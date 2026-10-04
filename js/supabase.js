@@ -6,8 +6,8 @@
 (function inicializarClienteSupabase() {
     "use strict";
 
-    const SUPABASE_URL = "https://SEU_PROJECT_REF.supabase.co";
-    const SUPABASE_ANON_KEY = "SUA_CHAVE_PUBLICA_ANON_OU_PUBLISHABLE";
+    const SUPABASE_URL = "https://zuvvaggooddpblqhgsdb.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_A1D2QDRqfVOU24huakpyPg_WGWYTXeQ";
 
     const status = {
         pronto: false,
