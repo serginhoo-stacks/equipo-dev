@@ -62,6 +62,7 @@
             </form>
 
             <form id="resetVerifyForm" class="auth-form" hidden>
+                <input id="verifyEmail" name="verifyEmail" type="hidden" autocomplete="email">
                 <div class="auth-field">
                     <label for="resetCode">Código de 8 dígitos</label>
                     <input id="resetCode" name="resetCode" class="auth-code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{8}" minlength="8" maxlength="8" placeholder="00000000" aria-describedby="resetCodeHint" required>
@@ -99,6 +100,6 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./js/supabase.js"></script>
-    <script src="./js/auth.js"></script>
+    <script src="./js/auth.js?v=reset-flow-3step"></script>
 </body>
 </html>
