@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050b18">
+    <meta name="description" content="Crie sua conta SmartInspect AI.">
+    <title>Criar conta — SmartInspect AI</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="auth-page">
+    <main class="auth-shell">
+        <section class="auth-intro" aria-labelledby="introTitle">
+            <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — início">
+                <span class="auth-brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"></path>
+                        <path d="m8 12 2.5 2.5L16.5 8"></path>
+                    </svg>
+                </span>
+                <span class="auth-brand-name">SmartInspect <span>AI</span></span>
+            </a>
+            <div class="auth-eyebrow">Comece por aqui</div>
+            <h1 id="introTitle">Crie sua conta. <span>Um passo de cada vez.</span></h1>
+            <p class="auth-intro-copy">Cadastre seus dados para iniciar o acesso ao SmartInspect AI. A criação da empresa e da Base será feita em uma etapa posterior.</p>
+            <ul class="auth-feature-list" aria-label="Informações importantes">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Seu perfil é criado pelo trigger do Supabase</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Confirme seu e-mail, se solicitado</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Nenhuma empresa será criada nesta etapa</li>
+            </ul>
+        </section>
+
+        <section class="auth-card" aria-labelledby="formTitle">
+            <h2 id="formTitle">Criar conta</h2>
+            <p class="auth-card-lead">Preencha seus dados para se cadastrar.</p>
+            <div id="authMessage" class="auth-message" role="status" aria-live="polite" data-visible="false"></div>
+            <form id="cadastroForm" class="auth-form">
+                <div class="auth-field">
+                    <label for="nome">Nome</label>
+                    <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome completo" maxlength="120" required>
+                </div>
+                <div class="auth-field">
+                    <label for="email">E-mail</label>
+                    <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
+                </div>
+                <div class="auth-field">
+                    <label for="senha">Senha</label>
+                    <input id="senha" name="senha" type="password" autocomplete="new-password" placeholder="Crie uma senha" required>
+                </div>
+                <div class="auth-field">
+                    <label for="confirmarSenha">Confirmar senha</label>
+                    <input id="confirmarSenha" name="confirmarSenha" type="password" autocomplete="new-password" placeholder="Digite a senha novamente" required>
+                </div>
+                <button class="auth-submit" type="submit">
+                    Criar conta
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+                </button>
+            </form>
+            <hr class="auth-divider">
+            <p class="auth-card-footer">Já tem uma conta? <a class="auth-text-link" href="./login.html">Entrar</a></p>
+            <a class="auth-back-link" href="./index.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path><path d="M9 12h12"></path></svg>
+                Voltar para a página inicial
+            </a>
+            <p class="auth-small-note">Ao continuar, o Supabase Auth processará sua conta. O perfil será criado pelo trigger já existente.</p>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/supabase.js"></script>
+    <script src="./js/auth.js"></script>
+</body>
+</html>
