@@ -55,22 +55,35 @@
                 <div class="auth-field">
                     <label for="resetEmail">E-mail da sua conta</label>
                     <input id="resetEmail" name="resetEmail" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
-                    <span class="auth-field-hint">Não precisa informar sua senha. Enviaremos um link para você criar outra.</span>
+                    <span class="auth-field-hint">Enviaremos um código de 8 dígitos. Você não precisa informar sua senha atual.</span>
                 </div>
-                <button class="auth-submit" type="submit">Enviar link de recuperação</button>
+                <button class="auth-submit" type="submit">Enviar código</button>
                 <button id="backToLoginFromRequest" class="auth-plain-button" type="button">Voltar para entrar</button>
             </form>
 
-            <form id="resetNewPasswordForm" class="auth-form" hidden>
+            <form id="resetVerifyForm" class="auth-form" hidden>
+                <div class="auth-field">
+                    <label for="verifyEmail">E-mail</label>
+                    <input id="verifyEmail" name="verifyEmail" type="email" autocomplete="email" readonly required>
+                </div>
+                <div class="auth-field">
+                    <label for="resetCode">Código de 8 dígitos</label>
+                    <input id="resetCode" name="resetCode" class="auth-code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{8}" minlength="8" maxlength="8" placeholder="00000000" aria-describedby="resetCodeHint" required>
+                    <span id="resetCodeHint" class="auth-field-hint">O código vence em 10 minutos e só pode ser usado uma vez.</span>
+                </div>
                 <div class="auth-field">
                     <label for="newPassword">Nova senha</label>
-                    <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" placeholder="Digite sua nova senha" required>
+                    <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
                 </div>
                 <div class="auth-field">
                     <label for="confirmNewPassword">Confirme a nova senha</label>
-                    <input id="confirmNewPassword" name="confirmNewPassword" type="password" autocomplete="new-password" placeholder="Digite novamente a nova senha" required>
+                    <input id="confirmNewPassword" name="confirmNewPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Digite novamente a nova senha" required>
                 </div>
-                <button class="auth-submit" type="submit">Salvar nova senha</button>
+                <button class="auth-submit" type="submit">Validar código e trocar senha</button>
+                <div class="auth-form-actions">
+                    <button id="resendResetCode" class="auth-text-button" type="button">Enviar outro código</button>
+                    <button id="backToResetRequest" class="auth-text-button" type="button">Trocar e-mail</button>
+                </div>
             </form>
 
             <div id="authAccountLinks">
@@ -81,7 +94,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path><path d="M9 12h12"></path></svg>
                 Voltar para a página inicial
             </a>
-            <p class="auth-small-note">A autenticação usa o Supabase Auth. O navegador utiliza somente a chave pública do projeto.</p>
+            <p class="auth-small-note">A autenticação usa o Supabase Auth. Chaves secretas ficam somente na Edge Function.</p>
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
