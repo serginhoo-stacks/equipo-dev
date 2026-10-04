@@ -63,14 +63,18 @@
 
             <form id="resetVerifyForm" class="auth-form" hidden>
                 <div class="auth-field">
-                    <label for="verifyEmail">E-mail</label>
-                    <input id="verifyEmail" name="verifyEmail" type="email" autocomplete="email" readonly required>
-                </div>
-                <div class="auth-field">
                     <label for="resetCode">Código de 8 dígitos</label>
                     <input id="resetCode" name="resetCode" class="auth-code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{8}" minlength="8" maxlength="8" placeholder="00000000" aria-describedby="resetCodeHint" required>
                     <span id="resetCodeHint" class="auth-field-hint">O código vence em 10 minutos e só pode ser usado uma vez.</span>
                 </div>
+                <button class="auth-submit" type="submit">Verificar código</button>
+                <div class="auth-form-actions">
+                    <button id="resendResetCode" class="auth-text-button" type="button">Enviar outro código</button>
+                    <button id="backToResetRequest" class="auth-text-button" type="button">Trocar e-mail</button>
+                </div>
+            </form>
+
+            <form id="resetPasswordForm" class="auth-form" hidden>
                 <div class="auth-field">
                     <label for="newPassword">Nova senha</label>
                     <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
@@ -79,11 +83,7 @@
                     <label for="confirmNewPassword">Confirme a nova senha</label>
                     <input id="confirmNewPassword" name="confirmNewPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Digite novamente a nova senha" required>
                 </div>
-                <button class="auth-submit" type="submit">Validar código e trocar senha</button>
-                <div class="auth-form-actions">
-                    <button id="resendResetCode" class="auth-text-button" type="button">Enviar outro código</button>
-                    <button id="backToResetRequest" class="auth-text-button" type="button">Trocar e-mail</button>
-                </div>
+                <button class="auth-submit" type="submit">Trocar senha</button>
             </form>
 
             <div id="authAccountLinks">
