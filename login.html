@@ -1,105 +1,1285 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#050b18">
-    <meta name="description" content="Acesse sua conta SmartInspect AI.">
-    <title>Entrar — SmartInspect AI</title>
-    <link rel="stylesheet" href="./css/style.css?v=reset-verify-fix-20261004-2056">
-</head>
-<body class="auth-page">
-    <main class="auth-shell">
-        <section class="auth-intro" aria-labelledby="introTitle">
-            <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — início">
-                <span class="auth-brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"></path>
-                        <path d="m8 12 2.5 2.5L16.5 8"></path>
-                    </svg>
-                </span>
-                <span class="auth-brand-name">SmartInspect <span>AI</span></span>
-            </a>
-            <div class="auth-eyebrow">Gestão inteligente de obras</div>
-            <h1 id="introTitle">Sua obra, sob <span>controle.</span></h1>
-            <p class="auth-intro-copy">Entre para acompanhar as informações e a operação da sua empresa no SmartInspect AI.</p>
-            <ul class="auth-feature-list" aria-label="Recursos da plataforma">
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Dados organizados em um único lugar</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Acompanhamento de obras e inspeções</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Acesso protegido pelo Supabase Auth</li>
-            </ul>
-        </section>
+```javascript
+// ============================================================
+// SMARTINSPECT AI — AUTENTICAÇÃO
+// ============================================================
 
-        <section class="auth-card" aria-labelledby="formTitle">
-            <h2 id="formTitle">Bem-vindo de volta</h2>
-            <p id="cardLead" class="auth-card-lead">Entre com o e-mail e a senha cadastrados.</p>
-            <div id="authMessage" class="auth-message" role="status" aria-live="polite" data-visible="false"></div>
+const supabaseClient = window.supabaseClient || window.supabase;
 
-            <form id="loginForm" class="auth-form">
-                <div class="auth-field">
-                    <label for="email">E-mail</label>
-                    <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
-                </div>
-                <div class="auth-field">
-                    <label for="senha">Senha</label>
-                    <input id="senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha" required>
-                </div>
-                <div class="auth-form-row"><a id="resetPassword" class="auth-text-link" href="#recuperar">Esqueci minha senha</a></div>
-                <button class="auth-submit" type="submit">
-                    Entrar
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
-                </button>
-            </form>
+// ------------------------------------------------------------
+// ELEMENTOS DA PÁGINA
+// ------------------------------------------------------------
 
-            <form id="resetRequestForm" class="auth-form" hidden>
-                <div class="auth-field">
-                    <label for="resetEmail">E-mail da sua conta</label>
-                    <input id="resetEmail" name="resetEmail" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
-                    <span class="auth-field-hint">Enviaremos um código de 8 dígitos. Você não precisa informar sua senha atual.</span>
-                </div>
-                <button class="auth-submit" type="submit">Enviar código</button>
-                <button id="backToLoginFromRequest" class="auth-plain-button" type="button">Voltar para entrar</button>
-            </form>
+const loginForm = document.getElementById("loginForm");
 
-            <form id="resetVerifyForm" class="auth-form" hidden>
-                <input id="verifyEmail" name="verifyEmail" type="hidden" autocomplete="email">
-                <div class="auth-field">
-                    <label for="resetCode">Código de 8 dígitos</label>
-                    <input id="resetCode" name="resetCode" class="auth-code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{8}" minlength="8" maxlength="8" placeholder="00000000" aria-describedby="resetCodeHint" required>
-                    <span id="resetCodeHint" class="auth-field-hint">O código vence em 10 minutos e só pode ser usado uma vez.</span>
-                </div>
-                <button class="auth-submit" type="submit">Verificar código</button>
-                <div class="auth-form-actions">
-                    <button id="resendResetCode" class="auth-text-button" type="button">Enviar outro código</button>
-                    <button id="backToResetRequest" class="auth-text-button" type="button">Trocar e-mail</button>
-                </div>
-            </form>
+const emailInput = document.getElementById("email");
+const senhaInput = document.getElementById("senha");
 
-            <form id="resetPasswordForm" class="auth-form" hidden>
-                <div class="auth-field">
-                    <label for="newPassword">Nova senha</label>
-                    <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
-                </div>
-                <div class="auth-field">
-                    <label for="confirmNewPassword">Confirme a nova senha</label>
-                    <input id="confirmNewPassword" name="confirmNewPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Digite novamente a nova senha" required>
-                </div>
-                <button class="auth-submit" type="submit">Trocar senha</button>
-            </form>
+const emailStep = document.getElementById("emailStep");
+const passwordStep = document.getElementById("passwordStep");
 
-            <div id="authAccountLinks">
-                <hr class="auth-divider">
-                <p class="auth-card-footer">Ainda não tem uma conta? <a class="auth-text-link" href="./cadastro.html">Criar conta</a></p>
-            </div>
-            <a class="auth-back-link" href="./index.html">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path><path d="M9 12h12"></path></svg>
-                Voltar para a página inicial
-            </a>
-            <p class="auth-small-note">A autenticação usa o Supabase Auth. Chaves secretas ficam somente na Edge Function.</p>
-        </section>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./js/supabase.js"></script>
-    <script src="./js/auth.js?v=reset-verify-fix-20261004-2056"></script>
-</body>
-</html>
+const verifyEmailButton = document.getElementById("verifyEmailButton");
+
+const resetPasswordLink = document.getElementById("resetPassword");
+
+const resetRequestForm = document.getElementById("resetRequestForm");
+const resetVerifyForm = document.getElementById("resetVerifyForm");
+const resetPasswordForm = document.getElementById("resetPasswordForm");
+
+const resetEmailInput = document.getElementById("resetEmail");
+const verifyEmailInput = document.getElementById("verifyEmail");
+
+const resetCodeInput = document.getElementById("resetCode");
+
+const newPasswordInput = document.getElementById("newPassword");
+const confirmNewPasswordInput =
+    document.getElementById("confirmNewPassword");
+
+const resendResetCode =
+    document.getElementById("resendResetCode");
+
+const backToLoginFromRequest =
+    document.getElementById("backToLoginFromRequest");
+
+const backToResetRequest =
+    document.getElementById("backToResetRequest");
+
+const authMessage =
+    document.getElementById("authMessage");
+
+const authAccountLinks =
+    document.getElementById("authAccountLinks");
+
+
+// ------------------------------------------------------------
+// MENSAGENS
+// ------------------------------------------------------------
+
+function showAuthMessage(message, type = "info") {
+
+    if (!authMessage) return;
+
+    authMessage.textContent = message;
+
+    authMessage.dataset.visible = "true";
+
+    authMessage.classList.remove(
+        "success",
+        "error",
+        "info"
+    );
+
+    authMessage.classList.add(type);
+}
+
+
+function hideAuthMessage() {
+
+    if (!authMessage) return;
+
+    authMessage.textContent = "";
+
+    authMessage.dataset.visible = "false";
+
+}
+
+
+// ------------------------------------------------------------
+// MOSTRAR LOGIN
+// ------------------------------------------------------------
+
+function showLogin() {
+
+    hideAuthMessage();
+
+    if (loginForm) {
+        loginForm.hidden = false;
+    }
+
+    if (resetRequestForm) {
+        resetRequestForm.hidden = true;
+    }
+
+    if (resetVerifyForm) {
+        resetVerifyForm.hidden = true;
+    }
+
+    if (resetPasswordForm) {
+        resetPasswordForm.hidden = true;
+    }
+
+    if (authAccountLinks) {
+        authAccountLinks.hidden = false;
+    }
+
+    // Volta para a primeira etapa
+    if (emailStep) {
+        emailStep.hidden = false;
+    }
+
+    if (passwordStep) {
+        passwordStep.hidden = true;
+    }
+
+    if (senhaInput) {
+        senhaInput.value = "";
+        senhaInput.required = false;
+    }
+
+}
+
+
+// ------------------------------------------------------------
+// MOSTRAR RECUPERAÇÃO — SOLICITAR CÓDIGO
+// ------------------------------------------------------------
+
+function showResetRequest() {
+
+    hideAuthMessage();
+
+    if (loginForm) {
+        loginForm.hidden = true;
+    }
+
+    if (resetRequestForm) {
+        resetRequestForm.hidden = false;
+    }
+
+    if (resetVerifyForm) {
+        resetVerifyForm.hidden = true;
+    }
+
+    if (resetPasswordForm) {
+        resetPasswordForm.hidden = true;
+    }
+
+    if (authAccountLinks) {
+        authAccountLinks.hidden = true;
+    }
+
+    if (resetEmailInput && emailInput) {
+        resetEmailInput.value = emailInput.value.trim();
+    }
+
+    if (resetEmailInput) {
+        resetEmailInput.focus();
+    }
+
+}
+
+
+// ------------------------------------------------------------
+// MOSTRAR VERIFICAÇÃO DO CÓDIGO
+// ------------------------------------------------------------
+
+function showResetVerify(email) {
+
+    hideAuthMessage();
+
+    if (loginForm) {
+        loginForm.hidden = true;
+    }
+
+    if (resetRequestForm) {
+        resetRequestForm.hidden = true;
+    }
+
+    if (resetVerifyForm) {
+        resetVerifyForm.hidden = false;
+    }
+
+    if (resetPasswordForm) {
+        resetPasswordForm.hidden = true;
+    }
+
+    if (authAccountLinks) {
+        authAccountLinks.hidden = true;
+    }
+
+    if (verifyEmailInput) {
+        verifyEmailInput.value = email;
+    }
+
+    if (resetCodeInput) {
+        resetCodeInput.value = "";
+        resetCodeInput.focus();
+    }
+
+}
+
+
+// ------------------------------------------------------------
+// MOSTRAR NOVA SENHA
+// ------------------------------------------------------------
+
+function showNewPassword() {
+
+    hideAuthMessage();
+
+    if (loginForm) {
+        loginForm.hidden = true;
+    }
+
+    if (resetRequestForm) {
+        resetRequestForm.hidden = true;
+    }
+
+    if (resetVerifyForm) {
+        resetVerifyForm.hidden = true;
+    }
+
+    if (resetPasswordForm) {
+        resetPasswordForm.hidden = false;
+    }
+
+    if (authAccountLinks) {
+        authAccountLinks.hidden = true;
+    }
+
+    if (newPasswordInput) {
+        newPasswordInput.focus();
+    }
+
+}
+
+
+// ============================================================
+// LOGIN — ETAPA 1
+// VERIFICAR E-MAIL
+// ============================================================
+
+if (verifyEmailButton) {
+
+    verifyEmailButton.addEventListener("click", async () => {
+
+        const email = emailInput.value.trim().toLowerCase();
+
+        hideAuthMessage();
+
+        // -------------------------
+        // Validação
+        // -------------------------
+
+        if (!email) {
+
+            showAuthMessage(
+                "Digite seu e-mail.",
+                "error"
+            );
+
+            emailInput.focus();
+
+            return;
+        }
+
+
+        if (!emailInput.checkValidity()) {
+
+            showAuthMessage(
+                "Digite um e-mail válido.",
+                "error"
+            );
+
+            emailInput.focus();
+
+            return;
+        }
+
+
+        // -------------------------
+        // Loading
+        // -------------------------
+
+        verifyEmailButton.disabled = true;
+
+        const originalText =
+            verifyEmailButton.innerHTML;
+
+        verifyEmailButton.textContent =
+            "Verificando...";
+
+
+        try {
+
+            /*
+             * IMPORTANTE
+             *
+             * Esta URL deve apontar para uma Edge Function
+             * criada no seu projeto Supabase.
+             *
+             * Exemplo:
+             *
+             * /functions/v1/check-email
+             */
+
+            const response = await fetch(
+                "/functions/v1/check-email",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email: email
+                    })
+                }
+            );
+
+
+            const result =
+                await response.json();
+
+
+            // -------------------------
+            // E-mail não encontrado
+            // -------------------------
+
+            if (
+                !response.ok ||
+                !result.exists
+            ) {
+
+                showAuthMessage(
+                    "Não encontramos uma conta com esse e-mail.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // -------------------------
+            // E-mail encontrado
+            // -------------------------
+
+            showAuthMessage(
+                "E-mail verificado. Agora digite sua senha.",
+                "success"
+            );
+
+
+            emailInput.value = email;
+
+
+            // Esconde e-mail
+            emailStep.hidden = true;
+
+
+            // Mostra senha
+            passwordStep.hidden = false;
+
+
+            senhaInput.required = true;
+
+
+            senhaInput.focus();
+
+
+        } catch (error) {
+
+            console.error(
+                "Erro ao verificar e-mail:",
+                error
+            );
+
+
+            showAuthMessage(
+                "Não foi possível verificar o e-mail. Tente novamente.",
+                "error"
+            );
+
+
+        } finally {
+
+            verifyEmailButton.disabled = false;
+
+            verifyEmailButton.innerHTML =
+                originalText;
+
+        }
+
+    });
+
+}
+
+
+// ============================================================
+// LOGIN — ETAPA 2
+// E-MAIL + SENHA
+// ============================================================
+
+if (loginForm) {
+
+    loginForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        hideAuthMessage();
+
+
+        const email =
+            emailInput.value.trim().toLowerCase();
+
+        const password =
+            senhaInput.value;
+
+
+        // -------------------------
+        // Validação
+        // -------------------------
+
+        if (!email) {
+
+            showAuthMessage(
+                "Digite seu e-mail.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!password) {
+
+            showAuthMessage(
+                "Digite sua senha.",
+                "error"
+            );
+
+            senhaInput.focus();
+
+            return;
+        }
+
+
+        // -------------------------
+        // Loading
+        // -------------------------
+
+        const submitButton =
+            loginForm.querySelector(
+                'button[type="submit"]'
+            );
+
+
+        const originalText =
+            submitButton
+                ? submitButton.innerHTML
+                : "";
+
+
+        if (submitButton) {
+
+            submitButton.disabled = true;
+
+            submitButton.textContent =
+                "Entrando...";
+
+        }
+
+
+        try {
+
+            // -------------------------
+            // Login Supabase
+            // -------------------------
+
+            const {
+                data,
+                error
+            } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+
+            // -------------------------
+            // Erro
+            // -------------------------
+
+            if (error) {
+
+                console.error(
+                    "Erro no login:",
+                    error
+                );
+
+
+                showAuthMessage(
+                    "E-mail ou senha incorretos.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // -------------------------
+            // Login realizado
+            // -------------------------
+
+            if (data && data.session) {
+
+                showAuthMessage(
+                    "Login realizado com sucesso!",
+                    "success"
+                );
+
+
+                // Pequeno atraso para mostrar mensagem
+                setTimeout(() => {
+
+                    window.location.href =
+                        "./dashboard.html";
+
+                }, 500);
+
+            }
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            showAuthMessage(
+                "Ocorreu um erro ao entrar. Tente novamente.",
+                "error"
+            );
+
+
+        } finally {
+
+            if (submitButton) {
+
+                submitButton.disabled = false;
+
+                submitButton.innerHTML =
+                    originalText;
+
+            }
+
+        }
+
+    });
+
+}
+
+
+// ============================================================
+// ESQUECI MINHA SENHA
+// ============================================================
+
+if (resetPasswordLink) {
+
+    resetPasswordLink.addEventListener(
+        "click",
+        (event) => {
+
+            event.preventDefault();
+
+            showResetRequest();
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// SOLICITAR CÓDIGO DE RECUPERAÇÃO
+// ============================================================
+
+if (resetRequestForm) {
+
+    resetRequestForm.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+            hideAuthMessage();
+
+
+            const email =
+                resetEmailInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            if (!email) {
+
+                showAuthMessage(
+                    "Digite o e-mail da sua conta.",
+                    "error"
+                );
+
+                resetEmailInput.focus();
+
+                return;
+            }
+
+
+            if (!resetEmailInput.checkValidity()) {
+
+                showAuthMessage(
+                    "Digite um e-mail válido.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const button =
+                resetRequestForm.querySelector(
+                    'button[type="submit"]'
+                );
+
+
+            if (button) {
+
+                button.disabled = true;
+
+                button.textContent =
+                    "Enviando...";
+
+            }
+
+
+            try {
+
+                /*
+                 * Sua Edge Function deve:
+                 *
+                 * 1. receber o e-mail
+                 * 2. gerar o código
+                 * 3. salvar o código com validade
+                 * 4. enviar o código por e-mail
+                 */
+
+                const response = await fetch(
+                    "/functions/v1/request-password-reset",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: email
+                        })
+                    }
+                );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Erro ao solicitar código."
+                    );
+
+                }
+
+
+                showAuthMessage(
+                    "Código enviado! Verifique seu e-mail.",
+                    "success"
+                );
+
+
+                verifyEmailInput.value =
+                    email;
+
+
+                setTimeout(() => {
+
+                    showResetVerify(email);
+
+                }, 700);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                showAuthMessage(
+                    error.message ||
+                    "Não foi possível enviar o código.",
+                    "error"
+                );
+
+
+            } finally {
+
+                if (button) {
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "Enviar código";
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// VERIFICAR CÓDIGO
+// ============================================================
+
+if (resetVerifyForm) {
+
+    resetVerifyForm.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+            hideAuthMessage();
+
+
+            const email =
+                verifyEmailInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const code =
+                resetCodeInput.value
+                    .trim();
+
+
+            // -------------------------
+            // Validação
+            // -------------------------
+
+            if (!/^\d{8}$/.test(code)) {
+
+                showAuthMessage(
+                    "Digite o código de 8 dígitos.",
+                    "error"
+                );
+
+                resetCodeInput.focus();
+
+                return;
+            }
+
+
+            const button =
+                resetVerifyForm.querySelector(
+                    'button[type="submit"]'
+                );
+
+
+            if (button) {
+
+                button.disabled = true;
+
+                button.textContent =
+                    "Verificando...";
+
+            }
+
+
+            try {
+
+                const response = await fetch(
+                    "/functions/v1/verify-password-reset",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: email,
+                            code: code
+                        })
+                    }
+                );
+
+
+                const result =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    !result.valid
+                ) {
+
+                    throw new Error(
+                        result.message ||
+                        "Código inválido ou expirado."
+                    );
+
+                }
+
+
+                showAuthMessage(
+                    "Código confirmado! Crie sua nova senha.",
+                    "success"
+                );
+
+
+                // Guarda um token temporário
+                // retornado pela Edge Function
+                if (result.resetToken) {
+
+                    sessionStorage.setItem(
+                        "smartinspect_reset_token",
+                        result.resetToken
+                    );
+
+                }
+
+
+                setTimeout(() => {
+
+                    showNewPassword();
+
+                }, 700);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                showAuthMessage(
+                    error.message ||
+                    "Código inválido ou expirado.",
+                    "error"
+                );
+
+
+            } finally {
+
+                if (button) {
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "Verificar código";
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// TROCAR SENHA
+// ============================================================
+
+if (resetPasswordForm) {
+
+    resetPasswordForm.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+            hideAuthMessage();
+
+
+            const password =
+                newPasswordInput.value;
+
+
+            const confirmPassword =
+                confirmNewPasswordInput.value;
+
+
+            // -------------------------
+            // Validações
+            // -------------------------
+
+            if (password.length < 8) {
+
+                showAuthMessage(
+                    "A nova senha precisa ter pelo menos 8 caracteres.",
+                    "error"
+                );
+
+                newPasswordInput.focus();
+
+                return;
+            }
+
+
+            if (password !== confirmPassword) {
+
+                showAuthMessage(
+                    "As senhas não são iguais.",
+                    "error"
+                );
+
+                confirmNewPasswordInput.focus();
+
+                return;
+            }
+
+
+            const resetToken =
+                sessionStorage.getItem(
+                    "smartinspect_reset_token"
+                );
+
+
+            if (!resetToken) {
+
+                showAuthMessage(
+                    "Sua sessão de recuperação expirou. Solicite um novo código.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const button =
+                resetPasswordForm.querySelector(
+                    'button[type="submit"]'
+                );
+
+
+            if (button) {
+
+                button.disabled = true;
+
+                button.textContent =
+                    "Alterando senha...";
+
+            }
+
+
+            try {
+
+                const response = await fetch(
+                    "/functions/v1/reset-password",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            token: resetToken,
+                            password: password
+                        })
+                    }
+                );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Não foi possível alterar a senha."
+                    );
+
+                }
+
+
+                // Apaga token
+                sessionStorage.removeItem(
+                    "smartinspect_reset_token"
+                );
+
+
+                showAuthMessage(
+                    "Senha alterada com sucesso! Agora você pode entrar.",
+                    "success"
+                );
+
+
+                // Limpa campos
+                newPasswordInput.value = "";
+                confirmNewPasswordInput.value = "";
+
+
+                setTimeout(() => {
+
+                    showLogin();
+
+                }, 1500);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                showAuthMessage(
+                    error.message ||
+                    "Não foi possível alterar a senha.",
+                    "error"
+                );
+
+
+            } finally {
+
+                if (button) {
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "Trocar senha";
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// REENVIAR CÓDIGO
+// ============================================================
+
+if (resendResetCode) {
+
+    resendResetCode.addEventListener(
+        "click",
+        async () => {
+
+            const email =
+                verifyEmailInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            if (!email) {
+
+                showAuthMessage(
+                    "Informe seu e-mail novamente.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            resendResetCode.disabled = true;
+
+            const originalText =
+                resendResetCode.textContent;
+
+
+            resendResetCode.textContent =
+                "Enviando...";
+
+
+            try {
+
+                const response = await fetch(
+                    "/functions/v1/request-password-reset",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: email
+                        })
+                    }
+                );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Erro ao reenviar código."
+                    );
+
+                }
+
+
+                showAuthMessage(
+                    "Um novo código foi enviado para seu e-mail.",
+                    "success"
+                );
+
+
+                resetCodeInput.value = "";
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                showAuthMessage(
+                    error.message ||
+                    "Não foi possível reenviar o código.",
+                    "error"
+                );
+
+
+            } finally {
+
+                resendResetCode.disabled = false;
+
+                resendResetCode.textContent =
+                    originalText;
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// VOLTAR PARA LOGIN
+// ============================================================
+
+if (backToLoginFromRequest) {
+
+    backToLoginFromRequest.addEventListener(
+        "click",
+        () => {
+
+            showLogin();
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// TROCAR E-MAIL
+// ============================================================
+
+if (backToResetRequest) {
+
+    backToResetRequest.addEventListener(
+        "click",
+        () => {
+
+            showResetRequest();
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// CÓDIGO — ACEITAR SOMENTE NÚMEROS
+// ============================================================
+
+if (resetCodeInput) {
+
+    resetCodeInput.addEventListener(
+        "input",
+        () => {
+
+            resetCodeInput.value =
+                resetCodeInput.value
+                    .replace(/\D/g, "")
+                    .slice(0, 8);
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// VERIFICAR SE JÁ ESTÁ LOGADO
+// ============================================================
+
+async function checkExistingSession() {
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabaseClient.auth.getSession();
+
+
+        if (error) {
+
+            console.error(error);
+
+            return;
+        }
+
+
+        if (
+            data &&
+            data.session
+        ) {
+
+            window.location.href =
+                "./dashboard.html";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao verificar sessão:",
+            error
+        );
+
+    }
+
+}
+
+
+// ============================================================
+// INICIALIZAÇÃO
+// ============================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        showLogin();
+
+        checkExistingSession();
+
+    }
+);
+```
