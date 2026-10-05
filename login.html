@@ -1,552 +1,347 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Acesso ao SmartInspect AI" />
+  <title>Entrar | SmartInspect AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg: #050a16;
+      --surface: rgba(14, 29, 52, .72);
+      --surface-soft: rgba(255, 255, 255, .055);
+      --border: rgba(147, 224, 255, .22);
+      --border-hover: rgba(92, 236, 255, .72);
+      --white: #ffffff;
+      --text: #eefaff;
+      --muted: #9cb4c9;
+      --cyan: #5cecff;
+      --blue: #00b9f2;
+      --violet: #9b83ff;
+      --danger: #ff91a7;
+    }
 
-    <title>Login — SmartInspect AI</title>
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg); }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(0, 207, 255, .18), transparent 30rem),
+        radial-gradient(circle at 88% 78%, rgba(133, 94, 255, .18), transparent 32rem),
+        linear-gradient(135deg, #050a16, #08182e 52%, #0c1027);
+    }
 
-    <link rel="icon" type="image/png" href="/imagens/favicon.png">
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .24;
+      background-image:
+        linear-gradient(rgba(114, 217, 255, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(114, 217, 255, .05) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, #000, transparent 92%);
+    }
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .page {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(380px, 520px);
+      min-height: 100vh;
+      align-items: center;
+      gap: clamp(40px, 9vw, 150px);
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 48px clamp(24px, 6vw, 86px);
+    }
 
-        html,
-        body {
-            width: 100%;
-            min-height: 100%;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f8fc;
-            color: #1a1a1a;
-        }
+    .brand-panel { max-width: 570px; }
+    .brand-mark {
+      width: 82px;
+      height: 82px;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 0 22px rgba(92, 236, 255, .48));
+    }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 560px;
+      margin: 0;
+      color: var(--white);
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: .98;
+      letter-spacing: -.065em;
+      text-shadow: 0 0 30px rgba(255, 255, 255, .08);
+    }
+    h1 span {
+      color: var(--cyan);
+      text-shadow: 0 0 24px rgba(92, 236, 255, .42);
+    }
+    .brand-copy {
+      max-width: 480px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    .feature-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+    .feature {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 13px;
+      color: #d9f6ff;
+      font-size: 12px;
+      border: 1px solid rgba(147, 224, 255, .16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .045);
+      backdrop-filter: blur(12px);
+    }
+    .feature svg { width: 15px; height: 15px; color: var(--cyan); }
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 25px;
-        }
+    .login-card {
+      --pointer-x: 50%;
+      --pointer-y: 50%;
+      position: relative;
+      overflow: hidden;
+      padding: clamp(26px, 4vw, 42px);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      background: linear-gradient(145deg, rgba(20, 45, 78, .76), rgba(7, 20, 39, .72));
+      box-shadow: 0 28px 80px rgba(0, 0, 0, .34), inset 0 1px rgba(255, 255, 255, .11);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      transition: transform .34s cubic-bezier(.2,.8,.2,1), border-color .34s, box-shadow .34s;
+    }
+    .login-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(92, 236, 255, .16), transparent 36%);
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+    .login-card:hover {
+      transform: translateY(-7px);
+      border-color: var(--border-hover);
+      box-shadow: 0 34px 90px rgba(0, 0, 0, .42), 0 0 38px rgba(0, 200, 255, .16), inset 0 1px rgba(255, 255, 255, .16);
+    }
+    .login-card:hover::before { opacity: 1; }
+    .card-content { position: relative; z-index: 1; }
+    .card-heading h2 {
+      margin: 0;
+      color: var(--white);
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 27px;
+      letter-spacing: -.035em;
+    }
+    .card-heading p { margin: 9px 0 28px; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
-        .login-container {
-            width: 100%;
-            max-width: 430px;
-        }
+    .field { display: block; margin-top: 17px; }
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #dbf5ff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap > svg {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      width: 17px;
+      height: 17px;
+      color: var(--cyan);
+      transform: translateY(-50%);
+      transition: transform .25s, filter .25s;
+    }
+    .input-wrap:focus-within > svg { transform: translateY(-50%) scale(1.14); filter: drop-shadow(0 0 7px var(--cyan)); }
+    input {
+      width: 100%;
+      height: 50px;
+      padding: 0 15px 0 45px;
+      color: var(--white);
+      font: inherit;
+      font-size: 13px;
+      border: 1px solid rgba(147, 224, 255, .2);
+      border-radius: 13px;
+      outline: 0;
+      background: rgba(3, 12, 27, .54);
+      transition: border-color .25s, box-shadow .25s, background .25s;
+    }
+    input::placeholder { color: #6f8ba3; }
+    input:focus { border-color: var(--cyan); background: rgba(3, 18, 36, .72); box-shadow: 0 0 0 3px rgba(92, 236, 255, .1), 0 0 24px rgba(0, 200, 255, .12); }
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      color: var(--muted);
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: color .25s, background .25s;
+    }
+    .password-toggle:hover { color: var(--cyan); background: rgba(92,236,255,.1); }
+    .password-toggle svg { width: 16px; height: 16px; transition: transform .25s; }
+    .password-toggle:hover svg { transform: scale(1.15); }
+    .form-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 15px 0 24px; }
+    .check { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; cursor: pointer; }
+    .check input { width: 15px; height: 15px; padding: 0; accent-color: var(--cyan); }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .form-row a { font-size: 11px; font-weight: 700; }
+    .submit {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: 100%;
+      height: 51px;
+      overflow: hidden;
+      color: #041221;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      border: 0;
+      border-radius: 13px;
+      background: linear-gradient(100deg, #5cecff, #9b83ff);
+      box-shadow: 0 12px 28px rgba(0, 200, 255, .18);
+      cursor: pointer;
+      transition: transform .28s, filter .28s, box-shadow .28s;
+    }
+    .submit::before { content: ""; position: absolute; inset: 0 auto 0 -110%; width: 70%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.72), transparent); transform: skewX(-18deg); transition: left .6s; }
+    .submit:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 16px 34px rgba(0, 200, 255, .3); }
+    .submit:hover::before { left: 140%; }
+    .submit svg { width: 17px; height: 17px; transition: transform .25s; }
+    .submit:hover svg { transform: translateX(4px); }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 25px 0 18px; color: #708ca4; font-size: 10px; }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: rgba(147,224,255,.15); }
+    .support { text-align: center; color: var(--muted); font-size: 11px; }
+    .support a { font-weight: 700; }
+    .status { min-height: 18px; margin: 12px 0 0; color: var(--danger); font-size: 11px; text-align: center; }
+    .status.success { color: var(--cyan); }
+    .footer-note { margin-top: 18px; color: #708ca4; font-size: 10px; line-height: 1.5; text-align: center; }
 
-        .login-card {
-            background: #ffffff;
-            border-radius: 18px;
-            padding: 40px 35px;
-            box-shadow: 0 15px 45px rgba(0, 60, 120, 0.12);
-            border: 1px solid #e5edf5;
-        }
-
-        .logo-area {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            width: 75px;
-            height: 75px;
-            object-fit: contain;
-            margin-bottom: 15px;
-        }
-
-        .logo-area h1 {
-            font-size: 27px;
-            color: #0066cc;
-            margin-bottom: 7px;
-        }
-
-        .logo-area p {
-            color: #68798a;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #263746;
-        }
-
-        .form-group input {
-            width: 100%;
-            height: 48px;
-            border: 1px solid #d6e0e9;
-            border-radius: 10px;
-            padding: 0 14px;
-            font-size: 15px;
-            outline: none;
-            transition: 0.2s;
-            background: #fbfdff;
-        }
-
-        .form-group input:focus {
-            border-color: #008cff;
-            box-shadow: 0 0 0 3px rgba(0, 140, 255, 0.10);
-            background: #ffffff;
-        }
-
-        .password-wrapper {
-            position: relative;
-        }
-
-        .password-wrapper input {
-            padding-right: 50px;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            color: #68798a;
-            font-size: 18px;
-            padding: 5px;
-        }
-
-        .toggle-password:hover {
-            color: #0066cc;
-        }
-
-        .form-options {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: -5px;
-            margin-bottom: 20px;
-        }
-
-        .forgot-password {
-            color: #0066cc;
-            text-decoration: none;
-            font-size: 13px;
-            cursor: pointer;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .btn-primary {
-            width: 100%;
-            height: 50px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #0066cc, #00a6ff);
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 7px 18px rgba(0, 102, 204, 0.20);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 23px rgba(0, 102, 204, 0.25);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .auth-message {
-            display: none;
-            margin-bottom: 18px;
-            padding: 12px 14px;
-            border-radius: 9px;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .auth-message.show {
-            display: block;
-        }
-
-        .auth-message.error {
-            background: #fff1f1;
-            border: 1px solid #ffcaca;
-            color: #b42318;
-        }
-
-        .auth-message.success {
-            background: #edfff5;
-            border: 1px solid #b7ebc9;
-            color: #147a3e;
-        }
-
-        .auth-message.info {
-            background: #eef7ff;
-            border: 1px solid #c5e4ff;
-            color: #075a9e;
-        }
-
-        .verification-section,
-        .reset-section {
-            display: none;
-        }
-
-        .verification-section.active,
-        .reset-section.active {
-            display: block;
-        }
-
-        .back-login {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #0066cc;
-            font-size: 13px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .back-login:hover {
-            text-decoration: underline;
-        }
-
-        .code-input {
-            text-align: center;
-            letter-spacing: 8px;
-            font-size: 22px !important;
-            font-weight: 700;
-        }
-
-        .verification-info {
-            text-align: center;
-            color: #657789;
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .verification-info strong {
-            color: #263746;
-        }
-
-        .resend-code {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #0066cc;
-            font-size: 13px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            width: 100%;
-        }
-
-        .resend-code:hover {
-            text-decoration: underline;
-        }
-
-        .resend-code:disabled {
-            color: #8b9aaa;
-            cursor: not-allowed;
-            text-decoration: none;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 22px;
-            color: #8796a5;
-            font-size: 12px;
-        }
-
-        .loading {
-            position: relative;
-            pointer-events: none;
-        }
-
-        .loading::after {
-            content: "";
-            width: 17px;
-            height: 17px;
-            border: 2px solid rgba(255,255,255,0.45);
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 8px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @media (max-width: 500px) {
-            body {
-                padding: 15px;
-            }
-
-            .login-card {
-                padding: 30px 22px;
-            }
-
-            .logo-area h1 {
-                font-size: 24px;
-            }
-        }
-    </style>
+    @media (max-width: 850px) {
+      .page { grid-template-columns: 1fr; max-width: 540px; gap: 30px; padding-top: 34px; padding-bottom: 34px; }
+      .brand-panel { text-align: center; }
+      .brand-mark { width: 64px; height: 64px; margin-bottom: 20px; }
+      .brand-copy { margin-right: auto; margin-left: auto; }
+      .feature-row { justify-content: center; }
+      h1 { font-size: clamp(40px, 12vw, 62px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .login-card:hover, .submit:hover { transform: none; }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="page">
+    <section class="brand-panel" aria-label="SmartInspect AI">
+      <svg class="brand-mark" viewBox="0 0 128 128" role="img" aria-label="Símbolo SmartInspect AI">
+        <defs>
+          <linearGradient id="markBg" x1="18" y1="8" x2="108" y2="120"><stop stop-color="#142d50"/><stop offset="1" stop-color="#071326"/></linearGradient>
+          <linearGradient id="markEdge" x1="15" y1="20" x2="108" y2="108"><stop stop-color="#7ef4ff"/><stop offset=".5" stop-color="#00c8ff"/><stop offset="1" stop-color="#8b7cff"/></linearGradient>
+          <linearGradient id="markCheck" x1="36" y1="72" x2="90" y2="54"><stop stop-color="#5cecff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+        </defs>
+        <path d="M64 6 112 24v35c0 29-19 50-48 63C35 109 16 88 16 59V24L64 6Z" fill="url(#markBg)" stroke="url(#markEdge)" stroke-width="3"/>
+        <path d="M64 19 98 32v26c0 21-13 37-34 48C43 95 30 79 30 58V32l34-13Z" fill="none" stroke="#7eefff" stroke-opacity=".2" stroke-width="1.5"/>
+        <circle cx="61" cy="54" r="18" fill="none" stroke="#9defff" stroke-width="4"/><path d="m74 67 14 14" stroke="#9defff" stroke-width="6" stroke-linecap="round"/><path d="m48 55 9 9 19-20" fill="none" stroke="url(#markCheck)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="eyebrow">Inspeção inteligente</p>
+      <h1>O futuro da sua obra começa <span>aqui.</span></h1>
+      <p class="brand-copy">Centralize inspeções, acompanhe suas obras e transforme dados técnicos em decisões mais rápidas.</p>
+      <div class="feature-row" aria-label="Benefícios">
+        <span class="feature"><i data-lucide="shield-check"></i> Dados protegidos</span>
+        <span class="feature"><i data-lucide="scan-search"></i> Inspeção precisa</span>
+        <span class="feature"><i data-lucide="sparkles"></i> IA integrada</span>
+      </div>
+    </section>
 
-    <main class="login-container">
-
-        <section class="login-card">
-
-            <!-- LOGIN -->
-            <div id="loginSection">
-
-                <div class="logo-area">
-                    <img
-                        src="/imagens/logo.png"
-                        alt="SmartInspect AI"
-                        class="logo"
-                        onerror="this.style.display='none'"
-                    >
-
-                    <h1>SmartInspect AI</h1>
-                    <p>Acesse sua plataforma de gestão e inspeção</p>
-                </div>
-
-                <div id="authMessage" class="auth-message"></div>
-
-                <form id="loginForm" autocomplete="on">
-
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="seu@email.com"
-                            autocomplete="email"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Senha</label>
-
-                        <div class="password-wrapper">
-
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Digite sua senha"
-                                autocomplete="current-password"
-                                required
-                            >
-
-                            <button
-                                type="button"
-                                class="toggle-password"
-                                id="togglePassword"
-                                aria-label="Mostrar senha"
-                            >
-                                👁
-                            </button>
-
-                        </div>
-                    </div>
-
-                    <div class="form-options">
-                        <a
-                            href="#"
-                            class="forgot-password"
-                            id="forgotPassword"
-                        >
-                            Esqueci minha senha
-                        </a>
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="btn-primary"
-                        id="loginButton"
-                    >
-                        Entrar
-                    </button>
-
-                </form>
-
-            </div>
-
-
-            <!-- VERIFICAÇÃO DE CÓDIGO -->
-            <div id="verificationSection" class="verification-section">
-
-                <div class="logo-area">
-
-                    <img
-                        src="/imagens/logo.png"
-                        alt="SmartInspect AI"
-                        class="logo"
-                        onerror="this.style.display='none'"
-                    >
-
-                    <h1>Verificação</h1>
-
-                    <p>Confirme seu acesso</p>
-
-                </div>
-
-                <div id="verificationMessage" class="auth-message"></div>
-
-                <p class="verification-info">
-                    Enviamos um código de verificação para
-                    <strong id="verificationEmail"></strong>.
-                </p>
-
-                <form id="verificationForm">
-
-                    <div class="form-group">
-
-                        <label for="verificationCode">
-                            Código de verificação
-                        </label>
-
-                        <input
-                            type="text"
-                            id="verificationCode"
-                            name="verificationCode"
-                            class="code-input"
-                            inputmode="numeric"
-                            autocomplete="one-time-code"
-                            maxlength="6"
-                            placeholder="000000"
-                            required
-                        >
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="btn-primary"
-                        id="verificationButton"
-                    >
-                        Confirmar código
-                    </button>
-
-                </form>
-
-                <button
-                    type="button"
-                    class="resend-code"
-                    id="resendCode"
-                >
-                    Reenviar código
-                </button>
-
-                <a
-                    href="#"
-                    class="back-login"
-                    id="backToLogin"
-                >
-                    ← Voltar para o login
-                </a>
-
-            </div>
-
-
-            <!-- RECUPERAÇÃO DE SENHA -->
-            <div id="resetSection" class="reset-section">
-
-                <div class="logo-area">
-
-                    <img
-                        src="/imagens/logo.png"
-                        alt="SmartInspect AI"
-                        class="logo"
-                        onerror="this.style.display='none'"
-                    >
-
-                    <h1>Recuperar senha</h1>
-
-                    <p>Vamos ajudar você a recuperar o acesso</p>
-
-                </div>
-
-                <div id="resetMessage" class="auth-message"></div>
-
-                <form id="resetRequestForm">
-
-                    <div class="form-group">
-
-                        <label for="resetEmail">
-                            E-mail
-                        </label>
-
-                        <input
-                            type="email"
-                            id="resetEmail"
-                            name="resetEmail"
-                            placeholder="seu@email.com"
-                            autocomplete="email"
-                            required
-                        >
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="btn-primary"
-                        id="resetButton"
-                    >
-                        Enviar código
-                    </button>
-
-                </form>
-
-                <a
-                    href="#"
-                    class="back-login"
-                    id="backToLoginFromReset"
-                >
-                    ← Voltar para o login
-                </a>
-
-            </div>
-
-        </section>
-
-        <div class="footer">
-            © 2026 SmartInspect AI — Todos os direitos reservados.
+    <section class="login-card" id="loginCard" aria-labelledby="loginTitle">
+      <div class="card-content">
+        <div class="card-heading">
+          <h2 id="loginTitle">Bem-vindo de volta</h2>
+          <p>Acesse seu painel inteligente para continuar.</p>
         </div>
+        <form id="loginForm">
+          <label class="field">
+            <span class="field-label">E-mail profissional</span>
+            <span class="input-wrap"><i data-lucide="mail"></i><input id="email" type="email" autocomplete="email" placeholder="voce@empresa.com" required /></span>
+          </label>
+          <label class="field">
+            <span class="field-label">Senha</span>
+            <span class="input-wrap"><i data-lucide="lock-keyhole"></i><input id="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" required /><button class="password-toggle" id="togglePassword" type="button" aria-label="Mostrar senha"><i data-lucide="eye"></i></button></span>
+          </label>
+          <div class="form-row"><label class="check"><input type="checkbox" id="remember" /> Lembrar de mim</label><a href="#">Esqueci minha senha</a></div>
+          <button class="submit" type="submit">Entrar no SmartInspect <i data-lucide="arrow-right"></i></button>
+          <p class="status" id="status" aria-live="polite"></p>
+        </form>
+        <div class="divider">ou</div>
+        <p class="support">Ainda não tem acesso? <a href="#">Fale com a equipe</a></p>
+        <p class="footer-note">Ao continuar, você concorda com os termos de uso e a política de privacidade.</p>
+      </div>
+    </section>
+  </main>
 
-    </main>
+  <script>
+    lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });
 
+    const card = document.querySelector('#loginCard');
+    card.addEventListener('pointermove', (event) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--pointer-x', `${event.clientX - rect.left}px`);
+      card.style.setProperty('--pointer-y', `${event.clientY - rect.top}px`);
+    });
 
-    <!--
-        IMPORTANTE:
-        O auth.js contém toda a lógica de autenticação.
-        O login.html apenas fornece a interface.
-    -->
-    <script src="./js/auth.js"></script>
+    const toggle = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    toggle.addEventListener('click', () => {
+      const visible = password.type === 'text';
+      password.type = visible ? 'password' : 'text';
+      toggle.setAttribute('aria-label', visible ? 'Mostrar senha' : 'Ocultar senha');
+      toggle.innerHTML = `<i data-lucide="${visible ? 'eye' : 'eye-off'}"></i>`;
+      lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });
+    });
 
+    document.querySelector('#loginForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const status = document.querySelector('#status');
+      status.className = 'status success';
+      status.textContent = 'Login pronto para conectar à autenticação do seu app.';
+    });
+  </script>
 </body>
 </html>
-```
