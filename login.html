@@ -1,380 +1,476 @@
-<!DOCTYPE html>
+```html
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Acesso ao SmartInspect AI" />
-  <title>Entrar | SmartInspect AI</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    :root {
-      --bg: #050a16;
-      --surface: rgba(14, 29, 52, .72);
-      --surface-soft: rgba(255, 255, 255, .055);
-      --border: rgba(147, 224, 255, .22);
-      --border-hover: rgba(92, 236, 255, .72);
-      --white: #ffffff;
-      --text: #eefaff;
-      --muted: #9cb4c9;
-      --cyan: #5cecff;
-      --blue: #00b9f2;
-      --violet: #9b83ff;
-      --danger: #ff91a7;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050b18">
+    <meta name="description" content="Acesse sua conta SmartInspect AI.">
 
-    * { box-sizing: border-box; }
-    html { min-height: 100%; background: var(--bg); }
-    body {
-      min-height: 100vh;
-      margin: 0;
-      overflow-x: hidden;
-      color: var(--text);
-      font-family: Inter, Arial, sans-serif;
-      background:
-        radial-gradient(circle at 12% 18%, rgba(0, 207, 255, .18), transparent 30rem),
-        radial-gradient(circle at 88% 78%, rgba(133, 94, 255, .18), transparent 32rem),
-        linear-gradient(135deg, #050a16, #08182e 52%, #0c1027);
-    }
+    <title>Entrar — SmartInspect AI</title>
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .24;
-      background-image:
-        linear-gradient(rgba(114, 217, 255, .05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(114, 217, 255, .05) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: linear-gradient(to bottom, #000, transparent 92%);
-    }
-
-    .page {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(380px, 520px);
-      min-height: 100vh;
-      align-items: center;
-      gap: clamp(40px, 9vw, 150px);
-      max-width: 1260px;
-      margin: 0 auto;
-      padding: 48px clamp(24px, 6vw, 86px);
-    }
-
-    .brand-panel { max-width: 570px; }
-    .brand-mark {
-      width: 82px;
-      height: 82px;
-      margin-bottom: 28px;
-      filter: drop-shadow(0 0 22px rgba(92, 236, 255, .48));
-    }
-    .eyebrow {
-      margin: 0 0 14px;
-      color: var(--cyan);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-    }
-    h1 {
-      max-width: 560px;
-      margin: 0;
-      color: var(--white);
-      font-family: "Space Grotesk", Inter, sans-serif;
-      font-size: clamp(42px, 6vw, 78px);
-      line-height: .98;
-      letter-spacing: -.065em;
-      text-shadow: 0 0 30px rgba(255, 255, 255, .08);
-    }
-    h1 span {
-      color: var(--cyan);
-      text-shadow: 0 0 24px rgba(92, 236, 255, .42);
-    }
-    .brand-copy {
-      max-width: 480px;
-      margin: 24px 0 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.8;
-    }
-    .feature-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 32px;
-    }
-    .feature {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 13px;
-      color: #d9f6ff;
-      font-size: 12px;
-      border: 1px solid rgba(147, 224, 255, .16);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .045);
-      backdrop-filter: blur(12px);
-    }
-    .feature svg { width: 15px; height: 15px; color: var(--cyan); }
-
-    .login-card {
-      --pointer-x: 50%;
-      --pointer-y: 50%;
-      position: relative;
-      overflow: hidden;
-      padding: clamp(26px, 4vw, 42px);
-      border: 1px solid var(--border);
-      border-radius: 26px;
-      background: linear-gradient(145deg, rgba(20, 45, 78, .76), rgba(7, 20, 39, .72));
-      box-shadow: 0 28px 80px rgba(0, 0, 0, .34), inset 0 1px rgba(255, 255, 255, .11);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      transition: transform .34s cubic-bezier(.2,.8,.2,1), border-color .34s, box-shadow .34s;
-    }
-    .login-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(92, 236, 255, .16), transparent 36%);
-      opacity: 0;
-      transition: opacity .3s ease;
-    }
-    .login-card:hover {
-      transform: translateY(-7px);
-      border-color: var(--border-hover);
-      box-shadow: 0 34px 90px rgba(0, 0, 0, .42), 0 0 38px rgba(0, 200, 255, .16), inset 0 1px rgba(255, 255, 255, .16);
-    }
-    .login-card:hover::before { opacity: 1; }
-    .card-content { position: relative; z-index: 1; }
-    .card-heading h2 {
-      margin: 0;
-      color: var(--white);
-      font-family: "Space Grotesk", Inter, sans-serif;
-      font-size: 27px;
-      letter-spacing: -.035em;
-    }
-    .card-heading p { margin: 9px 0 28px; color: var(--muted); font-size: 13px; line-height: 1.6; }
-
-    .field { display: block; margin-top: 17px; }
-    .field-label {
-      display: block;
-      margin-bottom: 8px;
-      color: #dbf5ff;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .input-wrap {
-      position: relative;
-      display: block;
-      overflow: hidden;
-      border: 1px solid rgba(147, 224, 255, .2);
-      border-radius: 13px;
-      background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
-      box-shadow: inset 0 1px rgba(255,255,255,.08), 0 8px 24px rgba(0,0,0,.12);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      transition: border-color .28s, box-shadow .28s, transform .28s, background .28s;
-    }
-    .input-wrap::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 -110%;
-      width: 70%;
-      pointer-events: none;
-      background: linear-gradient(100deg, transparent, rgba(255,255,255,.18), transparent);
-      transform: skewX(-18deg);
-      transition: left .55s ease;
-    }
-    .input-wrap:hover {
-      border-color: rgba(92,236,255,.42);
-      background: linear-gradient(135deg, rgba(92,236,255,.10), rgba(255,255,255,.035));
-      box-shadow: inset 0 1px rgba(255,255,255,.12), 0 0 22px rgba(0,200,255,.10);
-    }
-    .input-wrap:hover::before { left: 140%; }
-    .input-wrap:focus-within {
-      transform: translateY(-2px);
-      border-color: var(--cyan);
-      background: linear-gradient(135deg, rgba(92,236,255,.13), rgba(255,255,255,.045));
-      box-shadow: 0 0 0 3px rgba(92,236,255,.10), 0 0 28px rgba(0,200,255,.18), inset 0 1px rgba(255,255,255,.16);
-    }
-    .input-wrap > svg {
-      position: absolute;
-      top: 50%;
-      left: 15px;
-      width: 17px;
-      height: 17px;
-      color: var(--cyan);
-      transform: translateY(-50%);
-      transition: transform .25s, filter .25s;
-    }
-    .input-wrap:focus-within > svg { transform: translateY(-50%) scale(1.14); filter: drop-shadow(0 0 7px var(--cyan)); }
-    input {
-      width: 100%;
-      height: 50px;
-      padding: 0 15px 0 45px;
-      color: var(--white);
-      font: inherit;
-      font-size: 13px;
-      border: 0;
-      border-radius: 13px;
-      outline: 0;
-      background: transparent;
-      transition: color .25s;
-    }
-    input::placeholder { color: #6f8ba3; }
-    input:focus { outline: 0; }
-    .password-toggle {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      display: grid;
-      place-items: center;
-      width: 32px;
-      height: 32px;
-      color: var(--muted);
-      border: 0;
-      border-radius: 9px;
-      background: transparent;
-      cursor: pointer;
-      transform: translateY(-50%);
-      transition: color .25s, background .25s;
-    }
-    .password-toggle:hover { color: var(--cyan); background: rgba(92,236,255,.1); }
-    .password-toggle svg { width: 16px; height: 16px; transition: transform .25s; }
-    .password-toggle:hover svg { transform: scale(1.15); }
-    .form-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 15px 0 24px; }
-    .check { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; cursor: pointer; }
-    .check input { width: 15px; height: 15px; padding: 0; accent-color: var(--cyan); }
-    a { color: var(--cyan); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .form-row a { font-size: 11px; font-weight: 700; }
-    .submit {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      width: 100%;
-      height: 51px;
-      overflow: hidden;
-      color: #041221;
-      font: inherit;
-      font-size: 13px;
-      font-weight: 800;
-      border: 0;
-      border-radius: 13px;
-      background: linear-gradient(100deg, #5cecff, #9b83ff);
-      box-shadow: 0 12px 28px rgba(0, 200, 255, .18);
-      cursor: pointer;
-      transition: transform .28s, filter .28s, box-shadow .28s;
-    }
-    .submit::before { content: ""; position: absolute; inset: 0 auto 0 -110%; width: 70%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.72), transparent); transform: skewX(-18deg); transition: left .6s; }
-    .submit:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 16px 34px rgba(0, 200, 255, .3); }
-    .submit:hover::before { left: 140%; }
-    .submit svg { width: 17px; height: 17px; transition: transform .25s; }
-    .submit:hover svg { transform: translateX(4px); }
-    .divider { display: flex; align-items: center; gap: 12px; margin: 25px 0 18px; color: #708ca4; font-size: 10px; }
-    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: rgba(147,224,255,.15); }
-    .support { text-align: center; color: var(--muted); font-size: 11px; }
-    .support a { font-weight: 700; }
-    .status { min-height: 18px; margin: 12px 0 0; color: var(--danger); font-size: 11px; text-align: center; }
-    .status.success { color: var(--cyan); }
-    .footer-note { margin-top: 18px; color: #708ca4; font-size: 10px; line-height: 1.5; text-align: center; }
-
-    @media (max-width: 850px) {
-      .page { grid-template-columns: 1fr; max-width: 540px; gap: 30px; padding-top: 34px; padding-bottom: 34px; }
-      .brand-panel { text-align: center; }
-      .brand-mark { width: 64px; height: 64px; margin-bottom: 20px; }
-      .brand-copy { margin-right: auto; margin-left: auto; }
-      .feature-row { justify-content: center; }
-      h1 { font-size: clamp(40px, 12vw, 62px); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
-      .login-card:hover, .submit:hover { transform: none; }
-    }
-  </style>
+    <link rel="stylesheet" href="./css/style.css?v=reset-verify-fix-20261004-2056">
 </head>
-<body>
-  <main class="page">
-    <section class="brand-panel" aria-label="SmartInspect AI">
-      <svg class="brand-mark" viewBox="0 0 128 128" role="img" aria-label="Símbolo SmartInspect AI">
-        <defs>
-          <linearGradient id="markBg" x1="18" y1="8" x2="108" y2="120"><stop stop-color="#142d50"/><stop offset="1" stop-color="#071326"/></linearGradient>
-          <linearGradient id="markEdge" x1="15" y1="20" x2="108" y2="108"><stop stop-color="#7ef4ff"/><stop offset=".5" stop-color="#00c8ff"/><stop offset="1" stop-color="#8b7cff"/></linearGradient>
-          <linearGradient id="markCheck" x1="36" y1="72" x2="90" y2="54"><stop stop-color="#5cecff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
-        </defs>
-        <path d="M64 6 112 24v35c0 29-19 50-48 63C35 109 16 88 16 59V24L64 6Z" fill="url(#markBg)" stroke="url(#markEdge)" stroke-width="3"/>
-        <path d="M64 19 98 32v26c0 21-13 37-34 48C43 95 30 79 30 58V32l34-13Z" fill="none" stroke="#7eefff" stroke-opacity=".2" stroke-width="1.5"/>
-        <circle cx="61" cy="54" r="18" fill="none" stroke="#9defff" stroke-width="4"/><path d="m74 67 14 14" stroke="#9defff" stroke-width="6" stroke-linecap="round"/><path d="m48 55 9 9 19-20" fill="none" stroke="url(#markCheck)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <p class="eyebrow">Inspeção inteligente</p>
-      <h1>O futuro da sua obra começa <span>aqui.</span></h1>
-      <p class="brand-copy">Centralize inspeções, acompanhe suas obras e transforme dados técnicos em decisões mais rápidas.</p>
-      <div class="feature-row" aria-label="Benefícios">
-        <span class="feature"><i data-lucide="shield-check"></i> Dados protegidos</span>
-        <span class="feature"><i data-lucide="scan-search"></i> Inspeção precisa</span>
-        <span class="feature"><i data-lucide="sparkles"></i> IA integrada</span>
-      </div>
-    </section>
 
-    <section class="login-card" id="loginCard" aria-labelledby="loginTitle">
-      <div class="card-content">
-        <div class="card-heading">
-          <h2 id="loginTitle">Bem-vindo de volta</h2>
-          <p>Acesse seu painel inteligente para continuar.</p>
-        </div>
-        <form id="loginForm">
-          <label class="field">
-            <span class="field-label">E-mail profissional</span>
-            <span class="input-wrap"><i data-lucide="mail"></i><input id="email" type="email" autocomplete="email" placeholder="voce@empresa.com" required /></span>
-          </label>
-          <label class="field">
-            <span class="field-label">Senha</span>
-            <span class="input-wrap"><i data-lucide="lock-keyhole"></i><input id="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" required /><button class="password-toggle" id="togglePassword" type="button" aria-label="Mostrar senha"><i data-lucide="eye"></i></button></span>
-          </label>
-          <div class="form-row"><label class="check"><input type="checkbox" id="remember" /> Lembrar de mim</label><a href="#">Esqueci minha senha</a></div>
-          <button class="submit" type="submit">Entrar no SmartInspect <i data-lucide="arrow-right"></i></button>
-          <p class="status" id="status" aria-live="polite"></p>
-        </form>
-        <div class="divider">ou</div>
-        <p class="support">Ainda não tem acesso? <a href="#">Fale com a equipe</a></p>
-        <p class="footer-note">Ao continuar, você concorda com os termos de uso e a política de privacidade.</p>
-      </div>
-    </section>
-  </main>
+<body class="auth-page">
 
-  <script>
-    lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });
+    <main class="auth-shell">
 
-    const card = document.querySelector('#loginCard');
-    card.addEventListener('pointermove', (event) => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--pointer-x', `${event.clientX - rect.left}px`);
-      card.style.setProperty('--pointer-y', `${event.clientY - rect.top}px`);
-    });
+        <!-- LADO ESQUERDO -->
+        <section class="auth-intro" aria-labelledby="introTitle">
 
-    const toggle = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
-    toggle.addEventListener('click', () => {
-      const visible = password.type === 'text';
-      password.type = visible ? 'password' : 'text';
-      toggle.setAttribute('aria-label', visible ? 'Mostrar senha' : 'Ocultar senha');
-      toggle.innerHTML = `<i data-lucide="${visible ? 'eye' : 'eye-off'}"></i>`;
-      lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });
-    });
+            <a
+                class="auth-brand"
+                href="./index.html"
+                aria-label="SmartInspect AI — início"
+            >
+                <span class="auth-brand-mark" aria-hidden="true">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"></path>
+                        <path d="m8 12 2.5 2.5L16.5 8"></path>
+                    </svg>
+                </span>
 
-    document.querySelector('#loginForm').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const status = document.querySelector('#status');
-      status.className = 'status success';
-      status.textContent = 'Login pronto para conectar à autenticação do seu app.';
-    });
-  </script>
+                <span class="auth-brand-name">
+                    SmartInspect <span>AI</span>
+                </span>
+            </a>
+
+            <div class="auth-eyebrow">
+                Gestão inteligente de obras
+            </div>
+
+            <h1 id="introTitle">
+                Sua obra, sob <span>controle.</span>
+            </h1>
+
+            <p class="auth-intro-copy">
+                Entre para acompanhar as informações e a operação da sua empresa no SmartInspect AI.
+            </p>
+
+            <ul
+                class="auth-feature-list"
+                aria-label="Recursos da plataforma"
+            >
+                <li>
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                    >
+                        <path d="m5 12 4 4L19 6"></path>
+                    </svg>
+
+                    Dados organizados em um único lugar
+                </li>
+
+                <li>
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                    >
+                        <path d="m5 12 4 4L19 6"></path>
+                    </svg>
+
+                    Acompanhamento de obras e inspeções
+                </li>
+
+                <li>
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                    >
+                        <path d="m5 12 4 4L19 6"></path>
+                    </svg>
+
+                    Acesso protegido pelo Supabase Auth
+                </li>
+            </ul>
+
+        </section>
+
+
+        <!-- CARD DE AUTENTICAÇÃO -->
+        <section
+            class="auth-card"
+            aria-labelledby="formTitle"
+        >
+
+            <h2 id="formTitle">
+                Bem-vindo de volta
+            </h2>
+
+            <p
+                id="cardLead"
+                class="auth-card-lead"
+            >
+                Entre com o e-mail e a senha cadastrados.
+            </p>
+
+
+            <!-- MENSAGEM GLOBAL -->
+            <div
+                id="authMessage"
+                class="auth-message"
+                role="status"
+                aria-live="polite"
+                data-visible="false"
+            ></div>
+
+
+            <!-- LOGIN -->
+            <form
+                id="loginForm"
+                class="auth-form"
+                autocomplete="on"
+            >
+
+                <div class="auth-field">
+
+                    <label for="email">
+                        E-mail
+                    </label>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        placeholder="voce@empresa.com.br"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="auth-field">
+
+                    <label for="senha">
+                        Senha
+                    </label>
+
+                    <input
+                        id="senha"
+                        name="senha"
+                        type="password"
+                        autocomplete="current-password"
+                        placeholder="Sua senha"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="auth-form-row">
+
+                    <a
+                        id="resetPassword"
+                        class="auth-text-link"
+                        href="#recuperar"
+                    >
+                        Esqueci minha senha
+                    </a>
+
+                </div>
+
+
+                <button
+                    class="auth-submit"
+                    type="submit"
+                    id="loginSubmit"
+                >
+                    Entrar
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M5 12h14"></path>
+                        <path d="m13 6 6 6-6 6"></path>
+                    </svg>
+
+                </button>
+
+            </form>
+
+
+            <!-- SOLICITAR RECUPERAÇÃO -->
+            <form
+                id="resetRequestForm"
+                class="auth-form"
+                hidden
+            >
+
+                <div class="auth-field">
+
+                    <label for="resetEmail">
+                        E-mail da sua conta
+                    </label>
+
+                    <input
+                        id="resetEmail"
+                        name="resetEmail"
+                        type="email"
+                        autocomplete="email"
+                        placeholder="voce@empresa.com.br"
+                        required
+                    >
+
+                    <span class="auth-field-hint">
+                        Enviaremos um código de 8 dígitos. Você não precisa informar sua senha atual.
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="auth-submit"
+                    type="submit"
+                    id="resetRequestSubmit"
+                >
+                    Enviar código
+                </button>
+
+
+                <button
+                    id="backToLoginFromRequest"
+                    class="auth-plain-button"
+                    type="button"
+                >
+                    Voltar para entrar
+                </button>
+
+            </form>
+
+
+            <!-- VERIFICAR CÓDIGO -->
+            <form
+                id="resetVerifyForm"
+                class="auth-form"
+                hidden
+            >
+
+                <input
+                    id="verifyEmail"
+                    name="verifyEmail"
+                    type="hidden"
+                    autocomplete="email"
+                >
+
+
+                <div class="auth-field">
+
+                    <label for="resetCode">
+                        Código de 8 dígitos
+                    </label>
+
+                    <input
+                        id="resetCode"
+                        name="resetCode"
+                        class="auth-code-input"
+                        type="text"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        pattern="[0-9]{8}"
+                        minlength="8"
+                        maxlength="8"
+                        placeholder="00000000"
+                        aria-describedby="resetCodeHint"
+                        required
+                    >
+
+                    <span
+                        id="resetCodeHint"
+                        class="auth-field-hint"
+                    >
+                        O código vence em 10 minutos e só pode ser usado uma vez.
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="auth-submit"
+                    type="submit"
+                    id="resetVerifySubmit"
+                >
+                    Verificar código
+                </button>
+
+
+                <div class="auth-form-actions">
+
+                    <button
+                        id="resendResetCode"
+                        class="auth-text-button"
+                        type="button"
+                    >
+                        Enviar outro código
+                    </button>
+
+                    <button
+                        id="backToResetRequest"
+                        class="auth-text-button"
+                        type="button"
+                    >
+                        Trocar e-mail
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- NOVA SENHA -->
+            <form
+                id="resetPasswordForm"
+                class="auth-form"
+                hidden
+            >
+
+                <div class="auth-field">
+
+                    <label for="newPassword">
+                        Nova senha
+                    </label>
+
+                    <input
+                        id="newPassword"
+                        name="newPassword"
+                        type="password"
+                        autocomplete="new-password"
+                        minlength="8"
+                        placeholder="Mínimo de 8 caracteres"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="auth-field">
+
+                    <label for="confirmNewPassword">
+                        Confirme a nova senha
+                    </label>
+
+                    <input
+                        id="confirmNewPassword"
+                        name="confirmNewPassword"
+                        type="password"
+                        autocomplete="new-password"
+                        minlength="8"
+                        placeholder="Digite novamente a nova senha"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    class="auth-submit"
+                    type="submit"
+                    id="resetPasswordSubmit"
+                >
+                    Trocar senha
+                </button>
+
+            </form>
+
+
+            <!-- LINKS DA CONTA -->
+            <div id="authAccountLinks">
+
+                <hr class="auth-divider">
+
+                <p class="auth-card-footer">
+                    Ainda não tem uma conta?
+
+                    <a
+                        class="auth-text-link"
+                        href="./cadastro.html"
+                    >
+                        Criar conta
+                    </a>
+                </p>
+
+            </div>
+
+
+            <!-- VOLTAR -->
+            <a
+                class="auth-back-link"
+                href="./index.html"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="m15 18-6-6 6-6"></path>
+                    <path d="M9 12h12"></path>
+                </svg>
+
+                Voltar para a página inicial
+
+            </a>
+
+
+            <p class="auth-small-note">
+                A autenticação usa o Supabase Auth. Chaves secretas ficam somente na Edge Function.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!--
+        SUPABASE CLIENT
+        Necessário para o auth.js trabalhar com a sessão
+        pública do projeto.
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!--
+        CONFIGURAÇÃO DO SUPABASE
+    -->
+    <script src="./js/supabase.js"></script>
+
+
+    <!--
+        AUTENTICAÇÃO
+        Toda a lógica de login, recuperação,
+        código de verificação e troca de senha
+        fica no auth.js.
+    -->
+    <script src="./js/auth.js?v=reset-verify-fix-20261004-2056"></script>
+
 </body>
 </html>
+```
