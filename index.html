@@ -2162,7 +2162,7 @@
         .si-scroll-cue {
             position: absolute;
             left: 50%;
-            bottom: 10px;
+            bottom: 0;
             z-index: 3;
             display: inline-flex;
             align-items: center;
@@ -2198,7 +2198,7 @@
             isolation: isolate;
             overflow: hidden;
             background:
-                linear-gradient(180deg, rgba(5,11,24,.72), rgba(5,11,24,.88)),
+                linear-gradient(180deg, rgba(5,11,24,.42), rgba(5,11,24,.64)),
                 url("imagens/fundo.png") center center / cover no-repeat;
         }
 
@@ -2209,8 +2209,8 @@
             z-index: -1;
             pointer-events: none;
             background:
-                linear-gradient(90deg, rgba(5,11,24,.62), transparent 48%, rgba(5,11,24,.66)),
-                radial-gradient(circle at 50% 20%, rgba(92,236,255,.12), transparent 58%);
+                linear-gradient(90deg, rgba(5,11,24,.40), transparent 48%, rgba(5,11,24,.46)),
+                radial-gradient(circle at 50% 20%, rgba(92,236,255,.20), transparent 58%);
         }
 
         @keyframes siScrollPulse {
