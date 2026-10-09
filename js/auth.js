@@ -477,7 +477,7 @@
         // --------------------------------------------------------
 
         window.location.assign(
-            "./dashboard.html"
+            "./index.html"
         );
     }
 
