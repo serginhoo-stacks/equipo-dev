@@ -1322,101 +1322,6 @@
 
 
         /* =========================================================
-           MINI FLOATING CARDS
-        ========================================================= */
-
-        .si-floating-card {
-
-            position: absolute;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            padding: 11px 13px;
-
-            border-radius: 13px;
-
-            border:
-                1px solid rgba(255,255,255,.10);
-
-            background:
-                rgba(8,20,38,.78);
-
-            backdrop-filter:
-                blur(18px);
-
-            box-shadow:
-                0 18px 45px rgba(0,0,0,.28);
-
-            z-index: 4;
-
-            font-size: 10px;
-        }
-
-
-        .si-floating-card svg {
-
-            width: 17px;
-            height: 17px;
-
-            color: var(--si-cyan);
-        }
-
-
-        .si-floating-card strong {
-
-            display: block;
-
-            color: #eafaff;
-
-            font-size: 11px;
-        }
-
-
-        .si-floating-card span {
-
-            color: #718aa0;
-
-            font-size: 9px;
-        }
-
-
-        .si-floating-one {
-
-            left: -18px;
-            top: 105px;
-
-            animation:
-                siFloatSmall 4s ease-in-out infinite;
-        }
-
-
-        .si-floating-two {
-
-            right: -18px;
-            bottom: 105px;
-
-            animation:
-                siFloatSmall 5s ease-in-out infinite reverse;
-        }
-
-
-        @keyframes siFloatSmall {
-
-            0%,100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-7px);
-            }
-        }
-
-
-        /* =========================================================
            SEÇÕES
         ========================================================= */
 
@@ -3088,12 +2993,6 @@
             }
 
 
-            .si-floating-card {
-
-                display: none;
-            }
-
-
             .si-preview-card {
 
                 min-height: 98px;
@@ -3446,68 +3345,6 @@
                 <div class="si-preview-area si-reveal">
 
                     <div class="si-preview-glow"></div>
-
-
-                    <div class="si-floating-card si-floating-one">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-
-                            <path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-4Z"></path>
-                            <path d="m9 12 2 2 4-4"></path>
-
-                        </svg>
-
-                        <div>
-
-                            <strong>
-                                Inspeção
-                            </strong>
-
-                            <span>
-                                Atualizada agora
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="si-floating-card si-floating-two">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-
-                            <path d="M3 3v18h18"></path>
-                            <path d="m7 15 4-5 3 3 5-7"></path>
-
-                        </svg>
-
-                        <div>
-
-                            <strong>
-                                Operação
-                            </strong>
-
-                            <span>
-                                Acompanhamento ativo
-                            </span>
-
-                        </div>
-
-                    </div>
 
 
                     <div class="si-dashboard">
