@@ -1934,6 +1934,126 @@
 
 
         /* =========================================================
+           PRÉVIAS CLICÁVEIS DOS MÓDULOS
+        ========================================================= */
+
+        .si-preview-card {
+            transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .si-preview-card:hover,
+        .si-preview-card:focus-visible {
+            transform: translateY(-5px);
+            border-color: var(--si-border-hover);
+            box-shadow: 0 16px 30px rgba(0,0,0,.24), 0 0 22px rgba(92,236,255,.1);
+            outline: none;
+        }
+
+        .si-preview-card:focus-visible {
+            outline: 2px solid var(--si-cyan);
+            outline-offset: 3px;
+        }
+
+        .si-preview-card::after {
+            content: "Clique para visualizar";
+            position: absolute;
+            right: 9px;
+            bottom: 8px;
+            color: rgba(178,224,240,.62);
+            font-size: 7px;
+            letter-spacing: .04em;
+            opacity: 0;
+            transition: opacity .25s ease;
+        }
+
+        .si-preview-card:hover::after,
+        .si-preview-card:focus-visible::after { opacity: 1; }
+
+        .si-preview-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .25s ease, visibility .25s ease;
+        }
+
+        .si-preview-modal.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .si-preview-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(2,7,17,.76);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .si-preview-modal-panel {
+            position: relative;
+            width: min(690px, 100%);
+            max-height: min(720px, 92vh);
+            overflow: auto;
+            padding: 32px;
+            border: 1px solid rgba(133,216,255,.28);
+            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(16,38,66,.96), rgba(6,17,33,.97));
+            box-shadow: 0 32px 100px rgba(0,0,0,.56), 0 0 55px rgba(92,236,255,.1), inset 0 1px 0 rgba(255,255,255,.1);
+            transform: translateY(16px) scale(.97);
+            transition: transform .3s ease;
+        }
+
+        .si-preview-modal.is-open .si-preview-modal-panel { transform: translateY(0) scale(1); }
+        .si-preview-modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(133,216,255,.18);
+            border-radius: 10px;
+            color: #ccefff;
+            background: rgba(255,255,255,.05);
+            cursor: pointer;
+            transition: .2s ease;
+        }
+        .si-preview-modal-close:hover { color: var(--si-cyan); border-color: var(--si-border-hover); transform: rotate(5deg); }
+        .si-preview-modal-close svg { width: 17px; height: 17px; }
+        .si-preview-modal-kicker { margin-bottom: 9px; color: var(--si-cyan); font-size: 10px; font-weight: 800; letter-spacing: .16em; }
+        .si-preview-modal-panel h2 { margin: 0 42px 10px 0; color: var(--si-white); font-size: 30px; letter-spacing: -1px; }
+        .si-preview-modal-panel > p { max-width: 520px; margin: 0 0 24px; color: #8faabd; font-size: 13px; line-height: 1.7; }
+        .si-preview-modal-note { display: block; margin-top: 14px; color: #6f899e; font-size: 10px; }
+
+        .si-app-preview {
+            min-height: 260px;
+            padding: 20px;
+            border: 1px solid rgba(133,216,255,.14);
+            border-radius: 17px;
+            background: rgba(3,12,26,.72);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+        }
+        .si-app-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; color: #dff8ff; font-size: 12px; font-weight: 800; }
+        .si-app-toolbar span { color: #6f899e; font-size: 9px; font-weight: 500; }
+        .si-app-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .si-app-tile { min-height: 76px; padding: 12px; border: 1px solid rgba(133,216,255,.12); border-radius: 12px; background: rgba(255,255,255,.035); }
+        .si-app-tile small { display: block; margin-bottom: 8px; color: #7894aa; font-size: 8px; }
+        .si-app-tile strong { color: var(--si-cyan); font-size: 22px; }
+        .si-app-list { display: grid; gap: 9px; margin-top: 13px; }
+        .si-app-list-row { display: flex; align-items: center; gap: 9px; padding: 10px; border-radius: 9px; color: #b9d4e4; background: rgba(255,255,255,.035); font-size: 9px; }
+        .si-app-list-row i { width: 8px; height: 8px; border-radius: 50%; background: var(--si-cyan); box-shadow: 0 0 10px rgba(92,236,255,.6); }
+        .si-app-list-row em { margin-left: auto; color: #7793a8; font-style: normal; font-size: 8px; }
+        .si-app-progress { height: 8px; margin-top: 16px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+        .si-app-progress i { display: block; height: 100%; width: 78%; border-radius: inherit; background: linear-gradient(90deg, var(--si-cyan), var(--si-blue)); }
+        .si-app-alert { color: #d9ccff; border-left: 2px solid var(--si-violet); }
+
+        /* =========================================================
            PRÉVIAS DOS RECURSOS / VÍDEO / INDICADORES
         ========================================================= */
 
@@ -3434,7 +3554,7 @@
                         <div class="si-preview-grid">
 
 
-                            <div class="si-preview-card">
+                            <div class="si-preview-card" data-preview="obras" role="button" tabindex="0" aria-label="Ver prévia de obras">
 
                                 <div class="si-preview-icon">
 
@@ -3473,7 +3593,7 @@
                             </div>
 
 
-                            <div class="si-preview-card">
+                            <div class="si-preview-card" data-preview="inspecoes" role="button" tabindex="0" aria-label="Ver prévia de inspecoes">
 
                                 <div class="si-preview-icon">
 
@@ -3510,7 +3630,7 @@
                             </div>
 
 
-                            <div class="si-preview-card">
+                            <div class="si-preview-card" data-preview="pendencias" role="button" tabindex="0" aria-label="Ver prévia de pendencias">
 
                                 <div class="si-preview-icon">
 
@@ -3548,7 +3668,7 @@
                             </div>
 
 
-                            <div class="si-preview-card">
+                            <div class="si-preview-card" data-preview="materiais" role="button" tabindex="0" aria-label="Ver prévia de materiais">
 
                                 <div class="si-preview-icon">
 
@@ -4515,6 +4635,27 @@
 
 
     <!-- =========================================================
+         PRÉVIA INTERATIVA DOS MÓDULOS
+    ========================================================== -->
+
+    <div class="si-preview-modal" id="siPreviewModal" aria-hidden="true">
+        <div class="si-preview-modal-backdrop" data-preview-close></div>
+        <section class="si-preview-modal-panel" role="dialog" aria-modal="true" aria-labelledby="siPreviewModalTitle">
+            <button class="si-preview-modal-close" type="button" aria-label="Fechar prévia" data-preview-close>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M6 6l12 12"></path><path d="M18 6 6 18"></path>
+                </svg>
+            </button>
+            <div class="si-preview-modal-kicker">PRÉVIA DO MÓDULO</div>
+            <h2 id="siPreviewModalTitle">Visão geral</h2>
+            <p id="siPreviewModalDescription">Visualização de exemplo da tela do aplicativo.</p>
+            <div class="si-app-preview" id="siAppPreview"></div>
+            <span class="si-preview-modal-note">Prévia conceitual da interface — conteúdo demonstrativo.</span>
+        </section>
+    </div>
+
+
+    <!-- =========================================================
          JAVASCRIPT
     ========================================================== -->
 
@@ -4885,6 +5026,77 @@
             );
 
         }
+
+
+        /* =====================================================
+           PRÉVIA CLICÁVEL DOS MÓDULOS
+        ====================================================== */
+
+        const previewModal = document.getElementById("siPreviewModal");
+        const previewTitle = document.getElementById("siPreviewModalTitle");
+        const previewDescription = document.getElementById("siPreviewModalDescription");
+        const appPreview = document.getElementById("siAppPreview");
+        const previewCards = document.querySelectorAll(".si-preview-card[data-preview]");
+
+        const previewData = {
+            obras: {
+                title: "Obras ativas",
+                description: "Acompanhe cada obra, sua evolução e os principais indicadores em uma visão centralizada.",
+                html: `<div class="si-app-toolbar">Obras em andamento <span>12 projetos ativos</span></div><div class="si-app-grid"><div class="si-app-tile"><small>Em execução</small><strong>08</strong></div><div class="si-app-tile"><small>Em planejamento</small><strong>03</strong></div><div class="si-app-tile"><small>Concluídas</small><strong>21</strong></div></div><div class="si-app-list"><div class="si-app-list-row"><i></i>Residencial Aurora <em>86%</em></div><div class="si-app-list-row"><i></i>Centro Empresarial <em>64%</em></div></div>`
+            },
+            inspecoes: {
+                title: "Inspeções",
+                description: "Registre verificações, consulte o histórico e acompanhe a qualidade da execução em cada etapa.",
+                html: `<div class="si-app-toolbar">Central de inspeções <span>Atualizado agora</span></div><div class="si-app-grid"><div class="si-app-tile"><small>Realizadas</small><strong>48</strong></div><div class="si-app-tile"><small>Aprovadas</small><strong>41</strong></div><div class="si-app-tile"><small>Em análise</small><strong>07</strong></div></div><div class="si-app-list"><div class="si-app-list-row"><i></i>Instalações elétricas <em>Concluída</em></div><div class="si-app-list-row"><i></i>Estrutura — bloco B <em>Em análise</em></div></div>`
+            },
+            pendencias: {
+                title: "Pendências",
+                description: "Identifique pontos de atenção, defina prioridades e acompanhe a resolução de cada ocorrência.",
+                html: `<div class="si-app-toolbar">Pontos de atenção <span>07 pendências</span></div><div class="si-app-grid"><div class="si-app-tile"><small>Prioridade alta</small><strong>02</strong></div><div class="si-app-tile"><small>Em andamento</small><strong>03</strong></div><div class="si-app-tile"><small>Resolvidas</small><strong>18</strong></div></div><div class="si-app-list"><div class="si-app-list-row si-app-alert"><i></i>Correção de acabamento <em>Prioridade alta</em></div><div class="si-app-list-row"><i></i>Revisão de materiais <em>Em andamento</em></div></div>`
+            },
+            materiais: {
+                title: "Materiais",
+                description: "Tenha uma visão rápida do estoque, dos materiais disponíveis e do que precisa ser reposto.",
+                html: `<div class="si-app-toolbar">Controle de materiais <span>126 itens cadastrados</span></div><div class="si-app-grid"><div class="si-app-tile"><small>Disponíveis</small><strong>98</strong></div><div class="si-app-tile"><small>Em uso</small><strong>21</strong></div><div class="si-app-tile"><small>Reposição</small><strong>07</strong></div></div><div class="si-app-progress"><i></i></div><div class="si-app-list-row" style="margin-top:12px"><i></i>Disponibilidade geral <em>78%</em></div>`
+            }
+        };
+
+        function abrirPreview(id) {
+            const item = previewData[id];
+            if (!item || !previewModal) return;
+            previewTitle.textContent = item.title;
+            previewDescription.textContent = item.description;
+            appPreview.innerHTML = item.html;
+            previewModal.classList.add("is-open");
+            previewModal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            previewModal.querySelector(".si-preview-modal-close")?.focus();
+        }
+
+        function fecharPreview() {
+            if (!previewModal) return;
+            previewModal.classList.remove("is-open");
+            previewModal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        }
+
+        previewCards.forEach(function(card) {
+            card.addEventListener("click", function() { abrirPreview(card.dataset.preview); });
+            card.addEventListener("keydown", function(event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    abrirPreview(card.dataset.preview);
+                }
+            });
+        });
+
+        previewModal?.querySelectorAll("[data-preview-close]").forEach(function(element) {
+            element.addEventListener("click", fecharPreview);
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") fecharPreview();
+        });
 
 
         /* =====================================================
