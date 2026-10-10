@@ -444,41 +444,9 @@
                     membro.empresa.status === "ativa"
             );
 
-        // --------------------------------------------------------
-        // NENHUMA EMPRESA
-        // --------------------------------------------------------
-
-        if (empresasAtivas.length === 0) {
-
-            mostrarMensagem(
-                "Sua conta está autenticada, mas ainda não há uma empresa ativa vinculada. A criação da empresa e da Base será implementada na próxima etapa.",
-                "info"
-            );
-
-            return;
-        }
-
-        // --------------------------------------------------------
-        // MAIS DE UMA EMPRESA
-        // --------------------------------------------------------
-
-        if (empresasAtivas.length > 1) {
-
-            mostrarMensagem(
-                "Sua conta pertence a mais de uma empresa. A seleção/troca de empresa será implementada em uma etapa futura; nenhuma empresa foi escolhida automaticamente.",
-                "info"
-            );
-
-            return;
-        }
-
-        // --------------------------------------------------------
-        // UMA EMPRESA
-        // --------------------------------------------------------
-
-        window.location.assign(
-            "./"
-        );
+        // O Painel Pessoal é a porta de entrada após o login.
+        // A criação/escolha da empresa acontece lá, sempre sob RLS.
+        window.location.assign("./painel-pessoal.html");
     }
 
     // ============================================================
