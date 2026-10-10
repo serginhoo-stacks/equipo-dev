@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050b18">
+  <title>Painel Pessoal — SmartInspect AI</title>
+  <link rel="stylesheet" href="./css/painel-pessoal.css">
+</head>
+<body class="personal-page">
+  <header class="personal-header">
+    <a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a>
+    <div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button">Sair</button></div>
+  </header>
+  <main class="personal-shell">
+    <section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Gerencie seu acesso, suas empresas e os próximos passos da sua conta.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
+    <div id="pageMessage" class="page-message" role="status" aria-live="polite"></div>
+    <section class="summary-grid" aria-label="Resumo da conta">
+      <article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article>
+      <article class="summary-card"><span class="summary-icon cyan">◈</span><span>Convites recebidos</span><strong id="inviteCount">—</strong></article>
+      <article class="summary-card"><span class="summary-icon violet">◌</span><span>Solicitações pendentes</span><strong id="requestCount">—</strong></article>
+    </section>
+    <div class="content-grid">
+      <section class="panel-card main-panel" aria-labelledby="companiesTitle">
+        <div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" title="Atualizar">↻</button></div>
+        <div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos...</div></div>
+        <div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Crie sua empresa ou envie uma solicitação para entrar em uma já existente.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button">Criar uma empresa</button><button id="requestCompanyButton" class="secondary-button">Solicitar vínculo</button></div></div>
+      </section>
+      <aside class="side-column">
+        <section class="panel-card" aria-labelledby="accountTitle"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2 id="accountTitle">Minha conta</h2></div><span class="status-dot">●</span></div><div class="account-row"><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row"><span>E-mail</span><strong id="accountEmail">—</strong></div><button id="editAccountButton" class="secondary-button full">Editar dados permitidos</button></section>
+        <section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema deverá validar novamente seu vínculo e carregar apenas os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section>
+      </aside>
+    </div>
+    <section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><p class="eyebrow">ESTRUTURA CONFIGURÁVEL</p><h2 id="plansTitle">Planos e assinaturas</h2><p>Os planos reais aparecerão quando estiverem cadastrados e confirmados no banco.</p></div></div><div id="plansList" class="plans-list"><div class="empty-inline">Nenhum plano configurado para exibição.</div></div></section>
+  </main>
+  <dialog id="companyDialog" class="modal-card"><form method="dialog" id="companyForm"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">NOVA EMPRESA</p><h2>Criar uma empresa</h2><p class="modal-copy">O usuário autenticado será registrado como proprietário inicial.</p><label>Nome da empresa<input id="companyName" required maxlength="160" placeholder="Ex.: Construtora Horizonte"></label><label>CNPJ <span class="optional">opcional</span><input id="companyCnpj" maxlength="18" placeholder="00.000.000/0000-00"></label><button class="primary-button" id="submitCompany" value="default">Criar empresa</button><p id="companyStatus" class="modal-status"></p></form></dialog>
+  <dialog id="requestDialog" class="modal-card"><form method="dialog" id="requestForm"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">SOLICITAR VÍNCULO</p><h2>Entrar em uma empresa</h2><p class="modal-copy">A solicitação ficará pendente até aprovação de um administrador autorizado.</p><label>ID da empresa<input id="requestCompanyId" required placeholder="Cole o identificador da empresa"></label><button class="primary-button" id="submitRequest" value="default">Enviar solicitação</button><p id="requestStatus" class="modal-status"></p></form></dialog>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/supabase.js"></script><script src="./js/painel-pessoal.js"></script>
+</body>
+</html>
