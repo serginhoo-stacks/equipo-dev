@@ -15,6 +15,20 @@
   </header>
   <main class="personal-shell">
     <section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Gerencie seu acesso, suas empresas e os próximos passos da sua conta.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
+    <section class="panel-card profile-panel" aria-labelledby="profileTitle">
+      <div class="panel-heading"><div><p class="eyebrow">IDENTIDADE E ACESSO</p><h2 id="profileTitle">Meu perfil</h2><p>Atualize seus dados pessoais e as informações usadas para entrar na conta.</p></div><span class="status-dot">●</span></div>
+      <form id="profileForm" class="profile-layout">
+        <div class="avatar-column"><div class="profile-avatar"><img id="profileAvatarPreview" src="./imagens/favicon.png" alt="Foto de perfil"><span class="avatar-status">●</span></div><label class="upload-button" for="profileAvatar">Escolher foto<input id="profileAvatar" type="file" accept="image/png,image/jpeg,image/webp"></label><small class="field-note">PNG, JPG ou WebP até 5 MB.</small></div>
+        <div class="profile-fields">
+          <div class="profile-field-grid"><label>Nome completo<input id="profileName" autocomplete="name" maxlength="120" placeholder="Seu nome"></label><label>Nome de usuário<input id="profileUsername" autocomplete="username" maxlength="40" placeholder="Como quer ser identificado"></label></div>
+          <div class="profile-field-grid"><label>Data de nascimento<input id="profileBirthDate" type="date" autocomplete="bday"></label><label>Telefone / celular<input id="profilePhone" type="tel" autocomplete="tel" maxlength="24" placeholder="(00) 00000-0000"></label></div>
+          <div class="profile-field-grid"><label>E-mail de acesso<input id="profileEmail" type="email" autocomplete="email" required></label><label>CPF <span class="optional">opcional</span><input id="profileCpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00"></label></div>
+          <div class="profile-divider"><span>Alterar senha</span></div>
+          <div class="profile-field-grid"><label>Nova senha <span class="optional">opcional</span><input id="profilePassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres"></label><label>Confirmar nova senha<input id="profilePasswordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Repita a nova senha"></label></div>
+          <div class="profile-actions"><button type="submit" id="saveProfileButton" class="primary-button">Salvar alterações</button><span id="profileStatus" class="profile-status" role="status" aria-live="polite"></span></div>
+        </div>
+      </form>
+    </section>
     <div id="pageMessage" class="page-message" role="status" aria-live="polite"></div>
     <section class="summary-grid" aria-label="Resumo da conta">
       <article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article>
@@ -39,3 +53,4 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/supabase.js"></script><script src="./js/painel-pessoal.js"></script>
 </body>
 </html>
+s
