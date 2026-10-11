@@ -1,57 +1,55 @@
-(function(){
-  "use strict";
-  const $=(s)=>document.querySelector(s);
-  const message=(text,error=false)=>{const el=$("#pageMessage");el.textContent=text;el.className=`page-message show${error?" error":""}`;};
-  const clearMessage=()=>{const el=$("#pageMessage");el.textContent="";el.className="page-message";};
-  const setText=(selector,value)=>{const el=$(selector);if(el)el.textContent=value||"—";};
-  const escape=()=>{};
-  let banco=null,user=null;
-
-  function companyCard(member){
-    const company=member.empresa||{};
-    const wrapper=document.createElement("article"); wrapper.className="company-card";
-    const info=document.createElement("div");
-    const name=document.createElement("h3"); name.className="company-name"; name.textContent=company.nome||"Empresa sem nome";
-    const meta=document.createElement("div"); meta.className="company-meta";
-    [company.status||"status não informado",member.cargo||"membro"].forEach((value,i)=>{const span=document.createElement("span");span.className=i===0&&company.status==="ativa"?"tag":"";span.textContent=value;meta.append(span);});
-    info.append(name,meta); const button=document.createElement("button");button.className="company-action";button.textContent="Acessar ambiente";button.addEventListener("click",()=>{window.location.href=`./dashboard.html?empresa_id=${encodeURIComponent(company.id)}`;});
-    wrapper.append(info,button);return wrapper;
-  }
-
-  async function queryOptional(table,select,filter){
-    const result=await banco.from(table).select(select).match(filter||{});return result;
-  }
-  async function loadPanel(){
-    clearMessage();
-    const {data:sessionData}=await banco.auth.getSession();
-    user=sessionData&&sessionData.session&&sessionData.session.user;
-    if(!user){window.location.href="./login.html";return;}
-    const displayName=user.user_metadata?.nome||user.user_metadata?.name||user.email?.split("@")[0]||"usuário";
-    setText("#userName",displayName);setText("#accountName",displayName);setText("#accountEmail",user.email);setText("#headerEmail",user.email);
-    const {data:members,error:membersError}=await banco.from("membros_empresa").select("empresa_id, cargo, ativo, empresa:empresas(id,nome,status)").eq("usuario_id",user.id).eq("ativo",true);
-    if(membersError){$("#companiesList").innerHTML="";$("#emptyCompanies").hidden=false;setText("#companyCount","—");message("Não foi possível carregar os vínculos. Verifique as tabelas e políticas RLS de membros_empresa e empresas.",true);return;}
-    const active=(members||[]).filter(m=>m.empresa&&m.empresa.status!=="inativa");setText("#companyCount",active.length);
-    const list=$("#companiesList");list.innerHTML="";$("#emptyCompanies").hidden=active.length>0;
-    active.forEach(m=>list.append(companyCard(m)));
-    const invite=await banco.from("convites_empresa").select("id,status").ilike("email",user.email||"");setText("#inviteCount",invite.error?"—":(invite.data||[]).filter(x=>x.status==="pendente").length);
-    const requests=await queryOptional("solicitacoes_empresa","id,status",{usuario_id:user.id});setText("#requestCount",requests.error?"—":(requests.data||[]).filter(x=>x.status==="pendente").length);
-    const plans=await banco.from("planos").select("id,nome,preco,periodicidade,recursos,ativo").eq("ativo",true).order("preco",{ascending:true});
-    const planList=$("#plansList");planList.innerHTML="";
-    if(plans.error||!plans.data?.length){planList.innerHTML='<div class="empty-inline">Nenhum plano configurado para exibição.</div>';}
-    else plans.data.forEach(plan=>{const card=document.createElement("div");card.className="company-card";const title=document.createElement("h3");title.className="company-name";title.textContent=plan.nome;const meta=document.createElement("div");meta.className="company-meta";meta.textContent=plan.preco==null?"Preço não definido":`${plan.preco} / ${plan.periodicidade||"período"}`;card.append(title,meta);planList.append(card);});
-  }
-
-  async function createCompany(event){
-    event.preventDefault();const name=$("#companyName").value.trim();const cnpj=$("#companyCnpj").value.trim();const status=$("#companyStatus");const button=$("#submitCompany");if(!name)return;button.disabled=true;status.textContent="Criando empresa...";
-    try{const {data:company,error}=await banco.from("empresas").insert({nome:name,cnpj:cnpj||null,status:"ativa"}).select("id").single();if(error)throw error;const {error:memberError}=await banco.from("membros_empresa").insert({empresa_id:company.id,usuario_id:user.id,cargo:"proprietario",ativo:true});if(memberError)throw memberError;$("#companyDialog").close();$("#companyForm").reset();message("Empresa criada e vínculo de proprietário registrado.");await loadPanel();}catch(error){console.error(error);status.textContent="Não foi possível criar. Confira o esquema e as políticas RLS.";}finally{button.disabled=false;}
-  }
-  async function requestCompany(event){
-    event.preventDefault();const companyId=$("#requestCompanyId").value.trim();const status=$("#requestStatus");const button=$("#submitRequest");if(!companyId)return;button.disabled=true;status.textContent="Enviando solicitação...";
-    try{const {error}=await banco.from("solicitacoes_empresa").insert({empresa_id:companyId,usuario_id:user.id,status:"pendente"});if(error)throw error;$("#requestDialog").close();$("#requestForm").reset();message("Solicitação enviada. Ela não concede acesso até aprovação.");await loadPanel();}catch(error){console.error(error);status.textContent="Não foi possível enviar. Confirme o ID e as políticas RLS.";}finally{button.disabled=false;}
-  }
-  async function init(){
-    banco=window.banco;if(!banco){message(window.supabaseConfigStatus?.erro||"Supabase não configurado.",true);return;}
-    $("#logoutButton").addEventListener("click",async()=>{await banco.auth.signOut();window.location.href="./login.html";});$("#refreshButton").addEventListener("click",loadPanel);$("#createCompanyButton").addEventListener("click",()=>$("#companyDialog").showModal());$("#requestCompanyButton").addEventListener("click",()=>$("#requestDialog").showModal());$("#companyForm").addEventListener("submit",createCompany);$("#requestForm").addEventListener("submit",requestCompany);$("#editAccountButton").addEventListener("click",()=>message("A edição de dados será liberada apenas para campos permitidos pelo perfil."));await loadPanel();
-  }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
-})();
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="./imagens/favicon.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050b18">
+  <title>Painel Pessoal — SmartInspect AI</title>
+  <link rel="stylesheet" href="./css/painel-pessoal.css">
+</head>
+<body class="personal-page">
+  <header class="personal-header">
+    <a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a>
+    <div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button">Sair</button></div>
+  </header>
+  <main class="personal-shell">
+    <section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Gerencie seu acesso, suas empresas e os próximos passos da sua conta.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
+    <section class="panel-card profile-panel" aria-labelledby="profileTitle">
+      <div class="panel-heading"><div><p class="eyebrow">IDENTIDADE E ACESSO</p><h2 id="profileTitle">Meu perfil</h2><p>Atualize seus dados pessoais e as informações usadas para entrar na conta.</p></div><span class="status-dot">●</span></div>
+      <form id="profileForm" class="profile-layout">
+        <div class="avatar-column"><div class="profile-avatar"><img id="profileAvatarPreview" src="./imagens/favicon.png" alt="Foto de perfil"><span class="avatar-status">●</span></div><label class="upload-button" for="profileAvatar">Escolher foto<input id="profileAvatar" type="file" accept="image/png,image/jpeg,image/webp"></label><small class="field-note">PNG, JPG ou WebP até 5 MB.</small></div>
+        <div class="profile-fields">
+          <div class="profile-field-grid"><label>Nome completo<input id="profileName" autocomplete="name" maxlength="120" placeholder="Seu nome"></label><label>Nome de usuário<input id="profileUsername" autocomplete="username" maxlength="40" placeholder="Como quer ser identificado"></label></div>
+          <div class="profile-field-grid"><label>Data de nascimento<input id="profileBirthDate" type="date" autocomplete="bday"></label><label>Telefone / celular<input id="profilePhone" type="tel" autocomplete="tel" maxlength="24" placeholder="(00) 00000-0000"></label></div>
+          <div class="profile-field-grid"><label>E-mail de acesso<input id="profileEmail" type="email" autocomplete="email" required></label><label>CPF <span class="optional">opcional</span><input id="profileCpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00"></label></div>
+          <div class="profile-divider"><span>Alterar senha</span></div>
+          <div class="profile-field-grid"><label>Nova senha <span class="optional">opcional</span><input id="profilePassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres"></label><label>Confirmar nova senha<input id="profilePasswordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Repita a nova senha"></label></div>
+          <div class="profile-actions"><button type="submit" id="saveProfileButton" class="primary-button">Salvar alterações</button><span id="profileStatus" class="profile-status" role="status" aria-live="polite"></span></div>
+        </div>
+      </form>
+    </section>
+    <div id="pageMessage" class="page-message" role="status" aria-live="polite"></div>
+    <section class="summary-grid" aria-label="Resumo da conta">
+      <article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article>
+      <article class="summary-card"><span class="summary-icon cyan">◈</span><span>Convites recebidos</span><strong id="inviteCount">—</strong></article>
+      <article class="summary-card"><span class="summary-icon violet">◌</span><span>Solicitações pendentes</span><strong id="requestCount">—</strong></article>
+    </section>
+    <div class="content-grid">
+      <section class="panel-card main-panel" aria-labelledby="companiesTitle">
+        <div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" title="Atualizar">↻</button></div>
+        <div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos...</div></div>
+        <div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Crie sua empresa ou envie uma solicitação para entrar em uma já existente.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button">Criar uma empresa</button><button id="requestCompanyButton" class="secondary-button">Solicitar vínculo</button></div></div>
+      </section>
+      <aside class="side-column">
+        <section class="panel-card" aria-labelledby="accountTitle"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2 id="accountTitle">Minha conta</h2></div><span class="status-dot">●</span></div><div class="account-row"><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row"><span>E-mail</span><strong id="accountEmail">—</strong></div><button id="editAccountButton" class="secondary-button full">Editar dados permitidos</button></section>
+        <section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema deverá validar novamente seu vínculo e carregar apenas os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section>
+      </aside>
+    </div>
+    <section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><p class="eyebrow">ESTRUTURA CONFIGURÁVEL</p><h2 id="plansTitle">Planos e assinaturas</h2><p>Os planos reais aparecerão quando estiverem cadastrados e confirmados no banco.</p></div></div><div id="plansList" class="plans-list"><div class="empty-inline">Nenhum plano configurado para exibição.</div></div></section>
+  </main>
+  <dialog id="companyDialog" class="modal-card"><form method="dialog" id="companyForm"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">NOVA EMPRESA</p><h2>Criar uma empresa</h2><p class="modal-copy">O usuário autenticado será registrado como proprietário inicial.</p><label>Nome da empresa<input id="companyName" required maxlength="160" placeholder="Ex.: Construtora Horizonte"></label><label>CNPJ <span class="optional">opcional</span><input id="companyCnpj" maxlength="18" placeholder="00.000.000/0000-00"></label><button class="primary-button" id="submitCompany" value="default">Criar empresa</button><p id="companyStatus" class="modal-status"></p></form></dialog>
+  <dialog id="requestDialog" class="modal-card"><form method="dialog" id="requestForm"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">SOLICITAR VÍNCULO</p><h2>Entrar em uma empresa</h2><p class="modal-copy">A solicitação ficará pendente até aprovação de um administrador autorizado.</p><label>ID da empresa<input id="requestCompanyId" required placeholder="Cole o identificador da empresa"></label><button class="primary-button" id="submitRequest" value="default">Enviar solicitação</button><p id="requestStatus" class="modal-status"></p></form></dialog>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/supabase.js"></script><script src="./js/painel-pessoal.js"></script>
+</body>
+</html>
