@@ -34,6 +34,16 @@
 (function configurarAutenticacao() {
     "use strict";
 
+    // Preferência de navegação local; não guarda e-mail, senha ou token.
+    const accountSeenKey = "smartinspect-account-seen";
+    function marcarContaNesteDispositivo() {
+        try {
+            window.localStorage.setItem(accountSeenKey, "1");
+        } catch (erro) {
+            // O login continua a funcionar mesmo se o armazenamento estiver indisponível.
+        }
+    }
+
     // ============================================================
     // ELEMENTOS
     // ============================================================
@@ -528,6 +538,8 @@
 
                         return;
                     }
+
+                    marcarContaNesteDispositivo();
 
                     await encaminharUsuario(
                         data.user ||
@@ -1248,6 +1260,10 @@
                         );
 
                         return;
+                    }
+
+                    if (data.user) {
+                        marcarContaNesteDispositivo();
                     }
 
                     mostrarMensagem(
