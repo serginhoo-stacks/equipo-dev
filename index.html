@@ -3179,6 +3179,30 @@
         @keyframes siPhotoFall { 0%{opacity:0;transform:translateY(-150px) rotate(-7deg) scale(.72)} 65%{opacity:1;transform:translateY(12px) rotate(2deg) scale(1.04)} 100%{opacity:1;transform:translateY(0) rotate(0) scale(1)} }
         @media(max-width:820px){ .si-team-grid{grid-template-columns:1fr;max-width:430px;margin:auto}.si-team-card:nth-child(3){grid-column:auto;width:100%}.si-team-card{min-height:330px}.si-team-photo{width:190px;height:190px} }
 
+    
+
+        /* Refinamento para telefones estreitos e áreas seguras do ecrã. */
+        @media (max-width: 600px) {
+            .si-header { top: max(10px, env(safe-area-inset-top)); }
+            .si-hero { padding-top: calc(96px + env(safe-area-inset-top)); }
+            .si-nav a { min-height: 44px; display: flex; align-items: center; }
+            .si-menu { width: 44px; height: 44px; }
+            .si-section, .si-cta { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+        }
+        @media (max-width: 380px) {
+            .si-header { width: calc(100% - 16px); padding-inline: 8px; }
+            .si-logo { gap: 7px; font-size: 12px; letter-spacing: -.2px; }
+            .si-logo-icon { width: 32px; height: 32px; flex: 0 0 32px; }
+            .si-hero { padding-inline: 12px; }
+            .si-hero h1 { font-size: clamp(34px, 11vw, 42px); letter-spacing: -2px; }
+            .si-section, .si-cta { padding-inline: 12px; }
+            .si-section-header h2, .si-cta h2 { font-size: clamp(29px, 9vw, 34px); }
+            .si-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+            .si-stat { padding: 18px 8px; }
+            .si-stat strong { font-size: 26px; }
+            .si-preview-area { min-height: 360px; }
+        }
+
     </style>
 
 </head>
