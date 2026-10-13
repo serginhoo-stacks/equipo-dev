@@ -232,3 +232,20 @@
 @media (prefers-reduced-motion: reduce) {
     .auth-page *, .auth-page *::before, .auth-page *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+/* Ajustes de telemóvel: viewport dinâmica, safe area e controlos confortáveis ao toque. */
+.auth-page { min-height: 100vh; min-height: 100svh; min-height: 100dvh; }
+@media (max-width: 820px) {
+    .auth-shell {
+        padding-top: max(18px, env(safe-area-inset-top));
+        padding-bottom: max(28px, env(safe-area-inset-bottom));
+    }
+    .auth-field input { min-height: 48px; font-size: 16px; }
+    .auth-submit, .auth-plain-button, .auth-text-button, .auth-back-link { min-height: 44px; }
+}
+@media (max-width: 380px) {
+    .auth-shell { width: calc(100% - 20px); }
+    .auth-card { padding: 20px 15px; }
+    .auth-card h2 { font-size: 22px; }
+    .auth-form-actions { flex-wrap: wrap; gap: 6px 12px; }
+}
