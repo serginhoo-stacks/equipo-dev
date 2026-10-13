@@ -249,3 +249,47 @@
     .auth-card h2 { font-size: 22px; }
     .auth-form-actions { flex-wrap: wrap; gap: 6px 12px; }
 }
+
+/* Cenário estático e esfera em camada própria para só o globo girar. */
+.auth-page.login-page { position: relative; isolation: isolate; }
+.auth-page.login-page::before,
+.auth-page.login-page::after {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: min(86vw, 920px);
+    aspect-ratio: 1;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+    transform: translate3d(-50%, -50%, 0);
+}
+.auth-page.login-page::before {
+    z-index: -2;
+    background-image: url("../globo-fundo-estatico.webp");
+    opacity: .1;
+    filter: saturate(.78) brightness(1.12);
+}
+.auth-page.login-page::after {
+    z-index: -1;
+    background-image: url("../globo-esfera-transparente.webp");
+    opacity: .12;
+    filter: saturate(.88);
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    transform-origin: center;
+    animation: auth-globe-spin 72s linear infinite;
+    will-change: transform;
+}
+@keyframes auth-globe-spin {
+    from { transform: translate3d(-50%, -50%, 0) rotate(0deg); }
+    to { transform: translate3d(-50%, -50%, 0) rotate(360deg); }
+}
+@media (max-width: 820px) {
+    .auth-page.login-page::before { top: 36%; width: min(112vw, 760px); opacity: .085; }
+    .auth-page.login-page::after { top: 36%; width: min(112vw, 760px); opacity: .14; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .auth-page.login-page::after { animation: none !important; }
+}
