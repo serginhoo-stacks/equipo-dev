@@ -5011,10 +5011,22 @@
                         data &&
                         data.session
                     ){
-
-                        // O usuário autenticado permanece na página inicial.
-                        // O dashboard não faz parte deste fluxo da landing page.
-
+                        // Utilizadores com sessão ativa seguem direto para o painel.
+                        try {
+                            localStorage.setItem("smartinspect-account-seen", "1");
+                        } catch (erroStorage) {
+                            // A sessão continua válida mesmo se o navegador bloquear storage.
+                        }
+                        location.replace("./painel-pessoal.html");
+                    } else {
+                        // Sem sessão: contas já usadas neste navegador seguem para o login.
+                        try {
+                            if (localStorage.getItem("smartinspect-account-seen") === "1") {
+                                location.replace("./login.html");
+                            }
+                        } catch (erroStorage) {
+                            // Se o navegador bloquear storage, a apresentação continua acessível.
+                        }
                     }
 
                 }
