@@ -2,3 +2,93 @@
 
 /* Perfil pessoal */
 .profile-panel{margin-bottom:18px}.profile-layout{display:grid;grid-template-columns:180px minmax(0,1fr);gap:28px;align-items:start}.avatar-column{display:flex;align-items:center;flex-direction:column;text-align:center}.profile-avatar{position:relative;width:132px;height:132px;padding:4px;border:1px solid rgba(92,236,255,.45);border-radius:50%;background:linear-gradient(145deg,rgba(92,236,255,.22),rgba(34,157,255,.06));box-shadow:0 0 0 8px rgba(92,236,255,.05),0 18px 45px rgba(0,0,0,.28)}.profile-avatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;background:#081426}.avatar-status{position:absolute;right:3px;bottom:9px;width:18px;height:18px;color:var(--green);font-size:11px;line-height:15px;border:2px solid #081426;border-radius:50%;background:var(--green);overflow:hidden;text-indent:-999px;box-shadow:0 0 12px rgba(53,229,138,.6)}.upload-button{display:inline-flex;align-items:center;justify-content:center;min-height:38px;margin-top:17px;padding:0 13px;color:#dffaff;font-size:11px;font-weight:750;border:1px solid var(--border);border-radius:10px;background:rgba(92,236,255,.06);cursor:pointer;transition:.25s}.upload-button:hover{border-color:var(--cyan);background:rgba(92,236,255,.12);transform:translateY(-2px)}.upload-button input{display:none}.field-note{max-width:150px;margin-top:8px;color:var(--muted);font-size:10px;line-height:1.5}.profile-fields{min-width:0}.profile-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.profile-field-grid label{display:grid;gap:8px;margin-bottom:15px;color:#d7e9f5;font-size:11px;font-weight:750}.profile-field-grid input{width:100%;height:44px;padding:0 12px;color:#fff;border:1px solid rgba(133,216,255,.18);border-radius:10px;outline:0;background:rgba(3,11,23,.62);transition:.2s}.profile-field-grid input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(92,236,255,.09)}.profile-divider{display:flex;align-items:center;gap:12px;margin:3px 0 16px;color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.profile-divider:after{height:1px;flex:1;background:rgba(255,255,255,.09);content:""}.profile-actions{display:flex;align-items:center;gap:15px;margin-top:2px}.profile-status{min-height:17px;color:#a7f4c8;font-size:11px;line-height:1.5}.profile-status:not(:empty){padding:8px 0}.profile-status:has(+*){}.profile-panel .optional{color:var(--muted);font-weight:400}@media(max-width:700px){.profile-layout{grid-template-columns:1fr}.avatar-column{align-items:flex-start;flex-direction:row;flex-wrap:wrap;column-gap:15px;text-align:left}.profile-avatar{width:106px;height:106px}.upload-button{margin-top:31px}.field-note{order:3;width:100%;max-width:none;margin-left:121px;margin-top:-22px}.profile-field-grid{grid-template-columns:1fr}.profile-actions{align-items:flex-start;flex-direction:column}.profile-actions .primary-button{width:100%}}
+
+/* Refinamentos mobile para o painel, perfil e SmartInspect Chat. */
+.personal-page { min-height: 100vh; min-height: 100svh; min-height: 100dvh; overflow-x: hidden; }
+@media (max-width: 640px) {
+  .personal-page .personal-header {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto; width: calc(100% - 22px); height: auto;
+    min-height: 0; padding: 9px 0; row-gap: 8px; align-items: center;
+  }
+  .personal-page .brand { grid-column: 1; grid-row: 1; min-width: 0; gap: 8px; font-size: clamp(13px, 4vw, 16px); }
+  .personal-page .brand-mark { width: 36px; height: 36px; flex: 0 0 36px; }
+  .personal-page .header-actions { grid-column: 2; grid-row: 1; min-width: 0; gap: 0; }
+  .personal-page .header-actions .ghost-button { min-height: 44px; padding-inline: 12px; }
+  .personal-page .app-nav { grid-column: 1 / -1; grid-row: 2; width: 100%; gap: 7px; }
+  .personal-page .app-nav button { flex: 1; min-height: 44px; padding: 8px 10px; font-size: 12px; }
+  .personal-page .personal-shell { width: calc(100% - 22px); padding: 25px 0 calc(34px + env(safe-area-inset-bottom)); }
+  .personal-page .welcome-row { gap: 13px; margin-bottom: 20px; }
+  .personal-page .welcome-row h1 { font-size: clamp(31px, 9vw, 42px); }
+  .personal-page .session-pill { max-width: 100%; white-space: normal; }
+  .personal-page .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .personal-page .summary-card { min-width: 0; padding: 13px; gap: 7px; }
+  .personal-page .summary-card strong { font-size: 23px; }
+  .personal-page .summary-icon { width: 34px; height: 34px; }
+  .personal-page .summary-grid > .summary-card:last-child { grid-column: 1 / -1; }
+  .personal-page .content-grid { gap: 12px; }
+  .personal-page .panel-card { padding: 17px; border-radius: 16px; }
+  .personal-page .panel-heading { gap: 10px; }
+  .personal-page .panel-heading h2 { font-size: 20px; }
+  .personal-page .company-data-card { align-items: flex-start; flex-direction: column; }
+  .personal-page .company-data-card small { max-width: 100%; overflow-wrap: anywhere; word-break: break-word; }
+  .personal-page .modal-card.app-dialog { width: calc(100vw - 20px); max-width: 680px; max-height: calc(100dvh - 20px); margin: auto; padding: 20px 16px; border-radius: 16px; }
+  .personal-page .app-dialog form { gap: 10px; padding-bottom: max(4px, env(safe-area-inset-bottom)); }
+  .personal-page .modal-card input { min-height: 46px; font-size: 16px; }
+  .personal-page .avatar-edit { align-items: flex-start; flex-wrap: wrap; }
+  .personal-page .chat-view { width: calc(100% - 18px); margin: 16px auto calc(26px + env(safe-area-inset-bottom)); }
+  .personal-page .chat-headline { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .personal-page .chat-layout { grid-template-columns: minmax(0, 1fr); min-height: calc(100svh - 190px); min-height: calc(100dvh - 190px); }
+  .personal-page .chat-sidebar { min-width: 0; border-right: 0; border-bottom: 1px solid rgba(133,216,255,.13); }
+  .personal-page .chat-sidebar-head { padding: 12px; }
+  .personal-page .chat-search { gap: 6px; }
+  .personal-page .chat-search input { width: 100%; min-width: 0; min-height: 44px; font-size: 16px; }
+  .personal-page .chat-action, .personal-page .primary-button, .personal-page .secondary-button, .personal-page .ghost-button { min-height: 44px; }
+  .personal-page .chat-tools { gap: 8px; }
+  .personal-page .conv-list { max-height: 118px; scroll-snap-type: x proximity; }
+  .personal-page .conv-item { min-width: min(74vw, 230px); scroll-snap-align: start; }
+  .personal-page .chat-main { min-height: 0; }
+  .personal-page .chat-main-head { min-height: 64px; padding: 12px; }
+  .personal-page .chat-messages { min-height: clamp(220px, 38dvh, 420px); max-height: 52dvh; padding: 12px; overscroll-behavior: contain; }
+  .personal-page .msg { max-width: 92%; }
+  .personal-page .chat-compose { grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: center; gap: 8px; padding: 10px 10px calc(10px + env(safe-area-inset-bottom)); }
+  .personal-page .chat-compose textarea { grid-column: 1 / -1; grid-row: 1; min-height: 48px; max-height: 140px; font-size: 16px; }
+  .personal-page #attachButton { grid-column: 1; grid-row: 2; width: 100%; min-height: 44px; padding: 0; }
+  .personal-page #recordButton { grid-column: 2; grid-row: 2; width: 100%; min-height: 44px; padding: 0; }
+  .personal-page #cancelRecordButton { grid-column: 3; grid-row: 2; width: 100%; min-height: 44px; padding: 0 5px; }
+  .personal-page #sendButton { grid-column: 4; grid-row: 2; width: 100%; min-width: 0; min-height: 44px; padding: 0 7px; font-size: 11px; }
+  .personal-page .chat-status { padding-inline: 12px; }
+}
+@media (max-width: 380px) {
+  .personal-page .personal-header { width: calc(100% - 16px); }
+  .personal-page .brand strong { font-size: 13px; }
+  .personal-page .personal-shell { width: calc(100% - 16px); }
+  .personal-page .summary-grid { grid-template-columns: minmax(0, 1fr); }
+  .personal-page .summary-grid > .summary-card:last-child { grid-column: auto; }
+  .personal-page .panel-card { padding: 15px; }
+  .personal-page .profile-summary { grid-template-columns: 42px minmax(0, 1fr); gap: 8px; padding: 12px; }
+  .personal-page .profile-summary img { width: 42px; height: 42px; }
+  .personal-page .profile-summary .profile-hint { grid-column: 1 / -1; white-space: normal; }
+  .personal-page .chat-compose { padding-left: 8px; padding-right: 8px; }
+  .personal-page .modal-row { flex-direction: column; }
+  .personal-page .modal-row button { width: 100%; }
+}
+
+
+/* Correções confirmadas no preview de ecrãs pequenos. */
+@media (max-width: 640px) {
+  .personal-page .modal-card.app-dialog input:not([type=checkbox]) { width: 100%; min-width: 0; box-sizing: border-box; }
+  .personal-page .modal-card.app-dialog input[type=file] { max-width: 100%; font-size: 14px; }
+  .personal-page .modal-card.app-dialog input[type=file]::file-selector-button { min-height: 42px; }
+  .personal-page .modal-card.app-dialog .modal-close { grid-column: 1 / -1; justify-self: end; width: 44px; height: 44px; min-height: 44px; float: none; }
+  .personal-page .chat-layout { grid-template-rows: auto minmax(0, 1fr); height: calc(100dvh - 292px); min-height: 360px; }
+  .personal-page .chat-self { display: none; }
+  .personal-page .chat-sidebar-head { padding: 8px 10px; }
+  .personal-page .conv-list { max-height: 66px; }
+  .personal-page .chat-main { min-height: 0; overflow: hidden; }
+  .personal-page .chat-messages { flex: 1 1 0; min-height: 0; max-height: none; }
+  .personal-page .chat-compose { flex: 0 0 auto; }
+}
+@media (max-width: 380px) {
+  .personal-page .chat-layout { height: calc(100dvh - 272px); }
+}
