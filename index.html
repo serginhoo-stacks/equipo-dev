@@ -2583,128 +2583,80 @@
         ========================================================= */
 
         .si-footer {
-
             position: relative;
-
-            padding:
-                38px 24px;
-
-            border-top:
-                1px solid rgba(255,255,255,.045);
-
-            background:
-                rgba(3,8,18,.72);
-
+            padding: 62px 24px calc(24px + env(safe-area-inset-bottom));
+            border-top: 1px solid rgba(133,216,255,.11);
+            background: linear-gradient(180deg, rgba(5,12,25,.96), rgba(3,8,18,.99));
             z-index: 1;
         }
-
-
-        .si-footer-inner {
-
-            width: min(1180px, 100%);
-
-            margin: auto;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            gap: 12px;
-            text-align: center;
+        .si-footer-inner { width: min(1180px, 100%); margin: auto; display: grid; gap: 30px; text-align: left; }
+        .si-footer-top { display: grid; grid-template-columns: minmax(240px,.85fr) minmax(0,1.65fr); gap: 56px; align-items: start; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,.08); }
+        .si-footer-identity { max-width: 360px; }
+        .si-footer-brand { display: inline-flex; align-items: center; gap: 10px; color: #edfaff; text-decoration: none; }
+        .si-footer-brand .si-logo-icon { width: 42px; height: 42px; flex: 0 0 42px; }
+        .si-footer-brand .si-logo-name { font-size: 17px; font-weight: 750; letter-spacing: -.4px; }
+        .si-footer-brand .si-logo-name span { color: var(--si-cyan); }
+        .si-footer-copy { margin: 16px 0 0; color: #a3b6c8; text-align: left; font-size: 13px; line-height: 1.75; }
+        .si-footer-copy-muted { margin-top: 8px; color: #758ba0; font-size: 11px; }
+        .si-footer-copy strong { color: #c9dce9; }
+        .si-footer-columns { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 36px; }
+        .si-footer-column h3, .si-footer-panel h3 { margin: 0 0 13px; color: #f0f8ff; font-size: 14px; font-weight: 750; letter-spacing: .04em; }
+        .si-footer-column-note, .si-footer-panel-note { margin: -4px 0 8px; color: #8197ab; font-size: 11px; line-height: 1.55; }
+        .si-footer-links { display: grid; gap: 2px; }
+        .si-footer-link { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 38px; padding: 6px 0; border: 0; border-radius: 7px; color: #a9bdcf; background: transparent; font: inherit; font-size: 13px; line-height: 1.45; text-align: left; text-decoration: none; cursor: pointer; transition: color .2s ease, transform .2s ease; }
+        .si-footer-link:hover { color: #e8fbff; transform: translateX(3px); }
+        .si-footer-link:focus-visible, .si-footer-social:focus-visible, .si-footer-meta a:focus-visible { outline: 2px solid var(--si-cyan); outline-offset: 3px; }
+        .si-footer-soon { margin-left: auto; padding: 3px 7px; border: 1px solid rgba(92,236,255,.16); border-radius: 999px; color: #81eafa; font-size: 9px; font-weight: 700; white-space: nowrap; }
+        .si-footer-details { display: grid; grid-template-columns: 1fr 1.35fr .95fr; gap: 16px; align-items: stretch; }
+        .si-footer-panel { min-width: 0; padding: 18px; border: 1px solid rgba(133,216,255,.1); border-radius: 17px; background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012)); }
+        .si-footer-panel h3 { margin-bottom: 12px; }
+        .si-footer-social-list { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .si-footer-social { display: grid; place-items: center; width: 44px; height: 44px; padding: 7px; border: 1px solid transparent; border-radius: 12px; color: #eefaff; background: transparent; cursor: pointer; transition: color .2s ease, transform .2s ease, background .2s ease, border-color .2s ease; }
+        .si-footer-social svg { width: 29px; height: 29px; display: block; }
+        .si-footer-social:hover { color: var(--si-cyan); transform: translateY(-3px); border-color: rgba(92,236,255,.2); background: rgba(92,236,255,.055); }
+        .si-footer-payment-list { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 12px; }
+        .si-footer-payment { display: grid; place-items: center; min-width: 48px; height: 34px; color: #e7f4ff; opacity: .82; }
+        .si-footer-payment svg { display: block; width: auto; max-width: 72px; height: 28px; }
+        .si-footer-security { display: flex; align-items: center; gap: 12px; min-height: 70px; }
+        .si-footer-shield { width: 50px; height: 56px; flex: 0 0 auto; color: var(--si-cyan); }
+        .si-footer-security strong { display: block; color: #e8f8ff; font-size: 10px; letter-spacing: .12em; }
+        .si-footer-security span { display: block; margin-top: 6px; color: #91a8bb; font-size: 11px; line-height: 1.5; }
+        .si-footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.07); color: #6f8498; font-size: 11px; }
+        .si-footer-meta a { color: #94afc3; text-decoration: none; }
+        .si-footer-meta a:hover { color: var(--si-cyan); }
+        .si-footer-toast { position: fixed; z-index: 1000; left: 50%; bottom: max(18px,env(safe-area-inset-bottom)); width: max-content; max-width: min(92vw,460px); padding: 12px 16px; border: 1px solid rgba(92,236,255,.24); border-radius: 12px; color: #eafaff; background: rgba(9,22,40,.97); box-shadow: 0 12px 35px rgba(0,0,0,.36); font-size: 13px; line-height: 1.45; text-align: center; opacity: 0; pointer-events: none; transform: translate(-50%,10px); transition: opacity .2s ease,transform .2s ease; }
+        .si-footer-toast.is-visible { opacity: 1; transform: translate(-50%,0); }
+        @media (max-width: 900px) {
+            .si-footer-top { grid-template-columns: 1fr; gap: 28px; }
+            .si-footer-identity { max-width: 520px; }
+            .si-footer-inner { text-align: left; }
+            .si-footer-copy { text-align: left; }
         }
-
-
-        .si-footer-brand {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
+        @media (max-width: 600px) {
+            .si-footer { padding: 42px 18px calc(22px + env(safe-area-inset-bottom)); }
+            .si-footer-inner { gap: 22px; text-align: left; }
+            .si-footer-top { gap: 24px; padding-bottom: 23px; }
+            .si-footer-columns { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+            .si-footer-column h3, .si-footer-panel h3 { font-size: 13px; }
+            .si-footer-link { min-height: 40px; font-size: 12px; }
+            .si-footer-details { grid-template-columns: 1fr; gap: 12px; }
+            .si-footer-panel { padding: 16px; }
+            .si-footer-copy { text-align: left; }
+            .si-footer-meta { flex-direction: column; align-items: flex-start; }
         }
-
-
-        .si-footer-brand strong {
-
-            font-size: 13px;
+        @media (max-width: 360px) {
+            .si-footer { padding-inline: 14px; }
+            .si-footer-columns { gap: 12px; }
+            .si-footer-column h3 { font-size: 12px; }
+            .si-footer-link { font-size: 11px; }
+            .si-footer-soon { font-size: 8px; padding: 2px 5px; }
+            .si-footer-panel { padding: 14px; }
+            .si-footer-social-list { gap: 4px; }
         }
-
-
-        .si-footer-copy {
-
-            color: #647c91;
-
-            text-align: center;
-
-            font-size: 10px;
-
-            line-height: 1.7;
+        @media (prefers-reduced-motion: reduce) {
+            .si-footer-link, .si-footer-social, .si-footer-toast { transition: none; }
+            .si-footer-link:hover, .si-footer-social:hover { transform: none; }
         }
-
-
-        .si-footer-copy strong {
-
-            color: #a3b9ca;
-        }
-
-        .si-footer-contact-title {
-            margin: 8px 0 0;
-            color: #91a8bd;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-        }
-
-        .si-footer-contacts {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .si-footer-contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            min-height: 44px;
-            padding: 9px 14px;
-            border: 1px solid rgba(133,216,255,.14);
-            border-radius: 12px;
-            color: #d9f6ff;
-            background: rgba(255,255,255,.035);
-            font-size: 12px;
-            font-weight: 650;
-            transition: transform .25s ease, border-color .25s ease,
-                        background .25s ease, box-shadow .25s ease;
-        }
-
-        .si-footer-contact-link:hover {
-            transform: translateY(-4px);
-            border-color: rgba(92,236,255,.48);
-            background: rgba(92,236,255,.08);
-            box-shadow: 0 10px 28px rgba(0,0,0,.22),
-                        0 0 20px rgba(92,236,255,.10);
-        }
-
-        .si-footer-contact-link:focus-visible {
-            outline: 2px solid var(--si-cyan);
-            outline-offset: 3px;
-        }
-
-        .si-footer-contact-link svg {
-            width: 19px;
-            height: 19px;
-            flex: 0 0 auto;
-            color: var(--si-cyan);
-            transition: transform .25s ease;
-        }
-
-        .si-footer-contact-link:hover svg {
-            transform: scale(1.12) rotate(-4deg);
-        }
-
         @media (prefers-reduced-motion: reduce) {
             .si-footer-contact-link,
             .si-footer-contact-link svg {
@@ -3201,6 +3153,31 @@
             .si-stat { padding: 18px 8px; }
             .si-stat strong { font-size: 26px; }
             .si-preview-area { min-height: 360px; }
+        }
+
+    
+        /* Rodapé mobile: alinhamento e colunas finais, após as regras gerais do landing. */
+        @media (max-width: 900px) {
+            .si-footer-inner { text-align: left; }
+            .si-footer-copy { text-align: left; }
+        }
+        @media (max-width: 600px) {
+            .si-footer { padding: 42px 18px calc(22px + env(safe-area-inset-bottom)); }
+            .si-footer-inner { gap: 22px; text-align: left; }
+            .si-footer-top { grid-template-columns: 1fr; gap: 24px; padding-bottom: 23px; }
+            .si-footer-columns { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+            .si-footer-details { grid-template-columns: 1fr; gap: 12px; }
+            .si-footer-panel { padding: 16px; }
+            .si-footer-meta { flex-direction: column; align-items: flex-start; }
+        }
+        @media (max-width: 360px) {
+            .si-footer { padding-inline: 14px; }
+            .si-footer-columns { gap: 12px; }
+            .si-footer-column h3 { font-size: 12px; }
+            .si-footer-link { font-size: 11px; }
+            .si-footer-soon { font-size: 8px; padding: 2px 5px; }
+            .si-footer-panel { padding: 14px; }
+            .si-footer-social-list { gap: 4px; }
         }
 
     </style>
@@ -4382,69 +4359,95 @@
         </section>
 
 
-    <footer class="si-footer">
-
+    <footer class="si-footer" id="rodape">
         <div class="si-footer-inner">
+            <div class="si-footer-top">
+                <div class="si-footer-identity">
+                    <a href="#inicio" class="si-footer-brand" aria-label="SmartInspect AI — início">
+                        <span class="si-logo-icon"><img src="imagens/logo.png" alt="" aria-hidden="true"></span>
+                        <span class="si-logo-name">SmartInspect <span>AI</span></span>
+                    </a>
+                    <p class="si-footer-copy">Tecnologia para organizar, acompanhar e cuidar de cada etapa da sua obra.</p>
+                    <p class="si-footer-copy si-footer-copy-muted">Desenvolvido por <strong>Grupo MonteiroMelo</strong> · Versão 2.0</p>
+                </div>
 
+                <div class="si-footer-columns">
+                    <nav class="si-footer-column" aria-label="Navegação da plataforma">
+                        <h3>Plataforma</h3>
+                        <div class="si-footer-links">
+                            <a class="si-footer-link" href="#inicio">Início</a>
+                            <a class="si-footer-link" href="#sobre">Sobre o SmartInspect</a>
+                            <a class="si-footer-link" href="#recursos">Recursos</a>
+                            <a class="si-footer-link" href="#equipe">Nossa equipe</a>
+                            <a class="si-footer-link" href="#demonstracao">Pedir demonstração</a>
+                            <a class="si-footer-link" href="./login.html">Acessar o aplicativo</a>
+                        </div>
+                    </nav>
 
-            <div class="si-footer-brand">
-
-                <strong>
-                    SmartInspect AI
-                </strong>
-
+                    <nav class="si-footer-column" aria-label="Atendimento e informações">
+                        <h3>Atendimento</h3>
+                        <p class="si-footer-column-note">Estamos preparando estes canais.</p>
+                        <div class="si-footer-links">
+                            <button class="si-footer-link" type="button" data-footer-placeholder data-footer-name="Central de atendimento" title="Em breve">Central de atendimento <span class="si-footer-soon">Em breve</span></button>
+                            <button class="si-footer-link" type="button" data-footer-placeholder data-footer-name="Central de ajuda" title="Em breve">Central de ajuda</button>
+                            <button class="si-footer-link" type="button" data-footer-placeholder data-footer-name="Privacidade" title="Em breve">Privacidade</button>
+                            <button class="si-footer-link" type="button" data-footer-placeholder data-footer-name="Termos de uso" title="Em breve">Termos de uso</button>
+                            <button class="si-footer-link" type="button" data-footer-placeholder data-footer-name="Vendas corporativas" title="Em breve">Vendas corporativas</button>
+                        </div>
+                    </nav>
+                </div>
             </div>
 
+            <div class="si-footer-details">
+                <section class="si-footer-panel" aria-labelledby="siFooterSocialTitle">
+                    <h3 id="siFooterSocialTitle">Nossas redes</h3>
+                    <div class="si-footer-social-list" role="group" aria-label="Redes sociais — links em preparação">
+                        <button class="si-footer-social" type="button" data-footer-placeholder data-footer-name="YouTube" aria-label="YouTube — em breve" title="Em breve">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.2 7a3 3 0 0 0-2.1-2.1C19.2 4.4 12 4.4 12 4.4s-7.2 0-9.1.5A3 3 0 0 0 .8 7 31 31 0 0 0 .3 12a31 31 0 0 0 .5 5 3 3 0 0 0 2.1 2.1c1.9.5 9.1.5 9.1.5s7.2 0 9.1-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-5 31 31 0 0 0-.5-5Z"/><path fill="#081426" d="m9.6 15.5 6.2-3.5-6.2-3.5z"/></svg>
+                        </button>
+                        <button class="si-footer-social" type="button" data-footer-placeholder data-footer-name="Facebook" aria-label="Facebook — em breve" title="Em breve">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path fill="#081426" d="M13.6 20v-7h2.4l.4-2.8h-2.8V8.4c0-.8.2-1.3 1.4-1.3h1.5V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v1.7H7.7V13h2.6v7z"/></svg>
+                        </button>
+                        <button class="si-footer-social" type="button" data-footer-placeholder data-footer-name="Instagram" aria-label="Instagram — em breve" title="Em breve">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg>
+                        </button>
+                        <button class="si-footer-social" type="button" data-footer-placeholder data-footer-name="X (Twitter)" aria-label="X (Twitter) — em breve" title="Em breve">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.5 22H2.3l7.3-8.4L1.8 2h6.5l4.5 6.8L18.9 2Zm-1.1 18h1.7L7.3 3.9H5.5L17.8 20Z"/></svg>
+                        </button>
+                        <button class="si-footer-social" type="button" data-footer-placeholder data-footer-name="WhatsApp" aria-label="WhatsApp — em breve" title="Em breve">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2L3 20l1.2-4.8a8.2 8.2 0 1 1 16-3.5Z"/><path d="M8.5 8.2c.3-.6.6-.6 1-.6h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4-.1.6.4.8 1.1 1.5 1.9 1.9.2.1.4.1.6-.1l.7-.6c.2-.2.4-.2.6-.1l1.7.7c.3.1.4.3.4.5v.5c0 .4 0 .7-.6 1-.6.3-1.3.4-2 .2-1.1-.3-2.5-1-3.8-2.3s-2-2.7-2.3-3.8c-.2-.7-.1-1.4.2-2Z"/></svg>
+                        </button>
+                    </div>
+                </section>
 
-            <div class="si-footer-copy">
+                <section class="si-footer-panel" aria-labelledby="siFooterPaymentsTitle">
+                    <h3 id="siFooterPaymentsTitle">Formas de pagamento</h3>
+                    <p class="si-footer-panel-note">Ícones ilustrativos. Os meios de cobrança serão definidos junto com os planos.</p>
+                    <div class="si-footer-payment-list" role="group" aria-label="Referências visuais de meios de pagamento">
+                        <span class="si-footer-payment" role="img" aria-label="Visa"><svg viewBox="0 0 70 30" aria-hidden="true"><text x="2" y="23" fill="currentColor" font-family="Arial,sans-serif" font-size="22" font-style="italic" font-weight="800" letter-spacing="-1.5">VISA</text></svg></span>
+                        <span class="si-footer-payment" role="img" aria-label="Mastercard"><svg viewBox="0 0 48 30" aria-hidden="true"><circle cx="18" cy="15" r="12" fill="currentColor"/><circle cx="30" cy="15" r="12" fill="currentColor" opacity=".62"/></svg></span>
+                        <span class="si-footer-payment" role="img" aria-label="Elo"><svg viewBox="0 0 62 30" aria-hidden="true"><text x="1" y="23" fill="currentColor" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="-1.4">elo</text><circle cx="50" cy="15" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M44 10h12M42 15h16M44 20h12" stroke="currentColor" stroke-width="1.4" opacity=".8"/></svg></span>
+                        <span class="si-footer-payment" role="img" aria-label="American Express"><svg viewBox="0 0 72 30" aria-hidden="true"><rect x="1" y="3" width="70" height="24" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><text x="7" y="20" fill="currentColor" font-family="Arial,sans-serif" font-size="12" font-weight="800" letter-spacing=".5">AMEX</text></svg></span>
+                        <span class="si-footer-payment" role="img" aria-label="Pix"><svg viewBox="0 0 58 30" aria-hidden="true"><path fill="currentColor" d="m12 15 7-7 7 7-7 7zm12-7 3-3a3 3 0 0 1 4 0l4 4-7 7zm11 3 7 7-4 4a3 3 0 0 1-4 0l-3-3zm-2 9-7 7-4-4 7-7z"/><text x="39" y="21" fill="currentColor" font-family="Arial,sans-serif" font-size="16" font-weight="600">pix</text></svg></span>
+                        <span class="si-footer-payment" role="img" aria-label="Boleto bancário"><svg viewBox="0 0 66 30" aria-hidden="true"><path stroke="currentColor" stroke-width="2" d="M3 4v22M8 4v22M14 4v22M18 4v22M25 4v22M29 4v22M35 4v22M42 4v22M46 4v22M53 4v22"/><text x="57" y="19" fill="currentColor" font-family="Arial,sans-serif" font-size="7" font-weight="700" transform="rotate(-90 57 19)">BOLETO</text></svg></span>
+                    </div>
+                </section>
 
-                Sistema inteligente de gestão e inspeção de obras.
-
-                <br>
-
-                Desenvolvido por
-                <strong>
-                    Grupo MonteiroMelo
-                </strong>
-
-                · Versão 2.0
-
+                <section class="si-footer-panel" aria-labelledby="siFooterSecurityTitle">
+                    <h3 id="siFooterSecurityTitle">Segurança</h3>
+                    <div class="si-footer-security">
+                        <svg class="si-footer-shield" viewBox="0 0 64 72" fill="none" aria-hidden="true"><path d="M32 3 57 12v20c0 17-10 28-25 37C17 60 7 49 7 32V12L32 3Z" fill="rgba(92,236,255,.08)" stroke="currentColor" stroke-width="3"/><path d="m20 35 8 8 17-19" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div><strong>ACESSO PROTEGIDO</strong><span>Autenticação da conta gerida pelo Supabase Auth.</span></div>
+                    </div>
+                </section>
             </div>
 
-
-            <p class="si-footer-contact-title">Fale conosco</p>
-
-            <!-- Troque os valores LINK_INSTAGRAM_AQUI, LINK_WHATSAPP_AQUI e LINK_EMAIL_AQUI pelos destinos corretos. -->
-            <div class="si-footer-contacts" aria-label="Canais de contacto">
-                <a class="si-footer-contact-link" href="LINK_INSTAGRAM_AQUI" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"></circle>
-                    </svg>
-                    <span>Instagram</span>
-                </a>
-
-                <a class="si-footer-contact-link" href="LINK_WHATSAPP_AQUI" aria-label="WhatsApp">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2L3 20l1.2-4.8A8.2 8.2 0 1 1 20.2 11.7Z"></path>
-                        <path d="M8.5 8.2c.3-.6.6-.6 1-.6h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4-.1.6.4.8 1.1 1.5 1.9 1.9.2.1.4.1.6-.1l.7-.6c.2-.2.4-.2.6-.1l1.7.7c.3.1.4.3.4.5v.5c0 .4 0 .7-.6 1-0.6.3-1.3.4-2 .2-1.1-.3-2.5-1-3.8-2.3s-2-2.7-2.3-3.8c-.2-.7-.1-1.4.2-2Z"></path>
-                    </svg>
-                    <span>WhatsApp</span>
-                </a>
-
-                <a class="si-footer-contact-link" href="LINK_EMAIL_AQUI" aria-label="E-mail">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                        <path d="m4 7 8 6 8-6"></path>
-                    </svg>
-                    <span>E-mail</span>
-                </a>
+            <div class="si-footer-meta">
+                <span>© 2026 SmartInspect AI · Grupo MonteiroMelo</span>
+                <a href="./login.html">Entrar no aplicativo</a>
             </div>
-
-
         </div>
-
+        <div class="si-footer-toast" id="siFooterToast" role="status" aria-live="polite"></div>
     </footer>
 
 
@@ -5056,6 +5059,22 @@
       })();
     </script>
 
+    <script>
+      (function(){
+        const toast=document.getElementById('siFooterToast');
+        if(!toast)return;
+        let timer;
+        document.addEventListener('click',function(event){
+          const item=event.target.closest('[data-footer-placeholder]');
+          if(!item)return;
+          const name=item.dataset.footerName||item.getAttribute('aria-label')||item.textContent.trim();
+          toast.textContent=name+' estará disponível em breve.';
+          toast.classList.add('is-visible');
+          window.clearTimeout(timer);
+          timer=window.setTimeout(()=>toast.classList.remove('is-visible'),2600);
+        });
+      })();
+    </script>
 </body>
 
 </html>
