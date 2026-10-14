@@ -58,6 +58,7 @@
     box-shadow: 0 0 28px rgba(92,236,255,.12);
 }
 .auth-brand-mark svg { width: 23px; height: 23px; }
+.auth-brand-mark img { display: block; width: 34px; height: 28px; object-fit: contain; }
 .auth-brand-name span { color: var(--auth-cyan); }
 .auth-eyebrow {
     display: inline-flex;
