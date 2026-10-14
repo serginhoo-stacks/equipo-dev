@@ -285,7 +285,7 @@
     filter: saturate(.88);
     transform: translate3d(-50%, -50%, 0) rotate(0deg);
     transform-origin: center;
-    animation: auth-globe-spin 30s linear infinite;
+    animation: auth-globe-spin 24s linear infinite;
     will-change: transform;
 }
 @keyframes auth-globe-spin {
