@@ -3138,6 +3138,12 @@
         .si-hero { position:relative; overflow:hidden; background:linear-gradient(135deg,rgba(5,11,24,.82),rgba(8,20,38,.68) 50%,rgba(5,11,24,.88)); }
         .si-index-background-video { position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:.30; filter:saturate(.82) brightness(.72); pointer-events:none; }
         .si-hero > *:not(.si-index-background-video) { position:relative; z-index:1; }
+        .si-hero-container { grid-template-columns:1fr; max-width:920px; text-align:center; }
+        .si-hero-content { display:flex; flex-direction:column; align-items:center; }
+        .si-hero-description { margin-inline:auto; }
+        .si-hero-buttons, .si-trust { justify-content:center; }
+        .si-preview-area { width:100%; }
+        .si-dashboard { margin-inline:auto; text-align:left; }
 
         /* Refinamento para telefones estreitos e áreas seguras do ecrã. */
         @media (max-width: 600px) {
