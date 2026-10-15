@@ -47,6 +47,23 @@
   const callStatus = (text) => {
     $("callDialogTitle").textContent = text;
   };
+  const explainCallError = (error) => {
+    const name = error?.name || "";
+    if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+      return "Permissão de microfone/câmera bloqueada. Autorize o acesso no navegador e tente novamente.";
+    }
+    if (name === "NotFoundError") {
+      return "Nenhum microfone ou câmera disponível neste dispositivo.";
+    }
+    if (name === "NotReadableError") {
+      return "O microfone ou a câmera já está sendo usado por outro aplicativo.";
+    }
+    if (name === "SecurityError" || !window.isSecureContext) {
+      return "Chamadas exigem HTTPS ou localhost. Abra o sistema por uma conexão segura.";
+    }
+    if (error?.message) return error.message;
+    return "Não foi possível iniciar a chamada. Verifique o Supabase Realtime e as permissões do navegador.";
+  };
   const updateCallActions = (incoming = false, active = false) => {
     $("acceptCall").hidden = !incoming;
     $("declineCall").hidden = !incoming;
@@ -183,8 +200,9 @@
         void finishCall("cancel", true, "Sem resposta. A chamada foi encerrada.");
       }, 60000);
     } catch (error) {
+      console.error("Falha ao iniciar chamada privada:", error);
       await finishCall("cancel", false);
-      showStatus(error.message || "Não foi possível iniciar a chamada.", true);
+      showStatus(explainCallError(error), true);
       openDialog();
       updateCallActions(false, false);
       $("endCall").hidden = false;
