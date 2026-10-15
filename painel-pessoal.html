@@ -2,392 +2,54 @@
 <html lang="pt-BR">
 <head>
     <link rel="icon" type="image/png" href="./imagens/favicon.png">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#050b18">
-    <meta name="description" content="Acesse sua conta SmartInspect AI.">
-    <title>Entrar — SmartInspect AI</title>
-
-    <link rel="stylesheet" href="./css/style.css?v=login-globo-fullscreen-20261013-2057">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050b18">
+  <title>Painel Pessoal — SmartInspect AI</title>
+  <link rel="stylesheet" href="./css/painel-pessoal.css">
 </head>
-
-<body class="auth-page login-page">
-
-    <main class="auth-shell">
-
-        <section class="auth-intro" aria-labelledby="introTitle">
-
-            <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — início">
-                <span class="auth-brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"></path>
-                        <path d="m8 12 2.5 2.5L16.5 8"></path>
-                    </svg>
-                </span>
-
-                <span class="auth-brand-name">
-                    SmartInspect <span>AI</span>
-                </span>
-            </a>
-
-            <div class="auth-eyebrow">
-                Gestão inteligente de obras
-            </div>
-
-            <h1 id="introTitle">
-                Sua obra, sob <span>controle.</span>
-            </h1>
-
-            <p class="auth-intro-copy">
-                Entre para acompanhar as informações e a operação da sua empresa no SmartInspect AI.
-            </p>
-
-            <ul class="auth-feature-list" aria-label="Recursos da plataforma">
-
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" aria-hidden="true">
-                        <path d="m5 12 4 4L19 6"></path>
-                    </svg>
-                    Dados organizados em um único lugar
-                </li>
-
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" aria-hidden="true">
-                        <path d="m5 12 4 4L19 6"></path>
-                    </svg>
-                    Acompanhamento de obras e inspeções
-                </li>
-
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" aria-hidden="true">
-                        <path d="m5 12 4 4L19 6"></path>
-                    </svg>
-                    Acesso protegido pelo Supabase Auth
-                </li>
-
-            </ul>
-
-        </section>
-
-
-        <section class="auth-card" aria-labelledby="formTitle">
-
-            <h2 id="formTitle">
-                Bem-vindo de volta
-            </h2>
-
-            <p id="cardLead" class="auth-card-lead">
-                Entre com o e-mail e a senha cadastrados.
-            </p>
-
-            <div
-                id="authMessage"
-                class="auth-message"
-                role="status"
-                aria-live="polite"
-                data-visible="false">
-            </div>
-
-
-            <!-- LOGIN -->
-
-            <form id="loginForm" class="auth-form">
-
-                <div class="auth-field">
-                    <label for="email">
-                        E-mail
-                    </label>
-
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        autocomplete="email"
-                        placeholder="voce@empresa.com.br"
-                        required>
-                </div>
-
-
-                <div class="auth-field">
-                    <label for="senha">
-                        Senha
-                    </label>
-
-                    <input
-                        id="senha"
-                        name="senha"
-                        type="password"
-                        autocomplete="current-password"
-                        placeholder="Sua senha"
-                        required>
-                </div>
-
-
-                <div class="auth-form-row">
-                    <a
-                        id="resetPassword"
-                        class="auth-text-link"
-                        href="#recuperar">
-                        Esqueci minha senha
-                    </a>
-                </div>
-
-
-                <button class="auth-submit" type="submit">
-
-                    Entrar
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true">
-
-                        <path d="M5 12h14"></path>
-                        <path d="m13 6 6 6-6 6"></path>
-
-                    </svg>
-
-                </button>
-
-            </form>
-
-
-            <!-- SOLICITAR CÓDIGO -->
-
-            <form id="resetRequestForm" class="auth-form" hidden>
-
-                <div class="auth-field">
-
-                    <label for="resetEmail">
-                        E-mail da sua conta
-                    </label>
-
-                    <input
-                        id="resetEmail"
-                        name="resetEmail"
-                        type="email"
-                        autocomplete="email"
-                        placeholder="voce@empresa.com.br"
-                        required>
-
-                    <span class="auth-field-hint">
-                        Enviaremos um código de 4 dígitos. Você não precisa informar sua senha atual.
-                    </span>
-
-                </div>
-
-
-                <button class="auth-submit" type="submit">
-                    Enviar código
-                </button>
-
-
-                <button
-                    id="backToLoginFromRequest"
-                    class="auth-plain-button"
-                    type="button">
-
-                    Voltar para entrar
-
-                </button>
-
-            </form>
-
-
-            <!-- VERIFICAR CÓDIGO -->
-
-            <form id="resetVerifyForm" class="auth-form" hidden>
-
-                <input
-                    id="verifyEmail"
-                    name="verifyEmail"
-                    type="hidden"
-                    autocomplete="email">
-
-
-                <div class="auth-field">
-
-                    <label for="resetCode">
-                        Código de 4 dígitos
-                    </label>
-
-                    <input
-                        id="resetCode"
-                        name="resetCode"
-                        class="auth-code-input"
-                        type="text"
-                        inputmode="numeric"
-                        autocomplete="one-time-code"
-                        pattern="[0-9]{4}"
-                        minlength="4"
-                        maxlength="4"
-                        placeholder="0000"
-                        aria-describedby="resetCodeHint"
-                        required>
-
-                    <span
-                        id="resetCodeHint"
-                        class="auth-field-hint">
-
-                        O código vence em 10 minutos e só pode ser usado uma vez.
-
-                    </span>
-
-                </div>
-
-
-                <button class="auth-submit" type="submit">
-                    Verificar código
-                </button>
-
-
-                <div class="auth-form-actions">
-
-                    <button
-                        id="resendResetCode"
-                        class="auth-text-button"
-                        type="button">
-
-                        Enviar outro código
-
-                    </button>
-
-
-                    <button
-                        id="backToResetRequest"
-                        class="auth-text-button"
-                        type="button">
-
-                        Trocar e-mail
-
-                    </button>
-
-                </div>
-
-            </form>
-
-
-            <!-- NOVA SENHA -->
-
-            <form id="resetPasswordForm" class="auth-form" hidden>
-
-                <div class="auth-field">
-
-                    <label for="newPassword">
-                        Nova senha
-                    </label>
-
-                    <input
-                        id="newPassword"
-                        name="newPassword"
-                        type="password"
-                        autocomplete="new-password"
-                        minlength="8"
-                        placeholder="Mínimo de 8 caracteres"
-                        required>
-
-                </div>
-
-
-                <div class="auth-field">
-
-                    <label for="confirmNewPassword">
-                        Confirme a nova senha
-                    </label>
-
-                    <input
-                        id="confirmNewPassword"
-                        name="confirmNewPassword"
-                        type="password"
-                        autocomplete="new-password"
-                        minlength="8"
-                        placeholder="Digite novamente a nova senha"
-                        required>
-
-                </div>
-
-
-                <button class="auth-submit" type="submit">
-                    Trocar senha
-                </button>
-
-            </form>
-
-
-            <!-- LINKS DA CONTA -->
-
-            <div id="authAccountLinks">
-
-                <hr class="auth-divider">
-
-                <p class="auth-card-footer">
-
-                    Ainda não tem uma conta?
-
-                    <a
-                        class="auth-text-link"
-                        href="./cadastro.html">
-
-                        Criar conta
-
-                    </a>
-
-                </p>
-
-            </div>
-
-
-            <!-- VOLTAR -->
-
-            <a class="auth-back-link" href="./index.html">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true">
-
-                    <path d="m15 18-6-6 6-6"></path>
-                    <path d="M9 12h12"></path>
-
-                </svg>
-
-                Voltar para a página inicial
-
-            </a>
-
-
-            <p class="auth-small-note">
-                A autenticação usa o Supabase Auth. Chaves secretas ficam somente na Edge Function.
-            </p>
-
-        </section>
-
-    </main>
-
-
-    <!-- SUPABASE -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <!-- CONFIGURAÇÃO DO SUPABASE -->
-
-    <script src="./js/supabase.js"></script>
-
-    <!-- AUTENTICAÇÃO -->
-
-    <script src="./js/auth.js?v=reset-verify-fix-20261004-2056"></script>
-
+<body class="personal-page">
+  <header class="personal-header">
+    <a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a>
+    <div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button">Sair</button></div>
+  </header>
+  <main class="personal-shell">
+    <section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Gerencie seu acesso, suas empresas e os próximos passos da sua conta.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
+    <section class="panel-card profile-panel" aria-labelledby="profileTitle">
+      <div class="panel-heading"><div><p class="eyebrow">IDENTIDADE E ACESSO</p><h2 id="profileTitle">Meu perfil</h2><p>Atualize seus dados pessoais e as informações usadas para entrar na conta.</p></div><span class="status-dot">●</span></div>
+      <form id="profileForm" class="profile-layout">
+        <div class="avatar-column"><div class="profile-avatar"><img id="profileAvatarPreview" src="./imagens/favicon.png" alt="Foto de perfil"><span class="avatar-status">●</span></div><label class="upload-button" for="profileAvatar">Escolher foto<input id="profileAvatar" type="file" accept="image/png,image/jpeg,image/webp"></label><small class="field-note">PNG, JPG ou WebP até 5 MB.</small></div>
+        <div class="profile-fields">
+          <div class="profile-field-grid"><label>Nome completo<input id="profileName" autocomplete="name" maxlength="120" placeholder="Seu nome"></label><label>Nome de usuário<input id="profileUsername" autocomplete="username" maxlength="40" placeholder="Como quer ser identificado"></label></div>
+          <div class="profile-field-grid"><label>Data de nascimento<input id="profileBirthDate" type="date" autocomplete="bday"></label><label>Telefone / celular<input id="profilePhone" type="tel" autocomplete="tel" maxlength="24" placeholder="(00) 00000-0000"></label></div>
+          <div class="profile-field-grid"><label>E-mail de acesso<input id="profileEmail" type="email" autocomplete="email" required></label><label>CPF <span class="optional">opcional</span><input id="profileCpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00"></label></div>
+          <div class="profile-divider"><span>Alterar senha</span></div>
+          <div class="profile-field-grid"><label>Nova senha <span class="optional">opcional</span><input id="profilePassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres"></label><label>Confirmar nova senha<input id="profilePasswordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Repita a nova senha"></label></div>
+          <div class="profile-actions"><button type="submit" id="saveProfileButton" class="primary-button">Salvar alterações</button><span id="profileStatus" class="profile-status" role="status" aria-live="polite"></span></div>
+        </div>
+      </form>
+    </section>
+    <div id="pageMessage" class="page-message" role="status" aria-live="polite"></div>
+    <section class="summary-grid" aria-label="Resumo da conta">
+      <article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article>
+      <article class="summary-card"><span class="summary-icon cyan">◈</span><span>Convites recebidos</span><strong id="inviteCount">—</strong></article>
+      <article class="summary-card"><span class="summary-icon violet">◌</span><span>Solicitações pendentes</span><strong id="requestCount">—</strong></article>
+    </section>
+    <div class="content-grid">
+      <section class="panel-card main-panel" aria-labelledby="companiesTitle">
+        <div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" title="Atualizar">↻</button></div>
+        <div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos...</div></div>
+        <div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Crie sua empresa ou envie uma solicitação para entrar em uma já existente.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button">Criar uma empresa</button><button id="requestCompanyButton" class="secondary-button">Solicitar vínculo</button></div></div>
+      </section>
+      <aside class="side-column">
+        <section class="panel-card" aria-labelledby="accountTitle"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2 id="accountTitle">Minha conta</h2></div><span class="status-dot">●</span></div><div class="account-row"><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row"><span>E-mail</span><strong id="accountEmail">—</strong></div><button id="editAccountButton" class="secondary-button full">Editar dados permitidos</button></section>
+        <section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema deverá validar novamente seu vínculo e carregar apenas os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section>
+      </aside>
+    </div>
+    <section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><p class="eyebrow">ESTRUTURA CONFIGURÁVEL</p><h2 id="plansTitle">Planos e assinaturas</h2><p>Os planos reais aparecerão quando estiverem cadastrados e confirmados no banco.</p></div></div><div id="plansList" class="plans-list"><div class="empty-inline">Nenhum plano configurado para exibição.</div></div></section>
+  </main>
+  <dialog id="companyDialog" class="modal-card"><form method="dialog" id="companyForm"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">NOVA EMPRESA</p><h2>Criar uma empresa</h2><p class="modal-copy">O usuário autenticado será registrado como proprietário inicial.</p><label>Nome da empresa<input id="companyName" required maxlength="160" placeholder="Ex.: Construtora Horizonte"></label><label>CNPJ <span class="optional">opcional</span><input id="companyCnpj" maxlength="18" placeholder="00.000.000/0000-00"></label><button class="primary-button" id="submitCompany" value="default">Criar empresa</button><p id="companyStatus" class="modal-status"></p></form></dialog>
+  <dialog id="requestDialog" class="modal-card"><form method="dialog" id="requestForm"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">SOLICITAR VÍNCULO</p><h2>Entrar em uma empresa</h2><p class="modal-copy">A solicitação ficará pendente até aprovação de um administrador autorizado.</p><label>ID da empresa<input id="requestCompanyId" required placeholder="Cole o identificador da empresa"></label><button class="primary-button" id="submitRequest" value="default">Enviar solicitação</button><p id="requestStatus" class="modal-status"></p></form></dialog>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/supabase.js"></script><script src="./js/painel-pessoal.js"></script>
 </body>
 </html>
