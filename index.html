@@ -3145,15 +3145,16 @@
         @media (max-width: 480px) {
             .si-index-background-video { width:94%; height:62%; border-radius:20px; object-position:center center; opacity:.18; }
         }
-        .si-hero-container { display:flex; flex-direction:column; align-items:center; justify-content:center; width:min(920px,100%); max-width:920px; margin-inline:auto; text-align:center; }
-        .si-hero-content { display:flex; flex-direction:column; align-items:center; justify-content:center; width:min(100%, 700px); margin-inline:auto; text-align:center; }
-        .si-hero h1 { max-width:620px; margin-bottom:18px; font-size:clamp(38px, 4.7vw, 60px); line-height:1.04; letter-spacing:-2.8px; }
+        /* Hero em duas colunas: mensagem à esquerda, painel de visão geral à direita. */
+        .si-hero-container { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr); align-items:center; justify-content:center; gap:clamp(28px,5vw,64px); width:min(1180px,100%); max-width:1180px; margin-inline:auto; text-align:left; transform:none; }
+        .si-hero-content { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; width:min(100%,700px); margin:0; text-align:left; }
+        .si-hero h1 { max-width:620px; margin-bottom:18px; font-size:clamp(38px, 4.7vw, 60px); line-height:1.04; letter-spacing:-2.8px; text-align:left; }
         .si-hero h1 .si-title-line,
         .si-hero h1 .si-gradient-text { display:block; }
-        .si-hero-description { max-width:560px; margin:0 auto 26px; font-size:16px; line-height:1.7; }
-        .si-hero-buttons, .si-trust { justify-content:center; }
-        .si-preview-area { width:min(100%,760px); margin-inline:auto; }
-        .si-dashboard { margin-inline:auto; text-align:center; }
+        .si-hero-description { max-width:560px; margin:0 0 26px; font-size:16px; line-height:1.7; text-align:left; }
+        .si-hero-buttons, .si-trust { justify-content:flex-start; }
+        .si-preview-area { width:100%; max-width:520px; margin-inline:auto; justify-self:center; align-self:center; }
+        .si-dashboard { width:min(100%,500px); margin-inline:auto; justify-self:center; text-align:center; }
         .si-dashboard-top { flex-direction:column; justify-content:center; gap:10px; text-align:center; }
         .si-dashboard-title, .si-online { justify-content:center; }
         .si-preview-card { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
@@ -3161,6 +3162,14 @@
         .si-overview-preview { text-align:center; }
         .si-overview-status { justify-content:center; }
         .si-hero-light { left:50%; right:auto; transform:translateX(-50%); }
+        @media (max-width: 900px) {
+            .si-hero-container { grid-template-columns:minmax(0,1fr); gap:28px; width:min(760px,100%); text-align:center; }
+            .si-hero-content { align-items:center; width:100%; margin-inline:auto; text-align:center; }
+            .si-hero h1, .si-hero-description { text-align:center; }
+            .si-hero-description { margin-inline:auto; }
+            .si-hero-buttons, .si-trust { justify-content:center; }
+            .si-preview-area { width:min(100%,520px); }
+        }
 
         /* Refinamento para telefones estreitos e áreas seguras do ecrã. */
         @media (max-width: 600px) {
