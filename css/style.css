@@ -270,7 +270,10 @@
 }
 .auth-remember { display:flex; align-items:center; gap:8px; color:var(--auth-muted); font-size:12px; cursor:pointer; }
 .auth-remember input { width:15px; height:15px; accent-color:#5cecff; }
-.auth-form-row { align-items:center; }
+.auth-form-row { width:100%; align-items:center; justify-content:space-between; gap:16px; }
+@media (max-width: 420px) {
+    .auth-form-row { align-items:flex-start; flex-direction:column; gap:10px; }
+}
 @media (max-width: 820px) {
     .login-background-video { object-position: center; opacity: .10; }
 }
