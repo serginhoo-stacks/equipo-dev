@@ -51,6 +51,7 @@
     const mensagem = document.getElementById("authMessage");
 
     const loginForm = document.getElementById("loginForm");
+    const rememberLogin = document.getElementById("rememberLogin");
     const resetRequestForm = document.getElementById("resetRequestForm");
     const resetVerifyForm = document.getElementById("resetVerifyForm");
     const resetPasswordForm = document.getElementById("resetPasswordForm");
@@ -69,6 +70,30 @@
     let resetToken = "";
 
     const recoveryEmailStorageKey = "smartinspect-reset-email";
+    const rememberedEmailKey = "smartinspect-login-email";
+
+    function carregarEmailGuardado() {
+        if (!rememberLogin) return;
+        try {
+            const email = window.localStorage.getItem(rememberedEmailKey) || "";
+            const campo = document.getElementById("email");
+            if (campo && email) campo.value = email;
+        } catch {
+            // O login continua a funcionar sem localStorage.
+        }
+    }
+
+    function guardarPreferenciaDeLogin(email) {
+        try {
+            if (rememberLogin?.checked && email) {
+                window.localStorage.setItem(rememberedEmailKey, email);
+            } else {
+                window.localStorage.removeItem(rememberedEmailKey);
+            }
+        } catch {
+            // A sessão do Supabase continua válida sem localStorage.
+        }
+    }
 
     // ============================================================
     // CLIENTE SUPABASE
@@ -394,68 +419,17 @@
     // ============================================================
 
     async function encaminharUsuario(user) {
-        const banco = obterCliente();
-
-        if (!banco || !user) {
-            return;
-        }
-
-        // --------------------------------------------------------
-        // PERFIL
-        // --------------------------------------------------------
-
-        const {
-            error: erroPerfil
-        } = await banco
-            .from("perfis")
-            .select("id")
-            .eq("id", user.id)
-            .maybeSingle();
-
-        if (erroPerfil) {
-
+        if (!user) {
             mostrarMensagem(
-                "A autenticação foi feita, mas não foi possível consultar o perfil. Verifique as políticas RLS de public.perfis antes de continuar.",
+                "Não foi possível obter a sessão autenticada. Tente entrar novamente.",
                 "error"
             );
 
             return;
         }
 
-        // --------------------------------------------------------
-        // EMPRESAS DO USUÁRIO
-        // --------------------------------------------------------
-
-        const {
-            data: membros,
-            error: erroMembros
-        } = await banco
-            .from("membros_empresa")
-            .select(
-                "empresa_id, cargo, empresa:empresas(id, nome, status)"
-            )
-            .eq("usuario_id", user.id)
-            .eq("ativo", true);
-
-        if (erroMembros) {
-
-            mostrarMensagem(
-                "A autenticação foi feita, mas não foi possível carregar a empresa vinculada. Verifique as relações e as políticas RLS de membros_empresa e empresas.",
-                "error"
-            );
-
-            return;
-        }
-
-        const empresasAtivas =
-            (membros || []).filter(
-                (membro) =>
-                    membro.empresa &&
-                    membro.empresa.status === "ativa"
-            );
-
-        // O Painel Pessoal é a porta de entrada após o login.
-        // A criação/escolha da empresa acontece lá, sempre sob RLS.
+        // O painel faz as consultas de perfil e empresas. Um erro de RLS
+        // ou uma tabela ainda não criada não deve impedir a navegação.
         window.location.assign("./painel-pessoal.html");
     }
 
@@ -540,6 +514,7 @@
                     }
 
                     marcarContaNesteDispositivo();
+                    guardarPreferenciaDeLogin(email);
 
                     await encaminharUsuario(
                         data.user ||
@@ -1305,6 +1280,20 @@
 
     if (loginForm) {
         definirModo("login");
+        carregarEmailGuardado();
+    }
+
+    // O Supabase persiste a sessão renovável no navegador. Assim, a senha
+    // nunca é guardada e o utilizador não precisa de preencher o formulário
+    // novamente enquanto a sessão continuar válida.
+    if (loginForm && window.banco?.auth) {
+        window.banco.auth.getSession().then(({ data }) => {
+            if (data?.session?.user) {
+                window.location.replace("./painel-pessoal.html");
+            }
+        }).catch((erro) => {
+            console.warn("Não foi possível restaurar a sessão:", erro);
+        });
     }
 
     // ============================================================
