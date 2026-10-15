@@ -4989,65 +4989,12 @@
 
 
     <!-- =========================================================
-         VERIFICAÇÃO DE SESSÃO
+         PÁGINA INICIAL — SEM REDIRECCIONAMENTO AUTOMÁTICO
     ========================================================== -->
 
     <script>
-
-        (async function verificarSessaoInicial(){
-
-            try{
-
-                if(
-                    typeof banco !== "undefined" &&
-                    banco.auth
-                ){
-
-                    const { data } =
-                        await banco.auth.getSession();
-
-
-                    if(
-                        data &&
-                        data.session
-                    ){
-                        // Utilizadores com sessão ativa seguem direto para o painel.
-                        try {
-                            localStorage.setItem("smartinspect-account-seen", "1");
-                        } catch (erroStorage) {
-                            // A sessão continua válida mesmo se o navegador bloquear storage.
-                        }
-                        location.replace("./painel-pessoal.html");
-                    } else {
-                        // Sem sessão: contas já usadas neste navegador seguem para o login.
-                        try {
-                            if (localStorage.getItem("smartinspect-account-seen") === "1") {
-                                location.replace("./login.html");
-                            }
-                        } catch (erroStorage) {
-                            // Se o navegador bloquear storage, a apresentação continua acessível.
-                        }
-                    }
-
-                }
-
-            }catch(erro){
-
-                console.error(
-                    "Erro ao verificar sessão inicial:",
-                    erro
-                );
-
-            }finally{
-
-                document.documentElement.classList.remove(
-                    "session-checking"
-                );
-
-            }
-
-        })();
-
+        // O index permanece acessível mesmo quando existe uma sessão activa.
+        document.documentElement.classList.remove("session-checking");
     </script>
 
 
