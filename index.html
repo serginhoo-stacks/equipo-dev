@@ -3133,17 +3133,25 @@
 
     
 
-        /* Vídeo global do index e vídeo da demonstração. */
+        /* Vídeo de fundo responsivo do index: computador, tablet e celular. */
         .si-page { position:relative; isolation:isolate; }
-        .si-hero { position:relative; overflow:hidden; background:linear-gradient(135deg,rgba(5,11,24,.82),rgba(8,20,38,.68) 50%,rgba(5,11,24,.88)); }
-        .si-index-background-video { position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:.30; filter:saturate(.82) brightness(.72); pointer-events:none; }
+        .si-hero { position:relative; min-height:100vh; min-height:100svh; overflow:hidden; background:linear-gradient(135deg,rgba(5,11,24,.82),rgba(8,20,38,.68) 50%,rgba(5,11,24,.88)); }
+        .si-index-background-video { position:absolute; inset:0; z-index:0; display:block; width:100%; height:100%; min-width:100%; min-height:100%; object-fit:cover; object-position:center center; opacity:.30; filter:saturate(.82) brightness(.72); pointer-events:none; }
         .si-hero > *:not(.si-index-background-video) { position:relative; z-index:1; }
-        .si-hero-container { grid-template-columns:1fr; max-width:920px; text-align:center; }
-        .si-hero-content { display:flex; flex-direction:column; align-items:center; }
+        @media (max-width: 768px) {
+            .si-hero { min-height:100vh; min-height:100svh; }
+            .si-index-background-video { object-position:center center; opacity:.26; }
+        }
+        @media (max-width: 480px) {
+            .si-index-background-video { object-position:center center; opacity:.23; }
+        }
+        .si-hero-container { display:flex; flex-direction:column; align-items:center; justify-content:center; width:min(920px,100%); max-width:920px; margin-inline:auto; text-align:center; }
+        .si-hero-content { display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; text-align:center; }
         .si-hero-description { margin-inline:auto; }
         .si-hero-buttons, .si-trust { justify-content:center; }
-        .si-preview-area { width:100%; }
+        .si-preview-area { width:min(100%,760px); margin-inline:auto; }
         .si-dashboard { margin-inline:auto; text-align:left; }
+        .si-hero-light { left:50%; right:auto; transform:translateX(-50%); }
 
         /* Refinamento para telefones estreitos e áreas seguras do ecrã. */
         @media (max-width: 600px) {
@@ -3236,9 +3244,6 @@
             <a href="#recursos">
                 Recursos
             </a>
-<a href="#demonstracao">
-                Demonstração
-            </a>
 
             <a
                 href="./login.html"
@@ -3288,7 +3293,7 @@
             id="inicio"
         >
 
-            <video class="si-index-background-video" autoplay muted loop playsinline preload="auto" poster="imagens/fundo.png" aria-hidden="true" tabindex="-1">
+            <video class="si-index-background-video" autoplay muted loop playsinline preload="metadata" poster="imagens/fundo.png" aria-hidden="true" tabindex="-1">
                 <source src="imagens/fundoglobo.mp4" type="video/mp4">
             </video>
 
@@ -4346,35 +4351,7 @@
          FOOTER
     ========================================================== -->
 
-        <!-- =====================================================
-             VÍDEO DE DEMONSTRAÇÃO
-        ====================================================== -->
-
-        <section class="si-video-section" id="demonstracao">
-            <div class="si-video-container">
-                <div class="si-section-header si-reveal">
-                    <div class="si-section-label">Demonstração</div>
-                    <h2>Veja a inteligência em ação.</h2>
-                    <p>Conheça a tecnologia por trás do SmartInspect AI e veja como a plataforma pode apoiar a rotina da sua operação.</p>
-                </div>
-
-                <div class="si-video-placeholder si-reveal" data-tilt>
-                    <div class="si-video-content">
-                        <div class="si-video-play" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5.5v13a1 1 0 0 0 1.54.84l9.1-6.5a1 1 0 0 0 0-1.68l-9.1-6.5A1 1 0 0 0 8 5.5Z"></path>
-                            </svg>
-                        </div>
-                        <h3>Inteligência para acompanhar cada etapa</h3>
-                        <p>O vídeo de fundo cria a atmosfera visual da plataforma sem ocupar esta área com um player.</p>
-                        <span class="si-video-status">SmartInspect AI</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-    <footer class="si-footer" id="rodape">
+<footer class="si-footer" id="rodape">
         <div class="si-footer-inner">
             <div class="si-footer-top">
                 <div class="si-footer-identity">
@@ -4394,7 +4371,6 @@
                             <a class="si-footer-link" href="#sobre">Sobre o SmartInspect</a>
                             <a class="si-footer-link" href="#recursos">Recursos</a>
                             <a class="si-footer-link" href="#equipe">Nossa equipe</a>
-                            <a class="si-footer-link" href="#demonstracao">Pedir demonstração</a>
                             <a class="si-footer-link" href="./login.html">Acessar o aplicativo</a>
                         </div>
                     </nav>
