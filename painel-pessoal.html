@@ -1,55 +1,1152 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-    <link rel="icon" type="image/png" href="./imagens/favicon.png">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#050b18">
-  <title>Painel Pessoal — SmartInspect AI</title>
-  <link rel="stylesheet" href="./css/painel-pessoal.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050b18"><title>Painel Pessoal — SmartInspect AI</title>
+<link rel="icon" href="./imagens/favicon.png"><link rel="stylesheet" href="./css/painel-pessoal.css">
+<style>
+[hidden]{display:none!important}.app-nav{display:flex;gap:8px}.app-nav button,.chat-action,.profile-summary{border:1px solid var(--border);border-radius:12px;color:var(--text);background:rgba(255,255,255,.045);cursor:pointer;transition:.2s}.app-nav button{padding:9px 13px;font-size:12px;font-weight:700}.app-nav button[aria-current=page]{color:var(--cyan);border-color:rgba(92,236,255,.5);background:rgba(92,236,255,.1)}.profile-summary{--pointer-x:50%;--pointer-y:12%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;width:100%;padding:17px 20px;margin-bottom:18px;text-align:left;background-image:radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),rgba(92,236,255,.105),transparent 42%),linear-gradient(135deg,rgba(17,43,74,.8),rgba(7,18,35,.86));backdrop-filter:blur(18px)}.profile-summary:hover,.chat-action:hover,.app-nav button:hover{transform:translateY(-2px);border-color:var(--cyan)}.profile-summary img,.chat-self img,.conv-item img{width:52px;height:52px;border-radius:50%;object-fit:cover;background:#081426;border:1px solid rgba(92,236,255,.35)}.profile-summary strong{display:block;color:#fff;font-size:16px}.profile-summary small{display:block;margin-top:4px;color:var(--cyan);font-size:11px}.profile-summary .profile-hint{color:var(--muted);font-size:11px;white-space:nowrap}.app-dialog{width:min(680px,calc(100% - 24px));max-height:90vh;overflow:auto}.app-dialog form{display:grid;gap:13px}.app-dialog label{display:grid;gap:7px;color:#d8eaf4;font-size:12px;font-weight:700}.app-dialog input:not([type=file]):not([type=checkbox]){width:100%;height:43px;padding:0 12px;border-radius:10px;border:1px solid rgba(133,216,255,.18);color:white;background:rgba(3,11,23,.6)}.avatar-edit{display:flex;align-items:center;gap:14px;padding:13px;border:1px solid rgba(133,216,255,.14);border-radius:14px}.avatar-edit img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid rgba(92,236,255,.5)}.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.privacy-choice{display:flex!important;align-items:center;gap:8px!important;color:var(--muted)!important}.chat-view{width:min(1320px,calc(100% - 36px));margin:30px auto 70px}.chat-headline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.chat-headline h1{margin:0;color:#fff;font:600 clamp(26px,4vw,38px) "Space Grotesk",Inter,sans-serif}.chat-headline p{margin:5px 0;color:var(--muted);font-size:12px}.chat-layout{display:grid;grid-template-columns:330px minmax(0,1fr);min-height:620px;overflow:hidden;border:1px solid var(--border);border-radius:21px;background:linear-gradient(145deg,rgba(18,42,72,.8),rgba(7,18,35,.9));backdrop-filter:blur(18px)}.chat-sidebar{display:flex;flex-direction:column;min-width:0;border-right:1px solid rgba(133,216,255,.13)}.chat-sidebar-head{padding:16px;border-bottom:1px solid rgba(255,255,255,.07)}.chat-self{display:flex;align-items:center;gap:10px;margin-bottom:14px}.chat-self strong{display:block;color:white;font-size:12px}.chat-self small{display:block;margin-top:3px;color:var(--cyan);font-size:10px}.chat-search{display:flex;gap:7px}.chat-search input,.chat-compose textarea,.chat-input{min-width:0;color:white;border:1px solid rgba(133,216,255,.18);border-radius:10px;background:rgba(3,11,23,.6)}.chat-search input{flex:1;height:40px;padding:0 10px}.chat-action{min-height:38px;padding:0 11px;font-size:11px;font-weight:750}.chat-tools{display:flex;gap:7px;margin-top:8px}.chat-tools button{flex:1}.chat-results{display:grid;gap:6px;margin-top:8px}.chat-result{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px;border:1px solid rgba(92,236,255,.18);border-radius:10px;background:rgba(92,236,255,.05)}.chat-result strong{display:block;color:white;font-size:12px}.chat-result small{color:var(--cyan);font-size:10px}.conv-list{display:grid;align-content:start;gap:4px;overflow:auto;max-height:490px;padding:9px}.conv-item{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:9px;width:100%;padding:9px;border:1px solid transparent;border-radius:12px;text-align:left;color:var(--text);background:transparent;cursor:pointer}.conv-item:hover,.conv-item[aria-current=true]{border-color:rgba(92,236,255,.25);background:rgba(92,236,255,.075)}.conv-item img{width:42px;height:42px}.conv-item strong{display:block;overflow:hidden;color:#fff;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.conv-item small{display:block;overflow:hidden;margin-top:4px;color:var(--muted);font-size:10px;text-overflow:ellipsis;white-space:nowrap}.unread{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:99px;color:#04111e;background:var(--cyan);font-size:10px;font-weight:800}.chat-main{display:flex;min-width:0;flex-direction:column}.chat-main-head{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:68px;padding:13px 17px;border-bottom:1px solid rgba(255,255,255,.07)}.chat-main-head h2{margin:0;color:#fff;font:600 17px "Space Grotesk",Inter,sans-serif}.chat-main-head p{margin:4px 0 0;color:var(--muted);font-size:10px}.chat-main-actions{display:flex;gap:6px}.chat-messages{display:flex;flex:1;flex-direction:column;gap:10px;overflow:auto;min-height:390px;max-height:calc(100vh - 360px);padding:17px}.chat-empty{display:grid;place-content:center;flex:1;min-height:380px;padding:20px;color:var(--muted);text-align:center}.chat-empty strong{margin-bottom:8px;color:#eafaff;font-size:17px}.msg{display:flex;max-width:82%;flex-direction:column;align-self:flex-start;padding:9px 11px;border:1px solid rgba(133,216,255,.12);border-radius:14px 14px 14px 4px;background:rgba(255,255,255,.045);overflow-wrap:anywhere}.msg.mine{align-self:flex-end;border-color:rgba(92,236,255,.22);border-radius:14px 14px 4px 14px;background:rgba(34,157,255,.12)}.msg-author{margin-bottom:5px;color:var(--cyan);font-size:10px;font-weight:700}.msg-text{color:#f1f7fa;font-size:13px;line-height:1.55;white-space:pre-wrap}.msg-meta{display:flex;justify-content:flex-end;gap:7px;margin-top:5px;color:var(--muted);font-size:9px}.msg-file{display:grid;gap:6px;color:#dffaff;font-size:12px}.msg-file a{color:var(--cyan)}.msg-file audio{max-width:100%;height:34px}.chat-compose{display:grid;grid-template-columns:auto auto auto 1fr auto;align-items:end;gap:7px;padding:11px 13px;border-top:1px solid rgba(255,255,255,.07)}.chat-compose textarea{width:100%;min-height:42px;max-height:115px;padding:10px;resize:vertical}.chat-compose .chat-action,.chat-compose .primary-button{height:42px}.chat-compose #sendButton{width:auto;min-width:72px;height:38px;min-height:38px;padding:0 12px;justify-self:end;font-size:11px;line-height:1}.chat-compose #recordButton svg{display:block;width:19px;height:19px;margin:auto}.chat-status{min-height:20px;padding:0 15px 8px;color:var(--muted);font-size:11px}.error-text{color:#ffb5bc!important}.modal-row{display:flex;justify-content:flex-end;gap:8px}.modal-note{color:var(--muted);font-size:11px}.company-data-card{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0;padding:13px 15px;border:1px solid rgba(133,216,255,.14);border-radius:12px;background:rgba(255,255,255,.035)}.company-data-card strong{display:block;color:#fff}.company-data-card small{display:block;margin-top:4px;color:var(--muted)}.recording{color:#ff8b9b!important}@media(max-width:800px){.chat-layout{grid-template-columns:270px minmax(0,1fr)}}@media(max-width:640px){.personal-header{width:calc(100% - 22px);height:auto;min-height:65px;gap:8px}.header-email{display:none}.app-nav{gap:4px}.app-nav button{padding:7px 8px;font-size:10px}.personal-shell{width:calc(100% - 22px)}.profile-summary{grid-template-columns:auto 1fr;gap:11px;padding:13px}.profile-summary .profile-hint{grid-column:2}.chat-view{width:calc(100% - 18px);margin-top:18px}.chat-headline{align-items:flex-start;flex-direction:column}.chat-layout{grid-template-columns:1fr;min-height:calc(100vh - 180px)}.chat-sidebar{border-right:0;border-bottom:1px solid rgba(133,216,255,.13)}.conv-list{display:flex;max-height:118px;overflow-x:auto;overflow-y:hidden}.conv-item{min-width:205px}.chat-messages{min-height:290px;max-height:calc(100vh - 430px)}.profile-grid{grid-template-columns:1fr}.chat-compose{grid-template-columns:auto auto auto 1fr auto}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.call-start{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px!important;color:#dffaff!important}.call-start svg{width:16px;height:16px;flex:0 0 auto}.call-start:hover{background:rgba(92,236,255,.09)!important}.call-dialog{width:min(560px,calc(100% - 24px));max-width:none;max-height:min(92dvh,820px);padding:0;overflow:auto;border:1px solid rgba(133,216,255,.25);border-radius:22px;color:var(--text);background:linear-gradient(145deg,rgba(17,39,66,.98),rgba(5,13,27,.99));box-shadow:0 28px 90px rgba(0,0,0,.58);backdrop-filter:blur(22px)}.call-dialog::backdrop{background:rgba(1,6,15,.78);backdrop-filter:blur(5px)}.call-sheet{padding:22px}.call-sheet-heading h2{margin:0;color:#fff;font:600 22px "Space Grotesk",Inter,sans-serif}.call-sheet-heading .eyebrow{margin:0 0 8px}.call-status{min-height:22px;margin:6px 0 16px;color:var(--muted);font-size:12px;line-height:1.5}.call-stage{position:relative;display:grid;place-items:center;min-height:220px;overflow:hidden;border:1px solid rgba(133,216,255,.12);border-radius:16px;background:radial-gradient(ellipse at center,rgba(25,66,99,.48),rgba(2,8,18,.95))}.call-stage #remoteCallVideo{width:100%;max-height:48dvh;aspect-ratio:16/9;object-fit:cover}.call-stage #remoteCallVideo.call-audio-only{width:1px;height:1px;position:absolute;opacity:0;pointer-events:none}.call-audio-mark{display:grid;place-items:center;width:86px;height:86px;border:1px solid rgba(92,236,255,.24);border-radius:50%;color:var(--cyan);background:rgba(92,236,255,.08);box-shadow:0 0 50px rgba(92,236,255,.1)}.call-audio-mark svg{width:38px;height:38px}.call-local-video{position:absolute;right:12px;bottom:12px;width:min(26%,150px);aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(255,255,255,.35);border-radius:12px;background:#030813;box-shadow:0 8px 24px rgba(0,0,0,.4)}.call-mode-label{margin:10px 0;color:#d7eaf5;font-size:12px;font-weight:700}.call-controls{display:flex;flex-wrap:wrap;gap:8px}.call-controls button{min-height:40px;padding:0 14px}.call-end-button{border:1px solid rgba(255,100,122,.38);border-radius:11px;color:#fff;background:rgba(225,55,82,.78);cursor:pointer}.call-end-button:hover{background:rgba(245,60,86,.94)}.call-disclaimer{margin:15px 0 0;color:#8ea5b8;font-size:10px;line-height:1.55}.chat-main-actions{align-items:center;flex-wrap:wrap}@media(max-width:640px){.chat-main-actions{width:100%;justify-content:flex-end}.call-start{min-height:40px}.call-dialog{width:calc(100% - 18px);border-radius:18px}.call-sheet{padding:17px}.call-stage{min-height:200px}.call-controls{display:grid;grid-template-columns:1fr 1fr}.call-controls button{min-height:44px;padding-inline:8px;font-size:11px}}
+
+@media(max-width:640px){.personal-page .chat-compose #sendButton{width:auto;max-width:74px;min-width:0;min-height:40px;height:38px;padding:0 9px;justify-self:end;font-size:10px}}@media(max-width:380px){.personal-page .chat-compose #sendButton{max-width:64px;padding:0 7px;font-size:9px}}
+</style>
 </head>
 <body class="personal-page">
-  <header class="personal-header">
-    <a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a>
-    <div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button">Sair</button></div>
-  </header>
-  <main class="personal-shell">
-    <section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Gerencie seu acesso, suas empresas e os próximos passos da sua conta.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
-    <section class="panel-card profile-panel" aria-labelledby="profileTitle">
-      <div class="panel-heading"><div><p class="eyebrow">IDENTIDADE E ACESSO</p><h2 id="profileTitle">Meu perfil</h2><p>Atualize seus dados pessoais e as informações usadas para entrar na conta.</p></div><span class="status-dot">●</span></div>
-      <form id="profileForm" class="profile-layout">
-        <div class="avatar-column"><div class="profile-avatar"><img id="profileAvatarPreview" src="./imagens/favicon.png" alt="Foto de perfil"><span class="avatar-status">●</span></div><label class="upload-button" for="profileAvatar">Escolher foto<input id="profileAvatar" type="file" accept="image/png,image/jpeg,image/webp"></label><small class="field-note">PNG, JPG ou WebP até 5 MB.</small></div>
-        <div class="profile-fields">
-          <div class="profile-field-grid"><label>Nome completo<input id="profileName" autocomplete="name" maxlength="120" placeholder="Seu nome"></label><label>Nome de usuário<input id="profileUsername" autocomplete="username" maxlength="40" placeholder="Como quer ser identificado"></label></div>
-          <div class="profile-field-grid"><label>Data de nascimento<input id="profileBirthDate" type="date" autocomplete="bday"></label><label>Telefone / celular<input id="profilePhone" type="tel" autocomplete="tel" maxlength="24" placeholder="(00) 00000-0000"></label></div>
-          <div class="profile-field-grid"><label>E-mail de acesso<input id="profileEmail" type="email" autocomplete="email" required></label><label>CPF <span class="optional">opcional</span><input id="profileCpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00"></label></div>
-          <div class="profile-divider"><span>Alterar senha</span></div>
-          <div class="profile-field-grid"><label>Nova senha <span class="optional">opcional</span><input id="profilePassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres"></label><label>Confirmar nova senha<input id="profilePasswordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Repita a nova senha"></label></div>
-          <div class="profile-actions"><button type="submit" id="saveProfileButton" class="primary-button">Salvar alterações</button><span id="profileStatus" class="profile-status" role="status" aria-live="polite"></span></div>
-        </div>
-      </form>
-    </section>
-    <div id="pageMessage" class="page-message" role="status" aria-live="polite"></div>
-    <section class="summary-grid" aria-label="Resumo da conta">
-      <article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article>
-      <article class="summary-card"><span class="summary-icon cyan">◈</span><span>Convites recebidos</span><strong id="inviteCount">—</strong></article>
-      <article class="summary-card"><span class="summary-icon violet">◌</span><span>Solicitações pendentes</span><strong id="requestCount">—</strong></article>
-    </section>
-    <div class="content-grid">
-      <section class="panel-card main-panel" aria-labelledby="companiesTitle">
-        <div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" title="Atualizar">↻</button></div>
-        <div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos...</div></div>
-        <div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Crie sua empresa ou envie uma solicitação para entrar em uma já existente.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button">Criar uma empresa</button><button id="requestCompanyButton" class="secondary-button">Solicitar vínculo</button></div></div>
-      </section>
-      <aside class="side-column">
-        <section class="panel-card" aria-labelledby="accountTitle"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2 id="accountTitle">Minha conta</h2></div><span class="status-dot">●</span></div><div class="account-row"><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row"><span>E-mail</span><strong id="accountEmail">—</strong></div><button id="editAccountButton" class="secondary-button full">Editar dados permitidos</button></section>
-        <section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema deverá validar novamente seu vínculo e carregar apenas os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section>
-      </aside>
-    </div>
-    <section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><p class="eyebrow">ESTRUTURA CONFIGURÁVEL</p><h2 id="plansTitle">Planos e assinaturas</h2><p>Os planos reais aparecerão quando estiverem cadastrados e confirmados no banco.</p></div></div><div id="plansList" class="plans-list"><div class="empty-inline">Nenhum plano configurado para exibição.</div></div></section>
-  </main>
-  <dialog id="companyDialog" class="modal-card"><form method="dialog" id="companyForm"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">NOVA EMPRESA</p><h2>Criar uma empresa</h2><p class="modal-copy">O usuário autenticado será registrado como proprietário inicial.</p><label>Nome da empresa<input id="companyName" required maxlength="160" placeholder="Ex.: Construtora Horizonte"></label><label>CNPJ <span class="optional">opcional</span><input id="companyCnpj" maxlength="18" placeholder="00.000.000/0000-00"></label><button class="primary-button" id="submitCompany" value="default">Criar empresa</button><p id="companyStatus" class="modal-status"></p></form></dialog>
-  <dialog id="requestDialog" class="modal-card"><form method="dialog" id="requestForm"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">SOLICITAR VÍNCULO</p><h2>Entrar em uma empresa</h2><p class="modal-copy">A solicitação ficará pendente até aprovação de um administrador autorizado.</p><label>ID da empresa<input id="requestCompanyId" required placeholder="Cole o identificador da empresa"></label><button class="primary-button" id="submitRequest" value="default">Enviar solicitação</button><p id="requestStatus" class="modal-status"></p></form></dialog>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/supabase.js"></script><script src="./js/painel-pessoal.js"></script>
-</body>
-</html>
+<header class="personal-header"><a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a><nav class="app-nav" aria-label="Navegação"><button id="panelNav" type="button" aria-current="page">Painel</button><button id="chatNav" type="button">Chat</button></nav><div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button" type="button">Sair</button></div></header>
+<main id="panelView" class="personal-shell">
+<section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Seu espaço pessoal para organizar seu perfil e suas conversas.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
+<button id="profileOpen" class="profile-summary" type="button" aria-haspopup="dialog" data-spotlight><img id="profileCardAvatar" src="./imagens/favicon.png" alt="Foto de perfil"><span><strong id="profileCardName">Carregando perfil…</strong><small id="profileCardHandle">Configure seu @ID do chat</small><small id="profileCardEmail">Seu perfil SmartInspect</small></span><span class="profile-hint">Clique para editar →</span></button>
+<div id="pageMessage" class="page-message" role="status" aria-live="polite"></div>
+<section class="summary-grid" aria-label="Resumo da conta"><article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article><article class="summary-card"><span class="summary-icon cyan">◈</span><span>Convites recebidos</span><strong id="inviteCount">—</strong></article><article class="summary-card"><span class="summary-icon violet">◌</span><span>Solicitações pendentes</span><strong id="requestCount">—</strong></article></section>
+<div class="content-grid"><section class="panel-card main-panel" aria-labelledby="companiesTitle"><div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" type="button" title="Atualizar">↻</button></div><div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos…</div></div><div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Solicite vínculo a uma empresa existente. A criação depende de uma função autorizada do projeto.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button" type="button">Ver criação de empresa</button><button id="requestCompanyButton" class="secondary-button" type="button">Solicitar vínculo</button></div></div></section><aside class="side-column"><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2>Minha conta</h2></div></div><div class="account-row" hidden><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row" hidden><span>E-mail</span><strong id="accountEmail">—</strong></div><p class="side-copy">Os dados completos ficam ocultos até abrir o perfil.</p><button id="editProfile" class="secondary-button full" type="button">Editar perfil</button></section><section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema valida seu vínculo e carrega somente os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SMARTINSPECT CHAT</p><h2>Fale com sua equipe</h2></div></div><p class="side-copy">Encontre pessoas pelo @ID e converse com segurança.</p><button id="openChat" class="secondary-button full" type="button">Abrir chat →</button></section></aside></div><section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><p class="eyebrow">ESTRUTURA CONFIGURÁVEL</p><h2 id="plansTitle">Planos e assinaturas</h2><p>Os planos reais aparecem quando estão cadastrados e autorizados no banco.</p></div></div><div id="plansList" class="plans-list"><div class="empty-inline">Nenhum plano configurado para exibição.</div></div></section>
+</main>
+<main id="chatView" class="chat-view" hidden><div class="chat-headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Chat</h1><p>Encontre e chame pessoas usando o @identificador público.</p></div><button id="backPanel" class="secondary-button" type="button">← Voltar ao painel</button></div><div class="chat-layout"><aside class="chat-sidebar"><div class="chat-sidebar-head"><div class="chat-self"><img id="chatSelfAvatar" src="./imagens/favicon.png" alt=""><span><strong id="chatSelfName">Seu perfil</strong><small id="chatSelfHandle">Defina seu @ID</small></span></div><form id="searchForm" class="chat-search"><input id="searchHandle" maxlength="25" placeholder="Buscar por @identificador" aria-label="Buscar pessoa pelo identificador"><button class="chat-action" type="submit">Buscar</button></form><div id="searchResults" class="chat-results" aria-live="polite"></div><div class="chat-tools"><button id="newGroup" class="chat-action" type="button">＋ Criar grupo</button><button id="refreshChats" class="chat-action" type="button" title="Sincronizar agora, se necessário">Sincronizar</button></div></div><div id="conversationList" class="conv-list"><p class="modal-note">A carregar conversas…</p></div></aside><section class="chat-main"><div class="chat-main-head"><div><h2 id="activeTitle">Selecione uma conversa</h2><p id="activeSubtitle">As conversas só aparecem para seus participantes.</p></div><div class="chat-main-actions"><button id="startAudioCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de áudio" title="Chamada de áudio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.4 15.4 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.28.55 3.5.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10 21 3 14 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.4.55 3.5a1 1 0 0 1-.25 1.02l-2.2 2.28Z" fill="currentColor"/></svg><span>Áudio</span></button><button id="startVideoCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de vídeo" title="Chamada de vídeo" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 10 6-3v10l-6-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Vídeo</span></button><button id="groupMembers" class="chat-action" type="button" hidden>Participantes</button></div></div><div id="emptyChat" class="chat-empty"><strong>Seu chat, dentro do SmartInspect.</strong><span>Busque alguém pelo @ID ou abra uma conversa existente.</span></div><div id="messages" class="chat-messages" aria-live="polite" hidden></div><button id="olderMessages" class="ghost-button" type="button" hidden>Carregar mensagens anteriores</button><form id="composer" class="chat-compose" hidden><input id="fileInput" type="file" hidden accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,.doc,.docx,.xls,.xlsx,.ppt,.pptx"><button id="attachButton" class="chat-action" type="button" aria-label="Anexar imagem ou arquivo" title="Anexar imagem ou arquivo">＋</button><button id="recordButton" class="chat-action" type="button" aria-label="Gravar mensagem de voz" title="Gravar mensagem de voz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button id="cancelRecordButton" class="chat-action" type="button" hidden>Cancelar</button><textarea id="messageInput" rows="1" maxlength="10000" placeholder="Escreva uma mensagem… (Enter envia · Shift+Enter quebra linha)" aria-label="Mensagem. Enter envia; Shift mais Enter quebra a linha."></textarea><button class="primary-button" id="sendButton" type="submit">Enviar</button></form><div id="chatStatus" class="chat-status" role="status" aria-live="polite"></div></section></div></main>
+<dialog id="callDialog" class="call-dialog" aria-labelledby="callDialogTitle">
+  <section class="call-sheet">
+    <div class="call-sheet-heading"><p class="eyebrow">SMARTINSPECT · CHAMADA PRIVADA</p><h2 id="callDialogTitle">Chamada</h2><p id="callStatus" class="call-status" role="status" aria-live="polite">A preparar…</p></div>
+    <div class="call-stage"><video id="remoteCallVideo" autoplay playsinline></video><div id="callAudioMark" class="call-audio-mark" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.4 15.4 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.28.55 3.5.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10 21 3 14 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.4.55 3.5a1 1 0 0 1-.25 1.02l-2.2 2.28Z" fill="currentColor"/></svg></div><video id="localCallVideo" class="call-local-video" autoplay playsinline muted hidden></video></div>
+    <p id="callModeLabel" class="call-mode-label">Chamada de áudio</p>
+    <div class="call-controls"><button id="acceptCall" class="primary-button" type="button" hidden>Atender</button><button id="declineCall" class="ghost-button" type="button" hidden>Recusar</button><button id="toggleMicrophone" class="secondary-button" type="button" aria-pressed="false" hidden>Microfone ligado</button><button id="toggleCamera" class="secondary-button" type="button" aria-pressed="false" hidden>Câmera ligada</button><button id="endCall" class="call-end-button" type="button" hidden>Encerrar</button></div>
+    <p class="call-disclaimer">A outra pessoa precisa de estar com esta conversa aberta. A ligação pode falhar em redes que exijam um servidor TURN.</p>
+  </section>
+</dialog>
+<dialog id="profileDialog" class="modal-card app-dialog"><form id="profileForm"><button class="modal-close" type="button" data-close="profileDialog" aria-label="Fechar">×</button><p class="eyebrow">IDENTIDADE E ACESSO</p><h2>Editar perfil</h2><p class="modal-copy">A fotografia é guardada no Storage do Supabase; o painel mostra os campos completos só depois de clicar no perfil.</p><div class="avatar-edit"><img id="profileAvatarPreview" src="./imagens/favicon.png" alt="Prévia da foto"><label>Escolher foto<input id="profileAvatar" type="file" accept="image/png,image/jpeg,image/webp"></label><span class="modal-note">Até 5 MB</span></div><div class="profile-grid"><label>Nome de exibição<input id="profileName" maxlength="120" required></label><label>Telefone<input id="profilePhone" maxlength="24" placeholder="Opcional"></label></div><div class="profile-grid"><label>Data de nascimento <span class="optional">opcional</span><input id="profileBirthDate" type="date" autocomplete="bday"></label><label>CPF <span class="optional">opcional</span><input id="profileCpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00"></label></div><p class="modal-note">Data de nascimento e CPF ficam numa tabela privada; só você pode consultar e alterar esses dados.</p><label>Seu ID público no chat <span class="modal-note">3–24 letras, números ou _</span><input id="profileHandle" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" placeholder="seu_id" required></label><label class="privacy-choice"><input id="profileVisible" type="checkbox"> Permitir que encontrem meu @ID na busca</label><label>E-mail da conta<input id="profileEmail" readonly></label><div class="profile-grid"><label>Nova senha <span class="optional">opcional</span><input id="profilePassword" type="password" minlength="8" autocomplete="new-password" placeholder="Mínimo de 8 caracteres"></label><label>Confirmar nova senha<input id="profilePasswordConfirm" type="password" minlength="8" autocomplete="new-password" placeholder="Repita a nova senha"></label></div><button id="saveProfile" class="primary-button" type="submit">Salvar perfil</button><p id="profileStatus" class="modal-status" role="status" aria-live="polite"></p></form></dialog>
+<dialog id="companyDialog" class="modal-card app-dialog"><form method="dialog"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">NOVA EMPRESA</p><h2>Criar uma empresa</h2><p class="modal-copy">A cópia do projeto não possui uma RPC segura de criação de empresa. Para não contornar o RLS, este fluxo fica somente informativo.</p><label>Nome da empresa<input id="companyName" maxlength="160" placeholder="Ex.: Construtora Horizonte" disabled></label><label>CNPJ <span class="optional">opcional</span><input id="companyCnpj" maxlength="18" placeholder="00.000.000/0000-00" disabled></label><button class="primary-button" type="submit" disabled>Criar empresa</button></form></dialog><dialog id="requestDialog" class="modal-card app-dialog"><form id="requestForm"><button class="modal-close" type="button" data-close="requestDialog" aria-label="Fechar">×</button><p class="eyebrow">SOLICITAR VÍNCULO</p><h2>Entrar em uma empresa</h2><p class="modal-copy">A solicitação ficará pendente até aprovação de um administrador autorizado.</p><label>ID da empresa<input id="requestCompanyId" required placeholder="Cole o identificador UUID da empresa"></label><button id="submitRequest" class="primary-button" type="submit">Enviar solicitação</button><p id="requestStatus" class="modal-status" role="status" aria-live="polite"></p></form></dialog><dialog id="groupDialog" class="modal-card app-dialog"><form id="groupForm"><button class="modal-close" type="button" data-close="groupDialog" aria-label="Fechar">×</button><p class="eyebrow">SMARTINSPECT CHAT</p><h2>Criar grupo</h2><label>Nome do grupo<input id="groupName" maxlength="80" required></label><label>@IDs de participantes (separados por vírgula)<input id="groupHandles" required placeholder="ana_obra, joao_inspecao"></label><label>ID da empresa <span class="modal-note">opcional</span><input id="companyId" placeholder="UUID da empresa, para grupo empresarial"></label><button class="primary-button" type="submit">Criar grupo</button><p id="groupStatus" class="modal-status"></p></form></dialog>
+<dialog id="membersDialog" class="modal-card app-dialog"><form><button class="modal-close" type="button" data-close="membersDialog" aria-label="Fechar">×</button><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Participantes do grupo</h2><div id="membersList" class="modal-note"></div><label>@ID<input id="memberHandle" required></label><div class="modal-row"><button id="addMember" class="secondary-button" type="button">Adicionar</button><button id="removeMember" class="ghost-button" type="button">Remover</button></div><p id="membersStatus" class="modal-status"></p></form></dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/supabase.js"></script><script>
+(() => {
+  "use strict";
+  const db = window.banco,
+    $ = (id) => document.getElementById(id),
+    fallback = "./imagens/favicon.png";
+  const st = {
+    user: null,
+    profile: null,
+    privateProfile: null,
+    conversations: [],
+    active: null,
+    messages: [],
+    channel: null,
+    syncTimer: null,
+    syncBusy: false,
+    cursor: null,
+    recorder: null,
+    stream: null,
+    cancelRecording: false,
+    recordTimer: null,
+    recordStarted: 0,
+  };
+  const status = (id, msg, err = false) => {
+    const e = $(id);
+    if (e) {
+      e.textContent = msg || "";
+      e.classList.toggle("error-text", !!err);
+    }
+  };
+  const handle = (v) =>
+    String(v || "")
+      .trim()
+      .replace(/^@/, "")
+      .toLowerCase();
+  const micIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  const stopIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg>';
+  const setRecordButton = (recording) => {
+    const button = $("recordButton");
+    button.innerHTML = recording ? stopIcon : micIcon;
+    button.setAttribute("aria-label", recording ? "Finalizar gravação de áudio" : "Gravar mensagem de voz");
+    button.title = recording ? "Finalizar gravação e enviar áudio" : "Gravar mensagem de voz";
+  };
+  function cpfDigits(v) {
+    return String(v || "")
+      .replace(/\D/g, "")
+      .slice(0, 11);
+  }
+  function cpfValid(v) {
+    const d = cpfDigits(v);
+    if (d.length !== 11 || /^([0-9])\1{10}$/.test(d)) return false;
+    let sum = 0;
+    for (let i = 0; i < 9; i++) sum += Number(d[i]) * (10 - i);
+    let digit = (sum * 10) % 11;
+    if (digit === 10) digit = 0;
+    if (digit !== Number(d[9])) return false;
+    sum = 0;
+    for (let i = 0; i < 10; i++) sum += Number(d[i]) * (11 - i);
+    digit = (sum * 10) % 11;
+    if (digit === 10) digit = 0;
+    return digit === Number(d[10]);
+  }
+  function formatCpf(v) {
+    const d = cpfDigits(v);
+    return d
+      .replace(/^(\d{3})(\d)/, "$1.$2")
+      .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+      .replace(/\.(\d{3})(\d)/, ".$1-$2");
+  }
+  function todayLocal() {
+    const d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 10);
+  }
+  $("profileBirthDate").max = todayLocal();
+  function avatar(path) {
+    if (!path) return fallback;
+    if (/^https?:\/\//i.test(path)) return path;
+    return (
+      db.storage.from("avatars-perfil").getPublicUrl(path).data.publicUrl ||
+      fallback
+    );
+  }
+  function setAvatar(el, path) {
+    el.src = avatar(path);
+    el.onerror = () => {
+      el.onerror = null;
+      el.src = fallback;
+    };
+  }
+  function open(id) {
+    $(id).showModal();
+  }
+  document
+    .querySelectorAll("[data-close]")
+    .forEach((b) => (b.onclick = () => $(b.dataset.close).close()));
+  $("profileOpen").onclick = () => open("profileDialog");
+  $("editProfile").onclick = () => open("profileDialog");
+  $("refreshButton").onclick = loadBusinessSummary;
+  $("createCompanyButton").onclick = () => open("companyDialog");
+  $("requestCompanyButton").onclick = () => open("requestDialog");
+  $("chatNav").onclick = () => view(true);
+  $("openChat").onclick = () => view(true);
+  $("panelNav").onclick = () => view(false);
+  $("backPanel").onclick = () => view(false);
+  function view(chat) {
+    $("chatView").hidden = !chat;
+    $("panelView").hidden = chat;
+    $("chatNav").setAttribute("aria-current", chat ? "page" : "false");
+    $("panelNav").setAttribute("aria-current", chat ? "false" : "page");
+    if (chat) {
+      loadConversations();
+      ensureListRealtime();
+      startChatFallbackSync();
+    } else {
+      stopChatFallbackSync();
+    }
+  }
+  async function init() {
+    if (!db || !window.supabaseConfigStatus?.pronto) {
+      status(
+        "pageMessage",
+        window.supabaseConfigStatus?.erro || "Supabase não configurado.",
+        true,
+      );
+      return;
+    }
+    const { data, error } = await db.auth.getSession();
+    if (error || !data.session?.user) {
+      location.replace("./login.html");
+      return;
+    }
+    st.user = data.session.user;
+    $("headerEmail").textContent = "Sessão ativa";
+    $("profileEmail").value = st.user.email || "";
+    $("logoutButton").onclick = async () => {
+      await db.auth.signOut();
+      location.replace("./login.html");
+    };
+    db.auth.onAuthStateChange((ev) => {
+      if (ev === "SIGNED_OUT") location.replace("./login.html");
+    });
+    await loadProfile();
+    await loadBusinessSummary();
+    // Mantém o canal ativo durante toda a sessão autenticada, mesmo no painel principal.
+    ensureListRealtime();
+  }
+  async function loadBusinessSummary() {
+    const list = $("companiesList");
+    if (!st.user || !list) return;
+    const m = await db
+      .from("membros_empresa")
+      .select("empresa_id,cargo,empresa:empresas(id,nome,status)")
+      .eq("usuario_id", st.user.id)
+      .eq("ativo", true)
+      .limit(100);
+    list.replaceChildren();
+    if (m.error) {
+      const p = document.createElement("p");
+      p.className = "empty-inline";
+      p.textContent = "Não foi possível carregar os vínculos existentes.";
+      list.append(p);
+      status("companyCount", "—");
+      return;
+    }
+    const rows = m.data || [];
+    $("companyCount").textContent = String(rows.length);
+    $("emptyCompanies").hidden = rows.length > 0;
+    if (rows.length) {
+      for (const row of rows) {
+        const c = Array.isArray(row.empresa) ? row.empresa[0] : row.empresa;
+        if (!c) continue;
+        const card = document.createElement("article");
+        card.className = "company-data-card";
+        const left = document.createElement("span"),
+          name = document.createElement("strong"),
+          detail = document.createElement("small");
+        name.textContent = c.nome || "Empresa";
+        detail.textContent = `${row.cargo || "Membro"} · ${c.status || "vínculo ativo"}`;
+        left.append(name, detail);
+        const id = document.createElement("small");
+        id.textContent = String(c.id || "");
+        card.append(left, id);
+        list.append(card);
+      }
+    } else {
+      const p = document.createElement("div");
+      p.className = "loading-state";
+      p.textContent = "Nenhum vínculo ativo encontrado.";
+      list.append(p);
+    }
+    const [inv, req] = await Promise.all([
+      db
+        .from("convites_empresa")
+        .select("id,status")
+        .eq("email", st.user.email || "")
+        .limit(100),
+      db
+        .from("solicitacoes_empresa")
+        .select("id,status")
+        .eq("usuario_id", st.user.id)
+        .limit(100),
+    ]);
+    if (!inv.error)
+      $("inviteCount").textContent = String(
+        (inv.data || []).filter((x) => x.status === "pendente").length,
+      );
+    if (!req.error)
+      $("requestCount").textContent = String(
+        (req.data || []).filter((x) => x.status === "pendente").length,
+      );
+  }
+  async function loadProfile() {
+    const { data, error } = await db.rpc("perfil_obter_meu");
+    if (error) {
+      status(
+        "pageMessage",
+        "Não foi possível carregar o perfil. Confirme a migração do Supabase.",
+        true,
+      );
+      return;
+    }
+    st.profile = Array.isArray(data) ? data[0] : data;
+    if (!st.profile) return;
+    const p = st.profile;
+    for (const [id, val] of [
+      ["profileName", p.nome || ""],
+      ["profilePhone", p.telefone || ""],
+      ["profileHandle", p.username_publico || ""],
+    ])
+      $(id).value = val;
+    $("profileVisible").checked = p.visivel_chat !== false;
+    $("profileCardName").textContent =
+      p.nome || st.user.email?.split("@")[0] || "Seu perfil";
+    $("userName").textContent = (p.nome || "usuário").split(" ")[0];
+    $("profileCardHandle").textContent = p.username_publico
+      ? "@" + p.username_publico
+      : "Defina seu @ID do chat";
+    $("profileCardEmail").textContent = "Clique para abrir e editar seu perfil";
+    $("accountName").textContent = p.nome || "—";
+    $("accountEmail").textContent = st.user.email || "—";
+    $("chatSelfName").textContent = p.nome || "Seu perfil";
+    $("chatSelfHandle").textContent = p.username_publico
+      ? "@" + p.username_publico
+      : "Defina seu @ID";
+    for (const id of [
+      "profileCardAvatar",
+      "profileAvatarPreview",
+      "chatSelfAvatar",
+    ])
+      setAvatar($(id), p.avatar_url);
+    const personal = await db
+      .from("perfil_dados_pessoais")
+      .select("data_nascimento,cpf")
+      .eq("usuario_id", st.user.id)
+      .maybeSingle();
+    if (personal.error) {
+      st.privateProfile = null;
+      $("profileBirthDate").value = "";
+      $("profileCpf").value = "";
+      status(
+        "pageMessage",
+        "Aplique o SQL de dados pessoais para ativar o salvamento de nascimento e CPF.",
+        true,
+      );
+    } else {
+      st.privateProfile = personal.data || null;
+      $("profileBirthDate").value = personal.data?.data_nascimento || "";
+      $("profileCpf").value = formatCpf(personal.data?.cpf || "");
+    }
+  }
+  $("profileAvatar").onchange = () => {
+    const f = $("profileAvatar").files?.[0];
+    if (!f) return;
+    if (
+      !["image/jpeg", "image/png", "image/webp"].includes(f.type) ||
+      f.size > 5242880
+    ) {
+      status("profileStatus", "Escolha JPG, PNG ou WebP até 5 MB.", true);
+      $("profileAvatar").value = "";
+      return;
+    }
+    $("profileAvatarPreview").src = URL.createObjectURL(f);
+  };
+  $("profileCpf").addEventListener("input", (e) => {
+    e.target.value = formatCpf(e.target.value);
+  });
+  $("profileForm").onsubmit = async (e) => {
+    e.preventDefault();
+    const name = $("profileName").value.trim(),
+      phone = $("profilePhone").value.trim(),
+      id = handle($("profileHandle").value),
+      birth = $("profileBirthDate").value || null,
+      cpf = cpfDigits($("profileCpf").value),
+      newPassword = $("profilePassword").value,
+      confirmPassword = $("profilePasswordConfirm").value;
+    if (
+      newPassword &&
+      (newPassword.length < 8 || newPassword !== confirmPassword)
+    ) {
+      status(
+        "profileStatus",
+        "A nova senha deve ter ao menos 8 caracteres e coincidir com a confirmação.",
+        true,
+      );
+      return;
+    }
+    if (!name || !/^[a-z0-9_]{3,24}$/.test(id)) {
+      status(
+        "profileStatus",
+        "Informe nome e um @ID válido (3–24 letras, números ou _).",
+        true,
+      );
+      return;
+    }
+    if (birth && birth > todayLocal()) {
+      status(
+        "profileStatus",
+        "A data de nascimento não pode estar no futuro.",
+        true,
+      );
+      return;
+    }
+    if (cpf && !cpfValid(cpf)) {
+      status("profileStatus", "CPF inválido. Confira os 11 dígitos.", true);
+      return;
+    }
+    const btn = $("saveProfile");
+    btn.disabled = true;
+    status("profileStatus", "Salvando…");
+    let path = st.profile?.avatar_url || null,
+      profileSaved = false,
+      privateSaved = false;
+    try {
+      const f = $("profileAvatar").files?.[0];
+      if (f) {
+        const ext =
+          f.type === "image/png"
+            ? "png"
+            : f.type === "image/webp"
+              ? "webp"
+              : "jpg";
+        path = `${st.user.id}/${crypto.randomUUID()}.${ext}`;
+        const u = await db.storage
+          .from("avatars-perfil")
+          .upload(path, f, { contentType: f.type, upsert: false });
+        if (u.error) throw u.error;
+      }
+      const res = await db
+        .from("perfis")
+        .update({
+          nome: name,
+          telefone: phone || null,
+          username_publico: id,
+          visivel_chat: $("profileVisible").checked,
+          avatar_url: path,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", st.user.id);
+      if (res.error) throw res.error;
+      profileSaved = true;
+      const privateRes = await db
+        .from("perfil_dados_pessoais")
+        .upsert(
+          {
+            usuario_id: st.user.id,
+            data_nascimento: birth,
+            cpf: cpf || null,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "usuario_id" },
+        );
+      if (privateRes.error) throw privateRes.error;
+      privateSaved = true;
+      if (newPassword) {
+        const pw = await db.auth.updateUser({ password: newPassword });
+        if (pw.error) throw pw.error;
+      }
+      $("profilePassword").value = "";
+      $("profilePasswordConfirm").value = "";
+      const old = st.profile?.avatar_url;
+      await loadProfile();
+      $("profileAvatar").value = "";
+      status("pageMessage", "Perfil salvo com sucesso.");
+      $("profileDialog").close();
+      if (
+        f &&
+        old &&
+        !/^https?:\/\//i.test(old) &&
+        old.startsWith(st.user.id + "/") &&
+        old !== path
+      )
+        await db.storage.from("avatars-perfil").remove([old]);
+    } catch (err) {
+      if (
+        !profileSaved &&
+        path &&
+        path !== st.profile?.avatar_url &&
+        $("profileAvatar").files?.length
+      )
+        await db.storage.from("avatars-perfil").remove([path]);
+      let msg = err.message || "Falha ao salvar o perfil.";
+      if (profileSaved && !privateSaved)
+        msg =
+          "Perfil básico salvo, mas nascimento e CPF não foram guardados. Aplique a migração de dados pessoais e tente novamente.";
+      else if (profileSaved && privateSaved && newPassword)
+        msg =
+          "Perfil e dados pessoais foram salvos, mas a senha não foi alterada: " +
+          msg;
+      status("profileStatus", msg, true);
+    } finally {
+      btn.disabled = false;
+    }
+  };
+  function other(c) {
+    return (c.participantes || []).find((p) => !p.is_me);
+  }
+  function title(c) {
+    return c.tipo === "grupo" ? c.nome : other(c)?.nome || "Conversa privada";
+  }
+  function renderConversations() {
+    const list = $("conversationList");
+    list.replaceChildren();
+    if (!st.conversations.length) {
+      const p = document.createElement("p");
+      p.className = "modal-note";
+      p.textContent = "Nenhuma conversa. Busque alguém pelo @ID.";
+      list.append(p);
+      return;
+    }
+    for (const c of st.conversations) {
+      const b = document.createElement("button");
+      b.className = "conv-item";
+      b.type = "button";
+      b.setAttribute(
+        "aria-current",
+        c.conversa_id === st.active?.conversa_id ? "true" : "false",
+      );
+      const p = other(c),
+        img = document.createElement("img");
+      img.src = c.tipo === "grupo" ? fallback : avatar(p?.avatar_url);
+      img.alt = "";
+      const span = document.createElement("span"),
+        strong = document.createElement("strong"),
+        small = document.createElement("small");
+      strong.textContent = title(c);
+      small.textContent =
+        c.ultima_mensagem?.tipo === "texto"
+          ? c.ultima_mensagem.conteudo
+          : c.ultima_mensagem?.arquivo_nome || "Sem mensagens";
+      span.append(strong, small);
+      b.append(img, span);
+      if (+c.nao_lidas) {
+        const n = document.createElement("b");
+        n.className = "unread";
+        n.textContent = c.nao_lidas;
+        b.append(n);
+      }
+      b.onclick = () => openConversation(c);
+      list.append(b);
+    }
+  }
+  async function loadConversations() {
+    if (!st.user) return;
+    const r = await db.rpc("chat_listar_conversas");
+    if (r.error) {
+      $("conversationList").textContent =
+        "Aplique o SQL do SmartInspect Chat para carregar conversas.";
+      return;
+    }
+    st.conversations = r.data || [];
+    renderConversations();
+  }
+  function ensureListRealtime() {
+    if (st.channel || !st.user) return;
+    st.channel = db
+      .channel("chat-updates-user-" + st.user.id)
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "chat_mensagens" },
+        async (e) => {
+          await loadConversations();
+          if (
+            st.active?.conversa_id === e.new.conversa_id &&
+            !st.messages.some((m) => m.id === e.new.id)
+          ) {
+            st.messages.push(e.new);
+            await renderMessages();
+            await markRead([e.new]);
+            status("chatStatus", "Nova mensagem recebida.");
+          }
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "chat_participantes" },
+        async () => {
+          await loadConversations();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "chat_leituras" },
+        async () => {
+          await receipts();
+        },
+      )
+      .subscribe((state) => {
+        if (state === "SUBSCRIBED") {
+          status("chatStatus", "Atualização automática ativa.");
+        } else if (state === "CHANNEL_ERROR" || state === "TIMED_OUT") {
+          status(
+            "chatStatus",
+            "A reconectar ao chat. As mensagens continuam a sincronizar automaticamente.",
+            true,
+          );
+        }
+      });
+  }
+
+  function startChatFallbackSync() {
+    stopChatFallbackSync();
+    st.syncTimer = window.setInterval(async () => {
+      if ($("chatView").hidden || st.syncBusy || !st.user) return;
+      st.syncBusy = true;
+      try {
+        await loadConversations();
+        if (st.active) await loadMessages(true);
+      } catch (error) {
+        console.warn("Sincronização automática do chat falhou:", error);
+      } finally {
+        st.syncBusy = false;
+      }
+    }, 15000);
+  }
+
+  function stopChatFallbackSync() {
+    if (st.syncTimer) window.clearInterval(st.syncTimer);
+    st.syncTimer = null;
+  }
+
+  $("searchForm").onsubmit = async (e) => {
+    e.preventDefault();
+    const id = handle($("searchHandle").value),
+      box = $("searchResults");
+    box.replaceChildren();
+    if (!id) return;
+    status("chatStatus", "Buscando…");
+    const r = await db.rpc("chat_buscar_usuario", { p_handle: id });
+    if (r.error) {
+      status("chatStatus", r.error.message, true);
+      return;
+    }
+    if (!r.data?.length) {
+      status("chatStatus", "Nenhuma pessoa encontrada com esse @ID.");
+      return;
+    }
+    const p = r.data[0],
+      item = document.createElement("div"),
+      label = document.createElement("span"),
+      name = document.createElement("strong"),
+      tag = document.createElement("small"),
+      btn = document.createElement("button");
+    item.className = "chat-result";
+    name.textContent = p.nome || "Pessoa SmartInspect";
+    tag.textContent = "@" + p.username_publico;
+    label.append(name, tag);
+    btn.className = "chat-action";
+    btn.type = "button";
+    btn.textContent = "Conversar";
+    btn.onclick = async () => {
+      btn.disabled = true;
+      const x = await db.rpc("chat_iniciar_privado", {
+        p_handle: p.username_publico,
+      });
+      if (x.error) {
+        status("chatStatus", x.error.message, true);
+        btn.disabled = false;
+        return;
+      }
+      await loadConversations();
+      const c = st.conversations.find((v) => v.conversa_id === x.data);
+      if (c) await openConversation(c);
+    };
+    item.append(label, btn);
+    box.append(item);
+    status("chatStatus", "Pessoa encontrada.");
+  };
+  $("newGroup").onclick = () => open("groupDialog");
+  $("groupForm").onsubmit = async (e) => {
+    e.preventDefault();
+    const handles = $("groupHandles")
+        .value.split(",")
+        .map(handle)
+        .filter(Boolean),
+      btn = $("groupForm").querySelector("[type=submit]");
+    btn.disabled = true;
+    const r = await db.rpc("chat_criar_grupo", {
+      p_nome: $("groupName").value.trim(),
+      p_handles: handles,
+      p_empresa_id: $("companyId").value.trim() || null,
+    });
+    btn.disabled = false;
+    if (r.error) {
+      status("groupStatus", r.error.message, true);
+      return;
+    }
+    $("groupDialog").close();
+    $("groupForm").reset();
+    await loadConversations();
+    const c = st.conversations.find((v) => v.conversa_id === r.data);
+    if (c) await openConversation(c);
+  };
+  $("groupMembers").onclick = () => {
+    const box = $("membersList");
+    box.replaceChildren();
+    for (const p of st.active?.participantes || []) {
+      if (!p.ativo) continue;
+      const line = document.createElement("div");
+      line.textContent = `${p.nome || "Pessoa"}${p.username_publico ? " · @" + p.username_publico : ""}${p.papel === "admin" ? " · admin" : ""}`;
+      box.append(line);
+    }
+    open("membersDialog");
+  };
+  $("addMember").onclick = () => groupMember("chat_adicionar_participante");
+  $("removeMember").onclick = () => groupMember("chat_remover_participante");
+  async function groupMember(rpc) {
+    if (!st.active) return;
+    const r = await db.rpc(rpc, {
+      p_conversa_id: st.active.conversa_id,
+      p_handle: handle($("memberHandle").value),
+    });
+    if (r.error) {
+      status("membersStatus", r.error.message, true);
+      return;
+    }
+    status(
+      "membersStatus",
+      rpc === "chat_adicionar_participante"
+        ? "Participante adicionado."
+        : "Participante removido.",
+    );
+    await loadConversations();
+  }
+  async function openConversation(c) {
+    if (st.channel) await db.removeChannel(st.channel);
+    st.active = c;
+    st.messages = [];
+    st.cursor = null;
+    $("emptyChat").hidden = true;
+    $("messages").hidden = false;
+    $("composer").hidden = false;
+    $("activeTitle").textContent = title(c);
+    $("activeSubtitle").textContent =
+      c.tipo === "grupo"
+        ? `${(c.participantes || []).filter((p) => p.ativo).length} participantes`
+        : other(c)?.username_publico
+          ? "@" + other(c).username_publico
+          : "Conversa privada";
+    const mine = (c.participantes || []).find((p) => p.is_me);
+    $("groupMembers").hidden = !(c.tipo === "grupo" && mine?.papel === "admin");
+    renderConversations();
+    await loadMessages(true);
+    ensureListRealtime();
+    window.dispatchEvent(
+      new CustomEvent("smartinspect:conversation", {
+        detail: { conversation: c, userId: st.user.id },
+      }),
+    );
+  }
+  async function loadMessages(first = false) {
+    if (!st.active) return;
+    let q = db
+      .from("chat_mensagens")
+      .select(
+        "id,conversa_id,remetente_id,tipo,conteudo,arquivo_path,arquivo_nome,arquivo_mime,arquivo_tamanho,created_at",
+      )
+      .eq("conversa_id", st.active.conversa_id)
+      .order("created_at", { ascending: false })
+      .order("id", { ascending: false })
+      .limit(50);
+    if (!first && st.cursor) q = q.lt("created_at", st.cursor);
+    const r = await q;
+    if (r.error) {
+      status("chatStatus", r.error.message, true);
+      return;
+    }
+    const batch = (r.data || []).reverse();
+    if (first) {
+      st.messages = batch;
+      st.cursor = r.data?.length ? r.data[r.data.length - 1].created_at : null;
+    } else st.messages = [...batch, ...st.messages];
+    $("olderMessages").hidden = !(r.data?.length === 50);
+    await renderMessages();
+    await markRead(batch);
+    await loadConversations();
+  }
+  function time(v) {
+    try {
+      return new Intl.DateTimeFormat("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        day: "2-digit",
+        month: "2-digit",
+      }).format(new Date(v));
+    } catch {
+      return "";
+    }
+  }
+  function formatBytes(bytes) {
+    if (!Number.isFinite(Number(bytes))) return "";
+    const n = Number(bytes);
+    return n < 1024
+      ? `${n} B`
+      : n < 1048576
+        ? `${(n / 1024).toFixed(1)} KB`
+        : `${(n / 1048576).toFixed(1)} MB`;
+  }
+  async function renderMessages() {
+    const box = $("messages");
+    box.replaceChildren();
+    const people = new Map();
+    for (const c of st.conversations)
+      for (const p of c.participantes || []) if (p.id) people.set(p.id, p);
+    for (const m of st.messages) {
+      const article = document.createElement("article");
+      article.className =
+        "msg" + (m.remetente_id === st.user.id ? " mine" : "");
+      article.dataset.messageId = m.id;
+      if (m.remetente_id !== st.user.id) {
+        const a = document.createElement("small");
+        a.className = "msg-author";
+        a.textContent = people.get(m.remetente_id)?.nome || "Participante";
+        article.append(a);
+      }
+      if (m.tipo === "texto") {
+        const t = document.createElement("div");
+        t.className = "msg-text";
+        t.textContent = m.conteudo || "";
+        article.append(t);
+      } else {
+        const f = document.createElement("div");
+        f.className = "msg-file";
+        const l = document.createElement("span");
+        l.textContent =
+          m.tipo === "audio"
+            ? `Áudio · ${formatBytes(m.arquivo_tamanho)}`
+            : `${m.arquivo_nome || "Arquivo"} · ${formatBytes(m.arquivo_tamanho)} · ${m.arquivo_mime || ""}`;
+        f.append(l);
+        const s = await db.storage
+          .from("chat-arquivos")
+          .createSignedUrl(m.arquivo_path, 900);
+        if (s.data?.signedUrl) {
+          if (m.tipo === "audio") {
+            const audio = document.createElement("audio");
+            audio.controls = true;
+            audio.src = s.data.signedUrl;
+            audio.preload = "none";
+            f.append(audio);
+          } else if (m.arquivo_mime?.startsWith("image/")) {
+            const img = document.createElement("img");
+            img.src = s.data.signedUrl;
+            img.alt = m.arquivo_nome || "Imagem compartilhada";
+            img.style.cssText =
+              "max-width:min(320px,70vw);max-height:320px;border-radius:10px;object-fit:contain";
+            f.append(img);
+          } else {
+            const a = document.createElement("a");
+            a.href = s.data.signedUrl;
+            a.target = "_blank";
+            a.rel = "noopener";
+            a.textContent = "Abrir/baixar";
+            f.append(a);
+          }
+        }
+        article.append(f);
+      }
+      const meta = document.createElement("div");
+      meta.className = "msg-meta";
+      const tm = document.createElement("time");
+      tm.textContent = time(m.created_at);
+      meta.append(tm);
+      if (m.remetente_id === st.user.id) {
+        const receipt = document.createElement("span");
+        receipt.dataset.receipt = m.id;
+        receipt.textContent = "✓ enviada";
+        meta.append(receipt);
+      }
+      article.append(meta);
+      box.append(article);
+    }
+    box.scrollTop = box.scrollHeight;
+    await receipts();
+  }
+  async function markRead(batch) {
+    const ids = batch
+      .filter((m) => m.remetente_id !== st.user.id)
+      .map((m) => m.id);
+    if (ids.length)
+      await db.rpc("chat_marcar_lidas", { p_mensagem_ids: ids.slice(0, 100) });
+  }
+  async function receipts() {
+    const ids = st.messages
+      .filter((m) => m.remetente_id === st.user.id)
+      .map((m) => m.id);
+    if (!ids.length) return;
+    const r = await db
+      .from("chat_leituras")
+      .select("mensagem_id,usuario_id")
+      .in("mensagem_id", ids)
+      .neq("usuario_id", st.user.id);
+    const counts = new Map();
+    for (const x of r.data || [])
+      counts.set(x.mensagem_id, (counts.get(x.mensagem_id) || 0) + 1);
+    for (const [id, n] of counts) {
+      const el = document.querySelector(`[data-receipt="${CSS.escape(id)}"]`);
+      if (el) el.textContent = `✓✓ lida${n > 1 ? " por " + n : ""}`;
+    }
+  }
+  function subscribe(id) {
+    st.channel = db
+      .channel("chat-" + id)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chat_mensagens",
+          filter: `conversa_id=eq.${id}`,
+        },
+        async (e) => {
+          if (
+            !st.active ||
+            st.active.conversa_id !== id ||
+            st.messages.some((m) => m.id === e.new.id)
+          )
+            return;
+          st.messages.push(e.new);
+          await renderMessages();
+          await markRead([e.new]);
+          await loadConversations();
+        },
+      )
+      .subscribe((s) => {
+        if (s === "CHANNEL_ERROR" || s === "TIMED_OUT")
+          status(
+            "chatStatus",
+            "Tempo real instável; atualize as conversas.",
+            true,
+          );
+      });
+  }
+  $("requestForm").onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = $("submitRequest"),
+      id = $("requestCompanyId").value.trim();
+    if (!/^[0-9a-f-]{36}$/i.test(id)) {
+      status("requestStatus", "Informe um UUID de empresa válido.", true);
+      return;
+    }
+    btn.disabled = true;
+    const r = await db
+      .from("solicitacoes_empresa")
+      .insert({ empresa_id: id, usuario_id: st.user.id });
+    btn.disabled = false;
+    if (r.error) {
+      status("requestStatus", r.error.message, true);
+      return;
+    }
+    $("requestForm").reset();
+    $("requestDialog").close();
+    status("pageMessage", "Solicitação enviada; aguarde aprovação.");
+    await loadBusinessSummary();
+  };
+  $("olderMessages").onclick = () => loadMessages(false);
+  $("refreshChats").onclick = loadConversations;
+  $("messageInput").addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
+      event.preventDefault();
+      $("composer").requestSubmit();
+    }
+  });
+
+  $("messageInput").addEventListener("input", (event) => {
+    const input = event.currentTarget;
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 115) + "px";
+  });
+
+  $("messageInput").addEventListener("paste", async (event) => {
+    const image = Array.from(event.clipboardData?.items || []).find((item) =>
+      ["image/jpeg", "image/png", "image/webp"].includes(item.type),
+    );
+    if (!image || !st.active) return;
+    const file = image.getAsFile();
+    if (!file) return;
+    event.preventDefault();
+    const extension = file.type === "image/jpeg" ? "jpg" : file.type.split("/")[1];
+    await uploadFile(
+      new File([file], `imagem-colada-${Date.now()}.${extension}`, { type: file.type }),
+      "arquivo",
+    );
+  });
+
+  $("composer").onsubmit = async (e) => {
+    e.preventDefault();
+    const text = $("messageInput").value.trim();
+    if (!text || !st.active) return;
+    if ($("sendButton").disabled) return;
+    $("sendButton").disabled = true;
+    const r = await db
+      .from("chat_mensagens")
+      .insert({
+        conversa_id: st.active.conversa_id,
+        remetente_id: st.user.id,
+        tipo: "texto",
+        conteudo: text,
+      });
+    $("sendButton").disabled = false;
+    if (r.error) {
+      status("chatStatus", r.error.message, true);
+      return;
+    }
+    $("messageInput").value = "";
+    $("messageInput").style.height = "";
+    status("chatStatus", "Mensagem enviada.");
+    await loadMessages(true);
+  };
+  $("attachButton").onclick = () => $("fileInput").click();
+  $("fileInput").onchange = async () => {
+    const f = $("fileInput").files?.[0];
+    $("fileInput").value = "";
+    if (!f || !st.active) return;
+    if (f.size > 15 * 1024 * 1024) {
+      status("chatStatus", "Arquivo maior que 15 MB.", true);
+      return;
+    }
+    const types = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "application/pdf",
+      "text/plain",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.ms-excel",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.ms-powerpoint",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    ];
+    if (!types.includes(f.type)) {
+      status("chatStatus", "Tipo de arquivo não permitido.", true);
+      return;
+    }
+    await uploadFile(f, "arquivo");
+  };
+  async function uploadFile(f, type) {
+    const conversationId = st.active?.conversa_id;
+    if (!conversationId) return;
+    if (f.size > 15 * 1024 * 1024) {
+      status("chatStatus", "Arquivo/áudio maior que 15 MB.", true);
+      return;
+    }
+    const path = `${conversationId}/${st.user.id}/${crypto.randomUUID()}.${(f.name.split(".").pop() || "dat").replace(/[^a-z0-9]/gi, "").slice(0, 8)}`;
+    const mime = (f.type || "application/octet-stream").split(";")[0];
+    status("chatStatus", "Enviando…");
+    const up = await db.storage
+      .from("chat-arquivos")
+      .upload(path, f, { contentType: mime, upsert: false });
+    if (up.error) {
+      status("chatStatus", up.error.message, true);
+      return;
+    }
+    const ins = await db
+      .from("chat_mensagens")
+      .insert({
+        conversa_id: conversationId,
+        remetente_id: st.user.id,
+        tipo: type,
+        arquivo_path: path,
+        arquivo_nome: f.name.slice(0, 255),
+        arquivo_mime: mime,
+        arquivo_tamanho: f.size,
+      });
+    if (ins.error) {
+      await db.storage.from("chat-arquivos").remove([path]);
+      status("chatStatus", ins.error.message, true);
+      return;
+    }
+    status(
+      "chatStatus",
+      type === "audio"
+        ? "Áudio enviado."
+        : f.type.startsWith("image/")
+          ? "Imagem enviada."
+          : "Arquivo enviado.",
+    );
+    if (st.active?.conversa_id === conversationId) await loadMessages(true);
+  }
+  $("cancelRecordButton").onclick = () => {
+    if (st.recorder?.state === "recording") {
+      st.cancelRecording = true;
+      st.recorder.stop();
+    }
+  };
+  $("recordButton").onclick = async () => {
+    if (st.recorder?.state === "recording") {
+      st.recorder.stop();
+      return;
+    }
+    if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+      status(
+        "chatStatus",
+        "Este navegador não suporta gravação de áudio.",
+        true,
+      );
+      return;
+    }
+    try {
+      st.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const chunks = [];
+      st.cancelRecording = false;
+      st.recordStarted = Date.now();
+      st.recorder = new MediaRecorder(st.stream);
+      st.recorder.ondataavailable = (e) => {
+        if (e.data.size) chunks.push(e.data);
+      };
+      st.recorder.onstop = async () => {
+        const rec = st.recorder,
+          blob = new Blob(chunks, { type: rec.mimeType || "audio/webm" }),
+          cancel = st.cancelRecording;
+        clearInterval(st.recordTimer);
+        st.recordTimer = null;
+        st.stream?.getTracks().forEach((t) => t.stop());
+        st.stream = null;
+        st.recorder = null;
+        st.cancelRecording = false;
+        setRecordButton(false);
+        $("cancelRecordButton").hidden = true;
+        $("recordButton").classList.remove("recording");
+        if (cancel) {
+          status("chatStatus", "Gravação cancelada.");
+          return;
+        }
+        if (blob.size) {
+          const ext = blob.type.includes("ogg")
+            ? "ogg"
+            : blob.type.includes("mp4")
+              ? "mp4"
+              : "webm";
+          await uploadFile(
+            new File([blob], `audio-${Date.now()}.${ext}`, {
+              type: blob.type.split(";")[0],
+            }),
+            "audio",
+          );
+        }
+      };
+      st.recorder.start();
+      setRecordButton(true);
+      $("cancelRecordButton").hidden = false;
+      $("recordButton").classList.add("recording");
+      st.recordTimer = setInterval(
+        () =>
+          status(
+            "chatStatus",
+            `Gravando ${Math.floor((Date.now() - st.recordStarted) / 1000)} s…`,
+          ),
+        500,
+      );
+      status(
+        "chatStatus",
+        "Gravando… clique em Finalizar para enviar ou Cancelar para descartar.",
+      );
+    } catch (e) {
+      st.stream?.getTracks().forEach((t) => t.stop());
+      st.stream = null;
+      $("cancelRecordButton").hidden = true;
+      status("chatStatus", e.message || "Permissão de microfone negada.", true);
+    }
+  };
+  $("profileDialog").addEventListener("close", () => {
+    if (st.profile) setAvatar($("profileAvatarPreview"), st.profile.avatar_url);
+    $("profileAvatar").value = "";
+    $("profilePassword").value = "";
+    $("profilePasswordConfirm").value = "";
+    status("profileStatus", "");
+  });
+  const hover =
+    matchMedia("(hover:hover) and (pointer:fine)").matches &&
+    !matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if (hover) {
+    document.querySelectorAll("[data-spotlight]").forEach((card) =>
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty(
+          "--pointer-x",
+          `${((e.clientX - r.left) / r.width) * 100}%`,
+        );
+        card.style.setProperty(
+          "--pointer-y",
+          `${((e.clientY - r.top) / r.height) * 100}%`,
+        );
+      }),
+    );
+  }
+  init().catch((e) =>
+    status(
+      "pageMessage",
+      e.message || "Não foi possível iniciar o painel.",
+      true,
+    ),
+  );
+})();
+</script>
+<script src="./js/painel-chamadas.js"></script>
+</body></html>
