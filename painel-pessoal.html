@@ -30,6 +30,69 @@
 @media(hover:none){.msg-menu-button{opacity:1}}
 @media(max-width:640px){.chat-compose{grid-template-columns:auto auto minmax(0,1fr) auto;padding:10px;gap:6px}.chat-compose #cancelRecordButton{grid-column:1/-1}.chat-compose textarea{grid-column:1/-2;min-height:68px;max-height:160px;font-size:14px}.chat-compose #sendButton{grid-column:auto;min-width:58px;height:42px;min-height:42px}.msg{max-width:94%}.msg-menu-button{opacity:1}}
 
+
+/* Correção definitiva do compositor: alta especificidade para vencer painel-pessoal.css */
+.personal-page #chatView #composer.chat-compose {
+  display: grid !important;
+  grid-template-columns: auto auto auto minmax(0, 1fr) auto !important;
+  align-items: end !important;
+  gap: 10px !important;
+  padding: 16px 17px !important;
+}
+.personal-page #chatView #composer #messageInput {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 92px !important;
+  max-height: 220px !important;
+  height: 92px !important;
+  padding: 15px 16px !important;
+  border: 1px solid rgba(133,216,255,.30) !important;
+  border-radius: 15px !important;
+  background: rgba(3,11,23,.78) !important;
+  color: #fff !important;
+  font: inherit !important;
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+  resize: vertical !important;
+  overflow-y: hidden;
+  white-space: pre-wrap !important;
+}
+.personal-page #chatView #composer #messageInput:focus {
+  outline: none !important;
+  border-color: rgba(92,236,255,.78) !important;
+  box-shadow: 0 0 0 3px rgba(92,236,255,.12) !important;
+}
+.personal-page #chatView #composer #sendButton {
+  align-self: end !important;
+  min-height: 44px !important;
+  height: 44px !important;
+}
+@media (max-width: 640px) {
+  .personal-page #chatView #composer.chat-compose {
+    grid-template-columns: 42px 42px minmax(0,1fr) auto !important;
+    gap: 7px !important;
+    padding: 11px !important;
+  }
+  .personal-page #chatView #composer #cancelRecordButton:not([hidden]) {
+    grid-column: 1 / -1 !important;
+  }
+  .personal-page #chatView #composer #messageInput {
+    grid-column: 1 / -2 !important;
+    min-height: 78px !important;
+    max-height: 180px !important;
+    height: 78px !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+  }
+  .personal-page #chatView #composer #sendButton {
+    grid-column: auto !important;
+    min-width: 58px !important;
+    padding-inline: 9px !important;
+  }
+}
+
 </style>
 </head>
 <body class="personal-page">
@@ -41,7 +104,7 @@
 <section class="summary-grid" aria-label="Resumo da conta"><article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article><article class="summary-card"><span class="summary-icon cyan">◈</span><span>Convites recebidos</span><strong id="inviteCount">—</strong></article><article class="summary-card"><span class="summary-icon violet">◌</span><span>Solicitações pendentes</span><strong id="requestCount">—</strong></article></section>
 <div class="content-grid"><section class="panel-card main-panel" aria-labelledby="companiesTitle"><div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" type="button" title="Atualizar">↻</button></div><div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos…</div></div><div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Solicite vínculo a uma empresa existente. A criação depende de uma função autorizada do projeto.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button" type="button">Ver criação de empresa</button><button id="requestCompanyButton" class="secondary-button" type="button">Solicitar vínculo</button></div></div></section><aside class="side-column"><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2>Minha conta</h2></div></div><div class="account-row" hidden><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row" hidden><span>E-mail</span><strong id="accountEmail">—</strong></div><p class="side-copy">Os dados completos ficam ocultos até abrir o perfil.</p><button id="editProfile" class="secondary-button full" type="button">Editar perfil</button></section><section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema valida seu vínculo e carrega somente os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SMARTINSPECT CHAT</p><h2>Fale com sua equipe</h2></div></div><p class="side-copy">Encontre pessoas pelo @ID e converse com segurança.</p><button id="openChat" class="secondary-button full" type="button">Abrir chat →</button></section></aside></div><section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><p class="eyebrow">ESTRUTURA CONFIGURÁVEL</p><h2 id="plansTitle">Planos e assinaturas</h2><p>Os planos reais aparecem quando estão cadastrados e autorizados no banco.</p></div></div><div id="plansList" class="plans-list"><div class="empty-inline">Nenhum plano configurado para exibição.</div></div></section>
 </main>
-<main id="chatView" class="chat-view" hidden><div class="chat-headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Chat</h1><p>Encontre e chame pessoas usando o @identificador público.</p></div><button id="backPanel" class="secondary-button" type="button">← Voltar ao painel</button></div><div class="chat-layout"><aside class="chat-sidebar"><div class="chat-sidebar-head"><div class="chat-self"><img id="chatSelfAvatar" src="./imagens/favicon.png" alt=""><span><strong id="chatSelfName">Seu perfil</strong><small id="chatSelfHandle">Defina seu @ID</small></span></div><form id="searchForm" class="chat-search"><input id="searchHandle" maxlength="25" placeholder="Buscar por @identificador" aria-label="Buscar pessoa pelo identificador"><button class="chat-action" type="submit">Buscar</button></form><div id="searchResults" class="chat-results" aria-live="polite"></div><div class="chat-tools"><button id="newGroup" class="chat-action" type="button">＋ Criar grupo</button><button id="refreshChats" class="chat-action" type="button" title="Sincronizar agora, se necessário">Sincronizar</button></div></div><div id="conversationList" class="conv-list"><p class="modal-note">A carregar conversas…</p></div></aside><section class="chat-main"><div class="chat-main-head"><div><h2 id="activeTitle">Selecione uma conversa</h2><p id="activeSubtitle">As conversas só aparecem para seus participantes.</p></div><div class="chat-main-actions"><button id="startAudioCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de áudio" title="Chamada de áudio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.4 15.4 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.28.55 3.5.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10 21 3 14 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.4.55 3.5a1 1 0 0 1-.25 1.02l-2.2 2.28Z" fill="currentColor"/></svg><span>Áudio</span></button><button id="startVideoCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de vídeo" title="Chamada de vídeo" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 10 6-3v10l-6-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Vídeo</span></button><button id="groupMembers" class="chat-action" type="button" hidden>Participantes</button></div></div><div id="emptyChat" class="chat-empty"><strong>Seu chat, dentro do SmartInspect.</strong><span>Busque alguém pelo @ID ou abra uma conversa existente.</span></div><div id="messages" class="chat-messages" aria-live="polite" hidden></div><button id="olderMessages" class="ghost-button" type="button" hidden>Carregar mensagens anteriores</button><form id="composer" class="chat-compose" hidden><input id="fileInput" type="file" hidden accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,.doc,.docx,.xls,.xlsx,.ppt,.pptx"><button id="attachButton" class="chat-action" type="button" aria-label="Anexar imagem ou arquivo" title="Anexar imagem ou arquivo">＋</button><button id="recordButton" class="chat-action" type="button" aria-label="Gravar mensagem de voz" title="Gravar mensagem de voz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button id="cancelRecordButton" class="chat-action" type="button" hidden>Cancelar</button><textarea id="messageInput" rows="1" maxlength="10000" placeholder="Escreva uma mensagem… (Enter envia · Shift+Enter quebra linha)" aria-label="Mensagem. Enter envia; Shift mais Enter quebra a linha."></textarea><button class="primary-button" id="sendButton" type="submit">Enviar</button></form><div id="chatStatus" class="chat-status" role="status" aria-live="polite"></div></section></div></main>
+<main id="chatView" class="chat-view" hidden><div class="chat-headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Chat</h1><p>Encontre e chame pessoas usando o @identificador público.</p></div><button id="backPanel" class="secondary-button" type="button">← Voltar ao painel</button></div><div class="chat-layout"><aside class="chat-sidebar"><div class="chat-sidebar-head"><div class="chat-self"><img id="chatSelfAvatar" src="./imagens/favicon.png" alt=""><span><strong id="chatSelfName">Seu perfil</strong><small id="chatSelfHandle">Defina seu @ID</small></span></div><form id="searchForm" class="chat-search"><input id="searchHandle" maxlength="25" placeholder="Buscar por @identificador" aria-label="Buscar pessoa pelo identificador"><button class="chat-action" type="submit">Buscar</button></form><div id="searchResults" class="chat-results" aria-live="polite"></div><div class="chat-tools"><button id="newGroup" class="chat-action" type="button">＋ Criar grupo</button><button id="refreshChats" class="chat-action" type="button" title="Sincronizar agora, se necessário">Sincronizar</button></div></div><div id="conversationList" class="conv-list"><p class="modal-note">A carregar conversas…</p></div></aside><section class="chat-main"><div class="chat-main-head"><div><h2 id="activeTitle">Selecione uma conversa</h2><p id="activeSubtitle">As conversas só aparecem para seus participantes.</p></div><div class="chat-main-actions"><button id="startAudioCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de áudio" title="Chamada de áudio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.4 15.4 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.28.55 3.5.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10 21 3 14 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.4.55 3.5a1 1 0 0 1-.25 1.02l-2.2 2.28Z" fill="currentColor"/></svg><span>Áudio</span></button><button id="startVideoCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de vídeo" title="Chamada de vídeo" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 10 6-3v10l-6-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Vídeo</span></button><button id="groupMembers" class="chat-action" type="button" hidden>Participantes</button></div></div><div id="emptyChat" class="chat-empty"><strong>Seu chat, dentro do SmartInspect.</strong><span>Busque alguém pelo @ID ou abra uma conversa existente.</span></div><div id="messages" class="chat-messages" aria-live="polite" hidden></div><button id="olderMessages" class="ghost-button" type="button" hidden>Carregar mensagens anteriores</button><form id="composer" class="chat-compose" hidden><input id="fileInput" type="file" hidden accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,.doc,.docx,.xls,.xlsx,.ppt,.pptx"><button id="attachButton" class="chat-action" type="button" aria-label="Anexar imagem ou arquivo" title="Anexar imagem ou arquivo">＋</button><button id="recordButton" class="chat-action" type="button" aria-label="Gravar mensagem de voz" title="Gravar mensagem de voz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button id="cancelRecordButton" class="chat-action" type="button" hidden>Cancelar</button><textarea id="messageInput" rows="3" maxlength="10000" placeholder="Escreva uma mensagem… (Enter envia · Shift+Enter quebra linha)" aria-label="Mensagem. Enter envia; Shift mais Enter quebra a linha."></textarea><button class="primary-button" id="sendButton" type="submit">Enviar</button></form><div id="chatStatus" class="chat-status" role="status" aria-live="polite"></div></section></div></main>
 <main id="notificationsView" class="notifications-view" hidden><div class="notifications-head"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Notificações</h1><p>Convites e solicitações relacionados à sua conta.</p></div><button id="notificationsBack" class="secondary-button" type="button">← Voltar ao painel</button></div><section class="panel-card notification-panel" aria-label="Sua lista de notificações"><div class="notification-settings"><div><strong>Notificações no dispositivo</strong><p id="notificationPermissionStatus" class="side-copy">Ative para receber avisos enquanto o app estiver aberto.</p></div><button id="notificationPermissionButton" class="secondary-button" type="button">Ativar no dispositivo</button></div><div id="notificationList" class="notification-list" aria-live="polite"><div class="empty-state"><div class="empty-orb">◌</div><h3>Carregando notificações…</h3></div></div></section></main>
 <dialog id="callDialog" class="call-dialog" aria-labelledby="callDialogTitle">
   <section class="call-sheet">
@@ -739,6 +802,16 @@
       )
       .on(
         "postgres_changes",
+        { event: "DELETE", schema: "public", table: "chat_mensagens" },
+        async () => {
+          // DELETE pode chegar sem conversa_id no payload antigo dependendo de
+          // REPLICA IDENTITY; recarregar a conversa ativa evita depender disso.
+          if (st.active && !$("chatView").hidden) await loadMessages(true);
+          await loadConversations();
+        },
+      )
+      .on(
+        "postgres_changes",
         { event: "*", schema: "public", table: "chat_participantes" },
         async () => {
           await loadConversations();
@@ -1093,8 +1166,17 @@
       .eq("remetente_id", st.user.id)
       .select("id");
     if (result.error) {
-      console.error("Falha ao excluir mensagem:", result.error);
-      status("chatStatus", "Não foi possível excluir. Verifique a política RLS DELETE da tabela chat_mensagens no Supabase.", true);
+      console.error("Falha ao excluir mensagem no Supabase:", {
+        code: result.error.code,
+        message: result.error.message,
+        details: result.error.details,
+        hint: result.error.hint,
+      });
+      status(
+        "chatStatus",
+        `O Supabase recusou a exclusão (${result.error.code || "sem código"}). Confira o Console do navegador e a política RLS DELETE.`,
+        true,
+      );
       return;
     }
     if (!result.data?.length) {
@@ -1221,11 +1303,22 @@
     }
   });
 
+  function resizeMessageInput(input = $("messageInput")) {
+    if (!input) return;
+    // A altura é calculada pelo conteúdo, sem deixar o CSS externo encolher o campo.
+    input.style.setProperty("height", "auto", "important");
+    const styles = window.getComputedStyle(input);
+    const minHeight = parseFloat(styles.minHeight) || 92;
+    const maxHeight = parseFloat(styles.maxHeight) || 220;
+    const nextHeight = Math.max(minHeight, Math.min(input.scrollHeight, maxHeight));
+    input.style.setProperty("height", `${nextHeight}px`, "important");
+    input.style.setProperty("overflow-y", input.scrollHeight > maxHeight ? "auto" : "hidden");
+  }
+
   $("messageInput").addEventListener("input", (event) => {
-    const input = event.currentTarget;
-    input.style.height = "auto";
-    input.style.height = Math.min(input.scrollHeight, 200) + "px";
+    resizeMessageInput(event.currentTarget);
   });
+  window.addEventListener("resize", () => resizeMessageInput());
 
   $("messageInput").addEventListener("paste", async (event) => {
     const image = Array.from(event.clipboardData?.items || []).find((item) =>
@@ -1262,7 +1355,9 @@
       return;
     }
     $("messageInput").value = "";
-    $("messageInput").style.height = "";
+    $("messageInput").style.removeProperty("height");
+    $("messageInput").style.removeProperty("overflow-y");
+    resizeMessageInput();
     status("chatStatus", "Mensagem enviada.");
     await loadMessages(true);
   };
