@@ -2618,7 +2618,7 @@
         .si-footer-payment { display: grid; place-items: center; min-width: 48px; height: 34px; color: #e7f4ff; opacity: .82; }
         .si-footer-payment svg { display: block; width: auto; max-width: 72px; height: 28px; }
         .si-footer-security { display: flex; align-items: center; gap: 12px; min-height: 70px; }
-        .si-footer-shield { width: 76px; height: 56px; flex: 0 0 auto; object-fit: contain; }
+        .si-footer-shield { width: 56px; height: 56px; flex: 0 0 56px; object-fit: contain; border: 1px solid rgba(92,236,255,.28); border-radius: 50%; padding: 5px; background: rgba(255,255,255,.96); }
         .si-footer-security strong { display: block; color: #e8f8ff; font-size: 10px; letter-spacing: .12em; }
         .si-footer-security span { display: block; margin-top: 6px; color: #91a8bb; font-size: 11px; line-height: 1.5; }
         .si-footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.07); color: #6f8498; font-size: 11px; }
@@ -4469,7 +4469,6 @@
                         <span class="si-footer-payment" role="img" aria-label="Visa"><svg viewBox="0 0 70 30" aria-hidden="true"><text x="2" y="23" fill="currentColor" font-family="Arial,sans-serif" font-size="22" font-style="italic" font-weight="800" letter-spacing="-1.5">VISA</text></svg></span>
                         <span class="si-footer-payment" role="img" aria-label="Mastercard"><svg viewBox="0 0 48 30" aria-hidden="true"><circle cx="18" cy="15" r="12" fill="currentColor"/><circle cx="30" cy="15" r="12" fill="currentColor" opacity=".62"/></svg></span>
                         <span class="si-footer-payment" role="img" aria-label="Elo"><svg viewBox="0 0 62 30" aria-hidden="true"><text x="1" y="23" fill="currentColor" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="-1.4">elo</text><circle cx="50" cy="15" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M44 10h12M42 15h16M44 20h12" stroke="currentColor" stroke-width="1.4" opacity=".8"/></svg></span>
-                        <span class="si-footer-payment" role="img" aria-label="American Express"><svg viewBox="0 0 72 30" aria-hidden="true"><rect x="1" y="3" width="70" height="24" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><text x="7" y="20" fill="currentColor" font-family="Arial,sans-serif" font-size="12" font-weight="800" letter-spacing=".5">AMEX</text></svg></span>
                         <span class="si-footer-payment" role="img" aria-label="Pix"><svg viewBox="0 0 58 30" aria-hidden="true"><path fill="currentColor" d="m12 15 7-7 7 7-7 7zm12-7 3-3a3 3 0 0 1 4 0l4 4-7 7zm11 3 7 7-4 4a3 3 0 0 1-4 0l-3-3zm-2 9-7 7-4-4 7-7z"/><text x="39" y="21" fill="currentColor" font-family="Arial,sans-serif" font-size="16" font-weight="600">pix</text></svg></span>
                         <span class="si-footer-payment" role="img" aria-label="Boleto bancário"><svg viewBox="0 0 66 30" aria-hidden="true"><path stroke="currentColor" stroke-width="2" d="M3 4v22M8 4v22M14 4v22M18 4v22M25 4v22M29 4v22M35 4v22M42 4v22M46 4v22M53 4v22"/><text x="57" y="19" fill="currentColor" font-family="Arial,sans-serif" font-size="7" font-weight="700" transform="rotate(-90 57 19)">BOLETO</text></svg></span>
                     </div>
@@ -4479,7 +4478,7 @@
                     <h3 id="siFooterSecurityTitle">Segurança</h3>
                     <div class="si-footer-security">
                         <img class="si-footer-shield" src="./imagens/kaerb.png" alt="KAERB Security">
-                        <div><strong>KAERB Security</strong><span>Autenticação da conta gerida pelo Supabase Auth.</span></div>
+                        <div><strong>KAERB Security</strong><span>Autenticação da conta gerida pela KAERB Security.</span></div>
                     </div>
                 </section>
             </div>
