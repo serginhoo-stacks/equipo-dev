@@ -34,8 +34,35 @@
   };
   const openDialog = () => {
     const dialog = $("callDialog");
-    if (!dialog.open) dialog.showModal();
+    if (!dialog.open) dialog.show();
   };
+  const dragHandle = $("callDialog").querySelector("[data-call-drag-handle]");
+  if (dragHandle) {
+    let drag = null;
+    dragHandle.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+      const rect = $("callDialog").getBoundingClientRect();
+      drag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top };
+      $("callDialog").style.left = `${rect.left}px`;
+      $("callDialog").style.top = `${rect.top}px`;
+      $("callDialog").style.transform = "none";
+      dragHandle.setPointerCapture(event.pointerId);
+      event.preventDefault();
+    });
+    dragHandle.addEventListener("pointermove", (event) => {
+      if (!drag || drag.pointerId !== event.pointerId) return;
+      const dialog = $("callDialog"), rect = dialog.getBoundingClientRect();
+      const left = Math.max(8, Math.min(window.innerWidth - rect.width - 8, drag.left + event.clientX - drag.x));
+      const top = Math.max(8, Math.min(window.innerHeight - rect.height - 8, drag.top + event.clientY - drag.y));
+      dialog.style.left = `${left}px`;
+      dialog.style.top = `${top}px`;
+    });
+    const endDrag = (event) => {
+      if (drag?.pointerId === event.pointerId) drag = null;
+    };
+    dragHandle.addEventListener("pointerup", endDrag);
+    dragHandle.addEventListener("pointercancel", endDrag);
+  }
   const setMode = (mode) => {
     state.mode = mode;
     $("callAudioMark").hidden = mode !== "audio";
