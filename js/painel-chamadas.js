@@ -194,6 +194,14 @@
       const offer = await state.peerConnection.createOffer();
       await state.peerConnection.setLocalDescription(offer);
       await sendSignal("offer", { description: state.peerConnection.localDescription });
+      const callNotification = await db.rpc("chat_notificar_chamada", {
+        p_conversa_id: state.conversation.conversa_id,
+        p_chamada_id: state.callId,
+        p_tipo: mode === "video" ? "call_video" : "call_audio",
+      });
+      if (callNotification.error) {
+        console.warn("A chamada foi iniciada, mas não foi possível guardar a notificação:", callNotification.error);
+      }
       await sendQueuedCandidates();
       callStatus(`Ligando para ${state.peer.nome || "pessoa"}…`);
       state.ringTimeout = window.setTimeout(() => {
