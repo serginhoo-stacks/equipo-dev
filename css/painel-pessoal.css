@@ -130,3 +130,20 @@ html body.personal-page .chat-compose textarea {
   max-width: none;
   justify-self: stretch;
 }
+
+/* Centro de notificações no mesmo visual do painel. */
+.notifications-view { width: min(1120px, calc(100% - 36px)); margin: 30px auto 70px; }
+.notifications-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+.notifications-head h1 { margin: 0; color: #fff; font: 600 clamp(26px, 4vw, 38px) "Space Grotesk", Inter, sans-serif; }
+.notifications-head p:not(.eyebrow) { margin: 5px 0; color: var(--muted); font-size: 12px; }
+.notification-panel { min-height: 260px; }
+.notification-list { display: grid; gap: 12px; }
+.notification-item { display: flex; align-items: flex-start; gap: 13px; padding: 16px; border: 1px solid rgba(133,216,255,.16); border-radius: 14px; background: linear-gradient(145deg, rgba(18,42,72,.5), rgba(7,18,35,.55)); }
+.notification-icon { display: grid; flex: 0 0 38px; place-items: center; width: 38px; height: 38px; border: 1px solid rgba(92,236,255,.25); border-radius: 12px; color: var(--cyan); background: rgba(92,236,255,.08); font-size: 18px; }
+.notification-item strong { display: block; color: #fff; font-size: 14px; }
+.notification-item p { margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.notification-badge { display: inline-grid; place-items: center; min-width: 19px; height: 19px; margin-left: 4px; padding: 0 5px; border-radius: 99px; color: #04111e; background: var(--cyan); font-size: 10px; font-weight: 800; }
+@media (max-width: 640px) {
+  .notifications-view { width: calc(100% - 18px); margin: 16px auto calc(26px + env(safe-area-inset-bottom)); }
+  .notifications-head { align-items: flex-start; flex-direction: column; }
+}
