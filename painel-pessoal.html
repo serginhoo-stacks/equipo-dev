@@ -1499,3 +1499,58 @@
       setRecordButton(true);
       $("cancelRecordButton").hidden = false;
       $("recordButton").classList.add("recording");
+      st.recordTimer = setInterval(
+        () =>
+          status(
+            "chatStatus",
+            `Gravando ${Math.floor((Date.now() - st.recordStarted) / 1000)} s…`,
+          ),
+        500,
+      );
+      status(
+        "chatStatus",
+        "Gravando… clique em Finalizar para enviar ou Cancelar para descartar.",
+      );
+    } catch (e) {
+      st.stream?.getTracks().forEach((t) => t.stop());
+      st.stream = null;
+      $("cancelRecordButton").hidden = true;
+      status("chatStatus", e.message || "Permissão de microfone negada.", true);
+    }
+  };
+  $("profileDialog").addEventListener("close", () => {
+    if (st.profile) setAvatar($("profileAvatarPreview"), st.profile.avatar_url);
+    $("profileAvatar").value = "";
+    $("profilePassword").value = "";
+    $("profilePasswordConfirm").value = "";
+    status("profileStatus", "");
+  });
+  const hover =
+    matchMedia("(hover:hover) and (pointer:fine)").matches &&
+    !matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if (hover) {
+    document.querySelectorAll("[data-spotlight]").forEach((card) =>
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty(
+          "--pointer-x",
+          `${((e.clientX - r.left) / r.width) * 100}%`,
+        );
+        card.style.setProperty(
+          "--pointer-y",
+          `${((e.clientY - r.top) / r.height) * 100}%`,
+        );
+      }),
+    );
+  }
+  init().catch((e) =>
+    status(
+      "pageMessage",
+      e.message || "Não foi possível iniciar o painel.",
+      true,
+    ),
+  );
+})();
+</script>
+<script src="./js/painel-chamadas.js"></script>
+</body></html>
