@@ -9,6 +9,27 @@
 .call-start{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px!important;color:#dffaff!important}.call-start svg{width:16px;height:16px;flex:0 0 auto}.call-start:hover{background:rgba(92,236,255,.09)!important}.call-dialog{width:min(560px,calc(100% - 24px));max-width:none;max-height:min(92dvh,820px);padding:0;overflow:auto;border:1px solid rgba(133,216,255,.25);border-radius:22px;color:var(--text);background:linear-gradient(145deg,rgba(17,39,66,.98),rgba(5,13,27,.99));box-shadow:0 28px 90px rgba(0,0,0,.58);backdrop-filter:blur(22px)}.call-dialog::backdrop{background:rgba(1,6,15,.78);backdrop-filter:blur(5px)}.call-sheet{padding:22px}.call-sheet-heading h2{margin:0;color:#fff;font:600 22px "Space Grotesk",Inter,sans-serif}.call-sheet-heading .eyebrow{margin:0 0 8px}.call-status{min-height:22px;margin:6px 0 16px;color:var(--muted);font-size:12px;line-height:1.5}.call-stage{position:relative;display:grid;place-items:center;min-height:220px;overflow:hidden;border:1px solid rgba(133,216,255,.12);border-radius:16px;background:radial-gradient(ellipse at center,rgba(25,66,99,.48),rgba(2,8,18,.95))}.call-stage #remoteCallVideo{width:100%;max-height:48dvh;aspect-ratio:16/9;object-fit:cover}.call-stage #remoteCallVideo.call-audio-only{width:1px;height:1px;position:absolute;opacity:0;pointer-events:none}.call-audio-mark{display:grid;place-items:center;width:86px;height:86px;border:1px solid rgba(92,236,255,.24);border-radius:50%;color:var(--cyan);background:rgba(92,236,255,.08);box-shadow:0 0 50px rgba(92,236,255,.1)}.call-audio-mark svg{width:38px;height:38px}.call-local-video{position:absolute;right:12px;bottom:12px;width:min(26%,150px);aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(255,255,255,.35);border-radius:12px;background:#030813;box-shadow:0 8px 24px rgba(0,0,0,.4)}.call-mode-label{margin:10px 0;color:#d7eaf5;font-size:12px;font-weight:700}.call-controls{display:flex;flex-wrap:wrap;gap:8px}.call-controls button{min-height:40px;padding:0 14px}.call-end-button{border:1px solid rgba(255,100,122,.38);border-radius:11px;color:#fff;background:rgba(225,55,82,.78);cursor:pointer}.call-end-button:hover{background:rgba(245,60,86,.94)}.call-disclaimer{margin:15px 0 0;color:#8ea5b8;font-size:10px;line-height:1.55}.chat-main-actions{align-items:center;flex-wrap:wrap}@media(max-width:640px){.chat-main-actions{width:100%;justify-content:flex-end}.call-start{min-height:40px}.call-dialog{width:calc(100% - 18px);border-radius:18px}.call-sheet{padding:17px}.call-stage{min-height:200px}.call-controls{display:grid;grid-template-columns:1fr 1fr}.call-controls button{min-height:44px;padding-inline:8px;font-size:11px}}
 
 @media(max-width:640px){.personal-page .chat-compose #sendButton{width:auto;max-width:74px;min-width:0;min-height:40px;height:38px;padding:0 9px;justify-self:end;font-size:10px}}@media(max-width:380px){.personal-page .chat-compose #sendButton{max-width:64px;padding:0 7px;font-size:9px}}
+
+/* Chat: composer ampliado e ações discretas por mensagem */
+.chat-compose{grid-template-columns:auto auto auto minmax(0,1fr) auto;align-items:end;gap:9px;padding:16px 17px;background:rgba(2,9,20,.22)}
+.chat-compose textarea{min-height:76px;max-height:200px;padding:14px 15px;resize:vertical;border-radius:14px;font:inherit;font-size:14px;line-height:1.55;transition:border-color .18s,box-shadow .18s}
+.chat-compose textarea:focus{outline:none;border-color:rgba(92,236,255,.7);box-shadow:0 0 0 3px rgba(92,236,255,.09)}
+.chat-compose #sendButton{height:44px;min-height:44px;align-self:end;border-radius:12px;font-size:12px}
+.msg{position:relative;padding:12px 14px;max-width:min(82%,680px)}
+.msg-content-row{display:flex;align-items:flex-start;gap:8px}
+.msg-text,.msg-file{min-width:0;flex:1}
+.msg-menu-wrap{position:relative;display:flex;align-items:center;flex:0 0 auto;margin:-5px -7px 0 0}
+.msg-menu-button{display:grid;place-items:center;width:27px;height:27px;padding:0;border:1px solid transparent;border-radius:8px;color:#a8bfce;background:rgba(2,10,20,.35);font-size:18px;line-height:1;cursor:pointer;opacity:0;transition:opacity .16s,background .16s,border-color .16s}
+.msg:hover .msg-menu-button,.msg:focus-within .msg-menu-button,.msg-menu-button[aria-expanded=true]{opacity:1}
+.msg-menu-button:hover,.msg-menu-button:focus-visible{outline:none;color:#fff;background:rgba(92,236,255,.13);border-color:rgba(92,236,255,.25)}
+.msg-menu{position:absolute;z-index:20;right:0;top:31px;min-width:172px;padding:5px;border:1px solid rgba(133,216,255,.2);border-radius:11px;background:#0a1728;box-shadow:0 12px 32px rgba(0,0,0,.42)}
+.msg-menu[hidden]{display:none!important}
+.msg-menu-delete{display:flex;align-items:center;gap:9px;width:100%;padding:10px 11px;border:0;border-radius:7px;color:#ffb5bd;background:transparent;text-align:left;font:inherit;font-size:12px;cursor:pointer}
+.msg-menu-delete:hover,.msg-menu-delete:focus-visible{outline:none;background:rgba(255,90,112,.12)}
+.msg-menu-hint{padding:5px 10px 7px;color:#91a9ba;font-size:10px;line-height:1.4}
+@media(hover:none){.msg-menu-button{opacity:1}}
+@media(max-width:640px){.chat-compose{grid-template-columns:auto auto minmax(0,1fr) auto;padding:10px;gap:6px}.chat-compose #cancelRecordButton{grid-column:1/-1}.chat-compose textarea{grid-column:1/-2;min-height:68px;max-height:160px;font-size:14px}.chat-compose #sendButton{grid-column:auto;min-width:58px;height:42px;min-height:42px}.msg{max-width:94%}.msg-menu-button{opacity:1}}
+
 </style>
 </head>
 <body class="personal-page">
@@ -958,48 +979,86 @@
         a.textContent = people.get(m.remetente_id)?.nome || "Participante";
         article.append(a);
       }
+      const contentRow = document.createElement("div");
+      contentRow.className = "msg-content-row";
       if (m.tipo === "texto") {
         const t = document.createElement("div");
         t.className = "msg-text";
         t.textContent = m.conteudo || "";
-        article.append(t);
+        contentRow.append(t);
       } else {
         const f = document.createElement("div");
         f.className = "msg-file";
         const l = document.createElement("span");
-        l.textContent =
-          m.tipo === "audio"
-            ? `Áudio · ${formatBytes(m.arquivo_tamanho)}`
-            : `${m.arquivo_nome || "Arquivo"} · ${formatBytes(m.arquivo_tamanho)} · ${m.arquivo_mime || ""}`;
+        l.textContent = m.tipo === "audio"
+          ? `Áudio · ${formatBytes(m.arquivo_tamanho)}`
+          : `${m.arquivo_nome || "Arquivo"} · ${formatBytes(m.arquivo_tamanho)} · ${m.arquivo_mime || ""}`;
         f.append(l);
-        const s = await db.storage
-          .from("chat-arquivos")
-          .createSignedUrl(m.arquivo_path, 900);
-        if (s.data?.signedUrl) {
+        const signed = m.arquivo_path
+          ? await db.storage.from("chat-arquivos").createSignedUrl(m.arquivo_path, 900)
+          : { data: null };
+        if (signed.data?.signedUrl) {
           if (m.tipo === "audio") {
             const audio = document.createElement("audio");
             audio.controls = true;
-            audio.src = s.data.signedUrl;
+            audio.src = signed.data.signedUrl;
             audio.preload = "none";
             f.append(audio);
           } else if (m.arquivo_mime?.startsWith("image/")) {
             const img = document.createElement("img");
-            img.src = s.data.signedUrl;
+            img.src = signed.data.signedUrl;
             img.alt = m.arquivo_nome || "Imagem compartilhada";
-            img.style.cssText =
-              "max-width:min(320px,70vw);max-height:320px;border-radius:10px;object-fit:contain";
+            img.style.cssText = "max-width:min(320px,70vw);max-height:320px;border-radius:10px;object-fit:contain";
             f.append(img);
           } else {
             const a = document.createElement("a");
-            a.href = s.data.signedUrl;
+            a.href = signed.data.signedUrl;
             a.target = "_blank";
             a.rel = "noopener";
             a.textContent = "Abrir/baixar";
             f.append(a);
           }
         }
-        article.append(f);
+        contentRow.append(f);
       }
+      if (m.remetente_id === st.user.id) {
+        const menuWrap = document.createElement("div");
+        menuWrap.className = "msg-menu-wrap";
+        const menuButton = document.createElement("button");
+        menuButton.type = "button";
+        menuButton.className = "msg-menu-button";
+        menuButton.textContent = "⋯";
+        menuButton.title = "Opções da mensagem";
+        menuButton.setAttribute("aria-label", "Opções da mensagem");
+        menuButton.setAttribute("aria-expanded", "false");
+        const menu = document.createElement("div");
+        menu.className = "msg-menu";
+        menu.hidden = true;
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "msg-menu-delete";
+        del.textContent = "🗑  Excluir para todos";
+        const hint = document.createElement("div");
+        hint.className = "msg-menu-hint";
+        hint.textContent = "A mensagem será removida da conversa para todos os participantes.";
+        menu.append(del, hint);
+        menuButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const willOpen = menu.hidden;
+          document.querySelectorAll(".msg-menu").forEach((otherMenu) => { otherMenu.hidden = true; });
+          document.querySelectorAll(".msg-menu-button").forEach((otherButton) => otherButton.setAttribute("aria-expanded", "false"));
+          menu.hidden = !willOpen;
+          menuButton.setAttribute("aria-expanded", String(willOpen));
+        });
+        del.addEventListener("click", async () => {
+          menu.hidden = true;
+          menuButton.setAttribute("aria-expanded", "false");
+          await deleteMessageForEveryone(m);
+        });
+        menuWrap.append(menuButton, menu);
+        contentRow.append(menuWrap);
+      }
+      article.append(contentRow);
       const meta = document.createElement("div");
       meta.className = "msg-meta";
       const tm = document.createElement("time");
@@ -1017,6 +1076,49 @@
     box.scrollTop = box.scrollHeight;
     await receipts();
   }
+  async function deleteMessageForEveryone(message) {
+    if (!message?.id || message.remetente_id !== st.user?.id) {
+      status("chatStatus", "Você só pode excluir suas próprias mensagens.", true);
+      return;
+    }
+    if (!window.confirm("Excluir esta mensagem para todos os participantes? Esta ação não pode ser desfeita.")) return;
+    const conversationId = message.conversa_id;
+    status("chatStatus", "Excluindo mensagem para todos…");
+    // A exclusão é feita no banco, não apenas na interface; assim ela desaparece
+    // para todos os participantes que consultam a mesma conversa.
+    const result = await db.from("chat_mensagens")
+      .delete()
+      .eq("id", message.id)
+      .eq("conversa_id", conversationId)
+      .eq("remetente_id", st.user.id)
+      .select("id");
+    if (result.error) {
+      console.error("Falha ao excluir mensagem:", result.error);
+      status("chatStatus", "Não foi possível excluir. Verifique a política RLS DELETE da tabela chat_mensagens no Supabase.", true);
+      return;
+    }
+    if (!result.data?.length) {
+      status("chatStatus", "A mensagem não foi excluída: o banco não autorizou a operação. Confira as políticas RLS.", true);
+      return;
+    }
+    st.messages = st.messages.filter((item) => item.id !== message.id);
+    await renderMessages();
+    await loadConversations();
+    status("chatStatus", "Mensagem excluída para todos.");
+    // Se for arquivo, o objeto fica órfão no Storage até uma rotina segura de limpeza.
+  }
+
+  document.addEventListener("click", (event) => {
+    if (event.target.closest(".msg-menu-wrap")) return;
+    document.querySelectorAll(".msg-menu").forEach((menu) => { menu.hidden = true; });
+    document.querySelectorAll(".msg-menu-button").forEach((button) => button.setAttribute("aria-expanded", "false"));
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    document.querySelectorAll(".msg-menu").forEach((menu) => { menu.hidden = true; });
+    document.querySelectorAll(".msg-menu-button").forEach((button) => button.setAttribute("aria-expanded", "false"));
+  });
+
   async function markRead(batch) {
     const ids = batch
       .filter((m) => m.remetente_id !== st.user.id)
@@ -1066,6 +1168,19 @@
           await loadConversations();
         },
       )
+      .on(
+        "postgres_changes",
+        {
+          event: "DELETE",
+          schema: "public",
+          table: "chat_mensagens",
+          filter: `conversa_id=eq.${id}`,
+        },
+        async () => {
+          if (st.active?.conversa_id === id) await loadMessages(true);
+          await loadConversations();
+        },
+      )
       .subscribe((s) => {
         if (s === "CHANNEL_ERROR" || s === "TIMED_OUT")
           status(
@@ -1109,7 +1224,7 @@
   $("messageInput").addEventListener("input", (event) => {
     const input = event.currentTarget;
     input.style.height = "auto";
-    input.style.height = Math.min(input.scrollHeight, 115) + "px";
+    input.style.height = Math.min(input.scrollHeight, 200) + "px";
   });
 
   $("messageInput").addEventListener("paste", async (event) => {
