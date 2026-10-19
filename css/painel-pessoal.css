@@ -117,3 +117,16 @@ html body.personal-page .chat-compose textarea:focus {
     grid-template-columns: auto auto auto minmax(0, 1fr) auto;
   }
 }
+
+/* Dá mais largura útil à caixa, mantendo o botão Enviar no extremo direito. */
+html body.personal-page .chat-compose {
+  width: 100%;
+  padding-left: 8px;
+  padding-right: 8px;
+  column-gap: 6px;
+}
+html body.personal-page .chat-compose textarea {
+  width: 100%;
+  max-width: none;
+  justify-self: stretch;
+}
