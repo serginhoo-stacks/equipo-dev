@@ -21,6 +21,16 @@
   async function queryOptional(table,select,filter){
     const result=await banco.from(table).select(select).match(filter||{});return result;
   }
+  function renderNotifications(inviteCount,requestCount){
+    const list=$("#notificationList");const badge=$("#notificationBadge");if(!list||!badge)return;
+    list.replaceChildren();const total=(inviteCount||0)+(requestCount||0);badge.textContent=total>99?"99+":String(total);badge.hidden=total===0;
+    const add=(icon,title,description)=>{const item=document.createElement("article");item.className="notification-item";const mark=document.createElement("span");mark.className="notification-icon";mark.setAttribute("aria-hidden","true");mark.textContent=icon;const copy=document.createElement("div");const heading=document.createElement("strong");heading.textContent=title;const detail=document.createElement("p");detail.textContent=description;copy.append(heading,detail);item.append(mark,copy);list.append(item);};
+    if(inviteCount===null&&requestCount===null){add("!","Não foi possível carregar","Tente atualizar o painel para consultar suas notificações.");return;}
+    if(inviteCount>0)add("✉","Convite de empresa pendente",inviteCount===1?"Você tem 1 convite aguardando resposta.":`Você tem ${inviteCount} convites aguardando resposta.`);
+    if(requestCount>0)add("◷","Solicitação em andamento",requestCount===1?"Você tem 1 solicitação de vínculo pendente.":`Você tem ${requestCount} solicitações de vínculo pendentes.`);
+    if(inviteCount===null||requestCount===null)add("!","Lista parcial","Não foi possível consultar todas as notificações da sua conta.");
+    if(inviteCount===0&&requestCount===0){const empty=document.createElement("div");empty.className="empty-state";const orb=document.createElement("div");orb.className="empty-orb";orb.textContent="✓";const title=document.createElement("h3");title.textContent="Você está em dia";const text=document.createElement("p");text.textContent="Não há notificações pendentes no momento.";empty.append(orb,title,text);list.append(empty);}
+  }
   async function loadPanel(){
     clearMessage();
     const {data:sessionData}=await banco.auth.getSession();
@@ -33,8 +43,8 @@
     const active=(members||[]).filter(m=>m.empresa&&m.empresa.status!=="inativa");setText("#companyCount",active.length);
     const list=$("#companiesList");list.innerHTML="";$("#emptyCompanies").hidden=active.length>0;
     active.forEach(m=>list.append(companyCard(m)));
-    const invite=await banco.from("convites_empresa").select("id,status").ilike("email",user.email||"");setText("#inviteCount",invite.error?"—":(invite.data||[]).filter(x=>x.status==="pendente").length);
-    const requests=await queryOptional("solicitacoes_empresa","id,status",{usuario_id:user.id});setText("#requestCount",requests.error?"—":(requests.data||[]).filter(x=>x.status==="pendente").length);
+    const invite=await banco.from("convites_empresa").select("id,status").ilike("email",user.email||"");const pendingInvites=invite.error?null:(invite.data||[]).filter(x=>x.status==="pendente").length;setText("#inviteCount",pendingInvites===null?"—":pendingInvites);
+    const requests=await queryOptional("solicitacoes_empresa","id,status",{usuario_id:user.id});const pendingRequests=requests.error?null:(requests.data||[]).filter(x=>x.status==="pendente").length;setText("#requestCount",pendingRequests===null?"—":pendingRequests);renderNotifications(pendingInvites,pendingRequests);
     const plans=await banco.from("planos").select("id,nome,preco,periodicidade,recursos,ativo").eq("ativo",true).order("preco",{ascending:true});
     const planList=$("#plansList");planList.innerHTML="";
     if(plans.error||!plans.data?.length){planList.innerHTML='<div class="empty-inline">Nenhum plano configurado para exibição.</div>';}
