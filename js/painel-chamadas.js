@@ -131,7 +131,7 @@
         settled = true;
         reject(new Error("O canal privado de chamadas demorou a conectar. Confirme a migração de segurança."));
       }, 12000);
-      channel.subscribe((status) => {
+      channel.subscribe((status, subscribeError) => {
         if (status === "SUBSCRIBED" && !settled) {
           settled = true;
           clearTimeout(timer);
@@ -140,7 +140,9 @@
         } else if (["CHANNEL_ERROR", "TIMED_OUT", "CLOSED"].includes(status) && !settled) {
           settled = true;
           clearTimeout(timer);
-          reject(new Error("Canal de chamadas indisponível. Verifique a sessão, a ligação ao Supabase e as políticas do Realtime para os participantes desta conversa."));
+          const detail = subscribeError?.message ? ` (${subscribeError.message})` : "";
+          console.error("Falha ao subscrever canal privado de chamada:", status, subscribeError || "sem detalhe do SDK");
+          reject(new Error(`Canal de chamadas indisponível (${status})${detail}. Verifique a sessão, a ligação ao Supabase e as políticas do Realtime para os participantes desta conversa.`));
         }
       });
     });
