@@ -15,6 +15,7 @@
     peerConnection: null,
     localStream: null,
     remoteStream: null,
+    remoteAudio: null,
     callId: null,
     mode: null,
     isCaller: false,
@@ -252,7 +253,28 @@
       } else if (!state.remoteStream.getTracks().some((existing) => existing.id === event.track.id)) {
         state.remoteStream.addTrack(event.track);
       }
-      void $("remoteCallVideo").play().catch(() => {});
+      const remoteVideo = $("remoteCallVideo");
+      remoteVideo.srcObject = state.remoteStream;
+      if (state.mode === "audio") {
+        remoteVideo.muted = true;
+        state.remoteAudio ||= new Audio();
+        state.remoteAudio.autoplay = true;
+        state.remoteAudio.playsInline = true;
+        state.remoteAudio.muted = false;
+        state.remoteAudio.volume = 1;
+        state.remoteAudio.srcObject = state.remoteStream;
+        void state.remoteAudio.play().catch((error) => {
+          console.warn("A reprodução do áudio remoto foi bloqueada pelo navegador:", error);
+          showStatus("O navegador bloqueou o áudio remoto. Confirme que o separador não está silenciado e toque novamente em Atender.", true);
+        });
+      } else {
+        remoteVideo.muted = false;
+        remoteVideo.volume = 1;
+        void remoteVideo.play().catch((error) => {
+          console.warn("A reprodução do vídeo/áudio remoto foi bloqueada pelo navegador:", error);
+          showStatus("O navegador bloqueou a reprodução remota. Toque no vídeo para ativar o som.", true);
+        });
+      }
     };
     pc.onicecandidate = (event) => {
       if (!event.candidate) return;
@@ -273,6 +295,9 @@
       }
     };
     pc.oniceconnectionstatechange = () => {
+      console.info("Estado ICE da chamada:", pc.iceConnectionState);
+      if (pc.iceConnectionState === "checking") callStatus("A verificar ligação de áudio…");
+      if (pc.iceConnectionState === "connected" || pc.iceConnectionState === "completed") callStatus("Ligação de áudio estabelecida.");
       if (pc.iceConnectionState === "failed") {
         void finishCall("hangup", true, "A ligação falhou. Uma conexão TURN pode ser necessária nesta rede.");
       }
@@ -393,6 +418,11 @@
     state.peerConnection = null;
     state.localStream?.getTracks().forEach((track) => track.stop());
     state.localStream = null;
+    if (state.remoteAudio) {
+      state.remoteAudio.pause();
+      state.remoteAudio.srcObject = null;
+      state.remoteAudio = null;
+    }
     state.remoteStream = null;
     $("localCallVideo").srcObject = null;
     $("remoteCallVideo").srcObject = null;
