@@ -4,15 +4,103 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050b18"><title>Painel Pessoal — SmartInspect AI</title>
 <link rel="icon" href="./imagens/favicon.png"><link rel="stylesheet" href="./css/painel-pessoal.css">
 <style>
-[hidden]{display:none!important}.app-nav{display:flex;gap:8px}.app-nav button,.chat-action,.profile-summary{border:1px solid var(--border);border-radius:12px;color:var(--text);background:rgba(255,255,255,.045);cursor:pointer;transition:.2s}.app-nav button{padding:9px 13px;font-size:12px;font-weight:700}.app-nav button[aria-current=page]{color:var(--cyan);border-color:rgba(92,236,255,.5);background:rgba(92,236,255,.1)}.profile-summary{--pointer-x:50%;--pointer-y:12%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;width:100%;padding:17px 20px;margin-bottom:18px;text-align:left;background-image:radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),rgba(92,236,255,.105),transparent 42%),linear-gradient(135deg,rgba(17,43,74,.8),rgba(7,18,35,.86));backdrop-filter:blur(18px)}.profile-summary:hover,.chat-action:hover,.app-nav button:hover{transform:translateY(-2px);border-color:var(--cyan)}.profile-summary img,.chat-self img,.conv-item img{width:52px;height:52px;border-radius:50%;object-fit:cover;background:#081426;border:1px solid rgba(92,236,255,.35)}.profile-summary strong{display:block;color:#fff;font-size:16px}.profile-summary small{display:block;margin-top:4px;color:var(--cyan);font-size:11px}.profile-summary .profile-hint{color:var(--muted);font-size:11px;white-space:nowrap}.app-dialog{width:min(680px,calc(100% - 24px));max-height:90vh;overflow:auto}.app-dialog form{display:grid;gap:13px}.app-dialog label{display:grid;gap:7px;color:#d8eaf4;font-size:12px;font-weight:700}.app-dialog input:not([type=file]):not([type=checkbox]){width:100%;height:43px;padding:0 12px;border-radius:10px;border:1px solid rgba(133,216,255,.18);color:white;background:rgba(3,11,23,.6)}.avatar-edit{display:flex;align-items:center;gap:14px;padding:13px;border:1px solid rgba(133,216,255,.14);border-radius:14px}.avatar-edit img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid rgba(92,236,255,.5)}.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.privacy-choice{display:flex!important;align-items:center;gap:8px!important;color:var(--muted)!important}.chat-view{width:min(1320px,calc(100% - 36px));margin:30px auto 70px}.chat-headline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.chat-headline h1{margin:0;color:#fff;font:600 clamp(26px,4vw,38px) "Space Grotesk",Inter,sans-serif}.chat-headline p{margin:5px 0;color:var(--muted);font-size:12px}.chat-layout{display:grid;grid-template-columns:330px minmax(0,1fr);min-height:620px;overflow:hidden;border:1px solid var(--border);border-radius:21px;background:linear-gradient(145deg,rgba(18,42,72,.8),rgba(7,18,35,.9));backdrop-filter:blur(18px)}.chat-sidebar{display:flex;flex-direction:column;min-width:0;border-right:1px solid rgba(133,216,255,.13)}.chat-sidebar-head{padding:16px;border-bottom:1px solid rgba(255,255,255,.07)}.chat-self{display:flex;align-items:center;gap:10px;margin-bottom:14px}.chat-self strong{display:block;color:white;font-size:12px}.chat-self small{display:block;margin-top:3px;color:var(--cyan);font-size:10px}.chat-search{display:flex;gap:7px}.chat-search input,.chat-compose textarea,.chat-input{min-width:0;color:white;border:1px solid rgba(133,216,255,.18);border-radius:10px;background:rgba(3,11,23,.6)}.chat-search input{flex:1;height:40px;padding:0 10px}.chat-action{min-height:38px;padding:0 11px;font-size:11px;font-weight:750}.chat-tools{display:flex;gap:7px;margin-top:8px}.chat-tools button{flex:1}.chat-results{display:grid;gap:6px;margin-top:8px}.chat-result{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px;border:1px solid rgba(92,236,255,.18);border-radius:10px;background:rgba(92,236,255,.05)}.chat-result strong{display:block;color:white;font-size:12px}.chat-result small{color:var(--cyan);font-size:10px}.conv-list{display:grid;align-content:start;gap:4px;overflow:auto;max-height:490px;padding:9px}.conv-item{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:9px;width:100%;padding:9px;border:1px solid transparent;border-radius:12px;text-align:left;color:var(--text);background:transparent;cursor:pointer}.conv-item:hover,.conv-item[aria-current=true]{border-color:rgba(92,236,255,.25);background:rgba(92,236,255,.075)}.conv-item img{width:42px;height:42px}.conv-item strong{display:block;overflow:hidden;color:#fff;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.conv-item small{display:block;overflow:hidden;margin-top:4px;color:var(--muted);font-size:10px;text-overflow:ellipsis;white-space:nowrap}.unread{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:99px;color:#04111e;background:var(--cyan);font-size:10px;font-weight:800}.chat-main{display:flex;min-width:0;flex-direction:column}.chat-main-head{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:68px;padding:13px 17px;border-bottom:1px solid rgba(255,255,255,.07)}.chat-main-head h2{margin:0;color:#fff;font:600 17px "Space Grotesk",Inter,sans-serif}.chat-main-head p{margin:4px 0 0;color:var(--muted);font-size:10px}.chat-main-actions{display:flex;gap:6px}.chat-messages{display:flex;flex:1;flex-direction:column;gap:10px;overflow:auto;min-height:390px;max-height:calc(100vh - 360px);padding:17px}.chat-empty{display:grid;place-content:center;flex:1;min-height:380px;padding:20px;color:var(--muted);text-align:center}.chat-empty strong{margin-bottom:8px;color:#eafaff;font-size:17px}.msg{display:flex;max-width:82%;flex-direction:column;align-self:flex-start;padding:9px 11px;border:1px solid rgba(133,216,255,.12);border-radius:14px 14px 14px 4px;background:rgba(255,255,255,.045);overflow-wrap:anywhere}.msg.mine{align-self:flex-end;border-color:rgba(92,236,255,.22);border-radius:14px 14px 4px 14px;background:rgba(34,157,255,.12)}.msg-author{margin-bottom:5px;color:var(--cyan);font-size:10px;font-weight:700}.msg-text{color:#f1f7fa;font-size:13px;line-height:1.55;white-space:pre-wrap}.msg-meta{display:flex;justify-content:flex-end;gap:7px;margin-top:5px;color:var(--muted);font-size:9px}.msg-file{display:grid;gap:6px;color:#dffaff;font-size:12px}.msg-file a{color:var(--cyan)}.msg-file audio{max-width:100%;height:34px}.chat-compose{display:grid;grid-template-columns:auto auto auto 1fr auto;align-items:end;gap:7px;padding:11px 13px;border-top:1px solid rgba(255,255,255,.07)}.chat-compose textarea{width:100%;min-height:42px;max-height:115px;padding:10px;resize:vertical}.chat-compose .chat-action,.chat-compose .primary-button{height:42px}.chat-compose #sendButton{width:auto;min-width:72px;height:38px;min-height:38px;padding:0 12px;justify-self:end;font-size:11px;line-height:1}.chat-compose #recordButton svg{display:block;width:19px;height:19px;margin:auto}.chat-status{min-height:20px;padding:0 15px 8px;color:var(--muted);font-size:11px}.error-text{color:#ffb5bc!important}.modal-row{display:flex;justify-content:flex-end;gap:8px}.modal-note{color:var(--muted);font-size:11px}.company-data-card{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0;padding:13px 15px;border:1px solid rgba(133,216,255,.14);border-radius:12px;background:rgba(255,255,255,.035)}.company-data-card strong{display:block;color:#fff}.company-data-card small{display:block;margin-top:4px;color:var(--muted)}.recording{color:#ff8b9b!important}@media(max-width:800px){.chat-layout{grid-template-columns:270px minmax(0,1fr)}}@media(max-width:640px){.personal-header{width:calc(100% - 22px);height:auto;min-height:65px;gap:8px}.header-email{display:none}.app-nav{gap:4px}.app-nav button{padding:7px 8px;font-size:10px}.personal-shell{width:calc(100% - 22px)}.profile-summary{grid-template-columns:auto 1fr;gap:11px;padding:13px}.profile-summary .profile-hint{grid-column:2}.chat-view{width:calc(100% - 18px);margin-top:18px}.chat-headline{align-items:flex-start;flex-direction:column}.chat-layout{grid-template-columns:1fr;min-height:calc(100vh - 180px)}.chat-sidebar{border-right:0;border-bottom:1px solid rgba(133,216,255,.13)}.conv-list{display:flex;max-height:118px;overflow-x:auto;overflow-y:hidden}.conv-item{min-width:205px}.chat-messages{min-height:290px;max-height:calc(100vh - 430px)}.profile-grid{grid-template-columns:1fr}.chat-compose{grid-template-columns:auto auto auto 1fr auto}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;scroll-behavior:auto!important}}
+[hidden]{display:none!important}.app-nav{display:flex;gap:8px}.app-nav button,.chat-action,.profile-summary{border:1px solid var(--border);border-radius:12px;color:var(--text);background:rgba(255,255,255,.045);cursor:pointer;transition:.2s}.app-nav button{padding:9px 13px;font-size:12px;font-weight:700}.app-nav button[aria-current=page]{color:var(--cyan);border-color:rgba(92,236,255,.5);background:rgba(92,236,255,.1)}.profile-summary{--pointer-x:50%;--pointer-y:12%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;width:100%;padding:17px 20px;margin-bottom:18px;text-align:left;background-image:radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),rgba(92,236,255,.105),transparent 42%),linear-gradient(135deg,rgba(17,43,74,.8),rgba(7,18,35,.86));backdrop-filter:blur(18px)}.profile-summary:hover,.chat-action:hover,.app-nav button:hover{transform:translateY(-2px);border-color:var(--cyan)}.profile-summary img,.chat-self img,.conv-item img{width:52px;height:52px;border-radius:50%;object-fit:cover;background:#081426;border:1px solid rgba(92,236,255,.35)}.profile-summary strong{display:block;color:#fff;font-size:16px}.profile-summary small{display:block;margin-top:4px;color:var(--cyan);font-size:11px}.profile-summary .profile-hint{color:var(--muted);font-size:11px;white-space:nowrap}.app-dialog{width:min(680px,calc(100% - 24px));max-height:90vh;overflow:auto}.app-dialog form{display:grid;gap:13px}.app-dialog label{display:grid;gap:7px;color:#d8eaf4;font-size:12px;font-weight:700}.app-dialog input:not([type=file]):not([type=checkbox]){width:100%;height:43px;padding:0 12px;border-radius:10px;border:1px solid rgba(133,216,255,.18);color:white;background:rgba(3,11,23,.6)}.avatar-edit{display:flex;align-items:center;gap:14px;padding:13px;border:1px solid rgba(133,216,255,.14);border-radius:14px}.avatar-edit img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid rgba(92,236,255,.5)}.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.privacy-choice{display:flex!important;align-items:center;gap:8px!important;color:var(--muted)!important}.chat-view{width:min(1320px,calc(100% - 36px));margin:30px auto 70px}.chat-headline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.chat-headline h1{margin:0;color:#fff;font:600 clamp(26px,4vw,38px) "Space Grotesk",Inter,sans-serif}.chat-headline p{margin:5px 0;color:var(--muted);font-size:12px}.chat-layout{display:grid;grid-template-columns:330px minmax(0,1fr);min-height:620px;overflow:hidden;border:1px solid var(--border);border-radius:21px;background:linear-gradient(145deg,rgba(18,42,72,.8),rgba(7,18,35,.9));backdrop-filter:blur(18px)}.chat-sidebar{display:flex;flex-direction:column;min-width:0;border-right:1px solid rgba(133,216,255,.13)}.chat-sidebar-head{padding:16px;border-bottom:1px solid rgba(255,255,255,.07)}.chat-self{display:flex;align-items:center;gap:10px;margin-bottom:14px}.chat-self strong{display:block;color:white;font-size:12px}.chat-self small{display:block;margin-top:3px;color:var(--cyan);font-size:10px}.chat-search{display:flex;gap:7px}.chat-search input,.chat-compose textarea,.chat-input{min-width:0;color:white;border:1px solid rgba(133,216,255,.18);border-radius:10px;background:rgba(3,11,23,.6)}.chat-search input{flex:1;height:40px;padding:0 10px}.chat-action{min-height:38px;padding:0 11px;font-size:11px;font-weight:750}.chat-tools{display:flex;gap:7px;margin-top:8px}.chat-tools button{flex:1}.chat-results{display:grid;gap:6px;margin-top:8px}.chat-result{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px;border:1px solid rgba(92,236,255,.18);border-radius:10px;background:rgba(92,236,255,.05)}.chat-result strong{display:block;color:white;font-size:12px}.chat-result small{color:var(--cyan);font-size:10px}.conv-list{display:grid;align-content:start;gap:4px;overflow:auto;max-height:490px;padding:9px}.conv-item{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:9px;width:100%;padding:9px;border:1px solid transparent;border-radius:12px;text-align:left;color:var(--text);background:transparent;cursor:pointer}.conv-item:hover,.conv-item[aria-current=true]{border-color:rgba(92,236,255,.25);background:rgba(92,236,255,.075)}.conv-item img{width:42px;height:42px}.conv-item strong{display:block;overflow:hidden;color:#fff;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.conv-item small{display:block;overflow:hidden;margin-top:4px;color:var(--muted);font-size:10px;text-overflow:ellipsis;white-space:nowrap}.unread{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:99px;color:#04111e;background:var(--cyan);font-size:10px;font-weight:800}.chat-main{display:flex;min-width:0;flex-direction:column}.chat-main-head{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:68px;padding:13px 17px;border-bottom:1px solid rgba(255,255,255,.07)}.chat-main-head h2{margin:0;color:#fff;font:600 17px "Space Grotesk",Inter,sans-serif}.chat-main-head p{margin:4px 0 0;color:var(--muted);font-size:10px}.chat-main-actions{display:flex;gap:6px}.chat-messages{display:flex;flex:1;flex-direction:column;gap:10px;overflow:auto;min-height:390px;max-height:calc(100vh - 360px);padding:17px}.chat-empty{display:grid;place-content:center;flex:1;min-height:380px;padding:20px;color:var(--muted);text-align:center}.chat-empty strong{margin-bottom:8px;color:#eafaff;font-size:17px}.msg{display:flex;max-width:82%;flex-direction:column;align-self:flex-start;padding:9px 11px;border:1px solid rgba(133,216,255,.12);border-radius:14px 14px 14px 4px;background:rgba(255,255,255,.045);overflow-wrap:anywhere}.msg.mine{align-self:flex-end;border-color:rgba(92,236,255,.22);border-radius:14px 14px 4px 14px;background:rgba(34,157,255,.12)}.msg-author{margin-bottom:5px;color:var(--cyan);font-size:10px;font-weight:700}.msg-text{color:#f1f7fa;font-size:13px;line-height:1.55;white-space:pre-wrap}.msg-meta{display:flex;justify-content:flex-end;gap:7px;margin-top:5px;color:var(--muted);font-size:9px}.msg-file{display:grid;gap:6px;color:#dffaff;font-size:12px}.msg-file a{color:var(--cyan)}.msg-file audio{max-width:100%;height:34px}.chat-compose{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:end;gap:7px;padding:11px 13px;border-top:1px solid rgba(255,255,255,.07)}.chat-compose textarea{width:100%;min-height:42px;max-height:115px;padding:10px;resize:vertical}.chat-compose .chat-action,.chat-compose .primary-button{height:42px}.chat-compose #sendButton{width:auto;min-width:72px;height:38px;min-height:38px;padding:0 12px;justify-self:end;font-size:11px;line-height:1}.chat-compose #recordButton svg{display:block;width:19px;height:19px;margin:auto}.chat-status{min-height:20px;padding:0 15px 8px;color:var(--muted);font-size:11px}.error-text{color:#ffb5bc!important}.modal-row{display:flex;justify-content:flex-end;gap:8px}.modal-note{color:var(--muted);font-size:11px}.company-data-card{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0;padding:13px 15px;border:1px solid rgba(133,216,255,.14);border-radius:12px;background:rgba(255,255,255,.035)}.company-data-card strong{display:block;color:#fff}.company-data-card small{display:block;margin-top:4px;color:var(--muted)}.recording{color:#ff8b9b!important}@media(max-width:800px){.chat-layout{grid-template-columns:270px minmax(0,1fr)}}@media(max-width:640px){.personal-header{width:calc(100% - 22px);height:auto;min-height:65px;gap:8px}.header-email{display:none}.app-nav{gap:4px}.app-nav button{padding:7px 8px;font-size:10px}.personal-shell{width:calc(100% - 22px)}.profile-summary{grid-template-columns:auto 1fr;gap:11px;padding:13px}.profile-summary .profile-hint{grid-column:2}.chat-view{width:calc(100% - 18px);margin-top:18px}.chat-headline{align-items:flex-start;flex-direction:column}.chat-layout{grid-template-columns:1fr;min-height:calc(100vh - 180px)}.chat-sidebar{border-right:0;border-bottom:1px solid rgba(133,216,255,.13)}.conv-list{display:flex;max-height:118px;overflow-x:auto;overflow-y:hidden}.conv-item{min-width:205px}.chat-messages{min-height:290px;max-height:calc(100vh - 430px)}.profile-grid{grid-template-columns:1fr}.chat-compose{grid-template-columns:auto auto auto 1fr auto}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
 .call-start{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px!important;color:#dffaff!important}.call-start svg{width:16px;height:16px;flex:0 0 auto}.call-start:hover{background:rgba(92,236,255,.09)!important}.call-dialog{width:min(560px,calc(100% - 24px));max-width:none;max-height:min(92dvh,820px);padding:0;overflow:auto;border:1px solid rgba(133,216,255,.25);border-radius:22px;color:var(--text);background:linear-gradient(145deg,rgba(17,39,66,.98),rgba(5,13,27,.99));box-shadow:0 28px 90px rgba(0,0,0,.58);backdrop-filter:blur(22px)}.call-dialog::backdrop{background:rgba(1,6,15,.78);backdrop-filter:blur(5px)}.call-sheet{padding:22px}.call-sheet-heading h2{margin:0;color:#fff;font:600 22px "Space Grotesk",Inter,sans-serif}.call-sheet-heading .eyebrow{margin:0 0 8px}.call-status{min-height:22px;margin:6px 0 16px;color:var(--muted);font-size:12px;line-height:1.5}.call-stage{position:relative;display:grid;place-items:center;min-height:220px;overflow:hidden;border:1px solid rgba(133,216,255,.12);border-radius:16px;background:radial-gradient(ellipse at center,rgba(25,66,99,.48),rgba(2,8,18,.95))}.call-stage #remoteCallVideo{width:100%;max-height:48dvh;aspect-ratio:16/9;object-fit:cover}.call-stage #remoteCallVideo.call-audio-only{width:1px;height:1px;position:absolute;opacity:0;pointer-events:none}.call-audio-mark{display:grid;place-items:center;width:86px;height:86px;border:1px solid rgba(92,236,255,.24);border-radius:50%;color:var(--cyan);background:rgba(92,236,255,.08);box-shadow:0 0 50px rgba(92,236,255,.1)}.call-audio-mark svg{width:38px;height:38px}.call-local-video{position:absolute;right:12px;bottom:12px;width:min(26%,150px);aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(255,255,255,.35);border-radius:12px;background:#030813;box-shadow:0 8px 24px rgba(0,0,0,.4)}.call-mode-label{margin:10px 0;color:#d7eaf5;font-size:12px;font-weight:700}.call-controls{display:flex;flex-wrap:wrap;gap:8px}.call-controls button{min-height:40px;padding:0 14px}.call-end-button{border:1px solid rgba(255,100,122,.38);border-radius:11px;color:#fff;background:rgba(225,55,82,.78);cursor:pointer}.call-end-button:hover{background:rgba(245,60,86,.94)}.call-disclaimer{margin:15px 0 0;color:#8ea5b8;font-size:10px;line-height:1.55}.chat-main-actions{align-items:center;flex-wrap:wrap}@media(max-width:640px){.chat-main-actions{width:100%;justify-content:flex-end}.call-start{min-height:40px}.call-dialog{width:calc(100% - 18px);border-radius:18px}.call-sheet{padding:17px}.call-stage{min-height:200px}.call-controls{display:grid;grid-template-columns:1fr 1fr}.call-controls button{min-height:44px;padding-inline:8px;font-size:11px}}
 
 @media(max-width:640px){.personal-page .chat-compose #sendButton{width:auto;max-width:74px;min-width:0;min-height:40px;height:38px;padding:0 9px;justify-self:end;font-size:10px}}@media(max-width:380px){.personal-page .chat-compose #sendButton{max-width:64px;padding:0 7px;font-size:9px}}
 
-/* Ações rápidas de mensagem e organização pessoal de conversas. */
-.conv-row{display:grid;grid-template-columns:minmax(0,1fr) 34px;align-items:center;gap:3px;position:relative}.conv-row .conv-item{min-width:0}.conv-options{position:relative}.conv-options summary,.message-actions summary{display:grid;place-items:center;list-style:none;width:34px;height:36px;border:1px solid transparent;border-radius:9px;color:var(--muted);cursor:pointer;font-size:20px}.conv-options summary::-webkit-details-marker,.message-actions summary::-webkit-details-marker{display:none}.conv-options[open] summary,.conv-options summary:hover,.message-actions[open] summary,.message-actions summary:hover{color:var(--cyan);border-color:var(--border);background:rgba(92,236,255,.08)}.conv-menu,.message-actions-menu{position:absolute;z-index:15;right:0;top:100%;display:grid;min-width:175px;padding:5px;border:1px solid var(--border);border-radius:12px;background:#0b1c31;box-shadow:0 12px 34px #0009}.conv-menu button,.message-actions-menu button{width:100%;padding:9px 10px;border:0;border-radius:8px;color:var(--text);text-align:left;background:transparent;cursor:pointer;font-size:11px}.conv-menu button:hover,.message-actions-menu button:hover{background:rgba(92,236,255,.12)}.message-row{position:relative;display:flex;max-width:90%;align-self:flex-start;align-items:flex-start;gap:4px}.message-row.mine{align-self:flex-end;flex-direction:row-reverse}.message-row .msg{max-width:calc(100% - 38px)}.message-actions{position:relative;flex:0 0 34px;margin-top:4px;opacity:.4;transition:opacity .18s}.message-row:hover .message-actions,.message-row:focus-within .message-actions,.message-actions[open]{opacity:1}.message-actions-menu{top:36px}.msg-quote{margin:0 0 7px;padding:6px 9px;border-left:2px solid var(--cyan);border-radius:0 7px 7px 0;color:#c6d9e8;background:rgba(92,236,255,.07);font-size:10px;line-height:1.45}.msg-deleted{color:var(--muted);font-style:italic}.reply-preview{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;border-top:1px solid rgba(255,255,255,.07);background:rgba(92,236,255,.06)}.reply-preview strong,.reply-preview small{display:block}.reply-preview strong{color:var(--cyan);font-size:10px}.reply-preview small{max-width:min(70vw,520px);overflow:hidden;color:var(--muted);text-overflow:ellipsis;white-space:nowrap;font-size:11px}.call-history{max-height:210px;overflow:auto;padding:10px 15px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(3,11,23,.3)}.call-history h3{margin:0 0 8px;color:#fff;font-size:12px}.call-history-items{display:grid;gap:6px}.call-history-entry{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid rgba(133,216,255,.12);border-radius:9px;color:var(--text);font-size:11px;background:rgba(255,255,255,.03)}.call-history-entry small{color:var(--muted)}.call-sheet-heading[data-call-drag-handle]{cursor:grab;touch-action:none;user-select:none}.call-dialog[open]{position:fixed;inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;z-index:1000}.call-dialog[open]::backdrop{background:transparent;backdrop-filter:none;pointer-events:none}.call-dialog .call-sheet-heading:active{cursor:grabbing}
-@media(max-width:640px){.message-row{max-width:100%}.message-row .msg{max-width:calc(100% - 36px)}.message-actions{opacity:1}.conv-options summary{min-height:44px}.call-history-entry{align-items:flex-start;flex-direction:column;gap:4px}.call-dialog[open]{width:min(420px,calc(100% - 18px));max-height:calc(100dvh - 24px)}}
+/* Chat: composer ampliado e ações discretas por mensagem */
+.chat-compose{grid-template-columns:auto auto minmax(0,1fr) auto;align-items:end;gap:9px;padding:16px 17px;background:rgba(2,9,20,.22)}
+.chat-compose textarea{min-height:76px;max-height:200px;padding:14px 15px;resize:vertical;border-radius:14px;font:inherit;font-size:14px;line-height:1.55;transition:border-color .18s,box-shadow .18s}
+.chat-compose textarea:focus{outline:none;border-color:rgba(92,236,255,.7);box-shadow:0 0 0 3px rgba(92,236,255,.09)}
+.chat-compose #sendButton{height:44px;min-height:44px;align-self:end;border-radius:12px;font-size:12px}
+.msg{position:relative;padding:12px 14px;max-width:min(82%,680px)}
+.msg-content-row{display:flex;align-items:flex-start;gap:8px}
+.msg-text,.msg-file{min-width:0;flex:1}
+.msg-menu-wrap{position:relative;display:flex;align-items:center;flex:0 0 auto;margin:-5px -7px 0 0}
+.msg-menu-button{display:grid;place-items:center;width:27px;height:27px;padding:0;border:1px solid transparent;border-radius:8px;color:#a8bfce;background:rgba(2,10,20,.35);font-size:18px;line-height:1;cursor:pointer;opacity:0;transition:opacity .16s,background .16s,border-color .16s}
+.msg:hover .msg-menu-button,.msg:focus-within .msg-menu-button,.msg-menu-button[aria-expanded=true]{opacity:1}
+.msg-menu-button:hover,.msg-menu-button:focus-visible{outline:none;color:#fff;background:rgba(92,236,255,.13);border-color:rgba(92,236,255,.25)}
+.msg-menu{position:absolute;z-index:20;right:0;top:31px;min-width:172px;padding:5px;border:1px solid rgba(133,216,255,.2);border-radius:11px;background:#0a1728;box-shadow:0 12px 32px rgba(0,0,0,.42)}
+.msg-menu[hidden]{display:none!important}
+.msg-menu-delete{display:flex;align-items:center;gap:9px;width:100%;padding:10px 11px;border:0;border-radius:7px;color:#ffb5bd;background:transparent;text-align:left;font:inherit;font-size:12px;cursor:pointer}
+.msg-menu-delete:hover,.msg-menu-delete:focus-visible{outline:none;background:rgba(255,90,112,.12)}
+.msg-menu-hint{padding:5px 10px 7px;color:#91a9ba;font-size:10px;line-height:1.4}
+@media(hover:none){.msg-menu-button{opacity:1}}
+@media(max-width:640px){.chat-compose{grid-template-columns:auto auto minmax(0,1fr) auto;padding:10px;gap:6px}.chat-compose #cancelRecordButton{grid-column:1/-1}.chat-compose textarea{grid-column:1/-2;min-height:68px;max-height:160px;font-size:14px}.chat-compose #sendButton{grid-column:auto;min-width:58px;height:42px;min-height:42px}.msg{max-width:94%}.msg-menu-button{opacity:1}}
+
+
+/* Correção definitiva do compositor: alta especificidade para vencer painel-pessoal.css */
+.personal-page #chatView #composer.chat-compose {
+  display: grid !important;
+  grid-template-columns: auto auto minmax(0, 1fr) auto !important;
+  align-items: end !important;
+  gap: 10px !important;
+  padding: 16px 17px !important;
+}
+.personal-page #chatView #composer #messageInput {
+  grid-column: 3;
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 92px !important;
+  max-height: 220px !important;
+  height: 92px !important;
+  padding: 15px 16px !important;
+  border: 1px solid rgba(133,216,255,.30) !important;
+  border-radius: 15px !important;
+  background: rgba(3,11,23,.78) !important;
+  color: #fff !important;
+  font: inherit !important;
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+  resize: vertical !important;
+  overflow-y: hidden;
+  white-space: pre-wrap !important;
+}
+.personal-page #chatView #composer #messageInput:focus {
+  outline: none !important;
+  border-color: rgba(92,236,255,.78) !important;
+  box-shadow: 0 0 0 3px rgba(92,236,255,.12) !important;
+}
+.personal-page #chatView #composer #sendButton {
+  align-self: end !important;
+  min-height: 44px !important;
+  height: 44px !important;
+}
+@media (max-width: 640px) {
+  .personal-page #chatView #composer.chat-compose {
+    grid-template-columns: 42px 42px minmax(0,1fr) auto !important;
+    gap: 7px !important;
+    padding: 11px !important;
+  }
+  .personal-page #chatView #composer #cancelRecordButton:not([hidden]) {
+    grid-column: 1 / -1 !important;
+  }
+  .personal-page #chatView #composer #messageInput {
+    grid-column: 1 / -2 !important;
+    min-height: 78px !important;
+    max-height: 180px !important;
+    height: 78px !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+  }
+  .personal-page #chatView #composer #sendButton {
+    grid-column: auto !important;
+    min-width: 58px !important;
+    padding-inline: 9px !important;
+  }
+}
+
+
+/* Menus do chat, resposta citada e histórico de chamadas. */
+.conv-row{display:grid;grid-template-columns:minmax(0,1fr) 36px;align-items:center;gap:3px;position:relative}.conv-row .conv-item{min-width:0}.conv-options,.message-actions{position:relative}.conv-options summary,.message-actions summary{display:grid;place-items:center;list-style:none;width:36px;height:38px;border:1px solid transparent;border-radius:9px;color:var(--muted);cursor:pointer;font-size:20px}.conv-options summary::-webkit-details-marker,.message-actions summary::-webkit-details-marker{display:none}.conv-options[open] summary,.conv-options summary:hover,.message-actions[open] summary,.message-actions summary:hover{color:var(--cyan);border-color:var(--border);background:rgba(92,236,255,.08)}.conv-menu,.message-actions-menu{position:absolute;z-index:25;right:0;top:100%;display:grid;min-width:180px;padding:5px;border:1px solid var(--border);border-radius:12px;background:#0b1c31;box-shadow:0 12px 34px #0009}.conv-menu button,.message-actions-menu button{width:100%;padding:10px;border:0;border-radius:8px;color:var(--text);text-align:left;background:transparent;cursor:pointer;font-size:11px}.conv-menu button:hover,.message-actions-menu button:hover{background:rgba(92,236,255,.12)}.msg-quote{margin:0 0 7px;padding:6px 9px;border-left:2px solid var(--cyan);border-radius:0 7px 7px 0;color:#c6d9e8;background:rgba(92,236,255,.07);font-size:10px;line-height:1.45}.msg-deleted{color:var(--muted);font-style:italic}.message-actions{display:flex;justify-content:flex-end;align-self:flex-start;margin:3px 0 0;opacity:.35;transition:opacity .18s}.msg:hover .message-actions,.msg:focus-within .message-actions,.message-actions[open]{opacity:1}.msg-actions-layout{display:flex;align-items:flex-start;gap:6px}.msg-actions-layout>.msg-content-row{min-width:0;flex:1}.reply-preview{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;border-top:1px solid rgba(255,255,255,.07);background:rgba(92,236,255,.06)}.reply-preview strong,.reply-preview small{display:block}.reply-preview strong{color:var(--cyan);font-size:10px}.reply-preview small{max-width:min(70vw,520px);overflow:hidden;color:var(--muted);text-overflow:ellipsis;white-space:nowrap;font-size:11px}.call-history{max-height:210px;overflow:auto;padding:10px 15px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(3,11,23,.3)}.call-history h3{margin:0 0 8px;color:#fff;font-size:12px}.call-history-items{display:grid;gap:6px}.call-history-entry{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid rgba(133,216,255,.12);border-radius:9px;color:var(--text);font-size:11px;background:rgba(255,255,255,.03)}.call-history-entry small{color:var(--muted)}.call-sheet-heading[data-call-drag-handle]{cursor:grab;touch-action:none;user-select:none}.call-dialog[open]{position:fixed;inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;z-index:1000}.call-dialog[open]::backdrop{background:transparent;backdrop-filter:none;pointer-events:none}.call-dialog .call-sheet-heading:active{cursor:grabbing}
+@media(max-width:640px){.conv-options summary{min-height:44px}.message-actions{opacity:1}.call-history-entry{align-items:flex-start;flex-direction:column;gap:4px}.call-dialog[open]{width:min(420px,calc(100% - 18px));max-height:calc(100dvh - 24px)}}
 
 </style>
 </head>
@@ -25,7 +113,7 @@
 <section class="summary-grid" aria-label="Resumo da conta"><article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article><article class="summary-card"><span class="summary-icon cyan">◈</span><span>Convites recebidos</span><strong id="inviteCount">—</strong></article><article class="summary-card"><span class="summary-icon violet">◌</span><span>Solicitações pendentes</span><strong id="requestCount">—</strong></article></section>
 <div class="content-grid"><section class="panel-card main-panel" aria-labelledby="companiesTitle"><div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" type="button" title="Atualizar">↻</button></div><div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos…</div></div><div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Solicite vínculo a uma empresa existente. A criação depende de uma função autorizada do projeto.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button" type="button">Ver criação de empresa</button><button id="requestCompanyButton" class="secondary-button" type="button">Solicitar vínculo</button></div></div></section><aside class="side-column"><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2>Minha conta</h2></div></div><div class="account-row" hidden><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row" hidden><span>E-mail</span><strong id="accountEmail">—</strong></div><p class="side-copy">Os dados completos ficam ocultos até abrir o perfil.</p><button id="editProfile" class="secondary-button full" type="button">Editar perfil</button></section><section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema valida seu vínculo e carrega somente os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SMARTINSPECT CHAT</p><h2>Fale com sua equipe</h2></div></div><p class="side-copy">Encontre pessoas pelo @ID e converse com segurança.</p><button id="openChat" class="secondary-button full" type="button">Abrir chat →</button></section></aside></div><section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><p class="eyebrow">ESTRUTURA CONFIGURÁVEL</p><h2 id="plansTitle">Planos e assinaturas</h2><p>Os planos reais aparecem quando estão cadastrados e autorizados no banco.</p></div></div><div id="plansList" class="plans-list"><div class="empty-inline">Nenhum plano configurado para exibição.</div></div></section>
 </main>
-<main id="chatView" class="chat-view" hidden><div class="chat-headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Chat</h1><p>Encontre e chame pessoas usando o @identificador público.</p></div><button id="backPanel" class="secondary-button" type="button">← Voltar ao painel</button></div><div class="chat-layout"><aside class="chat-sidebar"><div class="chat-sidebar-head"><div class="chat-self"><img id="chatSelfAvatar" src="./imagens/favicon.png" alt=""><span><strong id="chatSelfName">Seu perfil</strong><small id="chatSelfHandle">Defina seu @ID</small></span></div><form id="searchForm" class="chat-search"><input id="searchHandle" maxlength="25" placeholder="Buscar por @identificador" aria-label="Buscar pessoa pelo identificador"><button class="chat-action" type="submit">Buscar</button></form><div id="searchResults" class="chat-results" aria-live="polite"></div><div class="chat-tools"><button id="newGroup" class="chat-action" type="button">＋ Criar grupo</button><button id="refreshChats" class="chat-action" type="button" title="Sincronizar agora, se necessário">Sincronizar</button></div></div><div id="conversationList" class="conv-list"><p class="modal-note">A carregar conversas…</p></div></aside><section class="chat-main"><div class="chat-main-head"><div><h2 id="activeTitle">Selecione uma conversa</h2><p id="activeSubtitle">As conversas só aparecem para seus participantes.</p></div><div class="chat-main-actions"><button id="callHistoryButton" class="chat-action" type="button" aria-expanded="false">Histórico</button><button id="startAudioCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de áudio" title="Chamada de áudio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.4 15.4 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.28.55 3.5.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10 21 3 14 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.4.55 3.5a1 1 0 0 1-.25 1.02l-2.2 2.28Z" fill="currentColor"/></svg><span>Áudio</span></button><button id="startVideoCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de vídeo" title="Chamada de vídeo" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 10 6-3v10l-6-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Vídeo</span></button><button id="groupMembers" class="chat-action" type="button" hidden>Participantes</button></div></div><section id="callHistory" class="call-history" hidden aria-label="Histórico de chamadas"><h3>Chamadas recentes</h3><div id="callHistoryItems" class="call-history-items"></div></section><div id="emptyChat" class="chat-empty"><strong>Seu chat, dentro do SmartInspect.</strong><span>Busque alguém pelo @ID ou abra uma conversa existente.</span></div><div id="messages" class="chat-messages" aria-live="polite" hidden></div><button id="olderMessages" class="ghost-button" type="button" hidden>Carregar mensagens anteriores</button><div id="replyPreview" class="reply-preview" hidden><span><strong>Respondendo a</strong><small id="replyPreviewText"></small></span><button id="cancelReply" class="chat-action" type="button" aria-label="Cancelar resposta">×</button></div><form id="composer" class="chat-compose" hidden><input id="fileInput" type="file" hidden accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,.doc,.docx,.xls,.xlsx,.ppt,.pptx"><button id="attachButton" class="chat-action" type="button" aria-label="Anexar imagem ou arquivo" title="Anexar imagem ou arquivo">＋</button><button id="recordButton" class="chat-action" type="button" aria-label="Gravar mensagem de voz" title="Gravar mensagem de voz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button id="cancelRecordButton" class="chat-action" type="button" hidden>Cancelar</button><textarea id="messageInput" rows="1" maxlength="10000" placeholder="Escreva uma mensagem… (Enter envia · Shift+Enter quebra linha)" aria-label="Mensagem. Enter envia; Shift mais Enter quebra a linha."></textarea><button class="primary-button" id="sendButton" type="submit">Enviar</button></form><div id="chatStatus" class="chat-status" role="status" aria-live="polite"></div></section></div></main>
+<main id="chatView" class="chat-view" hidden><div class="chat-headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Chat</h1><p>Encontre e chame pessoas usando o @identificador público.</p></div><button id="backPanel" class="secondary-button" type="button">← Voltar ao painel</button></div><div class="chat-layout"><aside class="chat-sidebar"><div class="chat-sidebar-head"><div class="chat-self"><img id="chatSelfAvatar" src="./imagens/favicon.png" alt=""><span><strong id="chatSelfName">Seu perfil</strong><small id="chatSelfHandle">Defina seu @ID</small></span></div><form id="searchForm" class="chat-search"><input id="searchHandle" maxlength="25" placeholder="Buscar por @identificador" aria-label="Buscar pessoa pelo identificador"><button class="chat-action" type="submit">Buscar</button></form><div id="searchResults" class="chat-results" aria-live="polite"></div><div class="chat-tools"><button id="newGroup" class="chat-action" type="button">＋ Criar grupo</button><button id="refreshChats" class="chat-action" type="button" title="Sincronizar agora, se necessário">Sincronizar</button></div></div><div id="conversationList" class="conv-list"><p class="modal-note">A carregar conversas…</p></div></aside><section class="chat-main"><div class="chat-main-head"><div><h2 id="activeTitle">Selecione uma conversa</h2><p id="activeSubtitle">As conversas só aparecem para seus participantes.</p></div><div class="chat-main-actions"><button id="callHistoryButton" class="chat-action" type="button" aria-expanded="false">Histórico</button><button id="startAudioCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de áudio" title="Chamada de áudio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.4 15.4 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.28.55 3.5.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10 21 3 14 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.4.55 3.5a1 1 0 0 1-.25 1.02l-2.2 2.28Z" fill="currentColor"/></svg><span>Áudio</span></button><button id="startVideoCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de vídeo" title="Chamada de vídeo" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 10 6-3v10l-6-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Vídeo</span></button><button id="groupMembers" class="chat-action" type="button" hidden>Participantes</button></div></div><section id="callHistory" class="call-history" hidden aria-label="Histórico de chamadas"><h3>Chamadas recentes</h3><div id="callHistoryItems" class="call-history-items"></div></section><div id="emptyChat" class="chat-empty"><strong>Seu chat, dentro do SmartInspect.</strong><span>Busque alguém pelo @ID ou abra uma conversa existente.</span></div><div id="messages" class="chat-messages" aria-live="polite" hidden></div><button id="olderMessages" class="ghost-button" type="button" hidden>Carregar mensagens anteriores</button><div id="replyPreview" class="reply-preview" hidden><span><strong>Respondendo a</strong><small id="replyPreviewText"></small></span><button id="cancelReply" class="chat-action" type="button" aria-label="Cancelar resposta">×</button></div><form id="composer" class="chat-compose" hidden><input id="fileInput" type="file" hidden accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,.doc,.docx,.xls,.xlsx,.ppt,.pptx"><button id="attachButton" class="chat-action" type="button" aria-label="Anexar imagem ou arquivo" title="Anexar imagem ou arquivo">＋</button><button id="recordButton" class="chat-action" type="button" aria-label="Gravar mensagem de voz" title="Gravar mensagem de voz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button id="cancelRecordButton" class="chat-action" type="button" hidden>Cancelar</button><textarea id="messageInput" rows="3" maxlength="10000" placeholder="Escreva uma mensagem… (Enter envia · Shift+Enter quebra linha)" aria-label="Mensagem. Enter envia; Shift mais Enter quebra a linha."></textarea><button class="primary-button" id="sendButton" type="submit">Enviar</button></form><div id="chatStatus" class="chat-status" role="status" aria-live="polite"></div></section></div></main>
 <main id="notificationsView" class="notifications-view" hidden><div class="notifications-head"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Notificações</h1><p>Convites e solicitações relacionados à sua conta.</p></div><button id="notificationsBack" class="secondary-button" type="button">← Voltar ao painel</button></div><section class="panel-card notification-panel" aria-label="Sua lista de notificações"><div class="notification-settings"><div><strong>Notificações no dispositivo</strong><p id="notificationPermissionStatus" class="side-copy">Ative para receber avisos enquanto o app estiver aberto.</p></div><button id="notificationPermissionButton" class="secondary-button" type="button">Ativar no dispositivo</button></div><div id="notificationList" class="notification-list" aria-live="polite"><div class="empty-state"><div class="empty-orb">◌</div><h3>Carregando notificações…</h3></div></div></section></main>
 <dialog id="callDialog" class="call-dialog" aria-labelledby="callDialogTitle">
   <section class="call-sheet">
@@ -650,57 +738,33 @@
     return c.tipo === "grupo" ? c.nome : other(c)?.nome || "Conversa privada";
   }
   function renderConversations() {
-    const list = $("conversationList");
-    list.replaceChildren();
-    if (!st.conversations.length) {
-      const p = document.createElement("p");
-      p.className = "modal-note";
-      p.textContent = "Nenhuma conversa. Busque alguém pelo @ID.";
-      list.append(p);
-      return;
-    }
+    const list = $("conversationList"); list.replaceChildren();
+    if (!st.conversations.length) { const p=document.createElement("p"); p.className="modal-note"; p.textContent="Nenhuma conversa. Busque alguém pelo @ID."; list.append(p); return; }
     for (const c of st.conversations) {
-      const row = document.createElement("div");
-      row.className = "conv-row";
-      const b = document.createElement("button");
-      b.className = "conv-item";
-      b.type = "button";
-      b.setAttribute("aria-current", c.conversa_id === st.active?.conversa_id ? "true" : "false");
-      const p = other(c), img = document.createElement("img");
-      img.src = c.tipo === "grupo" ? fallback : avatar(p?.avatar_url);
-      img.alt = "";
-      const span = document.createElement("span"), strong = document.createElement("strong"), small = document.createElement("small");
-      strong.textContent = title(c);
-      small.textContent = c.ultima_mensagem?.tipo === "texto" ? c.ultima_mensagem.conteudo : c.ultima_mensagem?.tipo === "apagada" ? "Mensagem apagada" : c.ultima_mensagem?.arquivo_nome || "Sem mensagens";
-      span.append(strong, small); b.append(img, span);
-      if (+c.nao_lidas) { const n = document.createElement("b"); n.className = "unread"; n.textContent = c.nao_lidas; b.append(n); }
-      b.onclick = () => openConversation(c);
-      const details = document.createElement("details"); details.className = "conv-options";
-      const summary = document.createElement("summary"); summary.textContent = "⋯"; summary.setAttribute("aria-label", "Opções da conversa");
-      const menu = document.createElement("div"); menu.className = "conv-menu";
-      for (const [action,label] of [["clear","Limpar conversa"],["delete","Excluir conversa para mim"]]) {
-        const item = document.createElement("button"); item.type = "button"; item.dataset.conversationAction = action; item.textContent = label;
-        item.onclick = async (event) => { event.stopPropagation(); details.open = false; await conversationAction(c, action); };
-        menu.append(item);
-      }
-      details.append(summary, menu); row.append(b, details); list.append(row);
+      const row=document.createElement("div"); row.className="conv-row";
+      const b=document.createElement("button"); b.className="conv-item"; b.type="button";
+      b.setAttribute("aria-current",c.conversa_id===st.active?.conversa_id?"true":"false");
+      const p=other(c),img=document.createElement("img"); img.src=c.tipo==="grupo"?fallback:avatar(p?.avatar_url); img.alt="";
+      const span=document.createElement("span"),strong=document.createElement("strong"),small=document.createElement("small");
+      strong.textContent=title(c); small.textContent=c.ultima_mensagem?.tipo==="texto"?c.ultima_mensagem.conteudo:c.ultima_mensagem?.tipo==="apagada"?"Mensagem apagada":c.ultima_mensagem?.arquivo_nome||"Sem mensagens";
+      span.append(strong,small); b.append(img,span);
+      if(+c.nao_lidas){const n=document.createElement("b");n.className="unread";n.textContent=c.nao_lidas;b.append(n);}
+      b.onclick=()=>openConversation(c);
+      const details=document.createElement("details");details.className="conv-options";
+      const summary=document.createElement("summary");summary.textContent="⋯";summary.setAttribute("aria-label","Opções da conversa");
+      const menu=document.createElement("div");menu.className="conv-menu";
+      for(const [action,label] of [["clear","Limpar conversa"],["delete","Excluir conversa para mim"]]){const item=document.createElement("button");item.type="button";item.textContent=label;item.onclick=async(ev)=>{ev.stopPropagation();details.open=false;await conversationAction(c,action);};menu.append(item);}
+      details.append(summary,menu);row.append(b,details);list.append(row);
     }
   }
-  async function conversationAction(conversation, action) {
-    const id = conversation.conversa_id;
-    const deleting = action === "delete";
-    const question = deleting
-      ? `Excluir “${title(conversation)}” da sua lista? As mensagens somem só para você; outras pessoas continuam vendo o histórico. Uma nova mensagem pode fazer a conversa reaparecer.`
-      : `Limpar o histórico de “${title(conversation)}” só para você? As mensagens não serão apagadas para os outros participantes.`;
-    if (!window.confirm(question)) return;
-    const r = await db.rpc(deleting ? "chat_excluir_conversa_mim" : "chat_limpar_conversa", { p_conversa_id: id });
-    if (r.error) { status("chatStatus", r.error.message, true); return; }
-    if (st.active?.conversa_id === id) {
-      if (deleting) { st.active = null; st.messages = []; $("messages").hidden = true; $("composer").hidden = true; $("emptyChat").hidden = false; $("activeTitle").textContent = "Selecione uma conversa"; }
-      else { st.messages = []; await renderMessages(); }
-    }
-    status("chatStatus", deleting ? "Conversa excluída da sua lista." : "Seu histórico da conversa foi limpo.");
-    await loadConversations();
+  async function conversationAction(conversation,action){
+    const deleting=action==="delete",id=conversation.conversa_id;
+    const prompt=deleting?`Excluir “${title(conversation)}” da sua lista? As mensagens somem só para você; as outras pessoas mantêm o histórico. Uma nova mensagem pode fazer a conversa reaparecer.`:`Limpar o histórico de “${title(conversation)}” só para você? As mensagens continuam visíveis para os outros participantes.`;
+    if(!window.confirm(prompt))return;
+    const result=await db.rpc(deleting?"chat_excluir_conversa_mim":"chat_limpar_conversa",{p_conversa_id:id});
+    if(result.error){status("chatStatus",result.error.message,true);return;}
+    if(st.active?.conversa_id===id){if(deleting){st.active=null;st.messages=[];$("messages").hidden=true;$("composer").hidden=true;$("emptyChat").hidden=false;$("activeTitle").textContent="Selecione uma conversa";}else{st.messages=[];await renderMessages();}}
+    status("chatStatus",deleting?"Conversa excluída da sua lista.":"Seu histórico da conversa foi limpo.");await loadConversations();
   }
   async function loadConversations() {
     if (!st.user) return;
@@ -737,9 +801,17 @@
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "chat_mensagens" },
         async (e) => {
-          if (st.active?.conversa_id !== e.new.conversa_id) return;
-          const index = st.messages.findIndex((m) => m.id === e.new.id);
-          if (index >= 0) { st.messages[index] = e.new; await renderMessages(); }
+          if (st.active?.conversa_id === e.new.conversa_id && !$("chatView").hidden) await loadMessages(true);
+          await loadConversations();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "chat_mensagens" },
+        async () => {
+          // DELETE pode chegar sem conversa_id no payload antigo dependendo de
+          // REPLICA IDENTITY; recarregar a conversa ativa evita depender disso.
+          if (st.active && !$("chatView").hidden) await loadMessages(true);
           await loadConversations();
         },
       )
@@ -921,28 +993,14 @@
       }),
     );
   }
-  async function loadCallHistory(conversationId = st.active?.conversa_id) {
-    const box = $("callHistoryItems"); box.replaceChildren();
-    if (!conversationId || !st.user) return;
-    const result = await db.from("notificacoes").select("id,tipo,titulo,corpo,criada_em,dados")
-      .eq("conversa_id", conversationId).in("tipo", ["call_audio", "call_video"])
-      .order("criada_em", { ascending: false }).limit(30);
-    if (result.error) { const p=document.createElement("p"); p.className="modal-note"; p.textContent="Não foi possível carregar o histórico de chamadas."; box.append(p); return; }
-    if (!result.data?.length) { const p=document.createElement("p"); p.className="modal-note"; p.textContent="Ainda não há chamadas registadas nesta conversa."; box.append(p); return; }
-    for (const call of result.data) {
-      const entry=document.createElement("div"); entry.className="call-history-entry";
-      const label=document.createElement("span"); label.textContent=`${call.titulo || (call.tipo === "call_video" ? "Chamada de vídeo" : "Chamada de áudio")} · ${call.dados?.direcao === "efetuada" ? "Efetuada" : "Recebida"}`;
-      const meta=document.createElement("small"); meta.textContent=new Intl.DateTimeFormat("pt-BR",{dateStyle:"short",timeStyle:"short"}).format(new Date(call.criada_em));
-      entry.append(label,meta); box.append(entry);
-    }
+  async function loadCallHistory(conversationId=st.active?.conversa_id){
+    const box=$("callHistoryItems");box.replaceChildren();if(!conversationId||!st.user)return;
+    const result=await db.from("notificacoes").select("id,tipo,titulo,corpo,criada_em,dados").eq("conversa_id",conversationId).in("tipo",["call_audio","call_video"]).order("criada_em",{ascending:false}).limit(30);
+    if(result.error){const p=document.createElement("p");p.className="modal-note";p.textContent="Não foi possível carregar o histórico de chamadas.";box.append(p);return;}
+    if(!result.data?.length){const p=document.createElement("p");p.className="modal-note";p.textContent="Ainda não há chamadas registadas nesta conversa.";box.append(p);return;}
+    for(const call of result.data){const entry=document.createElement("div");entry.className="call-history-entry";const label=document.createElement("span");label.textContent=`${call.titulo||"Chamada"} · ${call.dados?.direcao==="efetuada"?"Efetuada":"Recebida"}`;const meta=document.createElement("small");meta.textContent=new Intl.DateTimeFormat("pt-BR",{dateStyle:"short",timeStyle:"short"}).format(new Date(call.criada_em));entry.append(label,meta);box.append(entry);}
   }
-  $("callHistoryButton").addEventListener("click", async () => {
-    const visible = $("callHistory").hidden;
-    $("callHistory").hidden = !visible;
-    $("callHistoryButton").setAttribute("aria-expanded", String(visible));
-    if (visible) await loadCallHistory();
-  });
-
+  $("callHistoryButton").addEventListener("click",async()=>{const visible=$("callHistory").hidden;$("callHistory").hidden=!visible;$("callHistoryButton").setAttribute("aria-expanded",String(visible));if(visible)await loadCallHistory();});
   async function loadMessages(first = false) {
     if (!st.active) return;
     let q = db
@@ -991,119 +1049,36 @@
         ? `${(n / 1024).toFixed(1)} KB`
         : `${(n / 1048576).toFixed(1)} MB`;
   }
-  async function messageAction(message, action) {
-    if (action === "reply") {
-      st.replyTo = message;
-      $("replyPreviewText").textContent = message.conteudo || message.arquivo_nome || (message.tipo === "apagada" ? "Mensagem apagada" : "Mídia");
-      $("replyPreview").hidden = false; $("messageInput").focus(); return;
-    }
-    if (action === "copy") {
-      const text = message.conteudo || message.arquivo_nome || "";
-      try { await navigator.clipboard.writeText(text); status("chatStatus", text ? "Mensagem copiada." : "Esta mensagem não tem texto para copiar."); }
-      catch { status("chatStatus", "Não foi possível copiar. Verifique a permissão da área de transferência.", true); }
-      return;
-    }
-    const all = action === "everyone";
-    if (!window.confirm(all ? "Apagar esta mensagem para todos os participantes? Esta ação não pode ser desfeita." : "Apagar esta mensagem apenas para você?")) return;
-    const result = await db.rpc(all ? "chat_apagar_mensagem_todos" : "chat_ocultar_mensagem", { p_mensagem_id: message.id });
-    if (result.error) { status("chatStatus", result.error.message, true); return; }
-    status("chatStatus", all ? "Mensagem apagada para todos." : "Mensagem apagada só para você.");
-    await loadMessages(true);
+  async function messageAction(message,action){
+    if(action==="reply"){st.replyTo=message;$("replyPreviewText").textContent=message.conteudo||message.arquivo_nome||(message.tipo==="apagada"?"Mensagem apagada":"Mídia");$("replyPreview").hidden=false;$("messageInput").focus();return;}
+    if(action==="copy"){const text=message.conteudo||message.arquivo_nome||"";try{await navigator.clipboard.writeText(text);status("chatStatus",text?"Mensagem copiada.":"Esta mensagem não tem texto para copiar.");}catch{status("chatStatus","Não foi possível copiar. Verifique a permissão da área de transferência.",true);}return;}
+    const all=action==="everyone";if(!window.confirm(all?"Apagar esta mensagem para todos os participantes? Esta ação não pode ser desfeita.":"Apagar esta mensagem apenas para você?"))return;
+    const result=await db.rpc(all?"chat_apagar_mensagem_todos":"chat_ocultar_mensagem",{p_mensagem_id:message.id});if(result.error){status("chatStatus",result.error.message,true);return;}
+    status("chatStatus",all?"Mensagem apagada para todos.":"Mensagem apagada só para você.");await loadMessages(true);
   }
-  $("cancelReply").addEventListener("click", () => { st.replyTo = null; $("replyPreview").hidden = true; });
+  $("cancelReply").addEventListener("click",()=>{st.replyTo=null;$("replyPreview").hidden=true;});
+  async function renderMessages(){
+    const box=$("messages");box.replaceChildren();const people=new Map();
+    for(const c of st.conversations)for(const person of c.participantes||[])if(person.id)people.set(person.id,person);
+    for(const m of st.messages){
+      const article=document.createElement("article");article.className="msg"+(m.remetente_id===st.user.id?" mine":"");article.dataset.messageId=m.id;
+      if(m.remetente_id!==st.user.id){const author=document.createElement("small");author.className="msg-author";author.textContent=people.get(m.remetente_id)?.nome||"Participante";article.append(author);}
+      if(m.reply_to){const parent=st.messages.find(item=>item.id===m.reply_to);const quote=document.createElement("blockquote");quote.className="msg-quote";quote.textContent=parent?`${parent.remetente_id===st.user.id?"Você":people.get(parent.remetente_id)?.nome||"Participante"}: ${parent.conteudo||parent.arquivo_nome||"Mídia"}`:"Mensagem respondida";article.append(quote);}
+      const contentRow=document.createElement("div");contentRow.className="msg-content-row";
+      if(m.tipo==="apagada"){const deleted=document.createElement("div");deleted.className="msg-text msg-deleted";deleted.textContent="Esta mensagem foi apagada para todos.";contentRow.append(deleted);}
+      else if(m.tipo==="texto"){const text=document.createElement("div");text.className="msg-text";text.textContent=m.conteudo||"";contentRow.append(text);}
+      else{const file=document.createElement("div");file.className="msg-file";const label=document.createElement("span");label.textContent=m.tipo==="audio"?`Áudio · ${formatBytes(m.arquivo_tamanho)}`:`${m.arquivo_nome||"Arquivo"} · ${formatBytes(m.arquivo_tamanho)} · ${m.arquivo_mime||""}`;file.append(label);const signed=m.arquivo_path?await db.storage.from("chat-arquivos").createSignedUrl(m.arquivo_path,900):{data:null};if(signed.data?.signedUrl){if(m.tipo==="audio"){const audio=document.createElement("audio");audio.controls=true;audio.src=signed.data.signedUrl;audio.preload="none";file.append(audio);}else if(m.arquivo_mime?.startsWith("image/")){const image=document.createElement("img");image.src=signed.data.signedUrl;image.alt=m.arquivo_nome||"Imagem compartilhada";image.style.cssText="max-width:min(320px,70vw);max-height:320px;border-radius:10px;object-fit:contain";file.append(image);}else{const link=document.createElement("a");link.href=signed.data.signedUrl;link.target="_blank";link.rel="noopener";link.textContent="Abrir/baixar";file.append(link);}}contentRow.append(file);}
+      const actions=document.createElement("details");actions.className="message-actions";const toggle=document.createElement("summary");toggle.textContent="⋯";toggle.setAttribute("aria-label","Ações da mensagem");const menu=document.createElement("div");menu.className="message-actions-menu";
+      const choices=[["reply","Responder"],["copy","Copiar"]];if(m.tipo!=="apagada"){choices.push(["hide","Apagar para mim"]);if(m.remetente_id===st.user.id)choices.push(["everyone","Apagar para todos"]);}
+      for(const[action,label]of choices){const button=document.createElement("button");button.type="button";button.textContent=label;button.onclick=async event=>{event.stopPropagation();actions.open=false;await messageAction(m,action);};menu.append(button);}
+      actions.append(toggle,menu);const layout=document.createElement("div");layout.className="msg-actions-layout";layout.append(contentRow,actions);article.append(layout);
+      const meta=document.createElement("div");meta.className="msg-meta";const tm=document.createElement("time");tm.textContent=time(m.created_at);meta.append(tm);if(m.remetente_id===st.user.id){const receipt=document.createElement("span");receipt.dataset.receipt=m.id;receipt.textContent="✓ enviada";meta.append(receipt);}article.append(meta);box.append(article);
+    }
+    box.scrollTop=box.scrollHeight;await receipts();
+  }
+  document.addEventListener("click",event=>{if(event.target.closest(".message-actions,.conv-options"))return;document.querySelectorAll(".message-actions[open],.conv-options[open]").forEach(node=>node.open=false);});
+  document.addEventListener("keydown",event=>{if(event.key==="Escape")document.querySelectorAll(".message-actions[open],.conv-options[open]").forEach(node=>node.open=false);});
 
-  async function renderMessages() {
-    const box = $("messages");
-    box.replaceChildren();
-    const people = new Map();
-    for (const c of st.conversations)
-      for (const p of c.participantes || []) if (p.id) people.set(p.id, p);
-    for (const m of st.messages) {
-      const row = document.createElement("div");
-      row.className = "message-row" + (m.remetente_id === st.user.id ? " mine" : "");
-      const article = document.createElement("article");
-      article.className = "msg" + (m.remetente_id === st.user.id ? " mine" : "");
-      article.dataset.messageId = m.id;
-      if (m.reply_to) {
-        const parent = st.messages.find((item) => item.id === m.reply_to);
-        const quote = document.createElement("blockquote"); quote.className = "msg-quote";
-        quote.textContent = parent ? `${parent.remetente_id === st.user.id ? "Você" : people.get(parent.remetente_id)?.nome || "Participante"}: ${parent.conteudo || parent.arquivo_nome || "Mídia"}` : "Mensagem respondida";
-        article.append(quote);
-      }
-      if (m.remetente_id !== st.user.id) {
-        const a = document.createElement("small");
-        a.className = "msg-author";
-        a.textContent = people.get(m.remetente_id)?.nome || "Participante";
-        article.append(a);
-      }
-      if (m.tipo === "apagada") {
-        const deleted = document.createElement("div"); deleted.className = "msg-text msg-deleted";
-        deleted.textContent = "Esta mensagem foi apagada para todos."; article.append(deleted);
-      } else if (m.tipo === "texto") {
-        const t = document.createElement("div");
-        t.className = "msg-text";
-        t.textContent = m.conteudo || "";
-        article.append(t);
-      } else {
-        const f = document.createElement("div");
-        f.className = "msg-file";
-        const l = document.createElement("span");
-        l.textContent =
-          m.tipo === "audio"
-            ? `Áudio · ${formatBytes(m.arquivo_tamanho)}`
-            : `${m.arquivo_nome || "Arquivo"} · ${formatBytes(m.arquivo_tamanho)} · ${m.arquivo_mime || ""}`;
-        f.append(l);
-        const s = await db.storage
-          .from("chat-arquivos")
-          .createSignedUrl(m.arquivo_path, 900);
-        if (s.data?.signedUrl) {
-          if (m.tipo === "audio") {
-            const audio = document.createElement("audio");
-            audio.controls = true;
-            audio.src = s.data.signedUrl;
-            audio.preload = "none";
-            f.append(audio);
-          } else if (m.arquivo_mime?.startsWith("image/")) {
-            const img = document.createElement("img");
-            img.src = s.data.signedUrl;
-            img.alt = m.arquivo_nome || "Imagem compartilhada";
-            img.style.cssText =
-              "max-width:min(320px,70vw);max-height:320px;border-radius:10px;object-fit:contain";
-            f.append(img);
-          } else {
-            const a = document.createElement("a");
-            a.href = s.data.signedUrl;
-            a.target = "_blank";
-            a.rel = "noopener";
-            a.textContent = "Abrir/baixar";
-            f.append(a);
-          }
-        }
-        article.append(f);
-      }
-      const meta = document.createElement("div");
-      meta.className = "msg-meta";
-      const tm = document.createElement("time");
-      tm.textContent = time(m.created_at);
-      meta.append(tm);
-      if (m.remetente_id === st.user.id) {
-        const receipt = document.createElement("span");
-        receipt.dataset.receipt = m.id;
-        receipt.textContent = "✓ enviada";
-        meta.append(receipt);
-      }
-      article.append(meta);
-      const actions = document.createElement("details"); actions.className = "message-actions";
-      const actionToggle = document.createElement("summary"); actionToggle.textContent = "⋯"; actionToggle.setAttribute("aria-label", "Ações da mensagem");
-      const actionMenu = document.createElement("div"); actionMenu.className = "message-actions-menu";
-      const menuActions = [["reply","Responder"],["copy","Copiar"]];
-      if (m.tipo !== "apagada") { menuActions.push(["hide","Apagar para mim"]); if (m.remetente_id === st.user.id) menuActions.push(["everyone","Apagar para todos"]); }
-      for (const [action,label] of menuActions) { const button = document.createElement("button"); button.type="button"; button.textContent=label; button.onclick=async (event)=>{event.stopPropagation();actions.open=false;await messageAction(m,action);}; actionMenu.append(button); }
-      actions.append(actionToggle,actionMenu); row.append(article,actions); box.append(row);
-    }
-    box.scrollTop = box.scrollHeight;
-    await receipts();
-  }
   async function markRead(batch) {
     const ids = batch
       .filter((m) => m.remetente_id !== st.user.id)
@@ -1153,6 +1128,19 @@
           await loadConversations();
         },
       )
+      .on(
+        "postgres_changes",
+        {
+          event: "DELETE",
+          schema: "public",
+          table: "chat_mensagens",
+          filter: `conversa_id=eq.${id}`,
+        },
+        async () => {
+          if (st.active?.conversa_id === id) await loadMessages(true);
+          await loadConversations();
+        },
+      )
       .subscribe((s) => {
         if (s === "CHANNEL_ERROR" || s === "TIMED_OUT")
           status(
@@ -1193,11 +1181,22 @@
     }
   });
 
+  function resizeMessageInput(input = $("messageInput")) {
+    if (!input) return;
+    // A altura é calculada pelo conteúdo, sem deixar o CSS externo encolher o campo.
+    input.style.setProperty("height", "auto", "important");
+    const styles = window.getComputedStyle(input);
+    const minHeight = parseFloat(styles.minHeight) || 92;
+    const maxHeight = parseFloat(styles.maxHeight) || 220;
+    const nextHeight = Math.max(minHeight, Math.min(input.scrollHeight, maxHeight));
+    input.style.setProperty("height", `${nextHeight}px`, "important");
+    input.style.setProperty("overflow-y", input.scrollHeight > maxHeight ? "auto" : "hidden");
+  }
+
   $("messageInput").addEventListener("input", (event) => {
-    const input = event.currentTarget;
-    input.style.height = "auto";
-    input.style.height = Math.min(input.scrollHeight, 115) + "px";
+    resizeMessageInput(event.currentTarget);
   });
+  window.addEventListener("resize", () => resizeMessageInput());
 
   $("messageInput").addEventListener("paste", async (event) => {
     const image = Array.from(event.clipboardData?.items || []).find((item) =>
@@ -1235,8 +1234,9 @@
       return;
     }
     $("messageInput").value = "";
-    $("messageInput").style.height = "";
-    st.replyTo = null; $("replyPreview").hidden = true;
+    $("messageInput").style.removeProperty("height");
+    $("messageInput").style.removeProperty("overflow-y");
+    resizeMessageInput();
     status("chatStatus", "Mensagem enviada.");
     await loadMessages(true);
   };
