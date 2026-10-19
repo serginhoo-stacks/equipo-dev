@@ -107,6 +107,15 @@
     state.channelId = id;
     state.channelReady = false;
 
+    // Os canais privados precisam do JWT do utilizador para autorizar
+    // subscribe/broadcast através das políticas de realtime.messages.
+    const { data: sessionData, error: sessionError } = await db.auth.getSession();
+    const accessToken = sessionData?.session?.access_token;
+    if (sessionError || !accessToken) {
+      throw new Error("A sessão autenticada expirou. Entre novamente e tente a chamada.");
+    }
+    await db.realtime.setAuth(accessToken);
+
     const channel = db.channel(privateTopic(id), {
       config: { private: true, broadcast: { self: false, ack: true } },
     });
@@ -131,7 +140,7 @@
         } else if (["CHANNEL_ERROR", "TIMED_OUT", "CLOSED"].includes(status) && !settled) {
           settled = true;
           clearTimeout(timer);
-          reject(new Error("Canal de chamadas indisponível. A migração de chamadas pode ainda não ter sido aplicada."));
+          reject(new Error("Canal de chamadas indisponível. Verifique a sessão, a ligação ao Supabase e as políticas do Realtime para os participantes desta conversa."));
         }
       });
     });
