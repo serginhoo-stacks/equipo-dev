@@ -147,3 +147,12 @@ html body.personal-page .chat-compose textarea {
   .notifications-view { width: calc(100% - 18px); margin: 16px auto calc(26px + env(safe-area-inset-bottom)); }
   .notifications-head { align-items: flex-start; flex-direction: column; }
 }
+.notification-settings { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:18px; padding:14px 16px; border:1px solid rgba(133,216,255,.14); border-radius:14px; background:rgba(3,11,23,.28); }
+.notification-settings strong { color:#fff; font-size:13px; }
+.notification-settings .side-copy { margin-top:4px; font-size:11px; }
+.notification-item { align-items:center; }
+.notification-item.notification-unread { border-color:rgba(92,236,255,.38); background:linear-gradient(145deg,rgba(18,42,72,.75),rgba(7,18,35,.72)); }
+.notification-content { min-width:0; flex:1; }
+.notification-content small { display:block; margin-top:7px; color:var(--muted); font-size:10px; }
+.notification-open { flex:0 0 auto; min-height:36px; }
+@media(max-width:640px) { .notification-settings { align-items:stretch; flex-direction:column; } .notification-open { width:100%; } }
