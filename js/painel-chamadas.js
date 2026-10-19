@@ -165,7 +165,11 @@
         ...fields,
       },
     });
-    if (result !== "ok") throw new Error("Não foi possível enviar a sinalização da chamada.");
+    if (result !== "ok") {
+      const detail = typeof result === "string" ? result : JSON.stringify(result);
+      console.error("Falha ao enviar sinalização pelo Realtime:", result);
+      throw new Error(`Não foi possível enviar a sinalização da chamada (Realtime: ${detail || "resposta sem detalhe"}).`);
+    }
   }
 
   async function sendQueuedCandidates() {
