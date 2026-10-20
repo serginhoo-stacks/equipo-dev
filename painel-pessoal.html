@@ -108,12 +108,12 @@
 <header class="personal-header"><a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a><nav class="app-nav" aria-label="Navegação"><button id="panelNav" type="button" aria-current="page">Painel</button><button id="chatNav" type="button">Chat</button><button id="notificationNav" type="button">Notificações <span id="notificationBadge" class="notification-badge" hidden>0</span></button></nav><div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button" type="button">Sair</button></div></header>
 <main id="panelView" class="personal-shell">
 <section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Seu espaço pessoal para organizar seu perfil e suas conversas.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
-<button id="profileOpen" class="profile-summary" type="button" aria-haspopup="dialog" data-spotlight><img id="profileCardAvatar" src="./imagens/favicon.png" alt="Foto de perfil"><span><strong id="profileCardName">Carregando perfil…</strong><small id="profileCardHandle">Configure seu @ID do chat</small><small id="profileCardEmail">Seu perfil SmartInspect</small></span><span class="profile-hint">Clique para editar →</span></button>
+<button id="profileOpen" class="profile-summary" type="button" aria-haspopup="dialog" data-spotlight><img id="profileCardAvatar" src="./imagens/favicon.png" alt="Foto de perfil"><span><strong id="profileCardName">Carregando perfil…</strong><small id="profileCardHandle">Configure seu telefone do chat</small><small id="profileCardEmail">Seu perfil SmartInspect</small></span><span class="profile-hint">Clique para editar →</span></button>
 <div id="pageMessage" class="page-message" role="status" aria-live="polite"></div>
 <section class="summary-grid" aria-label="Resumo da conta"><article class="summary-card"><span class="summary-icon">⌂</span><span>Empresas vinculadas</span><strong id="companyCount">—</strong></article><article class="summary-card"><span class="summary-icon cyan">◈</span><span>Convites recebidos</span><strong id="inviteCount">—</strong></article><article class="summary-card"><span class="summary-icon violet">◌</span><span>Solicitações pendentes</span><strong id="requestCount">—</strong></article></section>
-<div class="content-grid"><section class="panel-card main-panel" aria-labelledby="companiesTitle"><div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" type="button" title="Atualizar">↻</button></div><div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos…</div></div><div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Solicite vínculo a uma empresa existente. A criação depende de uma função autorizada do projeto.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button" type="button">Ver criação de empresa</button><button id="requestCompanyButton" class="secondary-button" type="button">Solicitar vínculo</button></div></div></section><aside class="side-column"><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2>Minha conta</h2></div></div><div class="account-row" hidden><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row" hidden><span>E-mail</span><strong id="accountEmail">—</strong></div><p class="side-copy">Os dados completos ficam ocultos até abrir o perfil.</p><button id="editProfile" class="secondary-button full" type="button">Editar perfil</button></section><section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema valida seu vínculo e carrega somente os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SMARTINSPECT CHAT</p><h2>Fale com sua equipe</h2></div></div><p class="side-copy">Encontre pessoas pelo @ID e converse com segurança.</p><button id="openChat" class="secondary-button full" type="button">Abrir chat →</button></section></aside></div><section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><h2 id="plansTitle">Planos e assinaturas</h2><p>Conheça três formas de começar e veja a descrição completa de cada plano.</p></div><a class="primary-button link-button" href="./planos.html">Ver todos os planos →</a></div><div id="plansList" class="plans-list"><div class="empty-inline">Carregando planos…</div></div></section>
+<div class="content-grid"><section class="panel-card main-panel" aria-labelledby="companiesTitle"><div class="panel-heading"><div><p class="eyebrow">AMBIENTES AUTORIZADOS</p><h2 id="companiesTitle">Minhas empresas</h2><p>Entre somente em ambientes nos quais seu vínculo foi autorizado.</p></div><button id="refreshButton" class="icon-button" type="button" title="Atualizar">↻</button></div><div id="companiesList" class="companies-list"><div class="loading-state">Carregando seus vínculos…</div></div><div id="emptyCompanies" class="empty-state" hidden><div class="empty-orb">＋</div><h3>Você ainda não está vinculado a uma empresa</h3><p>Solicite vínculo a uma empresa existente. A criação depende de uma função autorizada do projeto.</p><div class="empty-actions"><button id="createCompanyButton" class="primary-button" type="button">Ver criação de empresa</button><button id="requestCompanyButton" class="secondary-button" type="button">Solicitar vínculo</button></div></div></section><aside class="side-column"><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SUA CONTA</p><h2>Minha conta</h2></div></div><div class="account-row" hidden><span>Nome</span><strong id="accountName">—</strong></div><div class="account-row" hidden><span>E-mail</span><strong id="accountEmail">—</strong></div><p class="side-copy">Os dados completos ficam ocultos até abrir o perfil.</p><button id="editProfile" class="secondary-button full" type="button">Editar perfil</button></section><section class="panel-card" aria-labelledby="nextTitle"><div class="panel-heading compact"><div><p class="eyebrow">PRÓXIMO PASSO</p><h2 id="nextTitle">Acesso empresarial</h2></div></div><p class="side-copy">Ao entrar em uma empresa, o sistema valida seu vínculo e carrega somente os dados autorizados.</p><a class="secondary-button full link-button" href="./index.html">Voltar à apresentação <span>→</span></a></section><section class="panel-card"><div class="panel-heading compact"><div><p class="eyebrow">SMARTINSPECT CHAT</p><h2>Fale com sua equipe</h2></div></div><p class="side-copy">Encontre pessoas pelo telefone e converse com segurança.</p><button id="openChat" class="secondary-button full" type="button">Abrir chat →</button></section></aside></div><section class="panel-card lower-panel" aria-labelledby="plansTitle"><div class="panel-heading"><div><h2 id="plansTitle">Planos e assinaturas</h2><p>Conheça três formas de começar e veja a descrição completa de cada plano.</p></div><a class="primary-button link-button" href="./planos.html">Ver todos os planos →</a></div><div id="plansList" class="plans-list"><div class="empty-inline">Carregando planos…</div></div></section>
 </main>
-<main id="chatView" class="chat-view" hidden><div class="chat-headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Chat</h1><p>Encontre e chame pessoas usando o @identificador público.</p></div><button id="backPanel" class="secondary-button" type="button">← Voltar ao painel</button></div><div class="chat-layout"><aside class="chat-sidebar"><div class="chat-sidebar-head"><div class="chat-self"><img id="chatSelfAvatar" src="./imagens/favicon.png" alt=""><span><strong id="chatSelfName">Seu perfil</strong><small id="chatSelfHandle">Defina seu @ID</small></span></div><form id="searchForm" class="chat-search"><input id="searchHandle" maxlength="25" placeholder="Buscar por @identificador" aria-label="Buscar pessoa pelo identificador"><button class="chat-action" type="submit">Buscar</button></form><div id="searchResults" class="chat-results" aria-live="polite"></div><div class="chat-tools"><button id="newGroup" class="chat-action" type="button">＋ Criar grupo</button><button id="refreshChats" class="chat-action" type="button" title="Sincronizar agora, se necessário">Sincronizar</button></div></div><div id="conversationList" class="conv-list"><p class="modal-note">A carregar conversas…</p></div></aside><section class="chat-main"><div class="chat-main-head"><div><h2 id="activeTitle">Selecione uma conversa</h2><p id="activeSubtitle">As conversas só aparecem para seus participantes.</p></div><div class="chat-main-actions"><button id="callHistoryButton" class="chat-action" type="button" aria-expanded="false">Histórico</button><button id="startAudioCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de áudio" title="Chamada de áudio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.4 15.4 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.28.55 3.5.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10 21 3 14 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.4.55 3.5a1 1 0 0 1-.25 1.02l-2.2 2.28Z" fill="currentColor"/></svg><span>Áudio</span></button><button id="startVideoCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de vídeo" title="Chamada de vídeo" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 10 6-3v10l-6-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Vídeo</span></button><button id="groupMembers" class="chat-action" type="button" hidden>Participantes</button></div></div><section id="callHistory" class="call-history" hidden aria-label="Histórico de chamadas"><h3>Chamadas recentes</h3><div id="callHistoryItems" class="call-history-items"></div></section><div id="emptyChat" class="chat-empty"><strong>Seu chat, dentro do SmartInspect.</strong><span>Busque alguém pelo @ID ou abra uma conversa existente.</span></div><div id="messages" class="chat-messages" aria-live="polite" hidden></div><button id="olderMessages" class="ghost-button" type="button" hidden>Carregar mensagens anteriores</button><div id="replyPreview" class="reply-preview" hidden><span><strong>Respondendo a</strong><small id="replyPreviewText"></small></span><button id="cancelReply" class="chat-action" type="button" aria-label="Cancelar resposta">×</button></div><form id="composer" class="chat-compose" hidden><input id="fileInput" type="file" hidden accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,.doc,.docx,.xls,.xlsx,.ppt,.pptx"><button id="attachButton" class="chat-action" type="button" aria-label="Anexar imagem ou arquivo" title="Anexar imagem ou arquivo">＋</button><button id="recordButton" class="chat-action" type="button" aria-label="Gravar mensagem de voz" title="Gravar mensagem de voz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button id="cancelRecordButton" class="chat-action" type="button" hidden>Cancelar</button><textarea id="messageInput" rows="3" maxlength="10000" placeholder="Escreva uma mensagem… (Enter envia · Shift+Enter quebra linha)" aria-label="Mensagem. Enter envia; Shift mais Enter quebra a linha."></textarea><button class="primary-button" id="sendButton" type="submit">Enviar</button></form><div id="chatStatus" class="chat-status" role="status" aria-live="polite"></div></section></div></main>
+<main id="chatView" class="chat-view" hidden><div class="chat-headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Chat</h1><p>Encontre e chame pessoas usando o telefone cadastrado.</p></div><button id="backPanel" class="secondary-button" type="button">← Voltar ao painel</button></div><div class="chat-layout"><aside class="chat-sidebar"><div class="chat-sidebar-head"><div class="chat-self"><img id="chatSelfAvatar" src="./imagens/favicon.png" alt=""><span><strong id="chatSelfName">Seu perfil</strong><small id="chatSelfHandle">Defina seu telefone</small></span></div><form id="searchForm" class="chat-search"><input id="searchHandle" maxlength="25" placeholder="Buscar por telefone" aria-label="Buscar pessoa pelo telefone"><button class="chat-action" type="submit">Buscar</button></form><div id="searchResults" class="chat-results" aria-live="polite"></div><div class="chat-tools"><button id="newGroup" class="chat-action" type="button">＋ Criar grupo</button><button id="refreshChats" class="chat-action" type="button" title="Sincronizar agora, se necessário">Sincronizar</button></div></div><div id="conversationList" class="conv-list"><p class="modal-note">A carregar conversas…</p></div></aside><section class="chat-main"><div class="chat-main-head"><div><h2 id="activeTitle">Selecione uma conversa</h2><p id="activeSubtitle">As conversas só aparecem para seus participantes.</p></div><div class="chat-main-actions"><button id="callHistoryButton" class="chat-action" type="button" aria-expanded="false">Histórico</button><button id="startAudioCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de áudio" title="Chamada de áudio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.4 15.4 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.28.55 3.5.55a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10 21 3 14 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.4.55 3.5a1 1 0 0 1-.25 1.02l-2.2 2.28Z" fill="currentColor"/></svg><span>Áudio</span></button><button id="startVideoCall" class="chat-action call-start" type="button" aria-label="Iniciar chamada de vídeo" title="Chamada de vídeo" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 10 6-3v10l-6-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Vídeo</span></button><button id="groupMembers" class="chat-action" type="button" hidden>Participantes</button></div></div><section id="callHistory" class="call-history" hidden aria-label="Histórico de chamadas"><h3>Chamadas recentes</h3><div id="callHistoryItems" class="call-history-items"></div></section><div id="emptyChat" class="chat-empty"><strong>Seu chat, dentro do SmartInspect.</strong><span>Busque alguém pelo telefone ou abra uma conversa existente.</span></div><div id="messages" class="chat-messages" aria-live="polite" hidden></div><button id="olderMessages" class="ghost-button" type="button" hidden>Carregar mensagens anteriores</button><div id="replyPreview" class="reply-preview" hidden><span><strong>Respondendo a</strong><small id="replyPreviewText"></small></span><button id="cancelReply" class="chat-action" type="button" aria-label="Cancelar resposta">×</button></div><form id="composer" class="chat-compose" hidden><input id="fileInput" type="file" hidden accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,.doc,.docx,.xls,.xlsx,.ppt,.pptx"><button id="attachButton" class="chat-action" type="button" aria-label="Anexar imagem ou arquivo" title="Anexar imagem ou arquivo">＋</button><button id="recordButton" class="chat-action" type="button" aria-label="Gravar mensagem de voz" title="Gravar mensagem de voz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button id="cancelRecordButton" class="chat-action" type="button" hidden>Cancelar</button><textarea id="messageInput" rows="3" maxlength="10000" placeholder="Escreva uma mensagem… (Enter envia · Shift+Enter quebra linha)" aria-label="Mensagem. Enter envia; Shift mais Enter quebra a linha."></textarea><button class="primary-button" id="sendButton" type="submit">Enviar</button></form><div id="chatStatus" class="chat-status" role="status" aria-live="polite"></div></section></div></main>
 <main id="notificationsView" class="notifications-view" hidden><div class="notifications-head"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Notificações</h1><p>Convites e solicitações relacionados à sua conta.</p></div><button id="notificationsBack" class="secondary-button" type="button">← Voltar ao painel</button></div><section class="panel-card notification-panel" aria-label="Sua lista de notificações"><div class="notification-settings"><div><strong>Notificações no dispositivo</strong><p id="notificationPermissionStatus" class="side-copy">Ative para receber avisos enquanto o app estiver aberto.</p></div><button id="notificationPermissionButton" class="secondary-button" type="button">Ativar no dispositivo</button></div><div id="notificationList" class="notification-list" aria-live="polite"><div class="empty-state"><div class="empty-orb">◌</div><h3>Carregando notificações…</h3></div></div></section></main>
 <dialog id="callDialog" class="call-dialog" aria-labelledby="callDialogTitle">
   <section class="call-sheet">
@@ -124,9 +124,9 @@
     <p class="call-disclaimer">A outra pessoa precisa de estar com esta conversa aberta. A ligação pode falhar em redes que exijam um servidor TURN.</p>
   </section>
 </dialog>
-<dialog id="profileDialog" class="modal-card app-dialog"><form id="profileForm"><button class="modal-close" type="button" data-close="profileDialog" aria-label="Fechar">×</button><p class="eyebrow">IDENTIDADE E ACESSO</p><h2>Editar perfil</h2><p class="modal-copy">A fotografia é guardada no Storage do Supabase; o painel mostra os campos completos só depois de clicar no perfil.</p><div class="avatar-edit"><img id="profileAvatarPreview" src="./imagens/favicon.png" alt="Prévia da foto"><label>Escolher foto<input id="profileAvatar" type="file" accept="image/png,image/jpeg,image/webp"></label><span class="modal-note">Até 5 MB</span></div><div class="profile-grid"><label>Nome de exibição<input id="profileName" maxlength="120" required></label><label>Telefone<input id="profilePhone" maxlength="24" placeholder="Opcional"></label></div><div class="profile-grid"><label>Data de nascimento <span class="optional">opcional</span><input id="profileBirthDate" type="date" autocomplete="bday"></label><label>CPF <span class="optional">opcional</span><input id="profileCpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00"></label></div><p class="modal-note">Data de nascimento e CPF ficam numa tabela privada; só você pode consultar e alterar esses dados.</p><label>Seu ID público no chat <span class="modal-note">3–24 letras, números ou _</span><input id="profileHandle" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" placeholder="seu_id" required></label><label class="privacy-choice"><input id="profileVisible" type="checkbox"> Permitir que encontrem meu @ID na busca</label><label>E-mail da conta<input id="profileEmail" readonly></label><div class="profile-grid"><label>Nova senha <span class="optional">opcional</span><input id="profilePassword" type="password" minlength="8" autocomplete="new-password" placeholder="Mínimo de 8 caracteres"></label><label>Confirmar nova senha<input id="profilePasswordConfirm" type="password" minlength="8" autocomplete="new-password" placeholder="Repita a nova senha"></label></div><button id="saveProfile" class="primary-button" type="submit">Salvar perfil</button><p id="profileStatus" class="modal-status" role="status" aria-live="polite"></p></form></dialog>
-<dialog id="companyDialog" class="modal-card app-dialog"><form method="dialog"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">NOVA EMPRESA</p><h2>Criar uma empresa</h2><p class="modal-copy">A cópia do projeto não possui uma RPC segura de criação de empresa. Para não contornar o RLS, este fluxo fica somente informativo.</p><label>Nome da empresa<input id="companyName" maxlength="160" placeholder="Ex.: Construtora Horizonte" disabled></label><label>CNPJ <span class="optional">opcional</span><input id="companyCnpj" maxlength="18" placeholder="00.000.000/0000-00" disabled></label><button class="primary-button" type="submit" disabled>Criar empresa</button></form></dialog><dialog id="requestDialog" class="modal-card app-dialog"><form id="requestForm"><button class="modal-close" type="button" data-close="requestDialog" aria-label="Fechar">×</button><p class="eyebrow">SOLICITAR VÍNCULO</p><h2>Entrar em uma empresa</h2><p class="modal-copy">A solicitação ficará pendente até aprovação de um administrador autorizado.</p><label>ID da empresa<input id="requestCompanyId" required placeholder="Cole o identificador UUID da empresa"></label><button id="submitRequest" class="primary-button" type="submit">Enviar solicitação</button><p id="requestStatus" class="modal-status" role="status" aria-live="polite"></p></form></dialog><dialog id="groupDialog" class="modal-card app-dialog"><form id="groupForm"><button class="modal-close" type="button" data-close="groupDialog" aria-label="Fechar">×</button><p class="eyebrow">SMARTINSPECT CHAT</p><h2>Criar grupo</h2><label>Nome do grupo<input id="groupName" maxlength="80" required></label><label>@IDs de participantes (separados por vírgula)<input id="groupHandles" required placeholder="ana_obra, joao_inspecao"></label><label>ID da empresa <span class="modal-note">opcional</span><input id="companyId" placeholder="UUID da empresa, para grupo empresarial"></label><button class="primary-button" type="submit">Criar grupo</button><p id="groupStatus" class="modal-status"></p></form></dialog>
-<dialog id="membersDialog" class="modal-card app-dialog"><form><button class="modal-close" type="button" data-close="membersDialog" aria-label="Fechar">×</button><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Participantes do grupo</h2><div id="membersList" class="modal-note"></div><label>@ID<input id="memberHandle" required></label><div class="modal-row"><button id="addMember" class="secondary-button" type="button">Adicionar</button><button id="removeMember" class="ghost-button" type="button">Remover</button></div><p id="membersStatus" class="modal-status"></p></form></dialog>
+<dialog id="profileDialog" class="modal-card app-dialog"><form id="profileForm"><button class="modal-close" type="button" data-close="profileDialog" aria-label="Fechar">×</button><p class="eyebrow">IDENTIDADE E ACESSO</p><h2>Editar perfil</h2><p class="modal-copy">A fotografia é guardada no Storage do Supabase; o painel mostra os campos completos só depois de clicar no perfil.</p><div class="avatar-edit"><img id="profileAvatarPreview" src="./imagens/favicon.png" alt="Prévia da foto"><label>Escolher foto<input id="profileAvatar" type="file" accept="image/png,image/jpeg,image/webp"></label><span class="modal-note">Até 5 MB</span></div><div class="profile-grid"><label>Nome de exibição<input id="profileName" maxlength="120" required></label><label>Telefone<input id="profilePhone" maxlength="24" placeholder="Opcional"></label></div><div class="profile-grid"><label>Data de nascimento <span class="optional">opcional</span><input id="profileBirthDate" type="date" autocomplete="bday"></label><label>CPF <span class="optional">opcional</span><input id="profileCpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00"></label></div><p class="modal-note">Data de nascimento e CPF ficam numa tabela privada; só você pode consultar e alterar esses dados.</p><label class="privacy-choice"><input id="profileVisible" type="checkbox"> Permitir que encontrem meu telefone na busca</label><label>E-mail da conta<input id="profileEmail" readonly></label><div class="profile-grid"><label>Nova senha <span class="optional">opcional</span><input id="profilePassword" type="password" minlength="8" autocomplete="new-password" placeholder="Mínimo de 8 caracteres"></label><label>Confirmar nova senha<input id="profilePasswordConfirm" type="password" minlength="8" autocomplete="new-password" placeholder="Repita a nova senha"></label></div><button id="saveProfile" class="primary-button" type="submit">Salvar perfil</button><p id="profileStatus" class="modal-status" role="status" aria-live="polite"></p></form></dialog>
+<dialog id="companyDialog" class="modal-card app-dialog"><form method="dialog"><button class="modal-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">NOVA EMPRESA</p><h2>Criar uma empresa</h2><p class="modal-copy">A cópia do projeto não possui uma RPC segura de criação de empresa. Para não contornar o RLS, este fluxo fica somente informativo.</p><label>Nome da empresa<input id="companyName" maxlength="160" placeholder="Ex.: Construtora Horizonte" disabled></label><label>CNPJ <span class="optional">opcional</span><input id="companyCnpj" maxlength="18" placeholder="00.000.000/0000-00" disabled></label><button class="primary-button" type="submit" disabled>Criar empresa</button></form></dialog><dialog id="requestDialog" class="modal-card app-dialog"><form id="requestForm"><button class="modal-close" type="button" data-close="requestDialog" aria-label="Fechar">×</button><p class="eyebrow">SOLICITAR VÍNCULO</p><h2>Entrar em uma empresa</h2><p class="modal-copy">A solicitação ficará pendente até aprovação de um administrador autorizado.</p><label>ID da empresa<input id="requestCompanyId" required placeholder="Cole o identificador UUID da empresa"></label><button id="submitRequest" class="primary-button" type="submit">Enviar solicitação</button><p id="requestStatus" class="modal-status" role="status" aria-live="polite"></p></form></dialog><dialog id="groupDialog" class="modal-card app-dialog"><form id="groupForm"><button class="modal-close" type="button" data-close="groupDialog" aria-label="Fechar">×</button><p class="eyebrow">SMARTINSPECT CHAT</p><h2>Criar grupo</h2><label>Nome do grupo<input id="groupName" maxlength="80" required></label><label>Telefones dos participantes (separados por vírgula)<input id="groupHandles" required placeholder="(11) 99999-9999, (11) 98888-8888"></label><label>ID da empresa <span class="modal-note">opcional</span><input id="companyId" placeholder="UUID da empresa, para grupo empresarial"></label><button class="primary-button" type="submit">Criar grupo</button><p id="groupStatus" class="modal-status"></p></form></dialog>
+<dialog id="membersDialog" class="modal-card app-dialog"><form><button class="modal-close" type="button" data-close="membersDialog" aria-label="Fechar">×</button><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Participantes do grupo</h2><div id="membersList" class="modal-note"></div><label>Telefone<input id="memberHandle" inputmode="tel" required></label><div class="modal-row"><button id="addMember" class="secondary-button" type="button">Adicionar</button><button id="removeMember" class="ghost-button" type="button">Remover</button></div><p id="membersStatus" class="modal-status"></p></form></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/supabase.js"></script><script>
 (() => {
   "use strict";
@@ -165,6 +165,7 @@
       .trim()
       .replace(/^@/, "")
       .toLowerCase();
+  const normalizePhone = (v) => String(v || "").replace(/\D/g, "").slice(0, 15);
   // A cor é calculada a partir do ID do utilizador: fica estável entre
   // sessões, sem precisar gravar uma nova coluna ou criar outro serviço.
   const senderColors = [
@@ -587,23 +588,22 @@
     for (const [id, val] of [
       ["profileName", p.nome || ""],
       ["profilePhone", p.telefone || ""],
-      ["profileHandle", p.username_publico || ""],
     ])
       $(id).value = val;
     $("profileVisible").checked = p.visivel_chat !== false;
     $("profileCardName").textContent =
       p.nome || st.user.email?.split("@")[0] || "Seu perfil";
     $("userName").textContent = (p.nome || "usuário").split(" ")[0];
-    $("profileCardHandle").textContent = p.username_publico
-      ? "@" + p.username_publico
-      : "Defina seu @ID do chat";
+    $("profileCardHandle").textContent = p.telefone
+      ? p.telefone
+      : "Defina seu telefone do chat";
     $("profileCardEmail").textContent = "Clique para abrir e editar seu perfil";
     $("accountName").textContent = p.nome || "—";
     $("accountEmail").textContent = st.user.email || "—";
     $("chatSelfName").textContent = p.nome || "Seu perfil";
-    $("chatSelfHandle").textContent = p.username_publico
-      ? "@" + p.username_publico
-      : "Defina seu @ID";
+    $("chatSelfHandle").textContent = p.telefone
+      ? p.telefone
+      : "Defina seu telefone";
     for (const id of [
       "profileCardAvatar",
       "profileAvatarPreview",
@@ -649,8 +649,7 @@
   $("profileForm").onsubmit = async (e) => {
     e.preventDefault();
     const name = $("profileName").value.trim(),
-      phone = $("profilePhone").value.trim(),
-      id = handle($("profileHandle").value),
+      phone = normalizePhone($("profilePhone").value),
       birth = $("profileBirthDate").value || null,
       cpf = cpfDigits($("profileCpf").value),
       newPassword = $("profilePassword").value,
@@ -666,10 +665,10 @@
       );
       return;
     }
-    if (!name || !/^[a-z0-9_]{3,24}$/.test(id)) {
+    if (!name || !phone) {
       status(
         "profileStatus",
-        "Informe nome e um @ID válido (3–24 letras, números ou _).",
+        "Informe nome e um telefone válido.",
         true,
       );
       return;
@@ -712,7 +711,7 @@
         .update({
           nome: name,
           telefone: phone || null,
-          username_publico: id,
+          username_publico: null,
           visivel_chat: $("profileVisible").checked,
           avatar_url: path,
           updated_at: new Date().toISOString(),
@@ -781,7 +780,7 @@
   }
   function renderConversations() {
     const list = $("conversationList"); list.replaceChildren();
-    if (!st.conversations.length) { const p=document.createElement("p"); p.className="modal-note"; p.textContent="Nenhuma conversa. Busque alguém pelo @ID."; list.append(p); return; }
+    if (!st.conversations.length) { const p=document.createElement("p"); p.className="modal-note"; p.textContent="Nenhuma conversa. Busque alguém pelo telefone."; list.append(p); return; }
     for (const c of st.conversations) {
       const row=document.createElement("div"); row.className="conv-row";
       const b=document.createElement("button"); b.className="conv-item"; b.type="button";
@@ -907,18 +906,18 @@
 
   $("searchForm").onsubmit = async (e) => {
     e.preventDefault();
-    const id = handle($("searchHandle").value),
+    const phone = normalizePhone($("searchHandle").value),
       box = $("searchResults");
     box.replaceChildren();
-    if (!id) return;
+    if (!phone) return;
     status("chatStatus", "Buscando…");
-    const r = await db.rpc("chat_buscar_usuario", { p_handle: id });
+    const r = await db.rpc("chat_buscar_usuario", { p_telefone: phone });
     if (r.error) {
       status("chatStatus", r.error.message, true);
       return;
     }
     if (!r.data?.length) {
-      status("chatStatus", "Nenhuma pessoa encontrada com esse @ID.");
+      status("chatStatus", "Nenhuma pessoa encontrada com esse telefone.");
       return;
     }
     const p = r.data[0],
@@ -929,7 +928,7 @@
       btn = document.createElement("button");
     item.className = "chat-result";
     name.textContent = p.nome || "Pessoa SmartInspect";
-    tag.textContent = "@" + p.username_publico;
+    tag.textContent = p.telefone || "Telefone não informado";
     label.append(name, tag);
     btn.className = "chat-action";
     btn.type = "button";
@@ -937,7 +936,7 @@
     btn.onclick = async () => {
       btn.disabled = true;
       const x = await db.rpc("chat_iniciar_privado", {
-        p_handle: p.username_publico,
+        p_telefone: p.telefone,
       });
       if (x.error) {
         status("chatStatus", x.error.message, true);
@@ -957,13 +956,13 @@
     e.preventDefault();
     const handles = $("groupHandles")
         .value.split(",")
-        .map(handle)
+        .map(normalizePhone)
         .filter(Boolean),
       btn = $("groupForm").querySelector("[type=submit]");
     btn.disabled = true;
     const r = await db.rpc("chat_criar_grupo", {
       p_nome: $("groupName").value.trim(),
-      p_handles: handles,
+      p_telefones: handles,
       p_empresa_id: $("companyId").value.trim() || null,
     });
     btn.disabled = false;
@@ -983,7 +982,7 @@
     for (const p of st.active?.participantes || []) {
       if (!p.ativo) continue;
       const line = document.createElement("div");
-      line.textContent = `${p.nome || "Pessoa"}${p.username_publico ? " · @" + p.username_publico : ""}${p.papel === "admin" ? " · admin" : ""}`;
+      line.textContent = `${p.nome || "Pessoa"}${p.telefone ? " · " + p.telefone : ""}${p.papel === "admin" ? " · admin" : ""}`;
       box.append(line);
     }
     open("membersDialog");
@@ -994,7 +993,7 @@
     if (!st.active) return;
     const r = await db.rpc(rpc, {
       p_conversa_id: st.active.conversa_id,
-      p_handle: handle($("memberHandle").value),
+      p_telefone: normalizePhone($("memberHandle").value),
     });
     if (r.error) {
       status("membersStatus", r.error.message, true);
@@ -1020,8 +1019,8 @@
     $("activeSubtitle").textContent =
       c.tipo === "grupo"
         ? `${(c.participantes || []).filter((p) => p.ativo).length} participantes`
-        : other(c)?.username_publico
-          ? "@" + other(c).username_publico
+        : other(c)?.telefone
+          ? other(c).telefone
           : "Conversa privada";
     const mine = (c.participantes || []).find((p) => p.is_me);
     $("groupMembers").hidden = !(c.tipo === "grupo" && mine?.papel === "admin");
