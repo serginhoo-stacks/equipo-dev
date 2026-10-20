@@ -305,6 +305,7 @@
     await Promise.all([
       loadProfile(),
       loadBusinessSummary(),
+      loadPlansPreview(),
       loadNotifications(false),
     ]);
     // Mantém o canal ativo durante toda a sessão autenticada, mesmo no painel principal.
@@ -374,6 +375,24 @@
       $("requestCount").textContent = String(
         (req.data || []).filter((x) => x.status === "pendente").length,
       );
+  }
+  function planDetails(value) {
+    if (value && typeof value === "object") return value;
+    if (typeof value !== "string") return {};
+    try { const parsed = JSON.parse(value); return parsed && typeof parsed === "object" ? parsed : { descricao: value }; } catch { return value ? { descricao: value } : {}; }
+  }
+  async function loadPlansPreview() {
+    const box = $("plansList");
+    if (!box) return;
+    const result = await db.from("planos").select("id,nome,preco,periodicidade,recursos,ativo").eq("ativo", true).order("preco", { ascending: true }).limit(3);
+    box.replaceChildren();
+    if (result.error || !result.data?.length) {
+      const empty = document.createElement("div"); empty.className = "empty-inline"; empty.textContent = result.error ? "Não foi possível carregar os planos." : "Nenhum plano configurado para exibição."; box.append(empty); return;
+    }
+    for (const plan of result.data) {
+      const details = planDetails(plan.recursos), card = document.createElement("article"), cover = document.createElement("div"), title = document.createElement("h3"), description = document.createElement("p"), price = document.createElement("strong");
+      card.className = "plan-preview"; cover.className = "plan-preview-cover"; cover.textContent = (plan.nome || "P").trim().charAt(0).toUpperCase(); title.textContent = plan.nome || "Plano SmartInspect"; description.textContent = details.descricao || details.description || "Estrutura configurável para sua operação."; price.textContent = plan.preco == null ? "Preço não definido" : `${Number(plan.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} / ${plan.periodicidade || "período"}`; card.append(cover, title, description, price); box.append(card);
+    }
   }
   function syncNotificationPermission() {
     const button = $("notificationPermissionButton");
