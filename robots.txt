@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /painel-pessoal.html
+Disallow: /painel-pessoal-por-telefone.html
+Disallow: /login.html
+Disallow: /cadastro.html
+Disallow: /recuperar-senha.html
+Disallow: /admin/
+Sitemap: https://www.smartinspect.com.br/sitemap.xml
