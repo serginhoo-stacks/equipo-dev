@@ -1,0 +1,11 @@
+{
+  "routes": [
+    { "path": "/", "title": "SmartInspect AI | Inspeção e Gestão da Construção Civil" },
+    { "path": "/sobre.html", "title": "Sobre o SmartInspect AI | Grupo MonteiroMelo" },
+    { "path": "/index.html", "title": "SmartInspect AI | Inspeção e Gestão da Construção Civil" },
+    { "path": "/login.html", "title": "Entrar — SmartInspect AI" },
+    { "path": "/cadastro.html", "title": "Criar conta — SmartInspect AI" },
+    { "path": "/painel-pessoal.html", "title": "Painel Pessoal — SmartInspect AI" },
+    { "path": "/planos.html", "title": "Planos | SmartInspect AI" }
+  ]
+}
