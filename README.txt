@@ -1,7 +1,6 @@
-PACOTE DE SEO INSTITUCIONAL — SMARTINSPECT AI
+CORREÇÃO DE LIDERANÇA E SEO — SMARTINSPECT AI
 
-Copie os cinco ficheiros desta pasta para a raiz do projeto:
-index.html, sobre.html, robots.txt, sitemap.xml e manus-routes.json.
-
-Não substituir as pastas js/, css/, imagens/ nem as páginas de autenticação.
-Este pacote não contém alterações de pagamentos, Supabase ou Vercel.
+Copie os cinco ficheiros desta pasta para a raiz do projeto.
+A alteração principal está em index.html: a seção de liderança agora apresenta
+Sérgio Monteiro (CEO) e Gabriel Melo (Co-CEO) com avatares tipográficos neutros.
+Não substitua js/, css/, imagens/ ou as páginas de autenticação.
