@@ -1,9 +1,11 @@
-CORREÇÃO DA EQUIPA — SMARTINSPECT AI
+ATUALIZAÇÃO INSTITUCIONAL — SMARTINSPECT AI
 
-Correspondência correta das fotos:
-- imagens/image.png — Sérgio Monteiro, CEO
-- imagens/image3.png — Gabriel Melo, Co-CEO
-- imagens/image2.png — Eduardo, COO
+Inclui:
+- fundadores Sérgio Monteiro e Gabriel Melo;
+- Grupo MonteiroMelo como grupo responsável;
+- Eduardo como COO;
+- perguntas institucionais sobre origem, propósito e visão;
+- texto "Grupo MonteiroMelo e o futuro da SmartInspect AI".
 
 Copie os cinco ficheiros para a raiz do projeto.
-Não substitua as pastas js/, css/ ou imagens/.
+Não substitua js/, css/ ou imagens/.
