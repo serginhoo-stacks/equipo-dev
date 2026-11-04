@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notificações - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.notificacoes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.contador-notificacoes {
+    background: #ef4444;
+    color: white;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.filtros-notificacoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filtro {
+    border: 1px solid #ddd;
+    background: white;
+    padding: 9px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.filtro.active {
+    background: #0066cc;
+    color: white;
+    border-color: #0066cc;
+}
+
+.notificacao {
+    position: relative;
+    border-left: 6px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.notificacao.critico {
+    border-left-color: #dc2626;
+}
+
+.notificacao.atencao {
+    border-left-color: #f97316;
+}
+
+.notificacao.informativo {
+    border-left-color: #eab308;
+}
+
+.notificacao.concluido {
+    border-left-color: #16a34a;
+}
+
+.notificacao.lida {
+    opacity: .65;
+}
+
+.notificacao-topo {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.prioridade {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.critico .prioridade {
+    color: #dc2626;
+}
+
+.atencao .prioridade {
+    color: #f97316;
+}
+
+.informativo .prioridade {
+    color: #ca8a04;
+}
+
+.concluido .prioridade {
+    color: #16a34a;
+}
+
+.notificacao h3 {
+    margin: 8px 0;
+}
+
+.notificacao p {
+    margin: 7px 0;
+}
+
+.notificacao-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.botao-pequeno {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.botao-lida {
+    background: #e5e7eb;
+}
+
+.botao-excluir {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #777;
+}
+
+.data-notificacao {
+    color: #777;
+    font-size: 13px;
+}
+
+@media(max-width: 700px) {
+
+    .notificacoes-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .notificacao-topo {
+        flex-direction: column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="menu-container"></div>
+
+<div class="content">
+
+<div class="notificacoes-header">
+
+<div>
+
+<h1>🔔 Notificações</h1>
+
+<p>
+Central de alertas e acontecimentos das obras
+</p>
+
+</div>
+
+<div
+id="contador"
+class="contador-notificacoes"
+>
+
+0 não lidas
+
+</div>
+
+</div>
+
+<!-- FILTROS -->
+
+<div class="filtros-notificacoes">
+
+<button
+class="filtro active"
+data-filtro="todos"
+
+>
+
+Todas </button>
+
+<button
+class="filtro"
+data-filtro="nao_lidas"
+
+>
+
+🔔 Não lidas </button>
+
+<button
+class="filtro"
+data-filtro="critico"
+
+>
+
+🔴 Crítico </button>
+
+<button
+class="filtro"
+data-filtro="atencao"
+
+>
+
+🟠 Atenção </button>
+
+<button
+class="filtro"
+data-filtro="informativo"
+
+>
+
+🟡 Informativo </button>
+
+<button
+class="filtro"
+data-filtro="concluido"
+
+>
+
+🟢 Concluído </button>
+
+</div>
+
+<!-- LISTA -->
+
+<div id="listaNotificacoes">
+
+<div class="card">
+
+Carregando notificações...
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/configuracoes.js"></script>
+<script src="js/auth.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+<script>
+
+verificarLogin();
+
+
+let notificacoes = [];
+
+let filtroAtual = "todos";
+
+
+const $ = id =>
+document.getElementById(id);
+
+
+
+/* ==========================================
+   ESCAPAR HTML
+========================================== */
+
+function esc(valor) {
+
+return String(valor || "")
+.replace(/&/g, "&amp;")
+.replace(/</g, "&lt;")
+.replace(/>/g, "&gt;")
+.replace(/"/g, "&quot;")
+.replace(/'/g, "&#039;");
+
+}
+
+
+
+/* ==========================================
+   ÍCONE DA PRIORIDADE
+========================================== */
+
+function iconePrioridade(prioridade) {
+
+if (prioridade === "critico")
+return "🔴";
+
+if (prioridade === "atencao")
+return "🟠";
+
+if (prioridade === "concluido")
+return "🟢";
+
+return "🟡";
+
+}
+
+
+
+/* ==========================================
+   NOME DA PRIORIDADE
+========================================== */
+
+function nomePrioridade(prioridade) {
+
+if (prioridade === "critico")
+return "CRÍTICO";
+
+if (prioridade === "atencao")
+return "ATENÇÃO";
+
+if (prioridade === "concluido")
+return "CONCLUÍDO";
+
+return "INFORMATIVO";
+
+}
+
+
+
+/* ==========================================
+   DATA
+========================================== */
+
+function formatarData(data) {
+
+if (!data)
+return "";
+
+return new Date(data).toLocaleString(
+"pt-BR",
+{
+dateStyle: "short",
+timeStyle: "short"
+}
+);
+
+}
+
+
+
+/* ==========================================
+   CARREGAR
+========================================== */
+
+async function carregarNotificacoes() {
+
+
+const { data, error } =
+
+await banco
+
+.from("notificacoes")
+
+.select("*")
+
+.order(
+"criado_em",
+{
+ascending: false
+}
+);
+
+
+if (error) {
+
+console.error(error);
+
+$("listaNotificacoes").innerHTML = `
+
+<div class="card">
+
+❌ Erro ao carregar notificações.
+
+<br><br>
+
+${esc(error.message)}
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+notificacoes = data || [];
+
+renderizarNotificacoes();
+
+}
+
+
+
+/* ==========================================
+   RENDERIZAR
+========================================== */
+
+function renderizarNotificacoes() {
+
+
+const naoLidas =
+
+notificacoes.filter(
+item => !item.lida
+).length;
+
+
+$("contador").textContent =
+
+`${naoLidas} não lida${naoLidas === 1 ? "" : "s"}`;
+
+
+
+let lista =
+
+notificacoes.filter(
+notificacao => {
+
+
+if (
+filtroAtual === "todos"
+)
+return true;
+
+
+if (
+filtroAtual === "nao_lidas"
+)
+return !notificacao.lida;
+
+
+return (
+notificacao.prioridade ===
+filtroAtual
+);
+
+}
+);
+
+
+
+if (!lista.length) {
+
+$("listaNotificacoes").innerHTML = `
+
+<div class="card empty-state">
+
+🔔
+
+<h3>
+
+Nenhuma notificação encontrada
+
+</h3>
+
+<p>
+
+Quando houver novos acontecimentos,
+eles aparecerão aqui.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+
+$("listaNotificacoes").innerHTML =
+
+lista.map(notificacao => `
+
+<article
+class="card notificacao
+${esc(notificacao.prioridade || "informativo")}
+${notificacao.lida ? "lida" : ""}"
+>
+
+
+<div class="notificacao-topo">
+
+<div>
+
+<span class="prioridade">
+
+${iconePrioridade(notificacao.prioridade)}
+
+${nomePrioridade(notificacao.prioridade)}
+
+</span>
+
+<h3>
+
+${esc(notificacao.titulo)}
+
+</h3>
+
+</div>
+
+
+<span class="data-notificacao">
+
+${formatarData(notificacao.criado_em)}
+
+</span>
+
+</div>
+
+
+
+<p>
+
+${esc(notificacao.mensagem)}
+
+</p>
+
+
+
+${
+notificacao.problema
+?
+`
+
+<p>
+
+<strong>
+Problema:
+</strong>
+
+${esc(notificacao.problema)}
+
+</p>
+
+`
+:
+""
+}
+
+
+
+${
+notificacao.impacto
+?
+`
+
+<p>
+
+<strong>
+Impacto:
+</strong>
+
+${esc(notificacao.impacto)}
+
+</p>
+
+`
+:
+""
+}
+
+
+
+${
+notificacao.recomendacao
+?
+`
+
+<p>
+
+<strong>
+Ação recomendada:
+</strong>
+
+${esc(notificacao.recomendacao)}
+
+</p>
+
+`
+:
+""
+}
+
+
+
+<div class="notificacao-acoes">
+
+
+${
+!notificacao.lida
+?
+
+`
+
+<button
+class="botao-pequeno botao-lida"
+onclick="marcarLida(${notificacao.id})"
+>
+
+✅ Marcar como lida
+
+</button>
+
+`
+
+:
+
+`
+
+<button
+class="botao-pequeno botao-lida"
+disabled
+>
+
+✓ Lida
+
+</button>
+
+`
+}
+
+
+
+<button
+class="botao-pequeno botao-excluir"
+onclick="excluirNotificacao(${notificacao.id})"
+>
+
+🗑 Excluir
+
+</button>
+
+
+</div>
+
+
+</article>
+
+`).join("");
+
+}
+
+
+
+/* ==========================================
+   MARCAR COMO LIDA
+========================================== */
+
+async function marcarLida(id) {
+
+
+const { error } =
+
+await banco
+
+.from("notificacoes")
+
+.update({
+lida: true
+})
+
+.eq(
+"id",
+id
+);
+
+
+if (error) {
+
+console.error(error);
+
+alert(
+"Não foi possível marcar a notificação."
+);
+
+return;
+
+}
+
+
+const notificacao =
+notificacoes.find(
+item => item.id === id
+);
+
+
+if (notificacao)
+notificacao.lida = true;
+
+
+renderizarNotificacoes();
+
+}
+
+
+
+/* ==========================================
+   EXCLUIR
+========================================== */
+
+async function excluirNotificacao(id) {
+
+
+if (
+!confirm(
+"Deseja excluir esta notificação?"
+)
+)
+return;
+
+
+const { error } =
+
+await banco
+
+.from("notificacoes")
+
+.delete()
+
+.eq(
+"id",
+id
+);
+
+
+if (error) {
+
+console.error(error);
+
+alert(
+"Não foi possível excluir a notificação."
+);
+
+return;
+
+}
+
+
+notificacoes =
+notificacoes.filter(
+item => item.id !== id
+);
+
+
+renderizarNotificacoes();
+
+}
+
+
+
+/* ==========================================
+   FILTROS
+========================================== */
+
+document
+.querySelectorAll(".filtro")
+.forEach(botao => {
+
+
+botao.addEventListener(
+"click",
+() => {
+
+
+filtroAtual =
+botao.dataset.filtro;
+
+
+document
+.querySelectorAll(".filtro")
+.forEach(item =>
+
+item.classList.toggle(
+"active",
+item === botao
+)
+
+);
+
+
+renderizarNotificacoes();
+
+}
+
+);
+
+});
+
+
+
+/* ==========================================
+   ATUALIZAÇÃO AUTOMÁTICA
+========================================== */
+
+setInterval(
+carregarNotificacoes,
+30000
+);
+
+
+
+/* ==========================================
+   INICIAR
+========================================== */
+
+carregarNotificacoes();
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Estoque - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+```
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+```
+<div class="logo">
+
+    <img src="imagens/logo.png" alt="SmartInspect AI">
+
+    <h2>SmartInspect AI</h2>
+
+</div>
+
+
+<a href="index.html">📊 Dashboard</a>
+
+<a href="criar.html">➕ Criar</a>
+
+<a href="obras.html">🏢 Obras</a>
+
+<a href="inspecoes.html">📋 Inspeções</a>
+
+<a href="estoque.html">📦 Estoque</a>
+
+<a href="ia.html">🤖 IA</a>
+
+<a href="relatorios.html">📄 Relatórios</a>
+
+<a href="equipe.html">👷 Equipe</a>
+
+<a href="solicitacoes.html">👤 Solicitações</a>
+
+<br>
+
+<a href="#" onclick="sair(); return false;">
+
+    🚪 Sair
+
+</a>
+```
+
+</div>
+
+<main class="content">
+
+```
+<header class="page-header">
+
+    <div>
+
+        <p class="eyebrow">
+            CONTROLE DE ESTOQUE
+        </p>
+
+        <h1 id="tituloPagina">
+            📦 Novo Material
+        </h1>
+
+        <p class="subtitle">
+            Cadastre ou altere um material do estoque.
+        </p>
+
+    </div>
+
+
+    <a
+        href="estoque.html"
+        class="secondary-button">
+
+        ← Voltar
+
+    </a>
+
+</header>
+
+
+
+<section class="card">
+
+
+    <form id="formEstoque">
+
+
+        <!-- OBRA -->
+
+        <label>
+
+            🏢 Obra
+
+            <select id="obra" required>
+
+                <option value="">
+                    Carregando obras...
+                </option>
+
+            </select>
+
+        </label>
+
+
+        <br>
+
+
+        <!-- MATERIAL -->
+
+        <label>
+
+            📦 Material
+
+            <input
+                id="material"
+                type="text"
+                placeholder="Ex: Cimento CP II"
+                required>
+
+        </label>
+
+
+        <br>
+
+
+        <!-- FOTO -->
+
+        <label>
+
+            📷 Foto do material
+
+            <input
+                id="foto"
+                type="file"
+                accept="image/*">
+
+        </label>
+
+
+        <br>
+
+
+        <!-- QUANTIDADE -->
+
+        <label>
+
+            🔢 Quantidade
+
+            <input
+                id="quantidade"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Quantidade"
+                required>
+
+        </label>
+
+
+        <br>
+
+
+        <!-- UNIDADE -->
+
+        <label>
+
+            📏 Unidade
+
+            <input
+                id="unidade"
+                type="text"
+                placeholder="Ex: saco, kg, m³"
+                required>
+
+        </label>
+
+
+        <br>
+
+
+        <!-- ESTOQUE MÍNIMO -->
+
+        <label>
+
+            ⚠️ Estoque mínimo
+
+            <input
+                id="minimo"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Quantidade mínima">
+
+        </label>
+
+
+        <br>
+
+
+        <!-- DATA -->
+
+        <label>
+
+            📅 Data de entrada
+
+            <input
+                id="data"
+                type="date">
+
+        </label>
+
+
+        <br>
+
+
+        <!-- STATUS -->
+
+        <label>
+
+            📌 Status
+
+            <select id="status">
+
+                <option value="Disponível">
+                    🟢 Disponível
+                </option>
+
+                <option value="Estoque baixo">
+                    🟠 Estoque baixo
+                </option>
+
+                <option value="Sem estoque">
+                    🔴 Sem estoque
+                </option>
+
+            </select>
+
+        </label>
+
+
+        <br><br>
+
+
+        <button
+            type="submit"
+            class="primary-button"
+            id="salvarButton">
+
+            💾 Salvar Material
+
+        </button>
+
+
+        <p
+            id="mensagem"
+            class="dashboard-message">
+        </p>
+
+
+    </form>
+
+
+</section>
+```
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/configuracoes.js"></script>
+<script src="js/auth.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+<script>
+
+
+verificarLogin();
+
+
+// =====================================================
+// ELEMENTOS
+// =====================================================
+
+const $ = id =>
+    document.getElementById(id);
+
+
+// =====================================================
+// ID DO MATERIAL
+// =====================================================
+
+const parametros =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const estoqueId =
+    parametros.get("id");
+
+
+// =====================================================
+// USUÁRIO
+// =====================================================
+
+const usuario =
+    getUsuario();
+
+
+// =====================================================
+// CARREGAR OBRAS
+// =====================================================
+
+async function carregarObras() {
+
+
+    const select =
+        $("obra");
+
+
+    const { data, error } =
+        await banco
+
+            .from("obras")
+
+            .select("*")
+
+            .order("id", {
+                ascending: false
+            });
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao carregar obras:",
+            error
+        );
+
+
+        select.innerHTML = `
+
+            <option value="">
+                ❌ Erro ao carregar obras
+            </option>
+
+        `;
+
+        return;
+
+    }
+
+
+    if (!data || !data.length) {
+
+        select.innerHTML = `
+
+            <option value="">
+                Nenhuma obra cadastrada
+            </option>
+
+        `;
+
+        return;
+
+    }
+
+
+    select.innerHTML = `
+
+        <option value="">
+            Selecione uma obra
+        </option>
+
+    `;
+
+
+    data.forEach(obra => {
+
+        const option =
+            document.createElement("option");
+
+
+        option.value =
+            obra.id;
+
+
+        option.textContent =
+            obra.nome || `Obra #${obra.id}`;
+
+
+        select.appendChild(option);
+
+    });
+
+
+    // Se estiver editando,
+    // carregaremos a obra depois.
+
+}
+
+
+// =====================================================
+// CARREGAR MATERIAL PARA EDIÇÃO
+// =====================================================
+
+async function carregarMaterial() {
+
+
+    if (!estoqueId) {
+
+        return;
+
+    }
+
+
+    $("tituloPagina").textContent =
+        "✏️ Editar Material";
+
+
+    $("salvarButton").textContent =
+        "💾 Salvar alterações";
+
+
+    const { data, error } =
+        await banco
+
+            .from("estoque")
+
+            .select("*")
+
+            .eq("id", estoqueId)
+
+            .single();
+
+
+    if (error || !data) {
+
+        console.error(
+            "Erro ao carregar material:",
+            error
+        );
+
+
+        $("mensagem").textContent =
+            "❌ Não foi possível carregar este material.";
+
+        return;
+
+    }
+
+
+    // =================================================
+    // PREENCHER CAMPOS
+    // =================================================
+
+    $("material").value =
+        data.material || "";
+
+
+    $("quantidade").value =
+        data.quantidade ?? "";
+
+
+    $("unidade").value =
+        data.unidade || "";
+
+
+    $("minimo").value =
+        data.estoque_minimo ?? "";
+
+
+    $("data").value =
+        data.data_entrada || "";
+
+
+    $("status").value =
+        data.status || "Disponível";
+
+
+    // Obra
+
+    if (data.obra_id) {
+
+        $("obra").value =
+            String(data.obra_id);
+
+    }
+
+}
+
+
+// =====================================================
+// UPLOAD DA FOTO
+// =====================================================
+
+async function enviarFoto() {
+
+
+    const arquivo =
+        $("foto").files[0];
+
+
+    if (!arquivo) {
+
+        return null;
+
+    }
+
+
+    const nomeArquivo =
+
+        `${Date.now()}_${arquivo.name.replace(/\s+/g, "_")}`;
+
+
+    const { error } =
+        await banco.storage
+
+            .from("estoque")
+
+            .upload(
+                nomeArquivo,
+                arquivo,
+                {
+                    upsert: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Erro no upload:",
+            error
+        );
+
+
+        throw new Error(
+            "Não foi possível enviar a foto."
+        );
+
+    }
+
+
+    const resultado =
+        banco.storage
+
+            .from("estoque")
+
+            .getPublicUrl(
+                nomeArquivo
+            );
+
+
+    return resultado
+        ?.data
+        ?.publicUrl || null;
+
+}
+
+
+// =====================================================
+// SALVAR
+// =====================================================
+
+$("formEstoque")
+    .addEventListener(
+        "submit",
+        async evento => {
+
+
+            evento.preventDefault();
+
+
+            const botao =
+                $("salvarButton");
+
+
+            const mensagem =
+                $("mensagem");
+
+
+            botao.disabled =
+                true;
+
+
+            botao.textContent =
+                "Salvando...";
+
+
+            mensagem.textContent =
+                "";
+
+
+            try {
+
+
+                // =====================================
+                // VALORES
+                // =====================================
+
+                const obraId =
+                    $("obra").value;
+
+
+                const material =
+                    $("material")
+                        .value
+                        .trim();
+
+
+                const quantidade =
+                    Number(
+                        $("quantidade").value
+                    );
+
+
+                const unidade =
+                    $("unidade")
+                        .value
+                        .trim();
+
+
+                const minimoValor =
+                    $("minimo").value;
+
+
+                const dataValor =
+                    $("data").value;
+
+
+                const status =
+                    $("status").value;
+
+
+                // =====================================
+                // VALIDAÇÃO
+                // =====================================
+
+                if (!obraId) {
+
+                    throw new Error(
+                        "Selecione uma obra."
+                    );
+
+                }
+
+
+                if (!material) {
+
+                    throw new Error(
+                        "Informe o material."
+                    );
+
+                }
+
+
+                if (
+                    Number.isNaN(quantidade) ||
+                    quantidade < 0
+                ) {
+
+                    throw new Error(
+                        "Informe uma quantidade válida."
+                    );
+
+                }
+
+
+                if (!unidade) {
+
+                    throw new Error(
+                        "Informe a unidade."
+                    );
+
+                }
+
+
+                // =====================================
+                // DATA
+                // IMPORTANTE:
+                // "" vira null
+                // =====================================
+
+                const dataEntrada =
+                    dataValor
+                        ? dataValor
+                        : null;
+
+
+                // =====================================
+                // ESTOQUE MÍNIMO
+                // "" vira null
+                // =====================================
+
+                const estoqueMinimo =
+                    minimoValor !== ""
+                        ? Number(minimoValor)
+                        : null;
+
+
+                // =====================================
+                // FOTO
+                // =====================================
+
+                let caminhoFoto = null;
+
+
+                if ($("foto").files.length) {
+
+                    caminhoFoto =
+                        await enviarFoto();
+
+                }
+
+
+                // =====================================
+                // DADOS
+                // =====================================
+
+                const dados = {
+
+                    obra_id:
+                        Number(obraId),
+
+                    material:
+                        material,
+
+                    quantidade:
+                        quantidade,
+
+                    unidade:
+                        unidade,
+
+                    estoque_minimo:
+                        estoqueMinimo,
+
+                    data_entrada:
+                        dataEntrada,
+
+                    status:
+                        status
+
+                };
+
+
+                // Só altera foto se
+                // uma nova foi enviada
+
+                if (caminhoFoto) {
+
+                    dados.foto =
+                        caminhoFoto;
+
+                }
+
+
+                // =================================================
+                // EDITAR
+                // =================================================
+
+                if (estoqueId) {
+
+
+                    const { error } =
+                        await banco
+
+                            .from("estoque")
+
+                            .update(dados)
+
+                            .eq(
+                                "id",
+                                estoqueId
+                            );
+
+
+                    if (error) {
+
+                        throw error;
+
+                    }
+
+
+                    mensagem.textContent =
+                        "✅ Material atualizado com sucesso!";
+
+
+                }
+
+                // =================================================
+                // NOVO
+                // =================================================
+
+                else {
+
+
+                    dados.responsavel =
+                        usuario?.nome ||
+                        usuario?.email ||
+                        "Usuário";
+
+
+                    const { error } =
+                        await banco
+
+                            .from("estoque")
+
+                            .insert([
+                                dados
+                            ]);
+
+
+                    if (error) {
+
+                        throw error;
+
+                    }
+
+
+                    mensagem.textContent =
+                        "✅ Material cadastrado com sucesso!";
+
+
+                    // Limpar formulário
+
+                    $("formEstoque")
+                        .reset();
+
+                }
+
+
+            }
+            catch (error) {
+
+
+                console.error(
+                    "Erro ao salvar estoque:",
+                    error
+                );
+
+
+                mensagem.textContent =
+                    "❌ " +
+                    (
+                        error.message ||
+                        "Erro ao salvar material."
+                    );
+
+            }
+            finally {
+
+
+                botao.disabled =
+                    false;
+
+
+                botao.textContent =
+                    estoqueId
+                        ? "💾 Salvar alterações"
+                        : "💾 Salvar Material";
+
+            }
+
+        }
+    );
+
+
+// =====================================================
+// INICIALIZAÇÃO
+// =====================================================
+
+async function iniciar() {
+
+    await carregarObras();
+
+    await carregarMaterial();
+
+}
+
+
+iniciar();
+
+
+</script>
+
+<footer class="rodape">
+
+```
+<p>
+    🚀 SmartInspect AI
+</p>
+
+<p>
+    Desenvolvido por
+    <strong>
+        Sérgio and Gabriel
+    </strong>
+</p>
+
+<p>
+    Versão 1.0.1
+</p>
+```
+
+</footer>
+
+</body>
+
+</html>

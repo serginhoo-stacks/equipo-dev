@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Estoque - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="menu-container"></div>
+
+<main class="content">
+
+<header class="page-header">
+
+<div>
+
+<p class="eyebrow">CONTROLE DE MATERIAIS</p>
+
+<h1>📦 Estoque</h1>
+
+<p class="subtitle">
+Controle de materiais, quantidades e movimentações da obra.
+</p>
+
+</div>
+
+<button
+onclick="location.href='novo_estoque.html'"
+class="primary-button">
+
+➕ Novo Material
+
+</button>
+
+</header>
+
+<div id="listaEstoque">
+
+<div class="card">
+
+Carregando estoque...
+
+</div>
+
+</div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/configuracoes.js"></script>
+<script src="js/auth.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+<script>
+
+verificarLogin();
+
+
+const $ = id =>
+document.getElementById(id);
+
+
+// =====================================================
+// CARREGAR ESTOQUE
+// =====================================================
+
+async function carregarEstoque(){
+
+const lista =
+$("listaEstoque");
+
+
+lista.innerHTML = `
+
+<div class="card">
+
+⏳ Carregando estoque...
+
+</div>
+
+`;
+
+
+const {data,error} =
+
+await banco
+
+.from("estoque")
+
+.select(`
+
+*,
+
+obras(
+
+nome
+
+)
+
+`)
+
+.order("id",{
+
+ascending:false
+
+});
+
+
+if(error){
+
+console.error(error);
+
+lista.innerHTML = `
+
+<div class="card">
+
+❌ Erro ao carregar estoque.
+
+<br><br>
+
+${error.message}
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if(!data || data.length === 0){
+
+lista.innerHTML = `
+
+<div class="card">
+
+📦 Nenhum material cadastrado.
+
+<br><br>
+
+<button
+onclick="location.href='novo_estoque.html'">
+
+➕ Cadastrar primeiro material
+
+</button>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+lista.innerHTML = "";
+
+
+data.forEach(item => {
+
+
+const quantidade =
+Number(item.quantidade || 0);
+
+
+const minimo =
+Number(item.estoque_minimo || 0);
+
+
+let statusEstoque =
+"🟢 Disponível";
+
+
+if(quantidade <= 0){
+
+statusEstoque =
+"🔴 Sem estoque";
+
+}
+
+else if(
+minimo > 0 &&
+quantidade <= minimo
+){
+
+statusEstoque =
+"🟠 Estoque baixo";
+
+}
+
+
+const unidade =
+item.unidade || "un";
+
+
+const dataEntrada =
+item.data_entrada
+
+?
+new Date(
+item.data_entrada +
+"T00:00:00"
+).toLocaleDateString("pt-BR")
+
+:
+"Não informada";
+
+
+const obra =
+item.obras?.nome ||
+"Obra não informada";
+
+
+const responsavel =
+item.responsavel ||
+"Não informado";
+
+
+lista.innerHTML += `
+
+<div class="card estoque-card">
+
+
+<div class="estoque-header">
+
+<div>
+
+<h2>
+
+📦
+${item.material || "Material sem nome"}
+
+</h2>
+
+<p>
+
+${statusEstoque}
+
+</p>
+
+</div>
+
+
+<div>
+
+<strong>
+
+${quantidade}
+
+${unidade}
+
+</strong>
+
+</div>
+
+</div>
+
+
+<hr>
+
+
+<p>
+
+🏢 <strong>Obra:</strong>
+
+${obra}
+
+</p>
+
+
+<p>
+
+🔢 <strong>Quantidade:</strong>
+
+${quantidade}
+
+${unidade}
+
+</p>
+
+
+<p>
+
+⚠️ <strong>Estoque mínimo:</strong>
+
+${minimo || "Não definido"}
+
+</p>
+
+
+<p>
+
+📅 <strong>Entrada:</strong>
+
+${dataEntrada}
+
+</p>
+
+
+<p>
+
+👤 <strong>Responsável:</strong>
+
+${responsavel}
+
+</p>
+
+
+<p>
+
+📌 <strong>Status:</strong>
+
+${item.status || "Disponível"}
+
+</p>
+
+
+<div class="estoque-actions">
+
+
+<button
+onclick="movimentarEstoque(${item.id})">
+
+🔄 Movimentar
+
+</button>
+
+
+<button
+onclick="editarMaterial(${item.id})">
+
+✏️ Editar
+
+</button>
+
+
+<button
+onclick="verLogs(${item.id})">
+
+📋 Logs
+
+</button>
+
+
+<button
+onclick="excluirMaterial(${item.id})">
+
+🗑 Excluir
+
+</button>
+
+
+</div>
+
+
+</div>
+
+`;
+
+});
+
+}
+
+
+// =====================================================
+// EDITAR
+// =====================================================
+
+function editarMaterial(id){
+
+window.location.href =
+`novo_estoque.html?id=${id}`;
+
+}
+
+
+// =====================================================
+// MOVIMENTAÇÃO
+// =====================================================
+
+function movimentarEstoque(id){
+
+window.location.href =
+`movimentar_estoque.html?id=${id}`;
+
+}
+
+
+// =====================================================
+// LOGS
+// =====================================================
+
+function verLogs(id){
+
+window.location.href =
+`logs_estoque.html?id=${id}`;
+
+}
+
+
+// =====================================================
+// EXCLUIR
+// =====================================================
+
+async function excluirMaterial(id){
+
+
+const confirmar =
+confirm(
+"Deseja realmente excluir este material?"
+);
+
+
+if(!confirmar){
+
+return;
+
+}
+
+
+const {error} =
+
+await banco
+
+.from("estoque")
+
+.delete()
+
+.eq("id",id);
+
+
+if(error){
+
+console.error(error);
+
+alert(
+"❌ Não foi possível excluir o material."
+);
+
+return;
+
+}
+
+
+alert(
+"✅ Material removido com sucesso."
+);
+
+
+carregarEstoque();
+
+}
+
+
+// =====================================================
+// INICIAR
+// =====================================================
+
+carregarEstoque();
+
+</script>
+
+</body>
+
+</html>

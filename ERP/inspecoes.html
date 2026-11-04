@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Inspeções - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="menu-container"></div>
+
+
+
+
+<div class="content">
+
+
+<h1>📋 Inspeções</h1>
+
+<p>
+Controle das inspeções realizadas nas obras
+</p>
+
+
+
+<button onclick="location.href='nova_inspecao.html'">
+
+➕ Nova Inspeção
+
+</button>
+
+
+
+
+<div id="listaInspecoes">
+
+<p>
+Carregando inspeções...
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/configuracoes.js"></script>
+<script src="js/auth.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+
+
+
+
+<script>
+
+
+// proteção de acesso
+
+if(!protegerPagina("inspecoes")){
+
+throw new Error("Sem permissão");
+
+}
+
+
+
+
+
+
+
+async function carregarInspecoes(){
+
+
+
+const {data,error}=await banco
+
+.from("inspecoes")
+
+.select(`
+
+*,
+
+obras(
+
+nome
+
+)
+
+`)
+
+.order("id",{ascending:false});
+
+
+
+
+
+
+
+const lista=document.getElementById("listaInspecoes");
+
+
+
+
+
+if(error){
+
+
+console.log(error);
+
+
+lista.innerHTML="❌ Erro ao carregar inspeções";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+if(!data || data.length===0){
+
+
+lista.innerHTML="Nenhuma inspeção cadastrada";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+lista.innerHTML="";
+
+
+
+
+
+
+
+data.forEach(inspecao=>{
+
+
+
+lista.innerHTML += `
+
+
+
+<div class="card">
+
+
+
+<h2>
+📋 Inspeção #${inspecao.id}
+</h2>
+
+
+
+
+
+<p>
+
+🏢 Obra:
+
+${inspecao.obras?.nome || "Sem obra"}
+
+</p>
+
+
+
+
+
+<p>
+
+🔧 Tipo:
+
+${inspecao.tipo || "-"}
+
+</p>
+
+
+
+
+
+<p>
+
+👷 Responsável:
+
+${inspecao.responsavel || "-"}
+
+</p>
+
+
+
+
+
+<p>
+
+📅 Data:
+
+${inspecao.data_inspecao || "-"}
+
+</p>
+
+
+
+
+
+<p>
+
+📌 Status:
+
+${inspecao.status || "Pendente"}
+
+</p>
+
+
+
+
+
+<p>
+
+📝 Observação:
+
+${inspecao.observacao || "Sem observações"}
+
+</p>
+
+
+
+
+
+<button onclick="verInspecao(${inspecao.id})">
+
+👁 Ver detalhes
+
+</button>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+
+
+}
+
+
+
+
+
+
+
+function verInspecao(id){
+
+
+window.location.href =
+
+"detalhes_inspecao.html?id="+id;
+
+
+}
+
+
+
+
+
+
+
+
+carregarInspecoes();
+
+
+
+</script>
+
+
+
+
+
+
+<footer class="rodape">
+
+<p>
+🚀 SmartInspect AI
+</p>
+
+<p>
+Desenvolvido por <strong>Sérgio and Gabriel</strong>
+</p>
+
+<p>
+Versão 1.0.1
+</p>
+
+</footer>
+
+
+
+</body>
+
+</html>

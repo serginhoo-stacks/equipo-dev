@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Configurações - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fa;
+}
+
+.content{
+    margin-left:260px;
+    padding:30px;
+    min-height:100vh;
+}
+
+.configuracoes-container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.cabecalho{
+    margin-bottom:25px;
+}
+
+.cabecalho h1{
+    margin:0;
+    font-size:30px;
+}
+
+.cabecalho p{
+    color:#666;
+    margin-top:8px;
+}
+
+.config-card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+}
+
+.config-card h2{
+    margin:0 0 8px;
+    font-size:20px;
+}
+
+.config-card > p{
+    color:#777;
+    margin-bottom:20px;
+}
+
+.config-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding:17px 0;
+    border-bottom:1px solid #eee;
+}
+
+.config-item:last-child{
+    border-bottom:none;
+}
+
+.config-info{
+    flex:1;
+}
+
+.config-info strong{
+    display:block;
+    margin-bottom:5px;
+    font-size:16px;
+}
+
+.config-info span{
+    color:#777;
+    font-size:13px;
+}
+
+.config-item select{
+    min-width:180px;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    background:white;
+    font-size:14px;
+}
+
+.switch{
+    position:relative;
+    width:52px;
+    height:28px;
+    flex-shrink:0;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#ccc;
+    border-radius:30px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:22px;
+    height:22px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.2s;
+}
+
+.switch input:checked + .slider{
+    background:#0066cc;
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(24px);
+}
+
+.tamanhos{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn-tamanho{
+    border:1px solid #ccc;
+    background:white;
+    padding:9px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.btn-tamanho:hover{
+    border-color:#0066cc;
+}
+
+.btn-tamanho.ativo{
+    background:#0066cc;
+    color:white;
+    border-color:#0066cc;
+}
+
+.acoes{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    border-radius:9px;
+    padding:12px 20px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-salvar{
+    background:#198754;
+    color:white;
+}
+
+.btn-salvar:hover{
+    background:#146c43;
+}
+
+.btn-restaurar{
+    background:#6c757d;
+    color:white;
+}
+
+.btn-restaurar:hover{
+    background:#565e64;
+}
+
+.mensagem{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:8px;
+    background:#d1e7dd;
+    color:#0f5132;
+}
+
+.acessibilidade-info{
+    background:#eef6ff;
+    border-left:4px solid #0066cc;
+    padding:15px;
+    border-radius:8px;
+    color:#444;
+    line-height:1.6;
+}
+
+/* ======================================
+   CONFIGURAÇÕES APLICADAS
+====================================== */
+
+body.fonte-pequena{
+    font-size:90%;
+}
+
+body.fonte-media{
+    font-size:100%;
+}
+
+body.fonte-grande{
+    font-size:115%;
+}
+
+body.fonte-muito-grande{
+    font-size:130%;
+}
+
+body.alto-contraste{
+    background:#000 !important;
+    color:#fff !important;
+}
+
+body.alto-contraste .config-card{
+    background:#111 !important;
+    color:#fff !important;
+    border:1px solid #fff;
+}
+
+body.alto-contraste .config-info span,
+body.alto-contraste .cabecalho p,
+body.alto-contraste .config-card > p{
+    color:#fff !important;
+}
+
+body.alto-contraste select,
+body.alto-contraste .btn-tamanho{
+    background:#000;
+    color:#fff;
+    border-color:#fff;
+}
+
+body.sublinhar-links a{
+    text-decoration:underline !important;
+}
+
+body.modo-escuro{
+    background:#121212 !important;
+    color:#eee;
+}
+
+body.modo-escuro .config-card{
+    background:#1e1e1e;
+    color:#eee;
+}
+
+body.modo-escuro .config-info span,
+body.modo-escuro .cabecalho p,
+body.modo-escuro .config-card > p{
+    color:#bbb;
+}
+
+body.modo-escuro select,
+body.modo-escuro .btn-tamanho{
+    background:#292929;
+    color:#fff;
+    border-color:#555;
+}
+
+/* ======================================
+   RESPONSIVO
+====================================== */
+
+@media(max-width:800px){
+
+    .content{
+        margin-left:0;
+        padding:20px;
+    }
+
+    .config-item{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .config-item select{
+        width:100%;
+    }
+
+    .tamanhos{
+        width:100%;
+    }
+
+    .btn-tamanho{
+        flex:1;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="menu-container"></div>
+
+<!-- CONTEÚDO -->
+
+<div class="content">
+
+<div class="configuracoes-container">
+
+<div class="cabecalho">
+
+<h1>⚙️ Configurações</h1>
+
+<p>
+Personalize o SmartInspect AI de acordo com suas necessidades.
+</p>
+
+</div>
+
+<!-- ======================================
+     APARÊNCIA
+====================================== -->
+
+<div class="config-card">
+
+<h2>🎨 Aparência</h2>
+
+<p>
+Personalize a forma como o sistema é apresentado.
+</p>
+
+<div class="config-item">
+
+<div class="config-info">
+
+<strong>🌙 Modo escuro</strong>
+
+<span>
+Reduz o brilho da interface para utilização em ambientes escuros.
+</span>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="modoEscuro"
+
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+<div class="config-item">
+
+<div class="config-info">
+
+<strong>⚫ Alto contraste</strong>
+
+<span>
+Aumenta o contraste das informações para facilitar a leitura.
+</span>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="altoContraste"
+
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+<div class="config-item">
+
+<div class="config-info">
+
+<strong>🔗 Sublinhar links</strong>
+
+<span>
+Deixa os links mais fáceis de identificar.
+</span>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="sublinharLinks"
+
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+<div class="config-item">
+
+<div class="config-info">
+
+<strong>🔠 Tamanho da fonte</strong>
+
+<span>
+Escolha o tamanho das letras do sistema.
+</span>
+
+</div>
+
+<div class="tamanhos">
+
+<button
+class="btn-tamanho"
+onclick="selecionarFonte('pequena')"
+id="fontePequena"
+
+>
+
+A- </button>
+
+<button
+class="btn-tamanho"
+onclick="selecionarFonte('media')"
+id="fonteMedia"
+
+>
+
+A </button>
+
+<button
+class="btn-tamanho"
+onclick="selecionarFonte('grande')"
+id="fonteGrande"
+
+>
+
+A+ </button>
+
+<button
+class="btn-tamanho"
+onclick="selecionarFonte('muito-grande')"
+id="fonteMuitoGrande"
+
+>
+
+A++ </button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ======================================
+     IDIOMA
+====================================== -->
+
+<div class="config-card">
+
+<h2>🌐 Idioma</h2>
+
+<p>
+Escolha o idioma preferido para a interface.
+</p>
+
+<div class="config-item">
+
+<div class="config-info">
+
+<strong>Idioma do sistema</strong>
+
+<span>
+O idioma selecionado será utilizado pelo SmartInspect AI.
+</span>
+
+</div>
+
+<select id="idioma">
+
+<option value="pt-BR">
+🇧🇷 Português (Brasil)
+</option>
+
+<option value="en">
+🇺🇸 English
+</option>
+
+<option value="es">
+🇪🇸 Español
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<!-- ======================================
+     ACESSIBILIDADE
+====================================== -->
+
+<div class="config-card">
+
+<h2>♿ Acessibilidade</h2>
+
+<p>
+Recursos para tornar o SmartInspect AI mais acessível.
+</p>
+
+<div class="acessibilidade-info">
+
+<strong>👂 Inclusão para pessoas com deficiência auditiva</strong>
+
+<br>
+
+O sistema priorizará informações visuais para avisos,
+notificações e eventos importantes, evitando depender
+exclusivamente de sons.
+
+</div>
+
+<div class="config-item">
+
+<div class="config-info">
+
+<strong>🔔 Alertas visuais</strong>
+
+<span>
+Exibe alertas visuais quando uma notificação importante ocorrer.
+</span>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="alertasVisuais"
+checked
+
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+<div class="config-item">
+
+<div class="config-info">
+
+<strong>💬 Notificações em texto</strong>
+
+<span>
+Exibe mensagens importantes por escrito.
+</span>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="notificacoesTexto"
+checked
+
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+</div>
+
+<!-- ======================================
+     AÇÕES
+====================================== -->
+
+<div class="config-card">
+
+<h2>💾 Salvar configurações</h2>
+
+<p>
+Suas preferências serão salvas neste dispositivo.
+</p>
+
+<div class="acoes">
+
+<button
+class="btn btn-salvar"
+onclick="salvarConfiguracoes()"
+
+>
+
+💾 Salvar configurações </button>
+
+<button
+class="btn btn-restaurar"
+onclick="restaurarConfiguracoes()"
+
+>
+
+♻️ Restaurar padrão </button>
+
+</div>
+
+<div
+id="mensagemConfiguracao"
+class="mensagem"
+>
+✅ Configurações salvas com sucesso!
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+<script src="js/configuracoes.js"></script>
+
+</body>
+
+</html>

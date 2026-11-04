@@ -1,0 +1,412 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cadastro - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="login-background">
+
+
+<div class="login-card">
+
+
+<img src="imagens/logo.png" class="login-logo">
+
+
+<h1>
+🏗 SmartInspect AI
+</h1>
+
+
+<h2>
+Criar conta
+</h2>
+
+
+<p>
+Solicite acesso ao sistema
+</p>
+
+
+
+<label>
+Nome completo
+</label>
+
+<input
+id="nome"
+type="text"
+placeholder="Digite seu nome"
+autocomplete="name"
+>
+
+
+
+<label>
+Email
+</label>
+
+<input
+id="email"
+type="email"
+placeholder="Digite seu email"
+autocomplete="email"
+>
+
+
+
+<label>
+Senha
+</label>
+
+<input
+id="senha"
+type="password"
+placeholder="Crie uma senha"
+autocomplete="new-password"
+>
+
+
+
+<label>
+Cargo solicitado
+</label>
+
+
+<select id="nivel">
+
+<option value="usuario">
+👤 Usuário
+</option>
+
+<option value="tecnico">
+🔧 Técnico
+</option>
+
+<option value="inspetor">
+🔍 Inspetor
+</option>
+
+<option value="engenheiro">
+👷 Engenheiro
+</option>
+
+</select>
+
+
+
+<p style="font-size:13px;">
+
+ℹ️ O cargo escolhido será analisado pelo administrador.
+O acesso só será liberado após aprovação.
+
+</p>
+
+
+
+<button
+type="button"
+onclick="cadastrar()"
+>
+
+➕ Solicitar acesso
+
+</button>
+
+
+
+<button
+type="button"
+class="voltar"
+onclick="location.href='login.html'"
+>
+
+⬅ Voltar
+
+</button>
+
+
+
+<p id="mensagem"></p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<script src="js/supabase.js"></script>
+
+
+<script>
+
+
+async function cadastrar(){
+
+
+const nome =
+document.getElementById("nome").value.trim();
+
+
+const email =
+document.getElementById("email").value.trim().toLowerCase();
+
+
+const senha =
+document.getElementById("senha").value;
+
+
+const nivel =
+document.getElementById("nivel").value;
+
+
+const mensagem =
+document.getElementById("mensagem");
+
+
+
+/*
+==================================================
+VALIDAÇÃO
+==================================================
+*/
+
+
+if(!nome){
+
+mensagem.innerHTML =
+"❌ Informe seu nome.";
+
+return;
+
+}
+
+
+
+if(!email){
+
+mensagem.innerHTML =
+"❌ Informe seu email.";
+
+return;
+
+}
+
+
+
+if(!senha){
+
+mensagem.innerHTML =
+"❌ Crie uma senha.";
+
+return;
+
+}
+
+
+
+if(senha.length < 6){
+
+mensagem.innerHTML =
+"❌ A senha precisa ter pelo menos 6 caracteres.";
+
+return;
+
+}
+
+
+
+/*
+==================================================
+INICIANDO
+==================================================
+*/
+
+
+mensagem.innerHTML =
+"⏳ Criando sua solicitação...";
+
+
+
+try {
+
+
+/*
+==================================================
+CRIAR CONTA NO SUPABASE AUTH
+==================================================
+*/
+
+
+const { data, error } =
+await banco.auth.signUp({
+
+email: email,
+
+password: senha
+
+});
+
+
+
+if(error){
+
+console.error(error);
+
+mensagem.innerHTML =
+"❌ " + error.message;
+
+return;
+
+}
+
+
+
+if(!data || !data.user){
+
+mensagem.innerHTML =
+"❌ Não foi possível criar a conta.";
+
+return;
+
+}
+
+
+
+/*
+==================================================
+SALVAR USUÁRIO
+==================================================
+
+IMPORTANTE:
+
+O usuário SEMPRE começa como pendente.
+
+O ADM define o cargo definitivo
+na tela de solicitações.
+
+*/
+
+
+const { error: erroBanco } =
+
+await banco
+
+.from("usuarios")
+
+.insert([{
+
+auth_id: data.user.id,
+
+nome: nome,
+
+email: email,
+
+nivel_acesso: nivel,
+
+status: "pendente",
+
+data_criacao: new Date().toISOString(),
+
+online: false
+
+}]);
+
+
+
+if(erroBanco){
+
+console.error(erroBanco);
+
+
+/*
+Se o cadastro da tabela falhar,
+tentamos informar o usuário.
+*/
+
+mensagem.innerHTML =
+
+"❌ Erro ao criar cadastro: " +
+erroBanco.message;
+
+return;
+
+}
+
+
+
+/*
+==================================================
+SUCESSO
+==================================================
+*/
+
+
+mensagem.innerHTML =
+
+"✅ Solicitação enviada com sucesso!<br><br>" +
+
+"Seu cadastro está aguardando aprovação do administrador.";
+
+
+
+/*
+Limpar formulário
+*/
+
+
+document.getElementById("nome").value = "";
+
+document.getElementById("email").value = "";
+
+document.getElementById("senha").value = "";
+
+document.getElementById("nivel").value = "usuario";
+
+
+
+}
+
+catch(error){
+
+
+console.error(error);
+
+
+mensagem.innerHTML =
+
+"❌ Erro inesperado: " +
+error.message;
+
+
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
+```

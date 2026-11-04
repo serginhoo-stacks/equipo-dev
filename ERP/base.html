@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+/* =========================
+   EQUIPE ONLINE
+========================= */
+
+.equipe-online-card{
+    margin-top:25px;
+}
+
+.usuarios-online{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:15px;
+}
+
+.usuario-online{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px;
+    border-radius:10px;
+    background:#f7f9fc;
+}
+
+.avatar-online{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #0066cc;
+}
+
+.ponto-online-dashboard{
+    width:10px;
+    height:10px;
+    background:#22c55e;
+    border-radius:50%;
+    margin-left:-20px;
+    margin-top:30px;
+    border:2px solid white;
+}
+
+.nome-online{
+    font-weight:bold;
+    color:#222;
+}
+
+.cargo-online{
+    font-size:13px;
+    color:#777;
+}
+
+.sem-usuarios{
+    color:#777;
+    padding:15px 0;
+}
+
+
+/* =========================
+   REDES SOCIAIS
+========================= */
+
+.redes-card{
+    margin-top:25px;
+    padding:25px;
+    background:white;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+
+.redes-card h2{
+    margin:0;
+    color:#222;
+}
+
+.redes-subtitulo{
+    margin-top:6px;
+    color:#777;
+    font-size:14px;
+}
+
+.redes-container{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.rede{
+    width:55px;
+    height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:#f5f7fa;
+    transition:0.2s;
+    text-decoration:none;
+}
+
+.rede img{
+    width:32px;
+    height:32px;
+    object-fit:contain;
+}
+
+.rede:hover{
+    transform:translateY(-3px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+
+/* =========================
+   RODAPÉ CENTRALIZADO
+========================= */
+
+footer{
+    text-align:center;
+    width:100%;
+    margin:60px auto 20px auto;
+    padding:25px 0;
+    color:#666;
+    line-height:1.8;
+}
+
+footer strong{
+    color:#333;
+}
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:600px){
+
+    .redes-container{
+        gap:12px;
+    }
+
+    .rede{
+        width:50px;
+        height:50px;
+    }
+
+    .rede img{
+        width:29px;
+        height:29px;
+    }
+
+    footer{
+        margin-top:40px;
+        padding:20px 10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body class="app-shell">
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<div class="menu-container"></div>
+
+
+<!-- =========================
+     CONTEÚDO
+========================= -->
+
+<div class="content">
+
+    <h1>📊 Dashboard</h1>
+
+    <p>
+        Sistema inteligente de gestão de obras
+    </p>
+
+
+    <!-- =========================
+         CARDS PRINCIPAIS
+    ========================== -->
+
+    <div class="cards">
+
+
+        <!-- OBRAS -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                🏢
+            </div>
+
+            <div>
+
+                <h3>Obras Ativas</h3>
+
+                <span id="totalObras">
+                    Carregando...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- INSPEÇÕES -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                📋
+            </div>
+
+            <div>
+
+                <h3>Inspeções</h3>
+
+                <span id="totalInspecoes">
+                    Carregando...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NÃO CONFORMIDADES -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <h3>Não Conformidades</h3>
+
+                <span id="totalProblemas">
+                    Carregando...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ESTOQUE -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                📦
+            </div>
+
+            <div>
+
+                <h3>Materiais em Estoque</h3>
+
+                <span id="totalEstoque">
+                    Carregando...
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         EQUIPE ONLINE
+    ========================== -->
+
+    <div class="card equipe-online-card">
+
+        <h2>👥 Equipe online</h2>
+
+        <p>
+            Usuários atualmente conectados ao sistema
+        </p>
+
+        <div
+            id="usuariosOnline"
+            class="usuarios-online"
+        >
+
+            Carregando...
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         REDES SOCIAIS
+    ========================== -->
+
+    <div class="redes-card">
+
+        <h2>🌐 Fale conosco</h2>
+
+        <div class="redes-subtitulo">
+            Entre em contato com a equipe SmartInspect AI
+        </div>
+
+
+        <div class="redes-container">
+
+
+            <!-- INSTAGRAM -->
+
+            <a
+                href="https://www.instagram.com/smartinspect.ai?stkn=MTBtdXhpYnNvcmJvdg%3D%3D&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rede"
+                title="Instagram"
+            >
+
+                <img
+                    src="imagens/instagram.png"
+                    alt="Instagram"
+                >
+
+            </a>
+
+
+            <!-- WHATSAPP -->
+
+            <a
+                href="https://wa.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rede"
+                title="WhatsApp"
+            >
+
+                <img
+                    src="imagens/whatsapp.png"
+                    alt="WhatsApp"
+                >
+
+            </a>
+
+
+            <!-- E-MAIL -->
+
+            <a
+                href="https://mail.google.com/mail/u/0/#inbox/FMfcgzQhWTtXGlPzBjVvvdQqpTssBDfr?compose=CllgCKCDlFnqxZgqwbKnkCDjdfsSmbCBmRtRxRhjKkpZCnPrtlRKBzXzfsbsdJDWxsZLVHXTwvq"
+                class="rede"
+                title="E-mail"
+            >
+
+                <img
+                    src="imagens/email.png"
+                    alt="E-mail"
+                >
+
+            </a>
+
+
+            <!-- DISCORD -->
+
+            <a
+                href="https://discord.com/invite/NB9kcTb5yU"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rede"
+                title="Discord"
+            >
+
+                <img
+                    src="imagens/discord.png"
+                    alt="Discord"
+                >
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         RODAPÉ
+    ========================== -->
+
+    <footer>
+
+        <strong>
+            🚀 SmartInspect AI
+        </strong>
+
+        <br>
+
+        Desenvolvido por
+        <strong>Sérgio and Gabriel</strong>
+
+        <br>
+
+        Versão 1.5.1 • Sistema de Inspeção Inteligente
+
+    </footer>
+
+
+</div>
+
+
+<!-- =========================
+     SCRIPTS
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/configuracoes.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function(){
+
+
+    /* =========================
+       LOGIN
+    ========================== */
+
+    if(typeof verificarLogin === "function"){
+        verificarLogin();
+    }
+
+
+    /* =========================
+       VERIFICAR SE ESTÁ ONLINE
+    ========================== */
+
+    function estaOnline(usuario){
+
+        if(!usuario || !usuario.ultimo_heartbeat){
+            return false;
+        }
+
+        const ultimoHeartbeat =
+            new Date(usuario.ultimo_heartbeat).getTime();
+
+        const agora =
+            Date.now();
+
+        return (
+            agora - ultimoHeartbeat
+            <= 60000
+        );
+
+    }
+
+
+    /* =========================
+       CARREGAR CONTADORES
+    ========================== */
+
+    async function carregarContadores(){
+
+        try{
+
+            const obras =
+                await banco
+                    .from("obras")
+                    .select("*");
+
+            const inspecoes =
+                await banco
+                    .from("inspecoes")
+                    .select("*");
+
+            const problemas =
+                await banco
+                    .from("nao_conformidades")
+                    .select("*");
+
+            const estoque =
+                await banco
+                    .from("estoque")
+                    .select("*");
+
+
+            document.getElementById("totalObras")
+                .textContent =
+                obras.data?.length || 0;
+
+
+            document.getElementById("totalInspecoes")
+                .textContent =
+                inspecoes.data?.length || 0;
+
+
+            document.getElementById("totalProblemas")
+                .textContent =
+                problemas.data?.length || 0;
+
+
+            document.getElementById("totalEstoque")
+                .textContent =
+                estoque.data?.length || 0;
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Erro ao carregar contadores:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       USUÁRIOS ONLINE
+    ========================== */
+
+    async function carregarUsuariosOnline(){
+
+        const container =
+            document.getElementById("usuariosOnline");
+
+
+        try{
+
+            const { data, error } =
+                await banco
+                    .from("usuarios")
+                    .select("*")
+                    .order("nome", {
+                        ascending:true
+                    });
+
+
+            if(error){
+
+                console.error(
+                    "Erro ao carregar usuários:",
+                    error
+                );
+
+                container.innerHTML =
+                    `<div class="sem-usuarios">
+                        Erro ao carregar usuários.
+                    </div>`;
+
+                return;
+
+            }
+
+
+            const usuariosOnline =
+                (data || []).filter(estaOnline);
+
+
+            if(usuariosOnline.length === 0){
+
+                container.innerHTML =
+                    `<div class="sem-usuarios">
+                        Nenhum usuário online.
+                    </div>`;
+
+                return;
+
+            }
+
+
+            container.innerHTML = "";
+
+
+            usuariosOnline.forEach(usuario => {
+
+                const foto =
+                    usuario.foto_url ||
+                    "imagens/avatar.png";
+
+
+                const nome =
+                    usuario.nome ||
+                    "Usuário";
+
+
+                const cargo =
+                    usuario.nivel_acesso ||
+                    "Usuário";
+
+
+                const div =
+                    document.createElement("div");
+
+
+                div.className =
+                    "usuario-online";
+
+
+                div.innerHTML = `
+
+                    <img
+                        src="${foto}"
+                        class="avatar-online"
+                        onerror="this.src='imagens/avatar.png'"
+                    >
+
+                    <span class="ponto-online-dashboard"></span>
+
+                    <div>
+
+                        <div class="nome-online">
+                            ${nome}
+                        </div>
+
+                        <div class="cargo-online">
+                            ${cargo}
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(div);
+
+            });
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Erro:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       USUÁRIO LOGADO
+    ========================== */
+
+    async function obterUsuarioLogado(){
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+                await banco.auth.getUser();
+
+
+            if(error){
+
+                console.error(error);
+
+                return null;
+
+            }
+
+
+            return data?.user || null;
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =========================
+       ATUALIZAR HEARTBEAT
+    ========================== */
+
+    async function atualizarHeartbeat(){
+
+        const usuario =
+            await obterUsuarioLogado();
+
+
+        if(!usuario){
+            return;
+        }
+
+
+        try{
+
+            await banco
+                .from("usuarios")
+                .update({
+
+                    ultimo_heartbeat:
+                        new Date().toISOString()
+
+                })
+                .eq(
+                    "auth_id",
+                    usuario.id
+                );
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Erro heartbeat:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       REGISTRAR ACESSO
+    ========================== */
+
+    async function registrarAcesso(){
+
+        const usuario =
+            await obterUsuarioLogado();
+
+
+        if(!usuario){
+            return;
+        }
+
+
+        try{
+
+            await banco
+                .from("usuarios")
+                .update({
+
+                    ultimo_acesso:
+                        new Date().toISOString(),
+
+                    ultimo_heartbeat:
+                        new Date().toISOString()
+
+                })
+                .eq(
+                    "auth_id",
+                    usuario.id
+                );
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Erro ao registrar acesso:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       PRESENÇA ONLINE
+    ========================== */
+
+    async function iniciarPresenca(){
+
+        await registrarAcesso();
+
+
+        setInterval(
+            atualizarHeartbeat,
+            30000
+        );
+
+    }
+
+
+    /* =========================
+       REALTIME USUÁRIOS
+    ========================== */
+
+    function ouvirUsuarios(){
+
+        try{
+
+            banco
+                .channel(
+                    "dashboard-usuarios-online"
+                )
+                .on(
+                    "postgres_changes",
+                    {
+                        event:"*",
+                        schema:"public",
+                        table:"usuarios"
+                    },
+                    function(){
+
+                        carregarUsuariosOnline();
+
+                    }
+                )
+                .subscribe();
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Erro Realtime:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       INICIAR DASHBOARD
+    ========================== */
+
+    await carregarContadores();
+
+    await carregarUsuariosOnline();
+
+    await iniciarPresenca();
+
+    ouvirUsuarios();
+
+
+    /* Atualiza equipe online
+       a cada 10 segundos */
+
+    setInterval(
+        carregarUsuariosOnline,
+        10000
+    );
+
+
+});
+
+</script>
+
+
+</body>
+
+</html>
