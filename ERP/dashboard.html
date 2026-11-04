@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — SmartInspect AI</title>
-<link rel="stylesheet" href="css/style.css">
+<!-- Ajuste do caminho do CSS para voltar uma pasta -->
+<link rel="stylesheet" href="../css/style.css">
 <style id="dashboard-styles">
 /* SmartInspect AI — Dashboard SaaS */
 :root{--si-blue:#1268d5;--si-blue-dark:#0e3f78;--si-ink:#102a43;--si-muted:#6b7c93;--si-line:#e5edf5;--si-bg:#f5f8fc;--si-green:#16a36a;--si-orange:#c87800;--si-red:#c53b3b;}
@@ -57,7 +58,6 @@
 @media(max-width:900px){.dashboard-header{align-items:stretch;flex-direction:column}.dashboard-actions{width:100%}.dashboard-search{width:100%;flex:1}.dashboard-body-grid,.dashboard-lower-grid{grid-template-columns:1fr}}
 @media(max-width:640px){.dashboard-page .content{padding:24px 14px 18px}.dashboard-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.dashboard-metric{min-height:126px;padding:14px}.dashboard-metric-value{font-size:23px}.dashboard-chart{gap:5px}.works-grid{grid-template-columns:1fr}.dashboard-table{min-width:650px}.dashboard-table-wrap{overflow-x:auto}.contact-panel{align-items:flex-start;flex-direction:column}.dashboard-user-name{max-width:90px}}
 .dashboard-chart-periods{display:flex;justify-content:flex-end;gap:5px;margin-top:12px}.dashboard-chart-periods button{padding:6px 8px;border:0;border-radius:7px;background:transparent;color:#829ab1;font:inherit;font-size:10px;cursor:pointer}.dashboard-chart-periods button:hover,.dashboard-chart-periods button.active{background:#eaf3ff;color:var(--si-blue);font-weight:800}
-
 </style>
 <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -76,7 +76,7 @@
                 <i data-lucide="search" size="16"></i>
                 <input type="search" placeholder="Pesquisar...">
             </label>
-            <button class="dashboard-icon-button" type="button" title="Notificações" onclick="location.href='notificacoes.html'"><i data-lucide="bell" size="17"></i></button>
+            <button class="dashboard-icon-button" type="button" title="Notificações"><i data-lucide="bell" size="17"></i></button>
             <div class="dashboard-user">
                 <div id="dashboardAvatar" class="dashboard-user-avatar">U</div>
                 <div><span id="dashboardUserName" class="dashboard-user-name">Usuário</span><span id="dashboardUserRole" class="dashboard-user-role">usuário</span></div>
@@ -105,7 +105,7 @@
         </article>
         <article class="dashboard-panel ai-panel">
             <div class="dashboard-panel-header"><div><span class="ai-badge"><i data-lucide="sparkles" size="12"></i> SmartInspect AI</span><h2 style="margin-top:13px">Análises inteligentes</h2><p>Insights para decisões mais rápidas nas suas inspeções.</p></div></div>
-            <div class="dashboard-panel-content"><div class="ai-metrics"><div class="ai-metric"><strong id="aiAnalyses">—</strong><span>Análises realizadas</span></div><div class="ai-metric"><strong id="aiProblems">—</strong><span>Problemas identificados</span></div></div><p id="aiNote" style="margin:16px 0 0;color:#dcecff;font-size:11px;line-height:1.5">Preparado para os dados de IA disponíveis no sistema.</p><a class="dashboard-button" href="ia.html">Ver análises <i data-lucide="arrow-up-right" size="15"></i></a></div>
+            <div class="dashboard-panel-content"><div class="ai-metrics"><div class="ai-metric"><strong id="aiAnalyses">—</strong><span>Análises realizadas</span></div><div class="ai-metric"><strong id="aiProblems">—</strong><span>Problemas identificados</span></div></div><p id="aiNote" style="margin:16px 0 0;color:#dcecff;font-size:11px;line-height:1.5">Preparado para os dados de IA disponíveis no sistema.</p></div>
         </article>
     </section>
 
@@ -115,25 +115,25 @@
     </section>
 
     <section class="dashboard-section dashboard-panel">
-        <div class="dashboard-panel-header"><div><h2>Obras em andamento</h2><p>Visão rápida das obras cadastradas</p></div><a href="obras.html" class="panel-link">Ver todas <i data-lucide="arrow-up-right" size="14"></i></a></div>
+        <div class="dashboard-panel-header"><div><h2>Obras em andamento</h2><p>Visão rápida das obras cadastradas</p></div></div>
         <div id="worksList" class="dashboard-panel-content works-grid"><div class="dashboard-list-empty">Carregando obras...</div></div>
     </section>
 
     <section class="dashboard-lower-grid">
         <article class="dashboard-panel"><div class="dashboard-panel-header"><div><h2>Equipe online</h2><p>Presença atualizada em tempo real</p></div><i data-lucide="radio" size="19" style="color:var(--si-green)"></i></div><div id="usuariosOnline" class="dashboard-panel-content online-list"><div class="dashboard-list-empty">Carregando equipe...</div></div></article>
-        <article class="dashboard-panel"><div class="dashboard-panel-header"><div><h2>Atividade recente</h2><p>Área preparada para notificações e eventos</p></div><i data-lucide="bell" size="19" style="color:var(--si-blue)"></i></div><div class="dashboard-panel-content"><div class="dashboard-list-empty">Ainda não existem eventos disponíveis para exibir.</div><a class="panel-link" href="notificacoes.html">Abrir notificações <i data-lucide="arrow-up-right" size="14"></i></a></div></article>
+        <article class="dashboard-panel"><div class="dashboard-panel-header"><div><h2>Atividade recente</h2><p>Área preparada para notificações e eventos</p></div><i data-lucide="bell" size="19" style="color:var(--si-blue)"></i></div><div class="dashboard-panel-content"><div class="dashboard-list-empty">Ainda não existem eventos disponíveis para exibir.</div></div></article>
     </section>
 
-    <section class="dashboard-panel contact-panel"><div><h2>Fale conosco</h2><p>Entre em contato com a equipe Grupo MonteiroMelo.</p></div><div class="contact-links"><a class="contact-link" href="https://www.instagram.com/smartinspect.ai?stkn=MTBtdXhpYnNvcmJvdg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" title="Instagram"><img src="imagens/instagram.png" alt="Instagram"></a><a class="contact-link" href="https://wa.me/" target="_blank" rel="noopener noreferrer" title="WhatsApp"><img src="imagens/whatsapp.png" alt="WhatsApp"></a><a class="contact-link" href="https://mail.google.com/mail/u/0/#inbox/FMfcgzQhWTtXGlPzBjVvvdQqpTssBDfr?compose=CllgCKCDlFnqxZgqwbKnkCDjdfsSmbCBmRtRxRhjKkpZCnPrtlRKBzXzfsbsdJDWxsZLVHXTwvq" title="E-mail"><img src="imagens/email.png" alt="E-mail"></a><a class="contact-link" href="https://discord.com/invite/NB9kcTb5yU" target="_blank" rel="noopener noreferrer" title="Discord"><img src="imagens/discord.png" alt="Discord"></a></div></section>
+    <section class="dashboard-panel contact-panel"><div><h2>Fale conosco</h2><p>Entre em contato com a equipe Grupo MonteiroMelo.</p></div></section>
 
     <footer class="dashboard-footer"><strong>SmartInspect AI</strong><br>Desenvolvido por <strong>Grupo MonteiroMelo</strong><br>Versão 1.5.1 • Sistema de Inspeção Inteligente</footer>
 </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/configuracoes.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/sidebar.js"></script>
+<!-- Ajuste dos caminhos dos scripts para voltar uma pasta -->
+<script src="../js/supabase.js"></script>
+<script src="../js/configuracoes.js"></script>
+<script src="../js/sidebar.js"></script>
 <script>
 /* SmartInspect AI — Dashboard data layer */
 (function(){
@@ -149,18 +149,11 @@
     const isClosed = (row) => /conclu|resolvid|fechad|cancelad|inativ/i.test(String(field(row,["status","situacao"],"")));
     const activeWorks = () => state.works.filter((work) => !isClosed(work));
     const openProblems = () => state.problems.filter((problem) => !isClosed(problem));
-    const showError = (id) => { if ($(id)) $(id).innerHTML = '<div class="dashboard-error">Não foi possível carregar este indicador.</div>'; };
-
+    
     function isOnline(user){
         if (!user?.auth_id || !user?.ultimo_heartbeat) return false;
         const heartbeat = new Date(user.ultimo_heartbeat).getTime();
         return Number.isFinite(heartbeat) && Date.now() - heartbeat <= 60000;
-    }
-
-    function formatDate(value){
-        if (!value) return "—";
-        const date = new Date(value);
-        return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString("pt-BR", {day:"2-digit", month:"2-digit"});
     }
 
     function currentUser(){
@@ -218,14 +211,6 @@
         chart.innerHTML = points.map((point) => `<div class="dashboard-chart-bar" style="height:${Math.max(3, Math.round(point.total / max * 100))}%" title="${point.total} inspeções"><span>${esc(point.label)}</span></div>`).join("");
     }
 
-    function renderAI(){
-        // Não inferir métricas de IA a partir de inspeções ou não conformidades.
-        setText("aiAnalyses", "—");
-        setText("aiProblems", "—");
-        const note = $("aiNote");
-        if (note) note.textContent = "Dados de análises de IA ainda não estão disponíveis no banco.";
-    }
-
     function renderProblems(){
         const target = $("priorityList");
         if (!target) return;
@@ -266,33 +251,17 @@
         const [works, inspections, problems, stock, users] = await Promise.all([queryTable("obras"), queryTable("inspecoes"), queryTable("nao_conformidades"), queryTable("estoque"), queryTable("usuarios")]);
         state.errors={obras:works.error,inspecoes:inspections.error,nao_conformidades:problems.error,estoque:stock.error,usuarios:users.error};
         state.works=works.data; state.inspections=inspections.data; state.problems=problems.data; state.stock=stock.data; state.users=users.data;
-        updateMetrics(); renderChart(); renderAI(); renderProblems(); renderWorks(); renderUsers();
+        updateMetrics(); renderChart(); renderProblems(); renderWorks(); renderUsers();
     }
-
-    async function currentAuthUser(){
-        try { const {data,error}=await banco.auth.getUser(); if(error) console.error("Erro ao obter usuário:",error); return data?.user || null; } catch(error){ console.error("Erro ao obter usuário:",error); return null; }
-    }
-    async function registerAccess(){
-        const authUser=await currentAuthUser(); if(!authUser) return;
-        const now=new Date().toISOString();
-        try { const {error}=await banco.from("usuarios").update({ultimo_acesso:now,ultimo_heartbeat:now}).eq("auth_id",authUser.id); if(error) console.error("Erro ao registrar acesso:",error); } catch(error){ console.error("Erro ao registrar acesso:",error); }
-    }
-    async function heartbeat(){ const authUser=await currentAuthUser(); if(!authUser) return; try { const {error}=await banco.from("usuarios").update({ultimo_heartbeat:new Date().toISOString()}).eq("auth_id",authUser.id); if(error) console.error("Erro heartbeat:",error); } catch(error){ console.error("Erro heartbeat:",error); } }
-    function subscribeUsers(){ try { banco.channel("dashboard-usuarios-online-v2").on("postgres_changes",{event:"*",schema:"public",table:"usuarios"},async()=>{ const users=await queryTable("usuarios"); state.users=users.data; renderUsers(); setText("totalFuncionarios",state.users.length); }).subscribe(); } catch(error){ console.error("Erro Realtime:",error); } }
 
     document.addEventListener("DOMContentLoaded", async () => {
-        if (typeof validarSessaoReal === "function" && !(await validarSessaoReal())) return;
+        // REMOVIDO O validarSessaoReal() PARA NÃO DAR LOOP NO IFRAME
         hydrateHeader();
         document.querySelectorAll("[data-chart-days]").forEach((button)=>button.addEventListener("click",()=>{state.chartDays=Number(button.dataset.chartDays);document.querySelectorAll("[data-chart-days]").forEach((item)=>item.classList.toggle("active",item===button));renderChart();}));
         await loadData();
-        await registerAccess();
-        setInterval(heartbeat,30000);
-        setInterval(async()=>{const users=await queryTable("usuarios");state.users=users.data;renderUsers();},10000);
-        subscribeUsers();
         if (window.lucide) lucide.createIcons();
     });
 })();
-
 </script>
 <script>document.addEventListener("DOMContentLoaded",()=>window.lucide&&lucide.createIcons());</script>
 </body>
