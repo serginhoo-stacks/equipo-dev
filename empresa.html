@@ -23,7 +23,7 @@
         }
         .nav-btn:hover, .nav-btn.active { background: rgba(92,236,255,.1); color: #5cecff; border-color: rgba(92,236,255,.3); }
 
-        /* Área do ERP Antigo */
+        /* Área do ERP */
         .erp-container { flex: 1; display: flex; flex-direction: column; background: #fff; position: relative; }
         .erp-header { 
             padding: 12px 20px; background: #f5f8fc; border-bottom: 1px solid #e5edf5; 
@@ -82,19 +82,25 @@
     <script src="js/supabase.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
+            // 1. VERIFICA SE O USUÁRIO ESTÁ LOGADO NO PROJETO NOVO
+            const { data: sessionData } = await window.banco.auth.getSession();
+            if (!sessionData.session) {
+                // Se não estiver logado, chuta pro login novo
+                window.location.href = 'login.html';
+                return;
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             const empresaId = urlParams.get('empresa');
             const iframe = document.getElementById('iframeERP');
             const erroBox = document.getElementById('erroBox');
 
             // Se o iframe não carregar em 5 segundos, mostra o erro
-            const timeout = setTimeout(() => {
-                erroBox.style.display = 'flex';
-            }, 5000);
-
-            iframe.onload = () => {
-                clearTimeout(timeout);
-                erroBox.style.display = 'none';
+            const timeout = setTimeout(() => { erroBox.style.display = 'flex'; }, 5000);
+            
+            iframe.onload = () => { 
+                clearTimeout(timeout); 
+                erroBox.style.display = 'none'; 
             };
 
             if (!empresaId) {
@@ -104,11 +110,10 @@
             }
 
             if(window.banco) {
-                const { data, error } = await window.banco.from('empresas').select('nome').eq('id', empresaId).single();
+                const { data: emp, error } = await window.banco.from('empresas').select('nome').eq('id', empresaId).single();
                 
-                if (data && !error) {
-                    document.getElementById('nomeEmpresaHeader').textContent = data.nome;
-                    // Passa o ID da empresa e aponta para a pasta ERP correta
+                if (emp && !error) {
+                    document.getElementById('nomeEmpresaHeader').textContent = emp.nome;
                     iframe.src = `ERP/dashboard.html?empresa=${empresaId}`;
                 } else {
                     document.getElementById('nomeEmpresaHeader').textContent = "Empresa sem nome";
