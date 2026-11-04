@@ -55,7 +55,7 @@
             position: fixed;
             inset: -5%;
             z-index: -1;
-            transition: transform 0.1s ease-out; /* Microinteração Parallax */
+            transition: transform 0.1s ease-out;
             will-change: transform;
             pointer-events: none;
         }
@@ -68,7 +68,6 @@
             filter: saturate(1.2) contrast(1.1);
         }
 
-        /* Shader de gradiente (Efeito de Luz) */
         .bg-shader {
             position: fixed;
             inset: 0;
@@ -80,9 +79,6 @@
             pointer-events: none;
         }
 
-        /* =========================================================
-           LAYOUT PRINCIPAL
-        ========================================================= */
         .auth-shell {
             width: min(1200px, 95%);
             margin: 40px auto;
@@ -94,9 +90,6 @@
             z-index: 10;
         }
 
-        /* =========================================================
-           LADO ESQUERDO (INTRO / SCROLLYTELLING)
-        ========================================================= */
         .auth-intro {
             display: flex;
             flex-direction: column;
@@ -190,9 +183,6 @@
             flex-shrink: 0;
         }
 
-        /* =========================================================
-           LADO DIREITO (CARD DE LOGIN / GLASSMORPHISM)
-        ========================================================= */
         .auth-card {
             background: var(--si-surface);
             backdrop-filter: blur(24px);
@@ -200,9 +190,7 @@
             border: 1px solid var(--si-border);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
             animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
@@ -212,13 +200,9 @@
         }
 
         .auth-card:hover {
-            box-shadow: 
-                0 40px 80px rgba(0, 0, 0, 0.5),
-                0 0 40px rgba(92, 236, 255, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(92, 236, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
-        /* Efeito de brilho passando pelo card (Microinteração) */
         .auth-card::before {
             content: "";
             position: absolute;
@@ -226,12 +210,7 @@
             left: -100%;
             width: 50%;
             height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.05),
-                transparent
-            );
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
             transform: skewX(-20deg);
             transition: left 0.7s ease;
             pointer-events: none;
@@ -253,7 +232,6 @@
             margin-bottom: 30px;
         }
 
-        /* FORMULÁRIO */
         .auth-form {
             display: flex;
             flex-direction: column;
@@ -320,7 +298,6 @@
             color: white;
         }
 
-        /* BOTÃO PRINCIPAL */
         .auth-submit {
             height: 52px;
             border: none;
@@ -359,7 +336,6 @@
             transform: translateX(4px);
         }
 
-        /* DIVISOR E FOOTER */
         .auth-divider {
             border: 0;
             height: 1px;
@@ -401,7 +377,6 @@
             line-height: 1.5;
         }
 
-        /* MENSAGEM DE ERRO */
         .auth-message {
             display: none;
             padding: 12px;
@@ -416,9 +391,6 @@
             display: block;
         }
 
-        /* =========================================================
-           ANIMAÇÕES
-        ========================================================= */
         @keyframes fadeSlideUp {
             to {
                 opacity: 1;
@@ -426,79 +398,61 @@
             }
         }
 
-        /* =========================================================
-           RESPONSIVIDADE TOTAL (Auto-adaptável)
-        ========================================================= */
-        
-        /* Tablets e Celulares Grandes */
         @media (max-width: 968px) {
             .auth-shell {
-                grid-template-columns: 1fr; /* Vira uma coluna só */
+                grid-template-columns: 1fr;
                 gap: 40px;
                 padding: 40px 0;
                 width: 90%;
             }
-
             .auth-intro {
                 text-align: center;
                 align-items: center;
             }
-
             .auth-intro h1 {
                 font-size: clamp(32px, 8vw, 48px);
             }
-
             .auth-feature-list {
                 align-items: flex-start;
                 margin: 0 auto;
             }
-
             .auth-intro-copy {
                 max-width: 100%;
             }
         }
 
-        /* Celulares */
         @media (max-width: 600px) {
             body {
                 align-items: flex-start;
             }
-
             .auth-shell {
                 margin: 20px auto;
                 gap: 30px;
             }
-
             .auth-card {
                 padding: 25px 20px;
                 border-radius: 20px;
             }
-
             .auth-brand {
                 font-size: 18px;
             }
-
             .auth-brand-mark {
                 width: 36px;
                 height: 36px;
             }
-
             .auth-form-row {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 12px;
             }
-
             .auth-field input {
-                height: 44px; /* Mais fácil de clicar no celular */
+                height: 44px;
             }
-
             .auth-submit {
                 height: 48px;
             }
         }
 
-        /* Ajuste para telas muito pequenas */
         @media (max-width: 380px) {
             .auth-card {
                 padding: 20px 15px;
@@ -508,7 +462,6 @@
             }
         }
 
-        /* Acessibilidade: Reduzir movimento se solicitado */
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -522,19 +475,15 @@
 
 <body class="auth-page login-page">
 
-    <!-- Parallax Background -->
     <div class="bg-container" id="bg-container">
         <video class="login-background-video" autoplay muted loop playsinline preload="auto" poster="./imagens/fundo.png" aria-hidden="true">
             <source src="./imagens/fundoglobo.mp4" type="video/mp4">
         </video>
     </div>
     
-    <!-- Shader Gradient Overlay -->
     <div class="bg-shader"></div>
 
     <main class="auth-shell">
-
-        <!-- Lado Esquerdo -->
         <section class="auth-intro" aria-labelledby="introTitle">
             <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — início">
                 <span class="auth-brand-mark" aria-hidden="true">
@@ -545,31 +494,18 @@
                 </span>
                 <span class="auth-brand-name">SmartInspect <span>AI</span></span>
             </a>
-
             <div class="auth-eyebrow">Gestão inteligente de obras</div>
             <h1 id="introTitle">Sua obra, sob <span>controle.</span></h1>
-            
             <p class="auth-intro-copy">
                 Entre para acompanhar as informações e a operação da sua empresa no SmartInspect AI.
             </p>
-
             <ul class="auth-feature-list" aria-label="Recursos da plataforma">
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>
-                    Dados organizados em um único lugar
-                </li>
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>
-                    Acompanhamento de obras e inspeções
-                </li>
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>
-                    Acesso protegido pelo Supabase Auth
-                </li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Dados organizados em um único lugar</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Acompanhamento de obras e inspeções</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Acesso protegido pelo Supabase Auth</li>
             </ul>
         </section>
 
-        <!-- Lado Direito (Login Card) -->
         <section class="auth-card" aria-labelledby="formTitle">
             <h2 id="formTitle">Bem-vindo de volta</h2>
             <p id="cardLead" class="auth-card-lead">Entre com o e-mail e a senha cadastrados.</p>
@@ -604,7 +540,6 @@
                 </button>
             </form>
 
-            <!-- Formulários de Recuperação ocultos (mantidos para não quebrar a lógica) -->
             <form id="resetRequestForm" class="auth-form" hidden style="display:none;"></form>
             <form id="resetVerifyForm" class="auth-form" hidden style="display:none;"></form>
             <form id="resetPasswordForm" class="auth-form" hidden style="display:none;"></form>
@@ -628,16 +563,11 @@
         </section>
     </main>
 
-    <!-- SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./js/supabase.js"></script>
 
-    <!-- LÓGICA DE LOGIN + MICROINTERAÇÕES -->
     <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // ==========================================
-        // LÓGICA DE LOGIN
-        // ==========================================
         const form = document.getElementById("loginForm");
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("senha");
@@ -668,7 +598,13 @@
 
                 if (error) throw error;
 
-                // SUCESSO!
+                // FORÇANDO A GRAVAÇÃO DA SESSÃO NO LOCALSTORAGE
+                await window.banco.auth.setSession({
+                    access_token: data.session.access_token,
+                    refresh_token: data.session.refresh_token
+                });
+
+                // SUCESSO! Redireciona para o painel.
                 window.location.href = "./painel-pessoal.html";
                 
             } catch (error) {
@@ -679,17 +615,11 @@
             }
         });
 
-        // ==========================================
-        // MICROINTERAÇÕES (Parallax 3D no fundo)
-        // ==========================================
         const bgContainer = document.getElementById('bg-container');
-        
-        // Só ativa o parallax em dispositivos com mouse (computadores)
         if (window.matchMedia("(pointer: fine)").matches) {
             document.addEventListener('mousemove', (e) => {
                 const x = (e.clientX / window.innerWidth - 0.5) * 30; 
                 const y = (e.clientY / window.innerHeight - 0.5) * 30;
-                
                 bgContainer.style.transform = `translate(${x}px, ${y}px)`;
             });
         }
