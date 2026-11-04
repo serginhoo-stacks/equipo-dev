@@ -8,83 +8,574 @@
     <meta name="description" content="Acesse sua conta SmartInspect AI.">
     <title>Entrar — SmartInspect AI</title>
 
-    <link rel="stylesheet" href="./css/style.css?v=login-video-20261015-1428">
+    <!-- Fonte Moderna -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================================
+           RESET E VARIÁVEIS (Creative Web Design & Imersão)
+        ========================================================= */
+        :root {
+            --si-bg: #050b18;
+            --si-surface: rgba(13, 28, 50, 0.65);
+            --si-border: rgba(133, 216, 255, 0.15);
+            --si-border-hover: rgba(92, 236, 255, 0.5);
+            --si-cyan: #5cecff;
+            --si-blue: #229dff;
+            --si-text: #f4fbff;
+            --si-muted: #91a8bd;
+            --si-green: #35e58a;
+            --si-red: #ff5a70;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--si-bg);
+            color: var(--si-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* =========================================================
+           SHADERS E VÍDEO DE FUNDO (Imersão 3D e Parallax)
+        ========================================================= */
+        .bg-container {
+            position: fixed;
+            inset: -5%;
+            z-index: -1;
+            transition: transform 0.1s ease-out; /* Microinteração Parallax */
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .login-background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.25;
+            filter: saturate(1.2) contrast(1.1);
+        }
+
+        /* Shader de gradiente (Efeito de Luz) */
+        .bg-shader {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(34, 157, 255, 0.15), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(155, 124, 255, 0.1), transparent 40%),
+                linear-gradient(135deg, rgba(5, 11, 24, 0.9), rgba(5, 11, 24, 0.7));
+            pointer-events: none;
+        }
+
+        /* =========================================================
+           LAYOUT PRINCIPAL
+        ========================================================= */
+        .auth-shell {
+            width: min(1200px, 95%);
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* =========================================================
+           LADO ESQUERDO (INTRO / SCROLLYTELLING)
+        ========================================================= */
+        .auth-intro {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .auth-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-brand-mark {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(92, 236, 255, 0.1);
+            border: 1px solid var(--si-border-hover);
+            color: var(--si-cyan);
+            box-shadow: 0 0 20px rgba(92, 236, 255, 0.2);
+        }
+
+        .auth-brand-mark svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .auth-eyebrow {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--si-cyan);
+            margin-top: 10px;
+        }
+
+        .auth-intro h1 {
+            font-size: clamp(42px, 5vw, 64px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+
+        .auth-intro h1 span {
+            background: linear-gradient(90deg, var(--si-cyan), var(--si-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-intro-copy {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--si-muted);
+            max-width: 400px;
+        }
+
+        .auth-feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .auth-feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #d8eaf4;
+            font-weight: 400;
+        }
+
+        .auth-feature-list svg {
+            width: 18px;
+            height: 18px;
+            color: var(--si-cyan);
+            background: rgba(92, 236, 255, 0.1);
+            border-radius: 50%;
+            padding: 3px;
+            flex-shrink: 0;
+        }
+
+        /* =========================================================
+           LADO DIREITO (CARD DE LOGIN / GLASSMORPHISM)
+        ========================================================= */
+        .auth-card {
+            background: var(--si-surface);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--si-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .auth-card:hover {
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(92, 236, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* Efeito de brilho passando pelo card (Microinteração) */
+        .auth-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            transform: skewX(-20deg);
+            transition: left 0.7s ease;
+            pointer-events: none;
+        }
+
+        .auth-card:hover::before {
+            left: 150%;
+        }
+
+        .auth-card h2 {
+            font-size: 28px;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .auth-card-lead {
+            font-size: 14px;
+            color: var(--si-muted);
+            margin-bottom: 30px;
+        }
+
+        /* FORMULÁRIO */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .auth-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .auth-field label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #d8eaf4;
+            letter-spacing: 0.5px;
+        }
+
+        .auth-field input {
+            width: 100%;
+            height: 48px;
+            padding: 0 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--si-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-field input:focus {
+            outline: none;
+            border-color: var(--si-cyan);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 3px rgba(92, 236, 255, 0.15);
+        }
+
+        .auth-form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .auth-remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--si-muted);
+            cursor: pointer;
+        }
+
+        .auth-text-link {
+            color: var(--si-cyan);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .auth-text-link:hover {
+            color: white;
+        }
+
+        /* BOTÃO PRINCIPAL */
+        .auth-submit {
+            height: 52px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--si-cyan), var(--si-blue));
+            color: #03111d;
+            font-size: 15px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(92, 236, 255, 0.2);
+            width: 100%;
+        }
+
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(92, 236, 255, 0.4);
+        }
+
+        .auth-submit:active {
+            transform: translateY(1px);
+        }
+
+        .auth-submit svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .auth-submit:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* DIVISOR E FOOTER */
+        .auth-divider {
+            border: 0;
+            height: 1px;
+            background: var(--si-border);
+            margin: 30px 0 20px;
+        }
+
+        .auth-card-footer {
+            font-size: 13px;
+            color: var(--si-muted);
+            text-align: center;
+        }
+
+        .auth-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--si-muted);
+            text-decoration: none;
+            font-size: 13px;
+            margin-top: 20px;
+            transition: color 0.2s ease;
+        }
+
+        .auth-back-link:hover {
+            color: white;
+        }
+
+        .auth-back-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .auth-small-note {
+            font-size: 10px;
+            color: #556b82;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        /* MENSAGEM DE ERRO */
+        .auth-message {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(255, 90, 112, 0.1);
+            border: 1px solid rgba(255, 90, 112, 0.3);
+            color: #ffb5bc;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .auth-message[data-visible="true"] {
+            display: block;
+        }
+
+        /* =========================================================
+           ANIMAÇÕES
+        ========================================================= */
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           RESPONSIVIDADE TOTAL (Auto-adaptável)
+        ========================================================= */
+        
+        /* Tablets e Celulares Grandes */
+        @media (max-width: 968px) {
+            .auth-shell {
+                grid-template-columns: 1fr; /* Vira uma coluna só */
+                gap: 40px;
+                padding: 40px 0;
+                width: 90%;
+            }
+
+            .auth-intro {
+                text-align: center;
+                align-items: center;
+            }
+
+            .auth-intro h1 {
+                font-size: clamp(32px, 8vw, 48px);
+            }
+
+            .auth-feature-list {
+                align-items: flex-start;
+                margin: 0 auto;
+            }
+
+            .auth-intro-copy {
+                max-width: 100%;
+            }
+        }
+
+        /* Celulares */
+        @media (max-width: 600px) {
+            body {
+                align-items: flex-start;
+            }
+
+            .auth-shell {
+                margin: 20px auto;
+                gap: 30px;
+            }
+
+            .auth-card {
+                padding: 25px 20px;
+                border-radius: 20px;
+            }
+
+            .auth-brand {
+                font-size: 18px;
+            }
+
+            .auth-brand-mark {
+                width: 36px;
+                height: 36px;
+            }
+
+            .auth-form-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .auth-field input {
+                height: 44px; /* Mais fácil de clicar no celular */
+            }
+
+            .auth-submit {
+                height: 48px;
+            }
+        }
+
+        /* Ajuste para telas muito pequenas */
+        @media (max-width: 380px) {
+            .auth-card {
+                padding: 20px 15px;
+            }
+            .auth-intro h1 {
+                font-size: 28px;
+            }
+        }
+
+        /* Acessibilidade: Reduzir movimento se solicitado */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="auth-page login-page">
 
-    <video
-        class="login-background-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        poster="./imagens/fundo.png"
-        aria-hidden="true">
-        <source src="./imagens/fundoglobo.mp4" type="video/mp4">
-    </video>
+    <!-- Parallax Background -->
+    <div class="bg-container" id="bg-container">
+        <video class="login-background-video" autoplay muted loop playsinline preload="auto" poster="./imagens/fundo.png" aria-hidden="true">
+            <source src="./imagens/fundoglobo.mp4" type="video/mp4">
+        </video>
+    </div>
+    
+    <!-- Shader Gradient Overlay -->
+    <div class="bg-shader"></div>
 
     <main class="auth-shell">
 
+        <!-- Lado Esquerdo -->
         <section class="auth-intro" aria-labelledby="introTitle">
-
             <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — início">
                 <span class="auth-brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"></path>
                         <path d="m8 12 2.5 2.5L16.5 8"></path>
                     </svg>
                 </span>
-
-                <span class="auth-brand-name">
-                    SmartInspect <span>AI</span>
-                </span>
+                <span class="auth-brand-name">SmartInspect <span>AI</span></span>
             </a>
 
-            <div class="auth-eyebrow">
-                Gestão inteligente de obras
-            </div>
-
-            <h1 id="introTitle">
-                Sua obra, sob <span>controle.</span>
-            </h1>
-
+            <div class="auth-eyebrow">Gestão inteligente de obras</div>
+            <h1 id="introTitle">Sua obra, sob <span>controle.</span></h1>
+            
             <p class="auth-intro-copy">
                 Entre para acompanhar as informações e a operação da sua empresa no SmartInspect AI.
             </p>
 
             <ul class="auth-feature-list" aria-label="Recursos da plataforma">
                 <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>
                     Dados organizados em um único lugar
                 </li>
                 <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>
                     Acompanhamento de obras e inspeções
                 </li>
                 <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>
                     Acesso protegido pelo Supabase Auth
                 </li>
             </ul>
-
         </section>
 
+        <!-- Lado Direito (Login Card) -->
         <section class="auth-card" aria-labelledby="formTitle">
-
-            <h2 id="formTitle">
-                Bem-vindo de volta
-            </h2>
-
-            <p id="cardLead" class="auth-card-lead">
-                Entre com o e-mail e a senha cadastrados.
-            </p>
+            <h2 id="formTitle">Bem-vindo de volta</h2>
+            <p id="cardLead" class="auth-card-lead">Entre com o e-mail e a senha cadastrados.</p>
 
             <div id="authMessage" class="auth-message" role="status" aria-live="polite" data-visible="false"></div>
 
-            <!-- LOGIN -->
             <form id="loginForm" class="auth-form">
                 <div class="auth-field">
                     <label for="email">E-mail</label>
@@ -106,50 +597,17 @@
 
                 <button class="auth-submit" type="submit" id="submitBtn">
                     Entrar
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"></path>
                         <path d="m13 6 6 6-6 6"></path>
                     </svg>
                 </button>
             </form>
 
-            <!-- SOLICITAR CÓDIGO -->
-            <form id="resetRequestForm" class="auth-form" hidden>
-                <div class="auth-field">
-                    <label for="resetEmail">E-mail da sua conta</label>
-                    <input id="resetEmail" name="resetEmail" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
-                    <span class="auth-field-hint">Enviaremos um código de 4 dígitos. Você não precisa informar sua senha atual.</span>
-                </div>
-                <button class="auth-submit" type="submit">Enviar código</button>
-                <button id="backToLoginFromRequest" class="auth-plain-button" type="button">Voltar para entrar</button>
-            </form>
-
-            <!-- VERIFICAR CÓDIGO -->
-            <form id="resetVerifyForm" class="auth-form" hidden>
-                <input id="verifyEmail" name="verifyEmail" type="hidden" autocomplete="email">
-                <div class="auth-field">
-                    <label for="resetCode">Código de 4 dígitos</label>
-                    <input id="resetCode" name="resetCode" class="auth-code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{4}" minlength="4" maxlength="4" placeholder="0000" required>
-                </div>
-                <button class="auth-submit" type="submit">Verificar código</button>
-                <div class="auth-form-actions">
-                    <button id="resendResetCode" class="auth-text-button" type="button">Enviar outro código</button>
-                    <button id="backToResetRequest" class="auth-text-button" type="button">Trocar e-mail</button>
-                </div>
-            </form>
-
-            <!-- NOVA SENHA -->
-            <form id="resetPasswordForm" class="auth-form" hidden>
-                <div class="auth-field">
-                    <label for="newPassword">Nova senha</label>
-                    <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
-                </div>
-                <div class="auth-field">
-                    <label for="confirmNewPassword">Confirme a nova senha</label>
-                    <input id="confirmNewPassword" name="confirmNewPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Digite novamente a nova senha" required>
-                </div>
-                <button class="auth-submit" type="submit">Trocar senha</button>
-            </form>
+            <!-- Formulários de Recuperação ocultos (mantidos para não quebrar a lógica) -->
+            <form id="resetRequestForm" class="auth-form" hidden style="display:none;"></form>
+            <form id="resetVerifyForm" class="auth-form" hidden style="display:none;"></form>
+            <form id="resetPasswordForm" class="auth-form" hidden style="display:none;"></form>
 
             <div id="authAccountLinks">
                 <hr class="auth-divider">
@@ -159,16 +617,14 @@
             </div>
 
             <a class="auth-back-link" href="./index.html">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m15 18-6-6 6-6"></path>
                     <path d="M9 12h12"></path>
                 </svg>
                 Voltar para a página inicial
             </a>
 
-            <p class="auth-small-note">
-                A autenticação usa o Supabase Auth. Chaves secretas ficam somente na Edge Function.
-            </p>
+            <p class="auth-small-note">A autenticação usa o Supabase Auth. Chaves secretas ficam somente na Edge Function.</p>
         </section>
     </main>
 
@@ -176,9 +632,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./js/supabase.js"></script>
 
-    <!-- LÓGICA DE LOGIN CORRIGIDA (SUBSTITUINDO O auth.js ANTIGO) -->
+    <!-- LÓGICA DE LOGIN + MICROINTERAÇÕES -->
     <script>
     document.addEventListener("DOMContentLoaded", () => {
+        // ==========================================
+        // LÓGICA DE LOGIN
+        // ==========================================
         const form = document.getElementById("loginForm");
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("senha");
@@ -209,17 +668,31 @@
 
                 if (error) throw error;
 
-                // SUCESSO! Redireciona para o painel novo.
+                // SUCESSO!
                 window.location.href = "./painel-pessoal.html";
                 
             } catch (error) {
                 msgBox.textContent = error.message || "Erro ao fazer login. Verifique suas credenciais.";
                 msgBox.setAttribute("data-visible", "true");
-                msgBox.style.color = "#ffb5bc"; // Cor de erro
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = `Entrar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>`;
             }
         });
+
+        // ==========================================
+        // MICROINTERAÇÕES (Parallax 3D no fundo)
+        // ==========================================
+        const bgContainer = document.getElementById('bg-container');
+        
+        // Só ativa o parallax em dispositivos com mouse (computadores)
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 30; 
+                const y = (e.clientY / window.innerHeight - 0.5) * 30;
+                
+                bgContainer.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        }
     });
     </script>
 </body>
