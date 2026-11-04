@@ -9,7 +9,7 @@
     </style>
 </head>
 <body>
-    <h2>Redirecionando para o ERP da empresa...</h2>
+    <h2>Entrando no ERP...</h2>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
@@ -32,9 +32,8 @@
                 return;
             }
 
-            // 3. Redireciona direto para o ERP (fora do iframe, em tela cheia)
-            // A pasta é ERP ou erp? Ajuste abaixo.
-            window.location.href = `ERP/dashboard.html?empresa=${empresaId}`;
+            // 3. Redireciona direto para a lista de Obras (em vez do Dashboard)
+            window.location.href = `ERP/obras.html?empresa=${empresaId}`;
         });
     </script>
 </body>
