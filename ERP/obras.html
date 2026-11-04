@@ -15,13 +15,9 @@
 
 <body>
 
-
 <div class="menu-container"></div>
 
-
-
 <div class="content">
-
 
 <h1>🏢 Obras</h1>
 
@@ -29,296 +25,91 @@
 Gerenciamento das obras cadastradas
 </p>
 
-
-
 <button onclick="location.href='nova_obra.html'">
-
 ➕ Nova Obra
-
 </button>
-
-
-
 
 <div id="listaObras">
-
-
-<p>
-Carregando obras...
-</p>
-
-
+<p>Carregando obras...</p>
 </div>
 
-
-
 </div>
-
-
-
-
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="js/supabase.js"></script>
-  <script src="js/configuracoes.js"></script>
-
-<script src="js/auth.js"></script>
-
 <script src="js/sidebar.js"></script>
 
-
-
-
-
 <script>
+    // NÃO CHAMA MAIS O verificarLogin()
 
+    async function carregarObras(){
 
-verificarLogin();
+        const {data,error}=await banco
+        .from("obras")
+        .select("*")
+        .order("id",{ascending:false});
 
+        const lista=document.getElementById("listaObras");
 
+        if(error){
+            console.log(error);
+            lista.innerHTML="❌ Erro ao carregar obras";
+            return;
+        }
 
+        if(!data || data.length===0){
+            lista.innerHTML="Nenhuma obra cadastrada";
+            return;
+        }
 
+        lista.innerHTML="";
 
-async function carregarObras(){
+        data.forEach(obra=>{
 
+            lista.innerHTML += `
+            <div class="card">
+                <h2>🏢 ${obra.nome}</h2>
+                <p>📍 Endereço: ${obra.endereco || "Não informado"}</p>
+                <p>👷 Responsável: ${obra.responsavel || "Não informado"}</p>
+                <p>📅 Início: ${obra.inicio || "-"}</p>
+                <p>📌 Status: ${obra.status || "Ativa"}</p>
+                <br>
+                <button onclick="verObra(${obra.id})">👁 Ver detalhes</button>
+                <button onclick="excluirObra(${obra.id})">🗑 Excluir</button>
+            </div>
+            `;
 
+        });
 
-const {data,error}=await banco
+    }
 
-.from("obras")
+    function verObra(id){
+        window.location.href="detalhes_obra.html?id="+id;
+    }
 
-.select("*")
+    async function excluirObra(id){
 
-.order("id",{ascending:false});
+        const confirmar = confirm("Deseja excluir esta obra?");
+        if(!confirmar)return;
 
+        const {error}=await banco
+        .from("obras")
+        .delete()
+        .eq("id",id);
 
+        if(error){
+            console.log(error);
+            alert("Erro ao excluir");
+            return;
+        }
 
+        alert("Obra excluída");
+        carregarObras();
 
+    }
 
-const lista=document.getElementById("listaObras");
-
-
-
-
-
-if(error){
-
-console.log(error);
-
-lista.innerHTML="❌ Erro ao carregar obras";
-
-return;
-
-}
-
-
-
-
-
-if(!data || data.length===0){
-
-
-lista.innerHTML="Nenhuma obra cadastrada";
-
-
-return;
-
-
-}
-
-
-
-
-
-lista.innerHTML="";
-
-
-
-
-
-data.forEach(obra=>{
-
-
-
-lista.innerHTML += `
-
-
-<div class="card">
-
-
-<h2>
-
-🏢 ${obra.nome}
-
-</h2>
-
-
-
-<p>
-
-📍 Endereço:
-
-${obra.endereco || "Não informado"}
-
-</p>
-
-
-
-<p>
-
-👷 Responsável:
-
-${obra.responsavel || "Não informado"}
-
-</p>
-
-
-
-<p>
-
-📅 Início:
-
-${obra.inicio || "-"}
-
-</p>
-
-
-
-<p>
-
-📌 Status:
-
-${obra.status || "Ativa"}
-
-</p>
-
-
-
-<br>
-
-
-
-<button onclick="verObra(${obra.id})">
-
-👁 Ver detalhes
-
-</button>
-
-
-
-<button onclick="excluirObra(${obra.id})">
-
-🗑 Excluir
-
-</button>
-
-
-
-</div>
-
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function verObra(id){
-
-
-window.location.href="detalhes_obra.html?id="+id;
-
-
-}
-
-
-
-
-
-
-
-
-
-async function excluirObra(id){
-
-
-const confirmar = confirm(
-
-"Deseja excluir esta obra?"
-
-);
-
-
-
-if(!confirmar)return;
-
-
-
-
-
-const {error}=await banco
-
-.from("obras")
-
-.delete()
-
-.eq("id",id);
-
-
-
-
-
-if(error){
-
-console.log(error);
-
-alert("Erro ao excluir");
-
-return;
-
-}
-
-
-
-alert("Obra excluída");
-
-
-carregarObras();
-
-
-
-}
-
-
-
-
-
-
-carregarObras();
-
-
-
+    carregarObras();
 </script>
 
-
-
 </body>
-
 </html>
