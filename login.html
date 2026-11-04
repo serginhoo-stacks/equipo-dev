@@ -4,626 +4,135 @@
     <link rel="icon" type="image/png" href="./imagens/favicon.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#050b18">
-    <meta name="description" content="Acesse sua conta SmartInspect AI.">
     <title>Entrar — SmartInspect AI</title>
-
-    <!-- Fonte Moderna -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
     <style>
-        /* =========================================================
-           RESET E VARIÁVEIS (Creative Web Design & Imersão)
-        ========================================================= */
-        :root {
-            --si-bg: #050b18;
-            --si-surface: rgba(13, 28, 50, 0.65);
-            --si-border: rgba(133, 216, 255, 0.15);
-            --si-border-hover: rgba(92, 236, 255, 0.5);
-            --si-cyan: #5cecff;
-            --si-blue: #229dff;
-            --si-text: #f4fbff;
-            --si-muted: #91a8bd;
-            --si-green: #35e58a;
-            --si-red: #ff5a70;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--si-bg);
-            color: var(--si-text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        /* =========================================================
-           SHADERS E VÍDEO DE FUNDO (Imersão 3D e Parallax)
-        ========================================================= */
-        .bg-container {
-            position: fixed;
-            inset: -5%;
-            z-index: -1;
-            transition: transform 0.1s ease-out;
-            will-change: transform;
-            pointer-events: none;
-        }
-
-        .login-background-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.25;
-            filter: saturate(1.2) contrast(1.1);
-        }
-
-        .bg-shader {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(34, 157, 255, 0.15), transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(155, 124, 255, 0.1), transparent 40%),
-                linear-gradient(135deg, rgba(5, 11, 24, 0.9), rgba(5, 11, 24, 0.7));
-            pointer-events: none;
-        }
-
-        .auth-shell {
-            width: min(1200px, 95%);
-            margin: 40px auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .auth-intro {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .auth-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .auth-brand-mark {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: rgba(92, 236, 255, 0.1);
-            border: 1px solid var(--si-border-hover);
-            color: var(--si-cyan);
-            box-shadow: 0 0 20px rgba(92, 236, 255, 0.2);
-        }
-
-        .auth-brand-mark svg {
-            width: 22px;
-            height: 22px;
-        }
-
-        .auth-eyebrow {
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--si-cyan);
-            margin-top: 10px;
-        }
-
-        .auth-intro h1 {
-            font-size: clamp(42px, 5vw, 64px);
-            line-height: 1.05;
-            letter-spacing: -2px;
-        }
-
-        .auth-intro h1 span {
-            background: linear-gradient(90deg, var(--si-cyan), var(--si-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .auth-intro-copy {
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--si-muted);
-            max-width: 400px;
-        }
-
-        .auth-feature-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 10px;
-        }
-
-        .auth-feature-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            color: #d8eaf4;
-            font-weight: 400;
-        }
-
-        .auth-feature-list svg {
-            width: 18px;
-            height: 18px;
-            color: var(--si-cyan);
-            background: rgba(92, 236, 255, 0.1);
-            border-radius: 50%;
-            padding: 3px;
-            flex-shrink: 0;
-        }
-
-        .auth-card {
-            background: var(--si-surface);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--si-border);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .auth-card:hover {
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(92, 236, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        }
-
-        .auth-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transform: skewX(-20deg);
-            transition: left 0.7s ease;
-            pointer-events: none;
-        }
-
-        .auth-card:hover::before {
-            left: 150%;
-        }
-
-        .auth-card h2 {
-            font-size: 28px;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-        }
-
-        .auth-card-lead {
-            font-size: 14px;
-            color: var(--si-muted);
-            margin-bottom: 30px;
-        }
-
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .auth-field {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .auth-field label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #d8eaf4;
-            letter-spacing: 0.5px;
-        }
-
-        .auth-field input {
-            width: 100%;
-            height: 48px;
-            padding: 0 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--si-border);
-            border-radius: 12px;
-            color: white;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .auth-field input:focus {
-            outline: none;
-            border-color: var(--si-cyan);
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 0 3px rgba(92, 236, 255, 0.15);
-        }
-
-        .auth-form-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .auth-remember {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--si-muted);
-            cursor: pointer;
-        }
-
-        .auth-text-link {
-            color: var(--si-cyan);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .auth-text-link:hover {
-            color: white;
-        }
-
-        .auth-submit {
-            height: 52px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--si-cyan), var(--si-blue));
-            color: #03111d;
-            font-size: 15px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(92, 236, 255, 0.2);
-            width: 100%;
-        }
-
-        .auth-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(92, 236, 255, 0.4);
-        }
-
-        .auth-submit:active {
-            transform: translateY(1px);
-        }
-
-        .auth-submit svg {
-            width: 18px;
-            height: 18px;
-            transition: transform 0.3s ease;
-        }
-
-        .auth-submit:hover svg {
-            transform: translateX(4px);
-        }
-
-        .auth-divider {
-            border: 0;
-            height: 1px;
-            background: var(--si-border);
-            margin: 30px 0 20px;
-        }
-
-        .auth-card-footer {
-            font-size: 13px;
-            color: var(--si-muted);
-            text-align: center;
-        }
-
-        .auth-back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--si-muted);
-            text-decoration: none;
-            font-size: 13px;
-            margin-top: 20px;
-            transition: color 0.2s ease;
-        }
-
-        .auth-back-link:hover {
-            color: white;
-        }
-
-        .auth-back-link svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .auth-small-note {
-            font-size: 10px;
-            color: #556b82;
-            text-align: center;
-            margin-top: 20px;
-            line-height: 1.5;
-        }
-
-        .auth-message {
-            display: none;
-            padding: 12px;
-            border-radius: 8px;
-            background: rgba(255, 90, 112, 0.1);
-            border: 1px solid rgba(255, 90, 112, 0.3);
-            color: #ffb5bc;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-        .auth-message[data-visible="true"] {
-            display: block;
-        }
-
-        @keyframes fadeSlideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 968px) {
-            .auth-shell {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                padding: 40px 0;
-                width: 90%;
-            }
-            .auth-intro {
-                text-align: center;
-                align-items: center;
-            }
-            .auth-intro h1 {
-                font-size: clamp(32px, 8vw, 48px);
-            }
-            .auth-feature-list {
-                align-items: flex-start;
-                margin: 0 auto;
-            }
-            .auth-intro-copy {
-                max-width: 100%;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                align-items: flex-start;
-            }
-            .auth-shell {
-                margin: 20px auto;
-                gap: 30px;
-            }
-            .auth-card {
-                padding: 25px 20px;
-                border-radius: 20px;
-            }
-            .auth-brand {
-                font-size: 18px;
-            }
-            .auth-brand-mark {
-                width: 36px;
-                height: 36px;
-            }
-            .auth-form-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            .auth-field input {
-                height: 44px;
-            }
-            .auth-submit {
-                height: 48px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .auth-card {
-                padding: 20px 15px;
-            }
-            .auth-intro h1 {
-                font-size: 28px;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
+        :root { --bg: #050b18; --surface: rgba(13, 28, 50, 0.65); --border: rgba(133, 216, 255, 0.15); --cyan: #5cecff; --blue: #229dff; --text: #f4fbff; --muted: #91a8bd; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .bg-video { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.15; z-index: -1; }
+        .bg-shader { position: fixed; inset: 0; background: radial-gradient(circle at 10% 20%, rgba(34, 157, 255, 0.15), transparent 40%); z-index: -1; }
+        #loginScreen { width: min(1200px, 95%); display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .auth-card { background: var(--surface); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 24px; padding: 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        .auth-card h2 { font-size: 28px; margin-bottom: 8px; }
+        .auth-card p { color: var(--muted); font-size: 14px; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #d8eaf4; }
+        .input-group input { width: 100%; height: 48px; padding: 0 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; color: white; }
+        .input-group input:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(92,236,255,0.15); }
+        .btn-submit { width: 100%; height: 52px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #03111d; font-size: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(92,236,255,0.2); }
+        .error-msg { display: none; color: #ff5a70; font-size: 13px; margin-bottom: 15px; padding: 10px; background: rgba(255,90,112,0.1); border-radius: 8px; border: 1px solid #ff5a70; }
+        #panelScreen { display: none; width: min(1200px, 95%); margin: 40px auto; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; }
+        .company-card { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; margin-bottom: 10px; border: 1px solid transparent; }
+        .btn-enter { background: linear-gradient(135deg, var(--cyan), var(--blue)); border: none; padding: 8px 16px; border-radius: 8px; color: #03111d; font-weight: bold; cursor: pointer; }
+        @media (max-width: 900px) { #loginScreen { grid-template-columns: 1fr; } }
     </style>
 </head>
-
-<body class="auth-page login-page">
-
-    <div class="bg-container" id="bg-container">
-        <video class="login-background-video" autoplay muted loop playsinline preload="auto" poster="./imagens/fundo.png" aria-hidden="true">
-            <source src="./imagens/fundoglobo.mp4" type="video/mp4">
-        </video>
-    </div>
-    
+<body>
+    <video class="bg-video" autoplay muted loop playsinline><source src="./imagens/fundoglobo.mp4" type="video/mp4"></video>
     <div class="bg-shader"></div>
 
-    <main class="auth-shell">
-        <section class="auth-intro" aria-labelledby="introTitle">
-            <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — início">
-                <span class="auth-brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"></path>
-                        <path d="m8 12 2.5 2.5L16.5 8"></path>
-                    </svg>
-                </span>
-                <span class="auth-brand-name">SmartInspect <span>AI</span></span>
-            </a>
-            <div class="auth-eyebrow">Gestão inteligente de obras</div>
-            <h1 id="introTitle">Sua obra, sob <span>controle.</span></h1>
-            <p class="auth-intro-copy">
-                Entre para acompanhar as informações e a operação da sua empresa no SmartInspect AI.
-            </p>
-            <ul class="auth-feature-list" aria-label="Recursos da plataforma">
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Dados organizados em um único lugar</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Acompanhamento de obras e inspeções</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Acesso protegido pelo Supabase Auth</li>
-            </ul>
-        </section>
-
-        <section class="auth-card" aria-labelledby="formTitle">
-            <h2 id="formTitle">Bem-vindo de volta</h2>
-            <p id="cardLead" class="auth-card-lead">Entre com o e-mail e a senha cadastrados.</p>
-
-            <div id="authMessage" class="auth-message" role="status" aria-live="polite" data-visible="false"></div>
-
-            <form id="loginForm" class="auth-form">
-                <div class="auth-field">
-                    <label for="email">E-mail</label>
-                    <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
-                </div>
-
-                <div class="auth-field">
-                    <label for="senha">Senha</label>
-                    <input id="senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha" required>
-                </div>
-
-                <div class="auth-form-row">
-                    <label class="auth-remember">
-                        <input id="rememberLogin" type="checkbox" checked>
-                        <span>Manter sessão iniciada</span>
-                    </label>
-                    <a id="resetPassword" class="auth-text-link" href="#recuperar">Esqueci minha senha</a>
-                </div>
-
-                <button class="auth-submit" type="submit" id="submitBtn">
-                    Entrar
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14"></path>
-                        <path d="m13 6 6 6-6 6"></path>
-                    </svg>
-                </button>
+    <main id="loginScreen">
+        <div>
+            <h1 style="font-size: 48px; line-height: 1.1; margin-bottom: 20px;">Sua obra, sob <span style="color: var(--cyan);">controle.</span></h1>
+        </div>
+        <div class="auth-card">
+            <h2>Bem-vindo de volta</h2>
+            <p>Entre com o e-mail e a senha cadastrados.</p>
+            <div id="authMessage" class="error-msg"></div>
+            <form id="loginForm">
+                <div class="input-group"><label>E-mail</label><input id="email" type="email" required placeholder="voce@empresa.com.br"></div>
+                <div class="input-group"><label>Senha</label><input id="senha" type="password" required placeholder="Sua senha"></div>
+                <button class="btn-submit" type="submit" id="submitBtn">Entrar</button>
             </form>
+        </div>
+    </main>
 
-            <form id="resetRequestForm" class="auth-form" hidden style="display:none;"></form>
-            <form id="resetVerifyForm" class="auth-form" hidden style="display:none;"></form>
-            <form id="resetPasswordForm" class="auth-form" hidden style="display:none;"></form>
-
-            <div id="authAccountLinks">
-                <hr class="auth-divider">
-                <p class="auth-card-footer">
-                    Ainda não tem uma conta? <a class="auth-text-link" href="./cadastro.html">Criar conta</a>
-                </p>
-            </div>
-
-            <a class="auth-back-link" href="./index.html">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m15 18-6-6 6-6"></path>
-                    <path d="M9 12h12"></path>
-                </svg>
-                Voltar para a página inicial
-            </a>
-
-            <p class="auth-small-note">A autenticação usa o Supabase Auth. Chaves secretas ficam somente na Edge Function.</p>
+    <main id="panelScreen">
+        <header class="panel-header">
+            <div><h1>Olá, <span id="userName">usuário</span>.</h1><p style="color: var(--muted);" id="profileEmail"></p></div>
+            <button class="btn-logout" id="logoutButton" style="background: transparent; border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Sair</button>
+        </header>
+        <section class="card">
+            <h3 style="color: var(--cyan); margin-bottom: 15px;">Minhas Empresas</h3>
+            <div id="companiesList"></div>
+            <button id="createCompanyBtn" style="background: transparent; border: 1px dashed var(--cyan); color: var(--cyan); padding: 15px; width: 100%; border-radius: 12px; cursor: pointer; margin-top: 20px; font-weight: bold;">+ Criar Nova Empresa</button>
         </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./js/supabase.js"></script>
-
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("loginForm");
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("senha");
-        const submitBtn = document.getElementById("submitBtn");
+        // CONEXÃO DIRETA (Sem depender do js/supabase.js)
+        const SUPABASE_URL = "https://zuvvaggooddpblqhgsdb.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_A1D2QDRqfVOU24huakpyPg_WGWYTXeQ";
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const loginForm = document.getElementById("loginForm");
         const msgBox = document.getElementById("authMessage");
 
-        // Se já estiver logado, manda direto pro painel
-        window.banco.auth.getSession().then(({ data }) => {
-            if (data.session) {
-                window.location.href = "./painel-pessoal.html";
-            }
+        // Verifica sessão ao abrir
+        db.auth.getSession().then(({ data }) => {
+            if (data.session) mostrarPainel(data.session.user);
         });
 
-        form.addEventListener("submit", async (e) => {
+        loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true; btn.textContent = "Entrando...";
+            msgBox.style.display = "none";
 
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = "Entrando...";
-            msgBox.setAttribute("data-visible", "false");
+            const { data, error } = await db.auth.signInWithPassword({
+                email: document.getElementById("email").value,
+                password: document.getElementById("senha").value
+            });
 
-            try {
-                const { data, error } = await window.banco.auth.signInWithPassword({
-                    email: email,
-                    password: password,
-                });
-
-                if (error) throw error;
-
-                // FORÇANDO A GRAVAÇÃO DA SESSÃO NO LOCALSTORAGE
-                await window.banco.auth.setSession({
-                    access_token: data.session.access_token,
-                    refresh_token: data.session.refresh_token
-                });
-
-                // SUCESSO! Redireciona para o painel.
-                window.location.href = "./painel-pessoal.html";
-                
-            } catch (error) {
-                msgBox.textContent = error.message || "Erro ao fazer login. Verifique suas credenciais.";
-                msgBox.setAttribute("data-visible", "true");
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `Entrar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>`;
+            if (error) {
+                // MOSTRA O ERRO NA TELA
+                msgBox.textContent = "ERRO SUPABASE: " + error.message;
+                msgBox.style.display = "block";
+                btn.disabled = false; btn.textContent = "Entrar";
+                return;
             }
+
+            mostrarPainel(data.user);
         });
 
-        const bgContainer = document.getElementById('bg-container');
-        if (window.matchMedia("(pointer: fine)").matches) {
-            document.addEventListener('mousemove', (e) => {
-                const x = (e.clientX / window.innerWidth - 0.5) * 30; 
-                const y = (e.clientY / window.innerHeight - 0.5) * 30;
-                bgContainer.style.transform = `translate(${x}px, ${y}px)`;
+        function mostrarPainel(user) {
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("panelScreen").style.display = "block";
+            document.getElementById("userName").textContent = user.email.split("@")[0];
+            document.getElementById("profileEmail").textContent = user.email;
+            carregarEmpresas(user.id);
+        }
+
+        async function carregarEmpresas(userId) {
+            const list = document.getElementById("companiesList");
+            const { data, error } = await db.from("membros_empresa").select("empresa_id, cargo, empresa:empresas(id, nome)").eq("usuario_id", userId).eq("ativo", true);
+            
+            list.innerHTML = "";
+            if (error || !data || data.length === 0) {
+                list.innerHTML = '<p style="color:var(--muted);">Nenhuma empresa encontrada.</p>';
+                return;
+            }
+            data.forEach(row => {
+                if(!row.empresa) return;
+                const div = document.createElement("div");
+                div.className = "company-card";
+                div.innerHTML = `<div><strong>${row.empresa.nome}</strong></div><button class="btn-enter" onclick="window.location.href='empresa.html?empresa=${row.empresa.id}'">Entrar →</button>`;
+                list.appendChild(div);
             });
         }
-    });
+
+        document.getElementById("createCompanyBtn").addEventListener("click", async () => {
+            const nome = prompt("Nome da nova empresa:");
+            if (!nome) return;
+            const { data, error } = await db.rpc('criar_minha_empresa', { p_nome: nome, p_cnpj: null });
+            if (error) { alert("Erro ao criar: " + error.message); return; }
+            window.location.href = `empresa.html?empresa=${data}`;
+        });
     </script>
 </body>
 </html>
