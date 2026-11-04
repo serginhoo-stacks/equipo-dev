@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área da Empresa — SmartInspect AI</title>
+    <link rel="icon" href="imagens/favicon.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { display: flex; height: 100vh; background: #050b18; color: white; overflow: hidden; }
+        
+        /* Sidebar do Projeto Novo (Apenas visual, para dar contexto) */
+        .nav-nova { width: 70px; background: #081426; border-right: 1px solid rgba(133,216,255,.14); display: flex; flex-direction: column; align-items: center; padding: 20px 0; gap: 20px; }
+        .nav-nova img { width: 40px; height: 40px; border-radius: 10px; margin-bottom: 10px; }
+        .nav-btn { width: 44px; height: 44px; border-radius: 12px; border: 1px solid transparent; background: rgba(255,255,255,.05); color: #91a8bd; cursor: pointer; display: grid; place-items: center; transition: .2s; }
+        .nav-btn:hover, .nav-btn.active { background: rgba(92,236,255,.1); color: #5cecff; border-color: rgba(92,236,255,.3); }
+
+        /* Área do ERP Antigo */
+        .erp-container { flex: 1; display: flex; flex-direction: column; background: #fff; }
+        .erp-header { padding: 10px 20px; background: #f5f8fc; border-bottom: 1px solid #e5edf5; display: flex; justify-content: space-between; align-items: center; }
+        .erp-header h2 { color: #102a43; font-size: 16px; margin: 0; }
+        .btn-voltar { padding: 8px 16px; background: #c53b3b; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
+        .btn-voltar:hover { background: #a12f2f; }
+        
+        /* O iframe que carrega o dashboard antigo */
+        iframe { flex: 1; width: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar do Usuário (Projeto Novo) -->
+    <aside class="nav-nova">
+        <img src="imagens/logo.png" alt="Logo">
+        <button class="nav-btn" title="Painel Pessoal" onclick="window.location.href='painel-pessoal.html'">🏠</button>
+        <button class="nav-btn active" title="ERP da Empresa">🏢</button>
+    </aside>
+
+    <!-- Container do ERP -->
+    <main class="erp-container">
+        <header class="erp-header">
+            <h2 id="nomeEmpresaHeader">Carregando empresa...</h2>
+            <button class="btn-voltar" onclick="window.location.href='painel-pessoal.html'">Sair da Empresa</button>
+        </header>
+        
+        <!-- AQUI CARREGA O ERP ANTIGO: Mude o src para o caminho correto do seu dashboard antigo -->
+        <iframe id="iframeERP" src="dashboard.html" title="ERP da Empresa"></iframe>
+    </main>
+
+    <!-- Script para ler o ID da empresa e mostrar o nome -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Pega o ID da empresa na URL: empresa.html?empresa=123
+            const urlParams = new URLSearchParams(window.location.search);
+            const empresaId = urlParams.get('empresa');
+
+            if (!empresaId) {
+                alert("Nenhuma empresa selecionada. Voltando ao painel.");
+                window.location.href = "painel-pessoal.html";
+                return;
+            }
+
+            // Busca o nome da empresa no Supabase para ficar bonito no topo
+            const { data, error } = await banco.from('empresas').select('nome').eq('id', empresaId).single();
+            
+            if (data && !error) {
+                document.getElementById('nomeEmpresaHeader').textContent = data.nome;
+                // Opcional: Se o seu dashboard.html aceitar parâmetro, passe ele:
+                document.getElementById('iframeERP').src = `dashboard.html?empresa=${empresaId}`;
+            } else {
+                document.getElementById('nomeEmpresaHeader').textContent = "Empresa sem nome";
+            }
+        });
+    </script>
+</body>
+</html>
