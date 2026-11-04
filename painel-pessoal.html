@@ -99,9 +99,75 @@
 /* Menus do chat, resposta citada e histórico de chamadas. */
 .conv-row{display:grid;grid-template-columns:minmax(0,1fr) 36px;align-items:center;gap:3px;position:relative}.conv-row .conv-item{min-width:0}.conv-options,.message-actions{position:relative}.conv-options summary,.message-actions summary{display:grid;place-items:center;list-style:none;width:36px;height:38px;border:1px solid transparent;border-radius:9px;color:var(--muted);cursor:pointer;font-size:20px}.conv-options summary::-webkit-details-marker,.message-actions summary::-webkit-details-marker{display:none}.conv-options[open] summary,.conv-options summary:hover,.message-actions[open] summary,.message-actions summary:hover{color:var(--cyan);border-color:var(--border);background:rgba(92,236,255,.08)}.conv-menu,.message-actions-menu{position:absolute;z-index:25;right:0;top:100%;display:grid;min-width:180px;padding:5px;border:1px solid var(--border);border-radius:12px;background:#0b1c31;box-shadow:0 12px 34px #0009}.conv-menu button,.message-actions-menu button{width:100%;padding:10px;border:0;border-radius:8px;color:var(--text);text-align:left;background:transparent;cursor:pointer;font-size:11px}.conv-menu button:hover,.message-actions-menu button:hover{background:rgba(92,236,255,.12)}.msg-quote{margin:0 0 7px;padding:6px 9px;border-left:2px solid var(--cyan);border-radius:0 7px 7px 0;color:#c6d9e8;background:rgba(92,236,255,.07);font-size:10px;line-height:1.45}.msg-deleted{color:var(--muted);font-style:italic}.message-actions{display:flex;justify-content:flex-end;align-self:flex-start;margin:3px 0 0;opacity:.35;transition:opacity .18s}.msg:hover .message-actions,.msg:focus-within .message-actions,.message-actions[open]{opacity:1}.msg-actions-layout{display:flex;align-items:flex-start;gap:6px}.msg-actions-layout>.msg-content-row{min-width:0;flex:1}.reply-preview{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;border-top:1px solid rgba(255,255,255,.07);background:rgba(92,236,255,.06)}.reply-preview strong,.reply-preview small{display:block}.reply-preview strong{color:var(--cyan);font-size:10px}.reply-preview small{max-width:min(70vw,520px);overflow:hidden;color:var(--muted);text-overflow:ellipsis;white-space:nowrap;font-size:11px}.call-history{max-height:210px;overflow:auto;padding:10px 15px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(3,11,23,.3)}.call-history h3{margin:0 0 8px;color:#fff;font-size:12px}.call-history-items{display:grid;gap:6px}.call-history-entry{display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid rgba(133,216,255,.12);border-radius:9px;color:var(--text);font-size:11px;background:rgba(255,255,255,.03)}.call-history-entry small{color:var(--muted)}.call-sheet-heading[data-call-drag-handle]{cursor:grab;touch-action:none;user-select:none}.call-dialog[open]{position:fixed;inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;z-index:1000}.call-dialog[open]::backdrop{background:transparent;backdrop-filter:none;pointer-events:none}.call-dialog .call-sheet-heading:active{cursor:grabbing}
 @media(max-width:640px){.conv-options summary{min-height:44px}.message-actions{opacity:1}.call-history-entry{align-items:flex-start;flex-direction:column;gap:4px}.call-dialog[open]{width:min(420px,calc(100% - 18px));max-height:calc(100dvh - 24px)}}
+
+
+/* Bloqueio visual durante a verificação da sessão. O conteúdo protegido só aparece após autenticação. */
+.auth-pending > .personal-header,
+.auth-pending > main,
+.auth-pending > dialog,
+.auth-error > .personal-header,
+.auth-error > main,
+.auth-error > dialog {
+  visibility: hidden !important;
+}
+#authGate {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  place-items: center;
+  padding: 24px;
+  color: var(--text, #f4fbff);
+  background: radial-gradient(ellipse at 50% 35%, rgba(34,157,255,.13), transparent 48%), #050b18;
+  text-align: center;
+}
+.auth-pending #authGate,
+.auth-error #authGate { display: grid; }
+.auth-gate-card {
+  width: min(440px, 100%);
+  padding: 30px 26px;
+  border: 1px solid rgba(133,216,255,.2);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(18,42,72,.86), rgba(7,18,35,.96));
+  box-shadow: 0 24px 70px rgba(0,0,0,.42);
+}
+.auth-gate-spinner {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 17px;
+  border: 3px solid rgba(92,236,255,.2);
+  border-top-color: #5cecff;
+  border-radius: 50%;
+  animation: authGateSpin .8s linear infinite;
+}
+.auth-error .auth-gate-spinner { display: none; }
+.auth-gate-card h1 { margin: 0 0 9px; color: #fff; font-size: 19px; }
+.auth-gate-card p { margin: 0; color: var(--muted, #91a8bd); font-size: 13px; line-height: 1.6; }
+#authRetry {
+  margin-top: 18px;
+  padding: 10px 16px;
+  border: 1px solid rgba(92,236,255,.45);
+  border-radius: 10px;
+  color: #061321;
+  background: linear-gradient(135deg, #5cecff, #229dff);
+  font-weight: 800;
+  cursor: pointer;
+}
+#authRetry:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@keyframes authGateSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .auth-gate-spinner { animation-duration: 2s; } }
+
 </style>
 </head>
-<body class="personal-page">
+<body class="personal-page auth-pending">
+<div id="authGate" role="status" aria-live="polite">
+  <div class="auth-gate-card">
+    <div class="auth-gate-spinner" aria-hidden="true"></div>
+    <h1 id="authGateTitle">Verificando sua sessão</h1>
+    <p id="authGateMessage">Estamos confirmando seu acesso ao SmartInspect.</p>
+    <button id="authRetry" type="button" hidden>Recarregar painel</button>
+  </div>
+</div>
 <header class="personal-header"><a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a><nav class="app-nav" aria-label="Navegação"><button id="panelNav" type="button" aria-current="page">Painel</button><button id="chatNav" type="button">Chat</button><button id="notificationNav" type="button">Notificações <span id="notificationBadge" class="notification-badge" hidden>0</span></button></nav><div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button" type="button">Sair</button></div></header>
 <main id="panelView" class="personal-shell">
 <section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Seu espaço pessoal para organizar seu perfil e suas conversas.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
@@ -155,6 +221,11 @@
     cancelRecording: false,
     recordTimer: null,
     recordStarted: 0,
+    authReady: false,
+    signingOut: false,
+    redirecting: false,
+    signedOutDuringBootstrap: false,
+    authSubscription: null,
   };
 
   const status = (id, msg, err = false) => {
@@ -225,51 +296,171 @@
     }
   }
 
-  // INICIALIZAÇÃO BLINDADA (Evita o Loop de Login)
-  async function init() {
+  // Autenticação do painel: a sessão é recuperada do armazenamento do Supabase.
+  // Não se lê nem se aceita access_token/refresh_token pela URL.
+  function showAuthError(title, message) {
+    document.body.classList.remove("auth-pending");
+    document.body.classList.add("auth-error");
+    const titleEl = $("authGateTitle");
+    const messageEl = $("authGateMessage");
+    const retryButton = $("authRetry");
+    if (titleEl) titleEl.textContent = title || "Não foi possível validar seu acesso";
+    if (messageEl) messageEl.textContent = message || "Verifique sua conexão e tente novamente.";
+    if (retryButton) retryButton.hidden = false;
+  }
+
+  function showProtectedApp() {
+    document.body.classList.remove("auth-pending", "auth-error");
+  }
+
+  function redirectToLogin() {
+    if (st.redirecting) return;
+    st.redirecting = true;
+    window.location.replace("./login.html");
+  }
+
+  function removeLegacyAuthTokensFromUrl() {
     try {
-      if (!db) throw new Error("Supabase não configurado.");
-      
-      // 1. Aguarda o Supabase verificar a sessão com calma
-      const { data, error } = await db.auth.getSession();
-      
-      if (error || !data.session?.user) {
-        console.warn("Sessão não encontrada, redirecionando para login.");
-        location.replace("./login.html");
+      const url = new URL(window.location.href);
+      const tokenKeys = ["access_token", "refresh_token", "token_type", "expires_in", "expires_at"];
+      let changed = false;
+      for (const key of tokenKeys) {
+        if (url.searchParams.has(key)) {
+          url.searchParams.delete(key);
+          changed = true;
+        }
+      }
+      if (changed) {
+        const cleanUrl = url.pathname + url.search + url.hash;
+        window.history.replaceState(window.history.state, document.title, cleanUrl);
+      }
+    } catch (urlError) {
+      // Não interrompe a autenticação por uma falha ao limpar a URL.
+      console.warn("Não foi possível limpar parâmetros antigos de autenticação da URL:", urlError);
+    }
+  }
+
+  function subscribeToAuthChanges() {
+    if (typeof db.auth.onAuthStateChange !== "function") return;
+
+    const result = db.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT") {
+        if (st.authReady && !st.signingOut && !st.redirecting) {
+          redirectToLogin();
+        } else if (!st.authReady) {
+          st.signedOutDuringBootstrap = true;
+        }
         return;
       }
 
-      // 2. Sessão confirmada, prossegue
-      st.user = data.session.user;
-      $("headerEmail").textContent = "Sessão ativa";
-      $("profileEmail").value = st.user.email || "";
-      
-      $("logoutButton").onclick = async () => {
-        await db.auth.signOut();
-        location.replace("./login.html");
-      };
-      
-      db.auth.onAuthStateChange((ev) => {
-        if (ev === "SIGNED_OUT") location.replace("./login.html");
-      });
+      // Mantém os dados locais atualizados após renovação/alteração do usuário.
+      if (st.authReady && session?.user && ["TOKEN_REFRESHED", "USER_UPDATED"].includes(event)) {
+        st.user = session.user;
+        if ($("headerEmail")) $("headerEmail").textContent = session.user.email || "Sessão ativa";
+        if ($("profileEmail")) $("profileEmail").value = session.user.email || "";
+      }
+    });
 
-      // 3. Carrega os dados com segurança
+    st.authSubscription = result?.data?.subscription || null;
+  }
+
+  async function init() {
+    try {
+      // js/supabase.js precisa criar window.banco antes deste script inline.
+      if (!db || !db.auth || typeof db.auth.getSession !== "function") {
+        showAuthError(
+          "Serviço de autenticação indisponível",
+          "O cliente Supabase não foi inicializado. Confira o carregamento e a configuração de js/supabase.js."
+        );
+        console.error("window.banco não contém um cliente Supabase Auth válido.");
+        return;
+      }
+
+      removeLegacyAuthTokensFromUrl();
+      subscribeToAuthChanges();
+
+      // Uma resposta com erro não é tratada como usuário deslogado: mostramos erro
+      // recuperável para evitar um redirecionamento em loop por falha de rede/storage.
+      const { data, error } = await db.auth.getSession();
+      if (error) {
+        console.error("Erro ao recuperar a sessão do Supabase:", error);
+        showAuthError(
+          "Não foi possível verificar sua sessão",
+          "O SmartInspect não conseguiu consultar a sessão salva. Verifique a conexão e tente novamente."
+        );
+        return;
+      }
+
+      const session = data?.session;
+      if (st.signedOutDuringBootstrap || !session?.user?.id || !session?.access_token) {
+        redirectToLogin();
+        return;
+      }
+
+      // Só libera qualquer conteúdo privado depois de confirmar a sessão.
+      st.user = session.user;
+      st.authReady = true;
+      showProtectedApp();
+
+      $("headerEmail").textContent = st.user.email || "Sessão ativa";
+      $("profileEmail").value = st.user.email || "";
+
+      $("logoutButton").onclick = async () => {
+        if (st.signingOut || st.redirecting) return;
+
+        st.signingOut = true;
+        const logoutButton = $("logoutButton");
+        logoutButton.disabled = true;
+        logoutButton.textContent = "Saindo…";
+
+        try {
+          const { error: signOutError } = await db.auth.signOut();
+          if (signOutError) throw signOutError;
+          redirectToLogin();
+        } catch (logoutError) {
+          console.error("Erro ao encerrar sessão:", logoutError);
+          st.signingOut = false;
+          logoutButton.disabled = false;
+          logoutButton.textContent = "Sair";
+          status("pageMessage", logoutError?.message || "Não foi possível encerrar a sessão.", true);
+        }
+      };
+
+      // Carregamento dos módulos só começa depois da autenticação confirmada.
       initializeNotificationRealtime();
       syncNotificationPermission();
-      
-      await Promise.allSettled([
+
+      const results = await Promise.allSettled([
         loadProfile(),
         loadBusinessSummary(),
         loadPlansPreview(),
         loadNotifications(false),
       ]);
-      
+
+      results.forEach((result, index) => {
+        if (result.status === "rejected") {
+          console.error(`Falha ao carregar o módulo ${index + 1} do painel:`, result.reason);
+        }
+      });
+
       ensureListRealtime();
-      
     } catch (err) {
-      console.error("Erro no init:", err);
-      status("pageMessage", "Erro ao carregar o painel. Tente novamente.", true);
+      console.error("Erro ao inicializar o painel pessoal:", err);
+      showAuthError(
+        "Não foi possível iniciar o painel",
+        err?.message || "Ocorreu um erro inesperado. Tente novamente."
+      );
     }
+  }
+
+  $("authRetry").onclick = () => window.location.reload();
+
+  // Inicializa após o DOM estar pronto. O script fica no fim do body, mas este
+  // cuidado também permite mover o script para outro ponto futuramente.
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => { void init(); }, { once: true });
+  } else {
+    void init();
   }
 
   async function loadBusinessSummary() {
