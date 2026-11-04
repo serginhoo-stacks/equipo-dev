@@ -56,35 +56,21 @@
             </p>
 
             <ul class="auth-feature-list" aria-label="Recursos da plataforma">
-
                 <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" aria-hidden="true">
-                        <path d="m5 12 4 4L19 6"></path>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
                     Dados organizados em um único lugar
                 </li>
-
                 <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" aria-hidden="true">
-                        <path d="m5 12 4 4L19 6"></path>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
                     Acompanhamento de obras e inspeções
                 </li>
-
                 <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" aria-hidden="true">
-                        <path d="m5 12 4 4L19 6"></path>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
                     Acesso protegido pelo Supabase Auth
                 </li>
-
             </ul>
 
         </section>
-
 
         <section class="auth-card" aria-labelledby="formTitle">
 
@@ -96,315 +82,145 @@
                 Entre com o e-mail e a senha cadastrados.
             </p>
 
-            <div
-                id="authMessage"
-                class="auth-message"
-                role="status"
-                aria-live="polite"
-                data-visible="false">
-            </div>
-
+            <div id="authMessage" class="auth-message" role="status" aria-live="polite" data-visible="false"></div>
 
             <!-- LOGIN -->
-
             <form id="loginForm" class="auth-form">
-
                 <div class="auth-field">
-                    <label for="email">
-                        E-mail
-                    </label>
-
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        autocomplete="email"
-                        placeholder="voce@empresa.com.br"
-                        required>
+                    <label for="email">E-mail</label>
+                    <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
                 </div>
 
-
                 <div class="auth-field">
-                    <label for="senha">
-                        Senha
-                    </label>
-
-                    <input
-                        id="senha"
-                        name="senha"
-                        type="password"
-                        autocomplete="current-password"
-                        placeholder="Sua senha"
-                        required>
+                    <label for="senha">Senha</label>
+                    <input id="senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha" required>
                 </div>
-
 
                 <div class="auth-form-row">
                     <label class="auth-remember">
                         <input id="rememberLogin" type="checkbox" checked>
                         <span>Manter sessão iniciada</span>
                     </label>
-
-                    <a
-                        id="resetPassword"
-                        class="auth-text-link"
-                        href="#recuperar">
-                        Esqueci minha senha
-                    </a>
+                    <a id="resetPassword" class="auth-text-link" href="#recuperar">Esqueci minha senha</a>
                 </div>
 
-
-                <button class="auth-submit" type="submit">
-
+                <button class="auth-submit" type="submit" id="submitBtn">
                     Entrar
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true">
-
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M5 12h14"></path>
                         <path d="m13 6 6 6-6 6"></path>
-
                     </svg>
-
                 </button>
-
             </form>
-
 
             <!-- SOLICITAR CÓDIGO -->
-
             <form id="resetRequestForm" class="auth-form" hidden>
-
                 <div class="auth-field">
-
-                    <label for="resetEmail">
-                        E-mail da sua conta
-                    </label>
-
-                    <input
-                        id="resetEmail"
-                        name="resetEmail"
-                        type="email"
-                        autocomplete="email"
-                        placeholder="voce@empresa.com.br"
-                        required>
-
-                    <span class="auth-field-hint">
-                        Enviaremos um código de 4 dígitos. Você não precisa informar sua senha atual.
-                    </span>
-
+                    <label for="resetEmail">E-mail da sua conta</label>
+                    <input id="resetEmail" name="resetEmail" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
+                    <span class="auth-field-hint">Enviaremos um código de 4 dígitos. Você não precisa informar sua senha atual.</span>
                 </div>
-
-
-                <button class="auth-submit" type="submit">
-                    Enviar código
-                </button>
-
-
-                <button
-                    id="backToLoginFromRequest"
-                    class="auth-plain-button"
-                    type="button">
-
-                    Voltar para entrar
-
-                </button>
-
+                <button class="auth-submit" type="submit">Enviar código</button>
+                <button id="backToLoginFromRequest" class="auth-plain-button" type="button">Voltar para entrar</button>
             </form>
-
 
             <!-- VERIFICAR CÓDIGO -->
-
             <form id="resetVerifyForm" class="auth-form" hidden>
-
-                <input
-                    id="verifyEmail"
-                    name="verifyEmail"
-                    type="hidden"
-                    autocomplete="email">
-
-
+                <input id="verifyEmail" name="verifyEmail" type="hidden" autocomplete="email">
                 <div class="auth-field">
-
-                    <label for="resetCode">
-                        Código de 4 dígitos
-                    </label>
-
-                    <input
-                        id="resetCode"
-                        name="resetCode"
-                        class="auth-code-input"
-                        type="text"
-                        inputmode="numeric"
-                        autocomplete="one-time-code"
-                        pattern="[0-9]{4}"
-                        minlength="4"
-                        maxlength="4"
-                        placeholder="0000"
-                        aria-describedby="resetCodeHint"
-                        required>
-
-                    <span
-                        id="resetCodeHint"
-                        class="auth-field-hint">
-
-                        O código vence em 10 minutos e só pode ser usado uma vez.
-
-                    </span>
-
+                    <label for="resetCode">Código de 4 dígitos</label>
+                    <input id="resetCode" name="resetCode" class="auth-code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{4}" minlength="4" maxlength="4" placeholder="0000" required>
                 </div>
-
-
-                <button class="auth-submit" type="submit">
-                    Verificar código
-                </button>
-
-
+                <button class="auth-submit" type="submit">Verificar código</button>
                 <div class="auth-form-actions">
-
-                    <button
-                        id="resendResetCode"
-                        class="auth-text-button"
-                        type="button">
-
-                        Enviar outro código
-
-                    </button>
-
-
-                    <button
-                        id="backToResetRequest"
-                        class="auth-text-button"
-                        type="button">
-
-                        Trocar e-mail
-
-                    </button>
-
+                    <button id="resendResetCode" class="auth-text-button" type="button">Enviar outro código</button>
+                    <button id="backToResetRequest" class="auth-text-button" type="button">Trocar e-mail</button>
                 </div>
-
             </form>
-
 
             <!-- NOVA SENHA -->
-
             <form id="resetPasswordForm" class="auth-form" hidden>
-
                 <div class="auth-field">
-
-                    <label for="newPassword">
-                        Nova senha
-                    </label>
-
-                    <input
-                        id="newPassword"
-                        name="newPassword"
-                        type="password"
-                        autocomplete="new-password"
-                        minlength="8"
-                        placeholder="Mínimo de 8 caracteres"
-                        required>
-
+                    <label for="newPassword">Nova senha</label>
+                    <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
                 </div>
-
-
                 <div class="auth-field">
-
-                    <label for="confirmNewPassword">
-                        Confirme a nova senha
-                    </label>
-
-                    <input
-                        id="confirmNewPassword"
-                        name="confirmNewPassword"
-                        type="password"
-                        autocomplete="new-password"
-                        minlength="8"
-                        placeholder="Digite novamente a nova senha"
-                        required>
-
+                    <label for="confirmNewPassword">Confirme a nova senha</label>
+                    <input id="confirmNewPassword" name="confirmNewPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Digite novamente a nova senha" required>
                 </div>
-
-
-                <button class="auth-submit" type="submit">
-                    Trocar senha
-                </button>
-
+                <button class="auth-submit" type="submit">Trocar senha</button>
             </form>
 
-
-            <!-- LINKS DA CONTA -->
-
             <div id="authAccountLinks">
-
                 <hr class="auth-divider">
-
                 <p class="auth-card-footer">
-
-                    Ainda não tem uma conta?
-
-                    <a
-                        class="auth-text-link"
-                        href="./cadastro.html">
-
-                        Criar conta
-
-                    </a>
-
+                    Ainda não tem uma conta? <a class="auth-text-link" href="./cadastro.html">Criar conta</a>
                 </p>
-
             </div>
 
-
-            <!-- VOLTAR -->
-
             <a class="auth-back-link" href="./index.html">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true">
-
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="m15 18-6-6 6-6"></path>
                     <path d="M9 12h12"></path>
-
                 </svg>
-
                 Voltar para a página inicial
-
             </a>
-
 
             <p class="auth-small-note">
                 A autenticação usa o Supabase Auth. Chaves secretas ficam somente na Edge Function.
             </p>
-
         </section>
-
     </main>
 
-
     <!-- SUPABASE -->
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <!-- CONFIGURAÇÃO DO SUPABASE -->
-
     <script src="./js/supabase.js"></script>
 
-    <!-- AUTENTICAÇÃO -->
+    <!-- LÓGICA DE LOGIN CORRIGIDA (SUBSTITUINDO O auth.js ANTIGO) -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("loginForm");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("senha");
+        const submitBtn = document.getElementById("submitBtn");
+        const msgBox = document.getElementById("authMessage");
 
-    <script src="./js/auth.js?v=reset-verify-fix-20261004-2056"></script>
+        // Se já estiver logado, manda direto pro painel
+        window.banco.auth.getSession().then(({ data }) => {
+            if (data.session) {
+                window.location.href = "./painel-pessoal.html";
+            }
+        });
 
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = "Entrando...";
+            msgBox.setAttribute("data-visible", "false");
+
+            try {
+                const { data, error } = await window.banco.auth.signInWithPassword({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) throw error;
+
+                // SUCESSO! Redireciona para o painel novo.
+                window.location.href = "./painel-pessoal.html";
+                
+            } catch (error) {
+                msgBox.textContent = error.message || "Erro ao fazer login. Verifique suas credenciais.";
+                msgBox.setAttribute("data-visible", "true");
+                msgBox.style.color = "#ffb5bc"; // Cor de erro
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `Entrar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>`;
+            }
+        });
+    });
+    </script>
 </body>
 </html>
