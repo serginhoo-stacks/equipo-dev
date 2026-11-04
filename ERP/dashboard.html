@@ -260,32 +260,5 @@
     });
 })();
 </script>
-<script>document.addEventListener("DOMContentLoaded",()=>window.lucide&&lucide.createIcons());</script>
-    <script>
-    // DESTRUIDOR DE TELA DE LOGIN
-    document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(() => {
-            // Procura qualquer coisa parecida com login
-            const suspeitos = document.querySelectorAll(
-                'form, [id*="login"], [class*="login"], [id*="auth"], [class*="auth"], input[type="password"]'
-            );
-            
-            suspeitos.forEach(el => {
-                // Se for um formulário de busca, ignora
-                if (el.innerHTML.includes('Pesquisar') || el.innerHTML.includes('search')) return;
-                console.warn("Elemento de login encontrado e destruído:", el);
-                el.remove();
-            });
-
-            // Se a tela toda for preta ou um overlay de login, destrói
-            const overlays = document.querySelectorAll('div[style*="fixed"], div[style*="absolute"]');
-            overlays.forEach(el => {
-                if (el.innerHTML.includes('Entrar') || el.innerHTML.includes('senha') || el.innerHTML.includes('E-mail')) {
-                    el.remove();
-                }
-            });
-        }, 500); // Espera meio segundo para a página carregar
-    });
-</script>
 </body>
 </html>
