@@ -1,0 +1,839 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IA - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<style>
+
+.chat-container{
+
+    max-width:900px;
+
+}
+
+
+.chat-box{
+
+    height:420px;
+
+    overflow-y:auto;
+
+    background:#f5f7fb;
+
+    padding:20px;
+
+    border-radius:15px;
+
+}
+
+
+.mensagem{
+
+    padding:12px 16px;
+
+    margin:12px 0;
+
+    max-width:75%;
+
+    border-radius:15px;
+
+    line-height:1.5;
+
+    white-space:pre-wrap;
+
+    word-break:break-word;
+
+}
+
+
+.mensagem.ia{
+
+    background:white;
+
+    box-shadow:0 2px 8px #0002;
+
+    margin-right:auto;
+
+}
+
+
+.mensagem.usuario{
+
+    background:#0066cc;
+
+    color:white;
+
+    margin-left:auto;
+
+}
+
+
+.chat-input{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:15px;
+
+}
+
+
+.chat-input textarea{
+
+    flex:1;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    resize:none;
+
+    border:1px solid #ddd;
+
+    font-family:Arial,sans-serif;
+
+    outline:none;
+
+}
+
+
+.chat-input textarea:focus{
+
+    border-color:#0066cc;
+
+}
+
+
+.chat-input button{
+
+    width:60px;
+
+    height:60px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#0066cc;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+
+.chat-input button:hover{
+
+    background:#0052a3;
+
+}
+
+
+.chat-input button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+
+.resultado-ia{
+
+    background:#f5f5f5;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    margin-top:20px;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="menu-container"></div>
+
+
+<div class="content">
+
+
+<h1>🤖 SmartInspect AI</h1>
+
+<p>
+Assistente inteligente para inspeções e construção civil
+</p>
+
+
+<!-- ==========================================
+     CHAT IA
+========================================== -->
+
+<div class="card chat-container">
+
+
+<h2>
+💬 Conversar com IA
+</h2>
+
+
+<div id="chatBox" class="chat-box">
+
+
+<div class="mensagem ia">
+
+🤖 Olá! Sou o SmartInspect AI.
+
+Posso ajudar com:
+
+✔ Inspeções
+
+✔ Patologias da construção
+
+✔ Materiais
+
+✔ Normas técnicas
+
+✔ Concreto
+
+✔ Estruturas
+
+✔ Manutenção
+
+✔ Correções
+
+</div>
+
+
+</div>
+
+
+<div class="chat-input">
+
+
+<textarea
+id="perguntaIA"
+rows="2"
+placeholder="Digite sua pergunta..."
+onkeydown="enviarEnter(event)"
+></textarea>
+
+
+<button
+id="btnEnviarIA"
+onclick="conversarIA()"
+title="Enviar"
+>
+
+➤
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     ANÁLISE DE IMAGEM
+========================================== -->
+
+<div class="card">
+
+
+<h2>
+📷 Analisar imagem da obra
+</h2>
+
+
+<input
+type="file"
+id="imagem"
+accept="image/*"
+>
+
+
+<br><br>
+
+
+<button onclick="analisarImagem()">
+
+🔍 Analisar com IA
+
+</button>
+
+
+<div
+id="resultadoImagem"
+class="resultado-ia"
+>
+
+Aguardando imagem...
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     SCRIPTS
+========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/configuracoes.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+
+<script>
+
+
+// ==========================================
+// LOGIN
+// ==========================================
+
+verificarLogin();
+
+
+// ==========================================
+// ENTER
+// ==========================================
+
+function enviarEnter(event){
+
+    if(
+        event.key === "Enter" &&
+        !event.shiftKey
+    ){
+
+        event.preventDefault();
+
+        conversarIA();
+
+    }
+
+}
+
+
+// ==========================================
+// CHAT
+// ==========================================
+
+async function conversarIA(){
+
+
+    const campo =
+        document.getElementById(
+            "perguntaIA"
+        );
+
+
+    const botao =
+        document.getElementById(
+            "btnEnviarIA"
+        );
+
+
+    const pergunta =
+        campo.value.trim();
+
+
+    if(!pergunta){
+
+        return;
+
+    }
+
+
+    // ======================================
+    // MENSAGEM DO USUÁRIO
+    // ======================================
+
+    adicionarMensagem(
+        pergunta,
+        "usuario"
+    );
+
+
+    campo.value = "";
+
+
+    // ======================================
+    // DESABILITAR BOTÃO
+    // ======================================
+
+    botao.disabled = true;
+
+
+    // ======================================
+    // CARREGANDO
+    // ======================================
+
+    const chat =
+        document.getElementById(
+            "chatBox"
+        );
+
+
+    const carregando =
+        document.createElement(
+            "div"
+        );
+
+
+    carregando.className =
+        "mensagem ia";
+
+
+    carregando.innerHTML =
+        "🤖 Pensando...";
+
+
+    chat.appendChild(
+        carregando
+    );
+
+
+    chat.scrollTop =
+        chat.scrollHeight;
+
+
+    try{
+
+
+        // ==================================
+        // CHAMAR API
+        // ==================================
+
+        const resposta =
+            await fetch(
+
+                "/api/chat-ia",
+
+                {
+
+                    method:
+                        "POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            mensagem:
+                                pergunta
+
+                        })
+
+                }
+
+            );
+
+
+        // ==================================
+        // LER RESPOSTA
+        // ==================================
+
+        const texto =
+            await resposta.text();
+
+
+        let dados;
+
+
+        try{
+
+            dados =
+                JSON.parse(texto);
+
+        }
+
+        catch{
+
+            dados = {
+
+                erro:
+                    texto ||
+                    "Resposta inválida do servidor."
+
+            };
+
+        }
+
+
+        // ==================================
+        // REMOVER CARREGANDO
+        // ==================================
+
+        carregando.remove();
+
+
+        // ==================================
+        // ERRO DA API
+        // ==================================
+
+        if(!resposta.ok){
+
+            console.error(
+                "Erro /api/chat-ia:",
+                dados
+            );
+
+
+            let mensagemErro =
+                "❌ Não foi possível conectar com a IA.";
+
+
+            if(
+                dados.erro_groq
+            ){
+
+                mensagemErro =
+                    "❌ Erro da inteligência artificial:\n\n" +
+                    dados.erro_groq;
+
+            }
+
+            else if(
+                dados.erro
+            ){
+
+                mensagemErro =
+                    "❌ " +
+                    dados.erro;
+
+            }
+
+
+            adicionarMensagem(
+
+                mensagemErro,
+
+                "ia"
+
+            );
+
+
+            return;
+
+        }
+
+
+        // ==================================
+        // RESPOSTA DA IA
+        // ==================================
+
+        if(
+            !dados.resposta
+        ){
+
+            adicionarMensagem(
+
+                "❌ A IA não retornou uma resposta.",
+
+                "ia"
+
+            );
+
+
+            return;
+
+        }
+
+
+        adicionarMensagem(
+
+            dados.resposta,
+
+            "ia"
+
+        );
+
+
+    }
+
+    catch(error){
+
+
+        console.error(
+            "Erro ao conversar com IA:",
+            error
+        );
+
+
+        carregando.remove();
+
+
+        adicionarMensagem(
+
+            "❌ Não foi possível conectar ao servidor da IA.",
+
+            "ia"
+
+        );
+
+    }
+
+    finally{
+
+
+        botao.disabled = false;
+
+
+        campo.focus();
+
+    }
+
+}
+
+
+// ==========================================
+// ADICIONAR MENSAGEM
+// ==========================================
+
+function adicionarMensagem(
+    texto,
+    tipo
+){
+
+
+    const chat =
+        document.getElementById(
+            "chatBox"
+        );
+
+
+    const mensagem =
+        document.createElement(
+            "div"
+        );
+
+
+    mensagem.className =
+        `mensagem ${tipo}`;
+
+
+    const icone =
+        tipo === "ia"
+            ? "🤖"
+            : "👤";
+
+
+    mensagem.textContent =
+        `${icone} ${texto}`;
+
+
+    chat.appendChild(
+        mensagem
+    );
+
+
+    chat.scrollTop =
+        chat.scrollHeight;
+
+}
+
+
+// ==========================================
+// ANÁLISE DE IMAGEM
+// ==========================================
+
+async function analisarImagem(){
+
+
+    const arquivo =
+        document.getElementById(
+            "imagem"
+        ).files[0];
+
+
+    if(!arquivo){
+
+        alert(
+            "Selecione uma imagem."
+        );
+
+        return;
+
+    }
+
+
+    const resultado =
+        document.getElementById(
+            "resultadoImagem"
+        );
+
+
+    resultado.innerHTML =
+        "🤖 Analisando imagem...";
+
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "imagem",
+        arquivo
+    );
+
+
+    try{
+
+
+        const resposta =
+            await fetch(
+
+                "/api/analisar-imagem",
+
+                {
+
+                    method:
+                        "POST",
+
+                    body:
+                        formData
+
+                }
+
+            );
+
+
+        const texto =
+            await resposta.text();
+
+
+        let dados;
+
+
+        try{
+
+            dados =
+                JSON.parse(texto);
+
+        }
+
+        catch{
+
+            dados = {
+
+                erro:
+                    texto
+
+            };
+
+        }
+
+
+        if(!resposta.ok){
+
+            resultado.innerHTML = `
+
+                <h3>
+                    ❌ Erro
+                </h3>
+
+                <p>
+                    ${
+                        dados.erro ||
+                        dados.error ||
+                        "Não foi possível analisar a imagem."
+                    }
+                </p>
+
+            `;
+
+            return;
+
+        }
+
+
+        resultado.innerHTML = `
+
+            <h3>
+                🤖 Resultado da análise
+            </h3>
+
+            <p>
+                ${
+                    dados.analise ||
+                    dados.resposta ||
+                    "Nenhuma análise foi retornada."
+                }
+            </p>
+
+        `;
+
+
+    }
+
+    catch(error){
+
+
+        console.error(
+            "Erro na análise:",
+            error
+        );
+
+
+        resultado.innerHTML = `
+
+            <h3>
+                ❌ Erro
+            </h3>
+
+            <p>
+                Não foi possível conectar com a IA.
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
+```

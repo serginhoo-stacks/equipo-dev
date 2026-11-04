@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Detalhes da Obra - SmartInspect AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+
+<div class="sidebar">
+
+
+<div class="logo">
+
+<img src="imagens/logo.png" alt="SmartInspect AI">
+
+<h2>SmartInspect AI</h2>
+
+</div>
+<a href="index.html">📊 Dashboard</a>
+<a href="obras.html">🏢 Obras</a>
+<a href="inspecoes.html">📋 Inspeções</a>
+<a href="estoque.html">📦 Estoque</a>
+<a href="ia.html">🤖 IA</a>
+<a href="relatorios.html">📄 Relatórios</a>
+<a href="equipe.html">👷 Equipe</a>
+
+</div>
+
+
+
+
+
+<div class="content">
+
+
+<h1>🏢 Detalhes da Obra</h1>
+
+<p>Controle técnico da obra</p>
+
+
+
+
+<div id="dadosObra" class="card">
+
+Carregando obra...
+
+</div>
+
+
+
+
+<br>
+
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<h2 id="totalInspecoes">
+
+0
+
+</h2>
+
+<p>
+
+📋 Inspeções realizadas
+
+</p>
+
+
+<button onclick="novaInspecao()">
+
+➕ Nova Inspeção
+
+</button>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>
+
+⚠️
+
+</h2>
+
+<p>
+
+Não conformidades
+
+</p>
+
+<button>
+
+Ver problemas
+
+</button>
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+<h2>
+
+📷
+
+</h2>
+
+<p>
+
+Fotos
+
+</p>
+
+<button>
+
+Adicionar fotos
+
+</button>
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+<h2>
+
+📄
+
+</h2>
+
+<p>
+
+Relatórios
+
+</p>
+
+<button>
+
+Gerar relatório
+
+</button>
+
+</div>
+
+
+
+</div>
+
+
+
+
+<br>
+
+
+
+
+<h2>📋 Histórico de Inspeções</h2>
+
+
+
+<div id="listaInspecoes">
+
+
+Carregando inspeções...
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+
+
+
+
+<script>
+
+
+// pega o ID da obra na URL
+
+const parametros = 
+new URLSearchParams(window.location.search);
+
+
+const obraId = 
+parametros.get("id");
+
+
+
+console.log("ID DA OBRA:", obraId);
+
+
+
+
+
+
+async function carregarObra(){
+
+
+
+if(!obraId){
+
+
+document.getElementById("dadosObra").innerHTML =
+
+"❌ Nenhuma obra selecionada";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+const {data,error} = await banco
+
+.from("obras")
+
+.select("*")
+
+.eq("id",obraId)
+
+.single();
+
+
+
+
+
+
+
+if(error){
+
+
+console.log(error);
+
+
+document.getElementById("dadosObra").innerHTML =
+
+"❌ Erro ao buscar obra";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+document.getElementById("dadosObra").innerHTML = `
+
+
+<h2>
+
+🏢 ${data.nome}
+
+</h2>
+
+
+
+<p>
+
+📍 Endereço:
+
+${data.endereco}
+
+</p>
+
+
+
+<p>
+
+👷 Responsável:
+
+${data.responsavel}
+
+</p>
+
+
+
+<p>
+
+📅 Início:
+
+${data.data_inicio}
+
+</p>
+
+
+
+<p>
+
+📌 Status:
+
+${data.status}
+
+</p>
+
+
+`;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+async function carregarInspecoes(){
+
+
+
+const {data,error} = await banco
+
+.from("inspecoes")
+
+.select("*")
+
+.eq("obra_id",obraId)
+
+.order("id",{ascending:false});
+
+
+
+
+
+
+if(error){
+
+
+console.log(error);
+
+
+document.getElementById("listaInspecoes").innerHTML =
+
+"❌ Erro ao carregar inspeções";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+document.getElementById("totalInspecoes").innerHTML =
+
+data.length;
+
+
+
+
+
+
+
+if(data.length === 0){
+
+
+document.getElementById("listaInspecoes").innerHTML =
+
+"Nenhuma inspeção encontrada";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+let lista = "";
+
+
+
+
+
+
+data.forEach(inspecao=>{
+
+
+lista += `
+
+
+<div class="card">
+
+
+<h3>
+
+📋 ${inspecao.tipo}
+
+</h3>
+
+
+
+<p>
+
+📅 Data:
+
+${inspecao.data_inspecao}
+
+</p>
+
+
+
+<p>
+
+👷 Responsável:
+
+${inspecao.responsavel}
+
+</p>
+
+
+
+<p>
+
+📌 Status:
+
+${inspecao.status}
+
+</p>
+
+
+
+<p>
+
+📝 Observação:
+
+${inspecao.observacao || "Sem observação"}
+
+</p>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+document.getElementById("listaInspecoes").innerHTML = lista;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function novaInspecao(){
+
+
+window.location.href =
+
+"nova_inspecao.html?obra=" + obraId;
+
+
+}
+
+
+
+
+
+
+
+
+carregarObra();
+
+carregarInspecoes();
+
+
+
+</script>
+
+
+<script src="js/configuracoes.js"></script>
+
+</body>
+
+</html>
