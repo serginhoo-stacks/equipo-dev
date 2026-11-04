@@ -568,55 +568,115 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
+        "use strict";
+
         const form = document.getElementById("loginForm");
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("senha");
         const submitBtn = document.getElementById("submitBtn");
         const msgBox = document.getElementById("authMessage");
+        const bgContainer = document.getElementById("bg-container");
 
-        // Se já estiver logado, manda direto pro painel (sem token na URL, pois já está salvo)
-        window.banco.auth.getSession().then(({ data }) => {
-            if (data.session) {
-                window.location.href = "./painel-pessoal.html";
+        const panelUrl = "./painel-pessoal.html";
+        const defaultButtonHtml = `Entrar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>`;
+        let redirecting = false;
+
+        function showMessage(message) {
+            msgBox.textContent = message;
+            msgBox.setAttribute("data-visible", "true");
+        }
+
+        function hideMessage() {
+            msgBox.textContent = "";
+            msgBox.setAttribute("data-visible", "false");
+        }
+
+        function setLoading(isLoading) {
+            submitBtn.disabled = isLoading;
+            submitBtn.setAttribute("aria-busy", String(isLoading));
+            submitBtn.innerHTML = isLoading ? "Entrando..." : defaultButtonHtml;
+        }
+
+        function getAuthClient() {
+            const client = window.banco;
+            if (!client || !client.auth) {
+                throw new Error("O serviço de autenticação não foi inicializado. Verifique o carregamento de js/supabase.js.");
             }
-        });
+            return client.auth;
+        }
 
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
+        // Se já existir uma sessão válida, abre o painel sem transportar tokens pela URL.
+        async function redirectIfAlreadyAuthenticated() {
+            try {
+                const auth = getAuthClient();
+                const { data, error } = await auth.getSession();
+
+                if (error) throw error;
+
+                if (data && data.session && data.session.user) {
+                    redirecting = true;
+                    window.location.replace(panelUrl);
+                }
+            } catch (error) {
+                console.error("Falha ao verificar a sessão existente:", error);
+                showMessage("Não foi possível verificar sua sessão. Confira sua conexão e tente entrar novamente.");
+            }
+        }
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            if (redirecting || submitBtn.disabled) return;
+
             const email = emailInput.value.trim();
             const password = passwordInput.value;
 
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = "Entrando...";
-            msgBox.setAttribute("data-visible", "false");
+            hideMessage();
+            setLoading(true);
 
             try {
-                const { data, error } = await window.banco.auth.signInWithPassword({
-                    email: email,
-                    password: password,
+                const auth = getAuthClient();
+                const { data, error } = await auth.signInWithPassword({
+                    email,
+                    password
                 });
 
                 if (error) throw error;
 
-                // AQUI ESTÁ A CORREÇÃO DO LOOP: Passa o token na URL
-                window.location.href = `./painel-pessoal.html?access_token=${data.session.access_token}&refresh_token=${data.session.refresh_token}`;
-                
+                // A autenticação precisa retornar uma sessão. O Supabase JS deve
+                // persistir essa sessão conforme a configuração central de supabase.js.
+                if (!data || !data.session || !data.session.user) {
+                    throw new Error("O login não retornou uma sessão válida. Verifique a configuração de autenticação.");
+                }
+
+                // Não colocar access_token ou refresh_token na URL.
+                // O painel recuperará a sessão pelo mesmo cliente/configuração Supabase.
+                redirecting = true;
+                window.location.replace(panelUrl);
             } catch (error) {
-                msgBox.textContent = error.message || "Erro ao fazer login. Verifique suas credenciais.";
-                msgBox.setAttribute("data-visible", "true");
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `Entrar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>`;
+                console.error("Erro ao realizar login:", error);
+                const message = error && error.message
+                    ? error.message
+                    : "Não foi possível entrar. Verifique suas credenciais e tente novamente.";
+                showMessage(message);
+                setLoading(false);
             }
         });
 
-        const bgContainer = document.getElementById('bg-container');
-        if (window.matchMedia("(pointer: fine)").matches) {
-            document.addEventListener('mousemove', (e) => {
-                const x = (e.clientX / window.innerWidth - 0.5) * 30; 
-                const y = (e.clientY / window.innerHeight - 0.5) * 30;
+        // Limpa a mensagem quando o usuário começa a corrigir os dados.
+        emailInput.addEventListener("input", hideMessage);
+        passwordInput.addEventListener("input", hideMessage);
+
+        // Efeito visual de fundo, mantido do template original.
+        if (bgContainer && window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener("mousemove", (event) => {
+                const x = (event.clientX / window.innerWidth - 0.5) * 30;
+                const y = (event.clientY / window.innerHeight - 0.5) * 30;
                 bgContainer.style.transform = `translate(${x}px, ${y}px)`;
             });
         }
+
+        void redirectIfAlreadyAuthenticated();
     });
     </script>
 </body>
