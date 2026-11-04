@@ -9,17 +9,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { display: flex; height: 100vh; background: #050b18; color: white; overflow: hidden; }
         
-        /* Sidebar do Projeto Novo (Apenas visual, para dar contexto) */
+        /* Sidebar do Projeto Novo */
         .nav-nova { 
-            width: 70px; 
-            background: #081426; 
-            border-right: 1px solid rgba(133,216,255,.14); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px 0; 
-            gap: 20px; 
-            flex-shrink: 0;
+            width: 70px; background: #081426; border-right: 1px solid rgba(133,216,255,.14); 
+            display: flex; flex-direction: column; align-items: center; padding: 20px 0; 
+            gap: 20px; flex-shrink: 0;
         }
         .nav-nova img { width: 40px; height: 40px; border-radius: 10px; margin-bottom: 10px; }
         .nav-btn { 
@@ -30,15 +24,10 @@
         .nav-btn:hover, .nav-btn.active { background: rgba(92,236,255,.1); color: #5cecff; border-color: rgba(92,236,255,.3); }
 
         /* Área do ERP Antigo */
-        .erp-container { flex: 1; display: flex; flex-direction: column; background: #fff; }
+        .erp-container { flex: 1; display: flex; flex-direction: column; background: #fff; position: relative; }
         .erp-header { 
-            padding: 12px 20px; 
-            background: #f5f8fc; 
-            border-bottom: 1px solid #e5edf5; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            flex-shrink: 0;
+            padding: 12px 20px; background: #f5f8fc; border-bottom: 1px solid #e5edf5; 
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
         }
         .erp-header h2 { color: #102a43; font-size: 16px; margin: 0; }
         .btn-voltar { 
@@ -48,13 +37,14 @@
         }
         .btn-voltar:hover { background: #a12f2f; }
         
-        /* O iframe que carrega o dashboard antigo */
+        /* O iframe */
         iframe { flex: 1; width: 100%; height: 100%; border: none; }
         
-        /* Tela de erro (se o caminho estiver errado) */
+        /* Tela de erro */
         .erro-load { 
             display: none; flex-direction: column; align-items: center; justify-content: center; 
             height: 100%; color: #102a43; text-align: center; padding: 20px;
+            position: absolute; inset: 0; background: #fff; z-index: 99;
         }
         .erro-load h3 { font-size: 24px; margin-bottom: 10px; }
         .erro-load p { color: #667085; margin-bottom: 20px; }
@@ -62,7 +52,7 @@
 </head>
 <body>
 
-    <!-- Sidebar do Usuário (Projeto Novo) -->
+    <!-- Sidebar do Usuário -->
     <aside class="nav-nova">
         <img src="imagens/logo.png" alt="Logo">
         <button class="nav-btn" title="Voltar ao Painel Pessoal" onclick="window.location.href='login.html'">🏠</button>
@@ -76,14 +66,14 @@
             <button class="btn-voltar" onclick="window.location.href='login.html'">Sair da Empresa</button>
         </header>
         
-        <!-- O IFrame apontando para a pasta ERP -->
-        <iframe id="iframeERP" src="erp/dashboard.html" title="ERP da Empresa" onload="esconderErro()" onerror="mostrarErro()"></iframe>
+        <!-- O IFrame apontando para a pasta ERP (com letras maiúsculas) -->
+        <iframe id="iframeERP" src="ERP/dashboard.html" title="ERP da Empresa"></iframe>
         
-        <!-- Bloco de erro caso o caminho esteja errado -->
+        <!-- Bloco de erro -->
         <div id="erroBox" class="erro-load">
-            <h3>Ops! O ERP não foi encontrado.</h3>
-            <p>O arquivo <strong>erp/dashboard.html</strong> não existe ou está em outro lugar.</p>
-            <p style="font-size:13px;">Verifique se dentro da pasta `erp` tem o arquivo `dashboard.html`.</p>
+            <h3>Ops! O ERP não foi encontrado ou está com erro.</h3>
+            <p>O arquivo <strong>ERP/dashboard.html</strong> não foi encontrado ou a página dentro dele falhou.</p>
+            <p style="font-size:13px;">Verifique se o arquivo está na pasta certa e se ele não tem erros de JavaScript.</p>
         </div>
     </main>
 
@@ -91,29 +81,38 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script>
-        function esconderErro() { document.getElementById('erroBox').style.display = 'none'; }
-        function mostrarErro() { document.getElementById('erroBox').style.display = 'flex'; }
-
         document.addEventListener("DOMContentLoaded", async () => {
-            // Pega o ID da empresa na URL: empresa.html?empresa=123
             const urlParams = new URLSearchParams(window.location.search);
             const empresaId = urlParams.get('empresa');
+            const iframe = document.getElementById('iframeERP');
+            const erroBox = document.getElementById('erroBox');
+
+            // Se o iframe não carregar em 5 segundos, mostra o erro
+            const timeout = setTimeout(() => {
+                erroBox.style.display = 'flex';
+            }, 5000);
+
+            iframe.onload = () => {
+                clearTimeout(timeout);
+                erroBox.style.display = 'none';
+            };
 
             if (!empresaId) {
                 document.getElementById('nomeEmpresaHeader').textContent = "Empresa não identificada";
+                iframe.src = "ERP/dashboard.html"; 
                 return;
             }
 
-            // Busca o nome da empresa no Supabase para ficar bonito no topo
             if(window.banco) {
                 const { data, error } = await window.banco.from('empresas').select('nome').eq('id', empresaId).single();
                 
                 if (data && !error) {
                     document.getElementById('nomeEmpresaHeader').textContent = data.nome;
-                    // Passa o ID da empresa para dentro do iframe
-                    document.getElementById('iframeERP').src = `erp/dashboard.html?empresa=${empresaId}`;
+                    // Passa o ID da empresa e aponta para a pasta ERP correta
+                    iframe.src = `ERP/dashboard.html?empresa=${empresaId}`;
                 } else {
                     document.getElementById('nomeEmpresaHeader').textContent = "Empresa sem nome";
+                    iframe.src = `ERP/dashboard.html?empresa=${empresaId}`;
                 }
             }
         });
