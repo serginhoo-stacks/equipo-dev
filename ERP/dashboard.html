@@ -130,10 +130,8 @@
 </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Ajuste dos caminhos dos scripts para voltar uma pasta -->
+<!-- APENAS O SUPABASE, SEM OS SCRIPTS DE LOGIN ANTIGOS -->
 <script src="../js/supabase.js"></script>
-<script src="../js/configuracoes.js"></script>
-<script src="../js/sidebar.js"></script>
 <script>
 /* SmartInspect AI — Dashboard data layer */
 (function(){
@@ -255,7 +253,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
-        // REMOVIDO O validarSessaoReal() PARA NÃO DAR LOOP NO IFRAME
         hydrateHeader();
         document.querySelectorAll("[data-chart-days]").forEach((button)=>button.addEventListener("click",()=>{state.chartDays=Number(button.dataset.chartDays);document.querySelectorAll("[data-chart-days]").forEach((item)=>item.classList.toggle("active",item===button));renderChart();}));
         await loadData();
