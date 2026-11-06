@@ -15,13 +15,9 @@
 
 <body>
 
-
 <div class="menu-container"></div>
 
-
-
 <div class="content">
-
 
 <h1>🏠 Novo Imóvel</h1>
 
@@ -29,330 +25,143 @@
 Cadastro de imóvel vinculado à obra
 </p>
 
-
-
 <div class="card">
 
-
 <label>🏢 Obra</label>
-
 <select id="obra">
 <option>Carregando obras...</option>
 </select>
 
-
-
 <label>🏠 Nome do imóvel</label>
-
 <input id="nome" type="text" placeholder="Ex: Apartamento 101">
 
-
-
 <label>🏷 Tipo</label>
-
 <select id="tipo">
-
 <option>Apartamento</option>
 <option>Casa</option>
 <option>Comercial</option>
 <option>Galpão</option>
-
 </select>
 
-
-
 <label>📍 Endereço</label>
-
 <input id="endereco" placeholder="Endereço do imóvel">
 
-
-
 <label>👤 Cliente</label>
-
 <input id="cliente" placeholder="Nome do cliente">
 
-
-
 <label>📷 Foto do imóvel</label>
-
 <input id="foto" type="file" accept="image/*">
 
-
-
 <label>📌 Status</label>
-
 <select id="status">
-
 <option>Em construção</option>
 <option>Pronto</option>
 <option>Entregue</option>
-
 </select>
 
-
-
 <label>📝 Observação</label>
-
 <textarea id="observacao" rows="5"></textarea>
 
-
-
 <br>
-
 <button onclick="salvarImovel()">
 💾 Salvar Imóvel
 </button>
 
-
 <p id="mensagem"></p>
 
-
 </div>
 
-
 </div>
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="js/supabase.js"></script>
-
-<script src="js/configuracoes.js"></script>
-<script src="js/auth.js"></script>
-
 <script src="js/sidebar.js"></script>
-
-
+<!-- REMOVIDO: configuracoes.js e auth.js -->
 
 <script>
-
-
-// protege página
-if(!protegerPagina("imoveis")){
-    throw new Error("Sem permissão");
-}
-
-
-
-// carregar obras
-
-async function carregarObras(){
-
-
-const {data,error}=await banco
-
-.from("obras")
-
-.select("*")
-
-.order("id",{ascending:false});
-
-
-
-const select=document.getElementById("obra");
-
-
-select.innerHTML="";
-
-
-
-if(error){
-
-console.log(error);
-
-select.innerHTML="<option>Erro ao carregar obras</option>";
-
-return;
-
-}
-
-
-
-data.forEach(obra=>{
-
-
-select.innerHTML += `
-
-<option value="${obra.id}">
-${obra.nome}
-</option>
-
-`;
-
-
-});
-
-
-}
-
-
-
-// salvar imóvel
-
-async function salvarImovel(){
-
-
-
-const arquivo =
-document.getElementById("foto").files[0];
-
-
-
-let fotoUrl=null;
-
-
-
-
-// upload foto
-
-if(arquivo){
-
-
-
-const nomeArquivo =
-Date.now()+"_"+arquivo.name;
-
-
-
-const {error:erroUpload}=await banco.storage
-
-.from("imoveis")
-
-.upload(nomeArquivo,arquivo);
-
-
-
-if(erroUpload){
-
-console.log(erroUpload);
-
-alert("Erro ao enviar foto");
-
-return;
-
-}
-
-
-
-const url=banco.storage
-
-.from("imoveis")
-
-.getPublicUrl(nomeArquivo);
-
-
-
-fotoUrl=url.data.publicUrl;
-
-
-}
-
-
-
-
-
-const {error}=await banco
-
-.from("imoveis")
-
-.insert([{
-
-
-obra_id:
-document.getElementById("obra").value,
-
-
-nome:
-document.getElementById("nome").value,
-
-
-tipo:
-document.getElementById("tipo").value,
-
-
-endereco:
-document.getElementById("endereco").value,
-
-
-cliente:
-document.getElementById("cliente").value,
-
-
-foto:
-fotoUrl,
-
-
-status:
-document.getElementById("status").value,
-
-
-observacao:
-document.getElementById("observacao").value
-
-
-}]);
-
-
-
-
-
-if(error){
-
-
-console.log(error);
-
-
-document.getElementById("mensagem").innerHTML=
-
-"❌ Erro ao salvar imóvel";
-
-
-return;
-
-}
-
-
-
-
-document.getElementById("mensagem").innerHTML=
-
-"✅ Imóvel cadastrado com sucesso!";
-
-
-
-}
-
-
-
-// iniciar
-
-carregarObras();
-
-
+    // REMOVIDO: protegerPagina("imoveis");
+
+    // carregar obras
+    async function carregarObras(){
+        const {data,error}=await banco
+        .from("obras")
+        .select("*")
+        .order("id",{ascending:false});
+
+        const select=document.getElementById("obra");
+        select.innerHTML="";
+
+        if(error){
+            console.log(error);
+            select.innerHTML="<option>Erro ao carregar obras</option>";
+            return;
+        }
+
+        data.forEach(obra=>{
+            select.innerHTML += `
+            <option value="${obra.id}">
+            ${obra.nome}
+            </option>
+            `;
+        });
+    }
+
+    // salvar imóvel
+    async function salvarImovel(){
+        const arquivo = document.getElementById("foto").files[0];
+        let fotoUrl=null;
+
+        // upload foto
+        if(arquivo){
+            const nomeArquivo = Date.now()+"_"+arquivo.name;
+            const {error:erroUpload}=await banco.storage
+            .from("imoveis")
+            .upload(nomeArquivo,arquivo);
+
+            if(erroUpload){
+                console.log(erroUpload);
+                alert("Erro ao enviar foto");
+                return;
+            }
+
+            const url=banco.storage
+            .from("imoveis")
+            .getPublicUrl(nomeArquivo);
+
+            fotoUrl=url.data.publicUrl;
+        }
+
+        const {error}=await banco
+        .from("imoveis")
+        .insert([{
+            obra_id: document.getElementById("obra").value,
+            nome: document.getElementById("nome").value,
+            tipo: document.getElementById("tipo").value,
+            endereco: document.getElementById("endereco").value,
+            cliente: document.getElementById("cliente").value,
+            foto: fotoUrl,
+            status: document.getElementById("status").value,
+            observacao: document.getElementById("observacao").value
+        }]);
+
+        if(error){
+            console.log(error);
+            document.getElementById("mensagem").innerHTML = "❌ Erro ao salvar imóvel";
+            return;
+        }
+
+        document.getElementById("mensagem").innerHTML = "✅ Imóvel cadastrado com sucesso!";
+    }
+
+    // iniciar
+    carregarObras();
 </script>
 
-
-
-
 <footer class="rodape">
-
-<p>
-🚀 SmartInspect AI
-</p>
-
-<p>
-Desenvolvido por <strong>Sérgio and Gabriel</strong>
-</p>
-
-<p>
-Versão 1.0.1
-</p>
-
+<p>🚀 SmartInspect AI</p>
+<p>Desenvolvido por <strong>Sérgio and Gabriel</strong></p>
+<p>Versão 1.0.1</p>
 </footer>
 
-
 </body>
-
 </html>
