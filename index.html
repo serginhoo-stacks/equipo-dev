@@ -11,16 +11,24 @@
 
 <style>
 /* =========================================================
-   RESET
+   RESET E FUNDO GERAL (AQUI ESTÁ A MÁGICA DA IMAGEM)
 ========================================================= */
 *{ margin:0; padding:0; box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
+
 body{
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background:#f7f9fc;
     color:#172033;
     overflow-x:hidden;
+    
+    /* Imagem de fundo fixa para o site inteiro */
+    background-image: url('imagens/fundo.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
+
 a{ text-decoration:none; color:inherit; }
 button{ font-family:inherit; }
 
@@ -89,7 +97,7 @@ nav a:hover{ color:var(--azul); }
 .menu-mobile{ display:none; width:42px; height:42px; border:0; border-radius:10px; background:#eef5fc; font-size:20px; cursor:pointer; }
 
 /* =========================================================
-   HERO (Fundo com Vídeo)
+   HERO (VÍDEO)
 ========================================================= */
 .hero{
     min-height:100vh; 
@@ -99,11 +107,10 @@ nav a:hover{ color:var(--azul); }
     justify-content:center;
     position:relative; 
     overflow:hidden;
-    /* O fundo original vira apenas um "fallback" caso o vídeo não carregue */
+    /* Fundo de fallback se o vídeo demorar a carregar */
     background: radial-gradient(circle at 15% 20%, rgba(0,140,255,0.14), transparent 30%), radial-gradient(circle at 85% 75%, rgba(0,102,204,0.10), transparent 30%), #f7f9fc;
 }
 
-/* A TAG DO VÍDEO */
 .hero-video-bg {
     position: absolute;
     top: 50%;
@@ -115,14 +122,13 @@ nav a:hover{ color:var(--azul); }
     transform: translate(-50%, -50%);
     z-index: 0;
     object-fit: cover;
-    opacity: 0.75; /* Transparência para o texto respirar */
+    opacity: 0.85;
 }
 
-/* Máscara branca sobre o vídeo para garantir que o texto escuro seja legível */
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(247, 249, 252, 0.92), rgba(247, 249, 252, 0.75));
+    background: linear-gradient(135deg, rgba(247, 249, 252, 0.85), rgba(247, 249, 252, 0.70));
     z-index: 1;
 }
 
@@ -134,7 +140,7 @@ nav a:hover{ color:var(--azul); }
     align-items:center; 
     gap:70px; 
     position: relative; 
-    z-index: 2; /* Acima do vídeo e da máscara */
+    z-index: 2; 
 }
 
 /* =========================================================
@@ -204,16 +210,17 @@ nav a:hover{ color:var(--azul); }
 }
 
 /* =========================================================
-   SEÇÕES RESTANTES
+   SEÇÕES (COM FUNDO SEMI-TRANSPARENTE PARA APARECER A IMAGEM)
 ========================================================= */
-section{ padding:100px 6%; }
+section{ padding:100px 6%; position: relative; z-index: 10; }
 .section-container{ max-width:1150px; margin:auto; }
 .section-header{ text-align:center; max-width:700px; margin: 0 auto 55px; }
 .section-label{ color:var(--azul); font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; }
 .section-header h2{ font-size: clamp(32px, 5vw, 46px); letter-spacing:-1.5px; margin-bottom:15px; }
 .section-header p{ color:var(--texto-secundario); line-height:1.8; }
 
-.sobre{ background:white; }
+/* Fundo branco com transparência para a imagem do body aparecer */
+.sobre{ background: rgba(255, 255, 255, 0.94); }
 .sobre-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:60px; align-items:center; }
 .sobre-texto h3{ font-size:30px; margin-bottom:18px; }
 .sobre-texto p{ color:var(--texto-secundario); line-height:1.85; margin-bottom:16px; }
@@ -223,7 +230,8 @@ section{ padding:100px 6%; }
 .sobre-item strong{ display:block; margin-bottom:3px; }
 .sobre-item span{ color:#667085; font-size:14px; line-height:1.6; }
 
-.recursos{ background:#f7f9fc; }
+/* Fundo cinza com transparência */
+.recursos{ background: rgba(247, 249, 252, 0.92); }
 .recursos-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; }
 .recurso-card{ padding:28px; border-radius:18px; background:white; border:1px solid var(--borda); transition: transform .3s, box-shadow .3s, border .3s; }
 .recurso-card:hover{ transform: translateY(-8px); border-color:#cfe5ff; box-shadow: 0 20px 40px rgba(0,70,140,0.10); }
@@ -231,26 +239,29 @@ section{ padding:100px 6%; }
 .recurso-card h3{ margin-bottom:10px; }
 .recurso-card p{ color:#667085; line-height:1.7; font-size:14px; }
 
-.como{ background:white; }
+/* Fundo branco com transparência */
+.como{ background: rgba(255, 255, 255, 0.94); }
 .passos{ display:grid; grid-template-columns: repeat(4,1fr); gap:20px; }
 .passo{ position:relative; padding:28px; border-radius:18px; background:#f8fafc; border:1px solid var(--borda); }
 .passo-numero{ width:42px; height:42px; display:flex; align-items:center; justify-content:center; border-radius:12px; color:white; background: linear-gradient(135deg, #0066cc, #008cff); font-weight:800; margin-bottom:20px; }
 .passo h3{ margin-bottom:10px; }
 .passo p{ color:#667085; font-size:14px; line-height:1.7; }
 
-.destaque{ background: radial-gradient(circle at 20% 50%, rgba(0,166,255,0.20), transparent 35%), linear-gradient(135deg, #004b99, #0066cc); color:white; }
+/* Destaque CTA */
+.destaque{ background: radial-gradient(circle at 20% 50%, rgba(0,166,255,0.20), transparent 35%), linear-gradient(135deg, rgba(0,75,153,0.95), rgba(0,102,204,0.95)); color:white; }
 .destaque-container{ max-width:900px; margin:auto; text-align:center; }
 .destaque h2{ font-size: clamp(32px, 5vw, 50px); margin-bottom:18px; }
 .destaque p{ color:rgba(255,255,255,0.82); line-height:1.8; font-size:17px; margin-bottom:30px; }
 .destaque .btn-primary{ background:white; color:#0066cc; }
 
-.estatisticas{ background:#f7f9fc; }
+/* Estatísticas */
+.estatisticas{ background: rgba(247, 249, 252, 0.92); }
 .estatisticas-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:18px; }
 .estatistica{ text-align:center; padding:30px 15px; background:white; border-radius:18px; border:1px solid var(--borda); }
 .estatistica strong{ display:block; font-size:38px; color:#0066cc; margin-bottom:5px; }
 .estatistica span{ color:#667085; font-size:14px; }
 
-footer{ padding:40px 6%; background:#101828; color:#98a2b3; text-align:center; }
+footer{ padding:40px 6%; background:#101828; color:#98a2b3; text-align:center; position: relative; z-index: 10; }
 footer strong{ color:white; }
 .footer-logo{ font-size:20px; font-weight:800; color:white; margin-bottom:10px; }
 footer p{ font-size:13px; line-height:1.7; }
@@ -317,15 +328,11 @@ html.session-checking body{ visibility:hidden; }
 <main>
 <section class="hero" id="inicio" aria-labelledby="descricao">
     
-    <!-- ==============================================
-         AQUI ESTÁ A TAG DE VÍDEO COM O CAMINHO CORRETO
-    =============================================== -->
     <video class="hero-video-bg" autoplay muted loop playsinline poster="imagens/fundo.png">
         <source src="imagens/fundoglobo.mp4" type="video/mp4">
         Seu navegador não suporta vídeos HTML5.
     </video>
     
-    <!-- Máscara para o texto não sumir -->
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
@@ -349,7 +356,6 @@ html.session-checking body{ visibility:hidden; }
             </div>
         </div>
 
-        <!-- PREVIEW -->
         <div class="hero-panel reveal">
             <div class="dashboard-preview">
                 <div class="preview-top">
