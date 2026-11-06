@@ -11,7 +11,7 @@
 
 <style>
 /* =========================================================
-   RESET E FUNDO GERAL (IMAGEM DE FUNDO AQUI)
+   RESET E FUNDO GERAL
 ========================================================= */
 *{ margin:0; padding:0; box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
@@ -20,14 +20,7 @@ body{
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     color:#172033;
     overflow-x:hidden;
-    
-    /* Forçando a imagem de fundo */
-    background-image: url('./imagens/fundo.png') !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-attachment: fixed !important;
-    background-repeat: no-repeat !important;
-    background-color: #f7f9fc;
+    background: #f7f9fc;
 }
 
 a{ text-decoration:none; color:inherit; }
@@ -61,44 +54,20 @@ header{
 header.scrolled{ box-shadow: 0 5px 25px rgba(0,0,0,0.07); }
 
 /* =========================================================
-   LOGO
+   LOGO E MENU
 ========================================================= */
-.logo{
-    display:flex; align-items:center; gap:10px;
-    font-size:20px; font-weight:800; color:var(--texto);
-}
-.logo-icon{
-    width:38px; height:38px; display:flex; align-items:center; justify-content:center;
-    border-radius:11px; color:white; background:linear-gradient(135deg, #0066cc, #00a6ff);
-    box-shadow: 0 8px 20px rgba(0,102,204,0.25);
-}
+.logo{ display:flex; align-items:center; gap:10px; font-size:20px; font-weight:800; color:var(--texto); }
+.logo-icon{ width:38px; height:38px; display:flex; align-items:center; justify-content:center; border-radius:11px; color:white; background:linear-gradient(135deg, #0066cc, #00a6ff); box-shadow: 0 8px 20px rgba(0,102,204,0.25); }
 .logo-icon img{ width:100%; height:100%; object-fit:contain; }
-
-/* =========================================================
-   MENU
-========================================================= */
 nav{ display:flex; align-items:center; gap:30px; }
 nav a{ color:#596273; font-size:14px; font-weight:600; transition:0.25s; }
 nav a:hover{ color:var(--azul); }
-
-/* =========================================================
-   BOTÃO LOGIN
-========================================================= */
-.btn-login{
-    padding:11px 20px; border-radius:10px; color:white !important;
-    background: linear-gradient(135deg, #0066cc, #008cff);
-    box-shadow: 0 7px 20px rgba(0,102,204,0.22);
-    transition:0.25s;
-}
+.btn-login{ padding:11px 20px; border-radius:10px; color:white !important; background: linear-gradient(135deg, #0066cc, #008cff); box-shadow: 0 7px 20px rgba(0,102,204,0.22); transition:0.25s; }
 .btn-login:hover{ transform:translateY(-2px); box-shadow: 0 12px 28px rgba(0,102,204,0.30); }
-
-/* =========================================================
-   MENU MOBILE
-========================================================= */
 .menu-mobile{ display:none; width:42px; height:42px; border:0; border-radius:10px; background:#eef5fc; font-size:20px; cursor:pointer; }
 
 /* =========================================================
-   HERO (Fundo com Vídeo e Máscara Azul)
+   HERO (VÍDEO E MÁSCARA AZUL)
 ========================================================= */
 .hero{
     min-height:100vh; 
@@ -108,45 +77,35 @@ nav a:hover{ color:var(--azul); }
     justify-content:center;
     position:relative; 
     overflow:hidden;
-    background: #054F77; /* Cor de fundo base caso o vídeo falhe */
+    background: #054F77;
 }
 
 .hero-video-bg {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
+    top: 50%; left: 50%;
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto;
     transform: translate(-50%, -50%);
     z-index: 0;
     object-fit: cover;
     opacity: 0.9;
 }
 
-/* MÁSCARA AZUL FOSCA SOBRE O VÍDEO */
+/* A máscara azul (#054F77) */
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(5, 79, 119, 0.85) !important; /* #054F77 com transparência */
+    background: rgba(5, 79, 119, 0.85) !important; 
     z-index: 1;
 }
 
 .hero-content{ 
-    width:100%; 
-    max-width:1150px; 
-    display:grid; 
-    grid-template-columns: 1.1fr 0.9fr; 
-    align-items:center; 
-    gap:70px; 
-    position: relative; 
-    z-index: 2; 
+    width:100%; max-width:1150px; 
+    display:grid; grid-template-columns: 1.1fr 0.9fr; 
+    align-items:center; gap:70px; 
+    position: relative; z-index: 2; 
 }
 
-/* =========================================================
-   HERO TEXTO (Ajustado para fundo escuro)
-========================================================= */
 .badge{
     display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border-radius:999px;
     background:rgba(255, 255, 255, 0.15); color:#eaf4ff; font-size:13px; font-weight:700; margin-bottom:20px;
@@ -158,26 +117,12 @@ nav a:hover{ color:var(--azul); }
 .hero h1 strong{ background: linear-gradient(135deg, #5cecff, #00a6ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .hero-description{ max-width:650px; font-size:18px; line-height:1.8; color:#d8eaf4; margin-bottom:32px; }
 
-/* =========================================================
-   HERO BOTÕES
-========================================================= */
 .hero-buttons{ display:flex; flex-wrap:wrap; gap:14px; }
-.btn-primary{
-    display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border-radius:12px;
-    color:white; font-weight:700; background: linear-gradient(135deg, #0066cc, #008cff);
-    box-shadow: 0 12px 28px rgba(0,102,204,0.25); transition:0.25s;
-}
+.btn-primary{ display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border-radius:12px; color:white; font-weight:700; background: linear-gradient(135deg, #0066cc, #008cff); box-shadow: 0 12px 28px rgba(0,102,204,0.25); transition:0.25s; }
 .btn-primary:hover{ transform:translateY(-3px); }
-
-.btn-secondary{
-    display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border-radius:12px;
-    color:#ffffff; font-weight:700; background:rgba(255, 255, 255, 0.1); border:1px solid rgba(255,255,255,0.3); transition:0.25s;
-}
+.btn-secondary{ display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border-radius:12px; color:#ffffff; font-weight:700; background:rgba(255, 255, 255, 0.1); border:1px solid rgba(255,255,255,0.3); transition:0.25s; }
 .btn-secondary:hover{ transform:translateY(-3px); background:rgba(255, 255, 255, 0.2); }
 
-/* =========================================================
-   HERO PAINEL
-========================================================= */
 .hero-panel{ position:relative; min-height:430px; display:flex; align-items:center; justify-content:center; }
 .dashboard-preview{
     width:100%; max-width:470px; padding:22px; border-radius:24px;
@@ -195,37 +140,42 @@ nav a:hover{ color:var(--azul); }
 .preview-title{ font-weight:800; }
 .preview-status{ display:flex; align-items:center; gap:6px; font-size:12px; color:#16a34a; }
 .preview-status span{ width:8px; height:8px; border-radius:50%; background:#22c55e; }
-
 .preview-cards{ display:grid; grid-template-columns: repeat(2,1fr); gap:12px; }
 .preview-card{ padding:18px; border-radius:15px; background:#f7f9fc; border:1px solid #edf0f5; }
 .preview-card-icon{ font-size:23px; margin-bottom:10px; }
 .preview-card small{ display:block; color:#667085; margin-bottom:5px; }
 .preview-card strong{ font-size:25px; }
-
-.preview-chart{
-    height:100px; margin-top:15px; border-radius:15px;
-    background: linear-gradient(135deg, #eaf4ff, #f8fbff); position:relative; overflow:hidden;
-}
-.preview-chart::after{
-    content:""; position:absolute; left:8%; right:8%; bottom:20px; height:50px;
-    border-top:3px solid #0066cc; border-radius:50%; transform: rotate(-4deg);
-}
+.preview-chart{ height:100px; margin-top:15px; border-radius:15px; background: linear-gradient(135deg, #eaf4ff, #f8fbff); position:relative; overflow:hidden; }
+.preview-chart::after{ content:""; position:absolute; left:8%; right:8%; bottom:20px; height:50px; border-top:3px solid #0066cc; border-radius:50%; transform: rotate(-4deg); }
 
 /* =========================================================
-   SEÇÕES (Fundo semi-transparente para ver a imagem)
+   SEÇÃO SOBRE (AQUI ESTÁ A IMAGEM FUNDO.PNG)
 ========================================================= */
-section{ padding:100px 6%; position: relative; z-index: 10; }
-.section-container{ max-width:1150px; margin:auto; }
+.sobre{
+    position: relative;
+    padding: 100px 6%;
+    background-image: url('./imagens/fundo.png'); /* Caminho da imagem */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efeito Parallax */
+    background-repeat: no-repeat;
+    z-index: 10;
+}
+
+/* Máscara escura sobre a imagem para o texto ficar legível */
+.sobre::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.9); /* Fundo branco semi-transparente para leitura */
+    z-index: 1;
+}
+
+.section-container{ max-width:1150px; margin:auto; position: relative; z-index: 2; }
 .section-header{ text-align:center; max-width:700px; margin: 0 auto 55px; }
 .section-label{ color:var(--azul); font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; }
 .section-header h2{ font-size: clamp(32px, 5vw, 46px); letter-spacing:-1.5px; margin-bottom:15px; }
 .section-header p{ color:var(--texto-secundario); line-height:1.8; }
-
-/* Fundos semi-transparentes (deixam a imagem do body vazar) */
-.sobre{ background: rgba(255, 255, 255, 0.92); }
-.recursos{ background: rgba(247, 249, 252, 0.90); }
-.como{ background: rgba(255, 255, 255, 0.92); }
-.estatisticas{ background: rgba(247, 249, 252, 0.90); }
 
 .sobre-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:60px; align-items:center; }
 .sobre-texto h3{ font-size:30px; margin-bottom:18px; }
@@ -236,6 +186,11 @@ section{ padding:100px 6%; position: relative; z-index: 10; }
 .sobre-item strong{ display:block; margin-bottom:3px; }
 .sobre-item span{ color:#667085; font-size:14px; line-height:1.6; }
 
+/* =========================================================
+   OUTRAS SEÇÕES (Mantidas iguais)
+========================================================= */
+section.recursos, section.como, section.estatisticas { padding:100px 6%; position: relative; z-index: 10; }
+.recursos{ background: rgba(247, 249, 252, 1); }
 .recursos-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; }
 .recurso-card{ padding:28px; border-radius:18px; background:white; border:1px solid var(--borda); transition: transform .3s, box-shadow .3s, border .3s; }
 .recurso-card:hover{ transform: translateY(-8px); border-color:#cfe5ff; box-shadow: 0 20px 40px rgba(0,70,140,0.10); }
@@ -243,18 +198,20 @@ section{ padding:100px 6%; position: relative; z-index: 10; }
 .recurso-card h3{ margin-bottom:10px; }
 .recurso-card p{ color:#667085; line-height:1.7; font-size:14px; }
 
+.como{ background: rgba(255, 255, 255, 1); }
 .passos{ display:grid; grid-template-columns: repeat(4,1fr); gap:20px; }
 .passo{ position:relative; padding:28px; border-radius:18px; background:#f8fafc; border:1px solid var(--borda); }
 .passo-numero{ width:42px; height:42px; display:flex; align-items:center; justify-content:center; border-radius:12px; color:white; background: linear-gradient(135deg, #0066cc, #008cff); font-weight:800; margin-bottom:20px; }
 .passo h3{ margin-bottom:10px; }
 .passo p{ color:#667085; font-size:14px; line-height:1.7; }
 
-.destaque{ background: radial-gradient(circle at 20% 50%, rgba(0,166,255,0.20), transparent 35%), linear-gradient(135deg, rgba(0,75,153,0.95), rgba(0,102,204,0.95)); color:white; }
+.destaque{ background: radial-gradient(circle at 20% 50%, rgba(0,166,255,0.20), transparent 35%), linear-gradient(135deg, rgba(0,75,153,0.95), rgba(0,102,204,0.95)); color:white; padding:100px 6%; position: relative; z-index: 10; }
 .destaque-container{ max-width:900px; margin:auto; text-align:center; }
 .destaque h2{ font-size: clamp(32px, 5vw, 50px); margin-bottom:18px; }
 .destaque p{ color:rgba(255,255,255,0.82); line-height:1.8; font-size:17px; margin-bottom:30px; }
 .destaque .btn-primary{ background:white; color:#0066cc; }
 
+.estatisticas{ background: rgba(247, 249, 252, 1); }
 .estatisticas-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:18px; }
 .estatistica{ text-align:center; padding:30px 15px; background:white; border-radius:18px; border:1px solid var(--borda); }
 .estatistica strong{ display:block; font-size:38px; color:#0066cc; margin-bottom:5px; }
@@ -276,7 +233,7 @@ footer p{ font-size:13px; line-height:1.7; }
     .hero-content{ grid-template-columns:1fr; text-align:center; }
     .hero-description{ margin-left:auto; margin-right:auto; }
     .hero-buttons{ justify-content:center; }
-    .hero-panel{ min-height:auto; margin-top: 40px;}
+    .hero-panel{ min-height:auto; margin-top: 40px; }
     .sobre-grid{ grid-template-columns:1fr; }
     .recursos-grid{ grid-template-columns: repeat(2,1fr); }
     .passos{ grid-template-columns: repeat(2,1fr); }
@@ -327,13 +284,11 @@ html.session-checking body{ visibility:hidden; }
 <main>
 <section class="hero" id="inicio" aria-labelledby="descricao">
     
-    <!-- VÍDEO DE FUNDO -->
     <video class="hero-video-bg" autoplay muted loop playsinline poster="imagens/fundo.png">
         <source src="imagens/fundoglobo.mp4" type="video/mp4">
         Seu navegador não suporta vídeos HTML5.
     </video>
     
-    <!-- MÁSCARA AZUL (#054F77) -->
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
@@ -380,6 +335,7 @@ html.session-checking body{ visibility:hidden; }
     </div>
 </section>
 
+<!-- A PARTIR DAQUI A IMAGEM DE FUNDO COMEÇA -->
 <section class="sobre" id="sobre">
 <div class="section-container">
     <div class="section-header reveal">
@@ -418,6 +374,7 @@ html.session-checking body{ visibility:hidden; }
 </div>
 </section>
 
+<!-- RESTO DO SITE -->
 <section class="recursos" id="recursos">
 <div class="section-container">
     <div class="section-header reveal">
@@ -489,24 +446,19 @@ const header = document.getElementById("header");
 window.addEventListener("scroll", function(){
     if(window.scrollY > 30){ header.classList.add("scrolled"); } else { header.classList.remove("scrolled"); }
 });
-
 const menuMobile = document.getElementById("menuMobile");
 const nav = document.getElementById("nav");
-
 menuMobile.addEventListener("click", function(){ nav.classList.toggle("active"); });
 nav.querySelectorAll("a").forEach(function(link){
     link.addEventListener("click", function(){ nav.classList.remove("active"); });
 });
-
 const elementosReveal = document.querySelectorAll(".reveal");
 const observer = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
         if(entry.isIntersecting){ entry.target.classList.add("active"); }
     });
 }, { threshold:0.12 });
-
 elementosReveal.forEach(function(elemento){ observer.observe(elemento); });
-
 const numeros = document.querySelectorAll("[data-count]");
 const numeroObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
@@ -515,7 +467,6 @@ const numeroObserver = new IntersectionObserver(function(entries){
         const destino = Number(elemento.dataset.count);
         let atual = 0;
         const incremento = Math.max(1, Math.ceil(destino / 35));
-
         const intervalo = setInterval(function(){
             atual += incremento;
             if(atual >= destino){ atual = destino; clearInterval(intervalo); }
@@ -524,9 +475,7 @@ const numeroObserver = new IntersectionObserver(function(entries){
         numeroObserver.unobserve(elemento);
     });
 }, { threshold:0.7 });
-
 numeros.forEach(function(numero){ numeroObserver.observe(numero); });
-
 document.addEventListener("click", function(event){
     if(!nav.contains(event.target) && !menuMobile.contains(event.target)){ nav.classList.remove("active"); }
 });
@@ -553,5 +502,4 @@ document.addEventListener("click", function(event){
 </script>
 
 </body>
-</html>
 </html>
