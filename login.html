@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/png" href="./imagens/favicon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SmartInspect AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #050b18;
+            --surface: rgba(13, 28, 50, 0.75);
+            --border: rgba(133, 216, 255, 0.15);
+            --cyan: #5cecff;
+            --blue: #229dff;
+            --text: #f4fbff;
+            --muted: #91a8bd;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+        /* Vídeo de fundo */
+        .bg-video { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.15; z-index: -1; }
+        .bg-shader { position: fixed; inset: 0; background: radial-gradient(circle at 10% 20%, rgba(34, 157, 255, 0.15), transparent 40%); z-index: -1; }
+
+        /* =========================================
+           TELA DE LOGIN
+        ========================================= */
+        #loginScreen {
+            position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s, transform 0.5s; z-index: 100;
+        }
+        .login-container { width: min(1100px, 95%); display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        
+        .auth-card { background: var(--surface); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 24px; padding: 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        .auth-card h2 { font-size: 28px; margin-bottom: 8px; }
+        .auth-card p { color: var(--muted); font-size: 14px; margin-bottom: 30px; }
+        
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #d8eaf4; }
+        .input-group input { width: 100%; height: 48px; padding: 0 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; color: white; }
+        .input-group input:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(92,236,255,0.15); }
+        
+        .btn-submit { width: 100%; height: 52px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #03111d; font-size: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(92,236,255,0.2); }
+        
+        .error-msg { display: none; color: #ff5a70; font-size: 13px; margin-bottom: 15px; padding: 10px; background: rgba(255,90,112,0.1); border-radius: 8px; border: 1px solid #ff5a70; }
+
+        /* =========================================
+           TELA DO PAINEL (Escondida)
+        ========================================= */
+        #panelScreen {
+            display: none; opacity: 0; transform: translateY(30px); transition: opacity 0.5s, transform 0.5s;
+            width: min(1200px, 95%); margin: 40px auto; padding-bottom: 50px;
+        }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .panel-header h1 { font-size: 24px; }
+        .btn-logout { background: transparent; border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .btn-logout:hover { background: rgba(255,255,255,0.05); }
+        
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; }
+        .card h3 { font-size: 18px; margin-bottom: 15px; color: var(--cyan); }
+        
+        .company-card { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; margin-bottom: 10px; border: 1px solid transparent; transition: 0.2s; }
+        .company-card:hover { border-color: var(--cyan); background: rgba(92,236,255,0.05); }
+        .btn-enter { background: linear-gradient(135deg, var(--cyan), var(--blue)); border: none; padding: 8px 16px; border-radius: 8px; color: #03111d; font-weight: bold; cursor: pointer; }
+        
+        .btn-create-company { background: transparent; border: 1px dashed var(--cyan); color: var(--cyan); padding: 15px; width: 100%; border-radius: 12px; cursor: pointer; margin-top: 20px; font-weight: bold; transition: 0.2s; }
+        .btn-create-company:hover { background: rgba(92,236,255,0.1); }
+        
+        @media (max-width: 900px) { 
+            .login-container, .dashboard-grid { grid-template-columns: 1fr; } 
+            #loginScreen { position: relative; padding: 40px 0; }
+            #panelScreen { margin: 20px auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <video class="bg-video" autoplay muted loop playsinline><source src="./imagens/fundoglobo.mp4" type="video/mp4"></video>
+    <div class="bg-shader"></div>
+
+    <!-- =========================================
+         TELA 1: LOGIN
+    ========================================== -->
+    <main id="loginScreen">
+        <div class="login-container">
+            <div>
+                <h1 style="font-size: 52px; line-height: 1.1; margin-bottom: 20px;">Sua obra, sob <span style="color: var(--cyan);">controle.</span></h1>
+                <p style="color: var(--muted); font-size: 18px; line-height: 1.6; max-width: 400px;">Acesse o painel para gerenciar suas empresas, inspeções e equipes.</p>
+            </div>
+            <div class="auth-card">
+                <h2>Bem-vindo de volta</h2>
+                <p>Entre com o e-mail e a senha cadastrados.</p>
+                <div id="authMessage" class="error-msg"></div>
+                <form id="loginForm">
+                    <div class="input-group"><label>E-mail</label><input id="email" type="email" required placeholder="voce@empresa.com.br"></div>
+                    <div class="input-group"><label>Senha</label><input id="senha" type="password" required placeholder="Sua senha"></div>
+                    <button class="btn-submit" type="submit" id="submitBtn">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- =========================================
+         TELA 2: PAINEL (Inicialmente escondida)
+    ========================================== -->
+    <main id="panelScreen">
+        <header class="panel-header">
+            <div>
+                <h1>Olá, <span id="userName">usuário</span>.</h1>
+                <p style="color: var(--muted); font-size: 14px;" id="profileEmail"></p>
+            </div>
+            <button class="btn-logout" id="logoutButton">Sair</button>
+        </header>
+
+        <div class="dashboard-grid">
+            <section class="card">
+                <h3>Minhas Empresas</h3>
+                <div id="companiesList"><p style="color:var(--muted);">Carregando...</p></div>
+                <button class="btn-create-company" id="createCompanyBtn">+ Criar Nova Empresa</button>
+            </section>
+
+            <aside>
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3>Chat da Equipe</h3>
+                    <p style="color: var(--muted); font-size: 13px; margin-bottom: 15px;">Converse com sua equipe em tempo real.</p>
+                    <button style="width:100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; cursor: pointer;">Abrir Chat</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/supabase.js"></script>
+
+    <script>
+        const db = window.banco;
+        const loginScreen = document.getElementById("loginScreen");
+        const panelScreen = document.getElementById("panelScreen");
+
+        // 1. VERIFICA SESSÃO AO ABRIR
+        db.auth.getSession().then(({ data }) => {
+            if (data.session) {
+                mostrarPainel(data.session.user);
+            }
+        });
+
+        // 2. FAZER LOGIN
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("submitBtn");
+            const msgBox = document.getElementById("authMessage");
+            
+            btn.disabled = true; btn.textContent = "Entrando...";
+            msgBox.style.display = "none";
+
+            const { data, error } = await db.auth.signInWithPassword({
+                email: document.getElementById("email").value,
+                password: document.getElementById("senha").value
+            });
+
+            if (error) {
+                msgBox.textContent = error.message;
+                msgBox.style.display = "block";
+                btn.disabled = false; btn.textContent = "Entrar";
+                return;
+            }
+
+            mostrarPainel(data.user);
+        });
+
+        // 3. TROCA DE TELA (Animação)
+        function mostrarPainel(user) {
+            loginScreen.style.opacity = "0";
+            loginScreen.style.transform = "translateY(-30px)";
+            
+            setTimeout(() => {
+                loginScreen.style.display = "none";
+                panelScreen.style.display = "block";
+                
+                setTimeout(() => {
+                    panelScreen.style.opacity = "1";
+                    panelScreen.style.transform = "translateY(0)";
+                }, 50);
+            }, 400);
+
+            document.getElementById("userName").textContent = user.email.split("@")[0];
+            document.getElementById("profileEmail").textContent = user.email;
+            
+            carregarEmpresas(user.id);
+        }
+
+        // 4. CARREGAR EMPRESAS
+        async function carregarEmpresas(userId) {
+            const list = document.getElementById("companiesList");
+            const { data, error } = await db.from("membros_empresa")
+                .select("empresa_id, cargo, empresa:empresas(id, nome)")
+                .eq("usuario_id", userId)
+                .eq("ativo", true);
+
+            list.innerHTML = "";
+            if (error || !data || data.length === 0) {
+                list.innerHTML = '<p style="color:var(--muted);">Nenhuma empresa encontrada.</p>';
+                return;
+            }
+
+            data.forEach(row => {
+                if (!row.empresa) return;
+                const div = document.createElement("div");
+                div.className = "company-card";
+                div.innerHTML = `
+                    <div>
+                        <strong>${row.empresa.nome}</strong>
+                        <p style="color:var(--muted); font-size:12px;">${row.cargo || 'Membro'}</p>
+                    </div>
+                    <button class="btn-enter" onclick="window.location.href='empresa.html?empresa=${row.empresa.id}'">Entrar →</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // 5. BOTÃO SAIR
+        document.getElementById("logoutButton").addEventListener("click", async () => {
+            await db.auth.signOut();
+            window.location.reload();
+        });
+
+        // 6. CRIAR EMPRESA
+        document.getElementById("createCompanyBtn").addEventListener("click", async () => {
+            const nome = prompt("Digite o nome da sua nova empresa:");
+            if (!nome) return;
+
+            const { data, error } = await db.rpc('criar_minha_empresa', { p_nome: nome, p_cnpj: null });
+
+            if (error) {
+                alert("Erro ao criar empresa: " + error.message);
+                return;
+            }
+            alert("Empresa criada com sucesso!");
+            window.location.href = `empresa.html?empresa=${data}`;
+        });
+    </script>
+</body>
+</html>
