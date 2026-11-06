@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estoque - SmartInspect AI</title>
+<title>Movimentar Estoque - SmartInspect AI</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,16 +14,48 @@
     <header class="page-header">
         <div>
             <p class="eyebrow">CONTROLE DE MATERIAIS</p>
-            <h1>📦 Estoque</h1>
-            <p class="subtitle">Controle de materiais, quantidades e movimentações da obra.</p>
+            <h1>🔄 Movimentar Estoque</h1>
+            <p class="subtitle">Registre entradas ou saídas de materiais.</p>
         </div>
-        <button onclick="location.href='novo_estoque.html'" class="primary-button">
-            ➕ Novo Material
-        </button>
+        <a href="estoque.html" class="secondary-button">← Voltar ao Estoque</a>
     </header>
 
-    <div id="listaEstoque">
-        <div class="card">Carregando estoque...</div>
+    <section class="card" id="formularioMovimentacao" style="display: none;">
+        <form id="formMovimentar">
+            <label>Material
+                <input id="materialNome" type="text" disabled>
+            </label>
+            <label>Quantidade Atual
+                <input id="quantidadeAtual" type="text" disabled>
+            </label>
+            
+            <label>Tipo de Movimentação
+                <select id="tipo" required>
+                    <option value="entrada">🟢 Entrada (Adicionar)</option>
+                    <option value="saida">🔴 Saída (Remover)</option>
+                </select>
+            </label>
+            
+            <label>Quantidade
+                <input id="quantidade" type="number" min="1" required placeholder="Ex: 10">
+            </label>
+            
+            <label>Responsável
+                <input id="responsavel" type="text" required placeholder="Seu nome">
+            </label>
+
+            <label>Observação
+                <textarea id="observacao" rows="3" placeholder="Motivo da movimentação..."></textarea>
+            </label>
+
+            <br>
+            <button type="submit" class="primary-button" id="btnSalvar">💾 Salvar Movimentação</button>
+            <p id="mensagem" style="margin-top: 15px;"></p>
+        </form>
+    </section>
+    
+    <div class="card" id="carregando">
+        <p>⏳ Carregando informações do material...</p>
     </div>
 </main>
 
@@ -32,72 +64,91 @@
 <script src="js/sidebar.js"></script>
 
 <script>
+    const parametros = new URLSearchParams(window.location.search);
+    const estoqueId = parametros.get("id");
     const $ = id => document.getElementById(id);
 
-    async function carregarEstoque(){
-        const lista = $("listaEstoque");
-        lista.innerHTML = `<div class="card">⏳ Carregando estoque...</div>`;
+    let materialAtual = null;
 
-        const {data,error} = await banco.from("estoque").select(`*, obras(nome)`).order("id",{ascending:false});
-
-        if(error){
-            lista.innerHTML = `<div class="card">❌ Erro ao carregar estoque.<br>${error.message}</div>`;
+    async function carregarMaterial() {
+        if (!estoqueId) {
+            alert("Nenhum material selecionado.");
+            window.location.href = "estoque.html";
             return;
         }
 
-        if(!data || data.length === 0){
-            lista.innerHTML = `<div class="card">📦 Nenhum material cadastrado.<br><br>
-                <button onclick="location.href='novo_estoque.html'">➕ Cadastrar primeiro material</button></div>`;
+        const { data, error } = await banco.from("estoque").select("*").eq("id", estoqueId).single();
+
+        if (error || !data) {
+            alert("Material não encontrado.");
+            window.location.href = "estoque.html";
             return;
         }
 
-        lista.innerHTML = "";
-
-        data.forEach(item => {
-            const quantidade = Number(item.quantidade || 0);
-            const minimo = Number(item.estoque_minimo || 0);
-            let statusEstoque = "🟢 Disponível";
-            if(quantidade <= 0) statusEstoque = "🔴 Sem estoque";
-            else if(minimo > 0 && quantidade <= minimo) statusEstoque = "🟠 Estoque baixo";
-
-            const unidade = item.unidade || "un";
-            const dataEntrada = item.data_entrada ? new Date(item.data_entrada + "T00:00:00").toLocaleDateString("pt-BR") : "Não informada";
-            const obra = item.obras?.nome || "Obra não informada";
-            const responsavel = item.responsavel || "Não informado";
-
-            lista.innerHTML += `
-            <div class="card estoque-card">
-                <div class="estoque-header">
-                    <div><h2>📦 ${item.material || "Material sem nome"}</h2><p>${statusEstoque}</p></div>
-                    <div><strong>${quantidade} ${unidade}</strong></div>
-                </div>
-                <hr>
-                <p>🏢 <strong>Obra:</strong> ${obra}</p>
-                <p>🔢 <strong>Quantidade:</strong> ${quantidade} ${unidade}</p>
-                <p>⚠️ <strong>Estoque mínimo:</strong> ${minimo || "Não definido"}</p>
-                <p>📅 <strong>Entrada:</strong> ${dataEntrada}</p>
-                <p>👤 <strong>Responsável:</strong> ${responsavel}</p>
-                <p>📌 <strong>Status:</strong> ${item.status || "Disponível"}</p>
-                
-                <div class="estoque-actions">
-                    <button onclick="window.location.href='movimentar_estoque.html?id=${item.id}'">🔄 Movimentar</button>
-                    <button onclick="window.location.href='novo_estoque.html?id=${item.id}'">✏️ Editar</button>
-                    <button onclick="window.location.href='logs_estoque.html?id=${item.id}'">📋 Logs</button>
-                    <button onclick="excluirMaterial(${item.id})">🗑 Excluir</button>
-                </div>
-            </div>`;
-        });
+        materialAtual = data;
+        $("materialNome").value = data.material;
+        $("quantidadeAtual").value = `${data.quantidade} ${data.unidade || 'un'}`;
+        
+        $("carregando").style.display = "none";
+        $("formularioMovimentacao").style.display = "block";
     }
 
-    async function excluirMaterial(id){
-        if(!confirm("Deseja realmente excluir este material?")) return;
-        const {error} = await banco.from("estoque").delete().eq("id",id);
-        if(error){ alert("❌ Não foi possível excluir o material."); return; }
-        alert("✅ Material removido com sucesso.");
-        carregarEstoque();
-    }
+    $("formMovimentar").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const btn = $("btnSalvar");
+        btn.disabled = true;
+        btn.textContent = "Salvando...";
+        $("mensagem").textContent = "";
 
-    carregarEstoque();
+        const tipo = $("tipo").value;
+        const qtdMovimentada = Number($("quantidade").value);
+        
+        if (qtdMovimentada <= 0) {
+            $("mensagem").textContent = "A quantidade deve ser maior que zero.";
+            btn.disabled = false; btn.textContent = "💾 Salvar Movimentação";
+            return;
+        }
+
+        let novaQuantidade = Number(materialAtual.quantidade || 0);
+
+        if (tipo === "entrada") {
+            novaQuantidade += qtdMovimentada;
+        } else {
+            if (qtdMovimentada > novaQuantidade) {
+                $("mensagem").textContent = "Você não pode remover mais do que tem em estoque.";
+                btn.disabled = false; btn.textContent = "💾 Salvar Movimentação";
+                return;
+            }
+            novaQuantidade -= qtdMovimentada;
+        }
+
+        // 1. Atualiza a tabela de estoque
+        const { error: erroUpdate } = await banco.from("estoque").update({ quantidade: novaQuantidade }).eq("id", estoqueId);
+
+        if (erroUpdate) {
+            $("mensagem").textContent = "Erro ao atualizar o estoque: " + erroUpdate.message;
+            btn.disabled = false; btn.textContent = "💾 Salvar Movimentação";
+            return;
+        }
+
+        // 2. Tenta registrar no log (se a tabela existir)
+        await banco.from("movimentacoes_estoque").insert([{
+            estoque_id: estoqueId,
+            tipo: tipo,
+            quantidade: qtdMovimentada,
+            responsavel: $("responsavel").value,
+            observacao: $("observacao").value
+        }]);
+
+        $("mensagem").textContent = "✅ Movimentação realizada com sucesso!";
+        $("mensagem").style.color = "#16a36a";
+        
+        setTimeout(() => {
+            window.location.href = "estoque.html";
+        }, 1500);
+    });
+
+    carregarMaterial();
 </script>
 
 </body>
