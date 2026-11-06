@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Logs de Estoque - SmartInspect AI</title>
+<title>Estoque - SmartInspect AI</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,20 +13,18 @@
 <main class="content">
     <header class="page-header">
         <div>
-            <p class="eyebrow">HISTÓRICO DE MOVIMENTAÇÕES</p>
-            <h1>📋 Histórico do Material</h1>
-            <p class="subtitle">Acompanhe todas as entradas e saídas deste item.</p>
+            <p class="eyebrow">CONTROLE DE MATERIAIS</p>
+            <h1>📦 Estoque</h1>
+            <p class="subtitle">Controle de materiais, quantidades e movimentações da obra.</p>
         </div>
-        <a href="estoque.html" class="secondary-button" style="text-decoration:none; padding: 10px 15px; background: #eee; border-radius: 8px; color: #333;">← Voltar ao Estoque</a>
+        <!-- Botão no topo -->
+        <button onclick="location.href='novo_estoque.html'" class="primary-button">
+            ➕ Novo Material
+        </button>
     </header>
 
-    <div id="infoMaterial" class="card" style="margin-bottom: 20px; display: none;">
-        <h2 id="nomeMaterial" style="margin-bottom: 10px;"></h2>
-        <p id="saldoMaterial"></p>
-    </div>
-
-    <div id="listaLogs" class="card">
-        <p>⏳ Carregando histórico...</p>
+    <div id="listaEstoque">
+        <div class="card">Carregando estoque...</div>
     </div>
 </main>
 
@@ -35,62 +33,76 @@
 <script src="js/sidebar.js"></script>
 
 <script>
-    const parametros = new URLSearchParams(window.location.search);
-    const estoqueId = parametros.get("id");
-    const lista = document.getElementById("listaLogs");
-    const infoMaterial = document.getElementById("infoMaterial");
+    const $ = id => document.getElementById(id);
 
-    async function carregarLogs() {
-        if (!estoqueId) {
-            lista.innerHTML = "<p>❌ Nenhum material selecionado.</p>";
+    async function carregarEstoque(){
+        const lista = $("listaEstoque");
+        lista.innerHTML = `<div class="card">⏳ Carregando estoque...</div>`;
+
+        const {data,error} = await banco.from("estoque").select(`*, obras(nome)`).order("id",{ascending:false});
+
+        if(error){
+            lista.innerHTML = `<div class="card">❌ Erro ao carregar estoque.<br>${error.message}</div>`;
             return;
         }
 
-        const { data: material } = await banco.from("estoque").select("material, quantidade, unidade").eq("id", estoqueId).single();
-        
-        if (material) {
-            infoMaterial.style.display = "block";
-            document.getElementById("nomeMaterial").textContent = `📦 ${material.material}`;
-            document.getElementById("saldoMaterial").textContent = `Saldo atual: ${material.quantidade} ${material.unidade || 'un'}`;
-        }
-
-        const { data, error } = await banco
-            .from("movimentacoes_estoque")
-            .select("*")
-            .eq("estoque_id", estoqueId)
-            .order("id", { ascending: false });
-
-        if (error) {
-            lista.innerHTML = `
-                <p>⚠️ Não foi possível carregar os logs.</p>
-                <p style="font-size:12px; color:#666;">Verifique se a tabela <strong>movimentacoes_estoque</strong> existe no seu Supabase.</p>
-            `;
-            return;
-        }
-
-        if (!data || data.length === 0) {
-            lista.innerHTML = "<p>📭 Nenhuma movimentação registrada para este material ainda.</p>";
+        if(!data || data.length === 0){
+            lista.innerHTML = `<div class="card">📦 Nenhum material cadastrado.<br><br>
+                <button onclick="location.href='novo_estoque.html'" class="primary-button">
+                    ➕ Cadastrar primeiro material
+                </button>
+            </div>`;
             return;
         }
 
         lista.innerHTML = "";
-        data.forEach(log => {
-            const cor = log.tipo === 'entrada' ? '#16a36a' : '#c53b3b';
-            const icone = log.tipo === 'entrada' ? '🟢 Entrada' : '🔴 Saída';
-            
+
+        data.forEach(item => {
+            const quantidade = Number(item.quantidade || 0);
+            const minimo = Number(item.estoque_minimo || 0);
+            let statusEstoque = "🟢 Disponível";
+            if(quantidade <= 0) statusEstoque = "🔴 Sem estoque";
+            else if(minimo > 0 && quantidade <= minimo) statusEstoque = "🟠 Estoque baixo";
+
+            const unidade = item.unidade || "un";
+            const dataEntrada = item.data_entrada ? new Date(item.data_entrada + "T00:00:00").toLocaleDateString("pt-BR") : "Não informada";
+            const obra = item.obras?.nome || "Obra não informada";
+            const responsavel = item.responsavel || "Não informado";
+
             lista.innerHTML += `
-                <div style="border-bottom: 1px solid #eee; padding: 15px 0;">
-                    <strong style="color: ${cor}; font-size: 16px;">${icone}</strong>
-                    <p style="margin-top: 5px;"><strong>Quantidade:</strong> ${log.quantidade}</p>
-                    <p><strong>Data:</strong> ${new Date(log.created_at || Date.now()).toLocaleString('pt-BR')}</p>
-                    <p><strong>Responsável:</strong> ${log.responsavel || 'Não informado'}</p>
-                    ${log.observacao ? `<p><strong>Obs:</strong> ${log.observacao}</p>` : ''}
+            <div class="card estoque-card">
+                <div class="estoque-header">
+                    <div><h2>📦 ${item.material || "Material sem nome"}</h2><p>${statusEstoque}</p></div>
+                    <div><strong>${quantidade} ${unidade}</strong></div>
                 </div>
-            `;
+                <hr>
+                <p>🏢 <strong>Obra:</strong> ${obra}</p>
+                <p>🔢 <strong>Quantidade:</strong> ${quantidade} ${unidade}</p>
+                <p>⚠️ <strong>Estoque mínimo:</strong> ${minimo || "Não definido"}</p>
+                <p>📅 <strong>Entrada:</strong> ${dataEntrada}</p>
+                <p>👤 <strong>Responsável:</strong> ${responsavel}</p>
+                <p>📌 <strong>Status:</strong> ${item.status || "Disponível"}</p>
+                
+                <div class="estoque-actions">
+                    <button onclick="window.location.href='movimentar_estoque.html?id=${item.id}'">🔄 Movimentar</button>
+                    <button onclick="window.location.href='novo_estoque.html?id=${item.id}'">✏️ Editar</button>
+                    <button onclick="window.location.href='logs_estoque.html?id=${item.id}'">📋 Logs</button>
+                    <button onclick="excluirMaterial(${item.id})">🗑 Excluir</button>
+                </div>
+            </div>`;
         });
     }
 
-    carregarLogs();
+    async function excluirMaterial(id){
+        if(!confirm("Deseja realmente excluir este material?")) return;
+        const {error} = await banco.from("estoque").delete().eq("id",id);
+        if(error){ alert("❌ Não foi possível excluir o material."); return; }
+        alert("✅ Material removido com sucesso.");
+        carregarEstoque();
+    }
+
+    carregarEstoque();
 </script>
+
 </body>
 </html>
