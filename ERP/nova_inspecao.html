@@ -1,1590 +1,312 @@
 <!doctype html>
-
 <html lang="pt-BR">
-
 <head>
-
-```
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta
-    name="description"
-    content="Registrar inspeção técnica com fotos pelo dispositivo"
->
-
+<meta name="description" content="Registrar inspeção técnica com fotos pelo dispositivo">
 <title>Nova Inspeção — SmartInspect AI</title>
-
 <link rel="stylesheet" href="css/style.css">
-```
-
 </head>
 
 <body>
 
-```
-<!-- ======================================
-     SIDEBAR
-======================================= -->
-
 <aside class="sidebar" aria-label="Navegação principal">
-
     <div class="logo">
-
-        <img
-            src="imagens/logo.png"
-            alt="Logo SmartInspect AI"
-        >
-
+        <img src="imagens/logo.png" alt="Logo SmartInspect AI">
         <h2>SmartInspect AI</h2>
-
     </div>
-
-
     <a href="index.html">📊 Dashboard</a>
-
     <a href="obras.html">🏢 Obras</a>
-
     <a href="inspecoes.html">📋 Inspeções</a>
-
     <a href="estoque.html">📦 Estoque</a>
-
     <a href="ia.html">🤖 IA</a>
-
     <a href="relatorios.html">📄 Relatórios</a>
-
     <a href="equipe.html">👷 Equipe</a>
-
     <a href="notificacoes.html">🔔 Notificações</a>
-
     <a href="configuracoes.html">⚙️ Configurações</a>
-
-    <a
-        href="#"
-        onclick="sair(); return false;"
-    >
-        🚪 Sair
-    </a>
-
+    <a href="#" onclick="sair(); return false;">🚪 Sair</a>
 </aside>
 
-
-
-<!-- ======================================
-     CONTEÚDO
-======================================= -->
-
 <main class="content inspection-page">
-
-
     <header class="page-header">
-
         <div>
-
-            <p class="eyebrow">
-                REGISTRO TÉCNICO
-            </p>
-
-            <h1>
-                Nova inspeção
-            </h1>
-
-            <p class="subtitle">
-                Registre os dados da obra e evidências fotográficas no local.
-            </p>
-
+            <p class="eyebrow">REGISTRO TÉCNICO</p>
+            <h1>Nova inspeção</h1>
+            <p class="subtitle">Registre os dados da obra e evidências fotográficas no local.</p>
         </div>
-
-
-        <a
-            class="back-link"
-            href="inspecoes.html"
-        >
-            ← Voltar para inspeções
-        </a>
-
+        <a class="back-link" href="inspecoes.html">← Voltar para inspeções</a>
     </header>
 
-
-
-    <!-- ======================================
-         FORMULÁRIO
-    ======================================= -->
-
-    <form
-        id="formInspecao"
-        class="inspection-layout"
-    >
-
-
+    <form id="formInspecao" class="inspection-layout">
         <!-- DADOS PRINCIPAIS -->
-
         <section class="card form-panel">
-
             <div class="panel-heading">
-
                 <div>
-
-                    <p class="eyebrow">
-                        DADOS PRINCIPAIS
-                    </p>
-
-                    <h2>
-                        Informações da inspeção
-                    </h2>
-
+                    <p class="eyebrow">DADOS PRINCIPAIS</p>
+                    <h2>Informações da inspeção</h2>
                 </div>
-
-                <span class="panel-icon">
-                    ✎
-                </span>
-
+                <span class="panel-icon">✎</span>
             </div>
-
-
 
             <div class="form-grid">
-
-
                 <label>
-
                     Obra
-
-                    <select
-                        id="obra"
-                        required
-                    >
-
-                        <option value="">
-                            Carregando obras...
-                        </option>
-
+                    <select id="obra" required>
+                        <option value="">Carregando obras...</option>
                     </select>
-
                 </label>
-
-
-
                 <label>
-
                     Tipo de inspeção
-
-                    <select
-                        id="tipo"
-                        required
-                    >
-
-                        <option value="Estrutura">
-                            Estrutura
-                        </option>
-
-                        <option value="Alvenaria">
-                            Alvenaria
-                        </option>
-
-                        <option value="Revestimento">
-                            Revestimento
-                        </option>
-
-                        <option value="Instalações">
-                            Instalações
-                        </option>
-
-                        <option value="Acabamento">
-                            Acabamento
-                        </option>
-
-                        <option value="Outros">
-                            Outros
-                        </option>
-
+                    <select id="tipo" required>
+                        <option value="Estrutura">Estrutura</option>
+                        <option value="Alvenaria">Alvenaria</option>
+                        <option value="Revestimento">Revestimento</option>
+                        <option value="Instalações">Instalações</option>
+                        <option value="Acabamento">Acabamento</option>
+                        <option value="Outros">Outros</option>
                     </select>
-
                 </label>
-
-
-
                 <label>
-
                     Data da inspeção
-
-                    <input
-                        type="date"
-                        id="data"
-                        required
-                    >
-
+                    <input type="date" id="data" required>
                 </label>
-
-
-
                 <label>
-
                     Responsável técnico
-
-                    <input
-                        id="responsavel"
-                        type="text"
-                        placeholder="Nome do inspetor"
-                        required
-                    >
-
+                    <input id="responsavel" type="text" placeholder="Nome do inspetor" required>
                 </label>
-
-
-
                 <label class="full-field">
-
                     Status
-
                     <select id="status">
-
-                        <option value="Pendente">
-                            Pendente
-                        </option>
-
-                        <option value="Aprovado">
-                            Aprovado
-                        </option>
-
-                        <option value="Reprovado">
-                            Reprovado
-                        </option>
-
+                        <option value="Pendente">Pendente</option>
+                        <option value="Aprovado">Aprovado</option>
+                        <option value="Reprovado">Reprovado</option>
                     </select>
-
                 </label>
-
-
-
                 <label class="full-field">
-
                     Observações
-
-                    <textarea
-                        id="observacao"
-                        rows="5"
-                        placeholder="Descreva a situação encontrada, local e recomendações"
-                    ></textarea>
-
+                    <textarea id="observacao" rows="5" placeholder="Descreva a situação encontrada, local e recomendações"></textarea>
                 </label>
-
-
             </div>
-
         </section>
 
-
-
-        <!-- ======================================
-             FOTOS
-        ======================================= -->
-
+        <!-- FOTOS -->
         <section class="card photo-panel">
-
-
             <div class="panel-heading">
-
                 <div>
-
-                    <p class="eyebrow">
-                        EVIDÊNCIAS
-                    </p>
-
-                    <h2>
-                        Fotos da inspeção
-                    </h2>
-
+                    <p class="eyebrow">EVIDÊNCIAS</p>
+                    <h2>Fotos da inspeção</h2>
                 </div>
-
-
-                <span
-                    class="photo-counter"
-                    id="photoCounter"
-                >
-                    0/10
-                </span>
-
+                <span class="photo-counter" id="photoCounter">0/10</span>
             </div>
 
-
-
-            <p class="photo-help">
-
-                Fotografe trincas, fissuras, materiais,
-                acabamentos ou qualquer não conformidade encontrada.
-
-            </p>
-
-
+            <p class="photo-help">Fotografe trincas, fissuras, materiais, acabamentos ou qualquer não conformidade encontrada.</p>
 
             <div class="photo-actions">
-
-
-                <button
-                    type="button"
-                    class="camera-button"
-                    id="abrirCamera"
-                >
-
-                    ⌾ Abrir câmera
-
-                </button>
-
-
-
-                <label
-                    class="upload-button"
-                    for="seletorFotos"
-                >
-
+                <button type="button" class="camera-button" id="abrirCamera">⌾ Abrir câmera</button>
+                <label class="upload-button" for="seletorFotos">
                     ▧ Escolher fotos
-
-                    <input
-                        id="seletorFotos"
-                        type="file"
-                        accept="image/*"
-                        capture="environment"
-                        multiple
-                        hidden
-                    >
-
+                    <input id="seletorFotos" type="file" accept="image/*" capture="environment" multiple hidden>
                 </label>
-
-
             </div>
 
-
-
-            <div
-                id="previewFotos"
-                class="photo-grid"
-                aria-live="polite"
-            >
-
-                <div class="photo-empty">
-
-                    Nenhuma foto adicionada.
-                    Use a câmera ou selecione imagens do dispositivo.
-
-                </div>
-
+            <div id="previewFotos" class="photo-grid" aria-live="polite">
+                <div class="photo-empty">Nenhuma foto adicionada. Use a câmera ou selecione imagens do dispositivo.</div>
             </div>
 
-
-
-            <p class="photo-note">
-
-                É possível adicionar até 10 fotos.
-                A captura pela câmera funciona melhor em conexão HTTPS.
-
-            </p>
-
-
+            <p class="photo-note">É possível adicionar até 10 fotos. A captura pela câmera funciona melhor em conexão HTTPS.</p>
         </section>
 
-
-
-        <!-- ======================================
-             AÇÕES
-        ======================================= -->
-
+        <!-- AÇÕES -->
         <div class="form-actions">
-
-
-            <a
-                class="secondary-button"
-                href="inspecoes.html"
-            >
-                Cancelar
-            </a>
-
-
-
-            <button
-                type="submit"
-                class="primary-button"
-                id="salvarButton"
-            >
-
-                💾 Salvar inspeção
-
-            </button>
-
-
+            <a class="secondary-button" href="inspecoes.html">Cancelar</a>
+            <button type="submit" class="primary-button" id="salvarButton">💾 Salvar inspeção</button>
         </div>
-
-
-
-        <p
-            id="mensagemFormulario"
-            class="dashboard-message"
-            role="status"
-        ></p>
-
-
+        <p id="mensagemFormulario" class="dashboard-message" role="status"></p>
     </form>
-
-
 </main>
 
-
-
-<!-- ======================================
-     MODAL DA CÂMERA
-======================================= -->
-
-<div
-    class="camera-modal"
-    id="cameraModal"
-    hidden
->
-
-    <div
-        class="camera-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="cameraTitle"
-    >
-
-
+<!-- MODAL DA CÂMERA -->
+<div class="camera-modal" id="cameraModal" hidden>
+    <div class="camera-dialog" role="dialog" aria-modal="true" aria-labelledby="cameraTitle">
         <div class="camera-dialog-header">
-
-
             <div>
-
-                <p class="eyebrow">
-                    CAPTURA NO LOCAL
-                </p>
-
-                <h2 id="cameraTitle">
-                    Câmera da inspeção
-                </h2>
-
+                <p class="eyebrow">CAPTURA NO LOCAL</p>
+                <h2 id="cameraTitle">Câmera da inspeção</h2>
             </div>
-
-
-            <button
-                type="button"
-                class="icon-button"
-                id="fecharCamera"
-                aria-label="Fechar câmera"
-            >
-                ×
-            </button>
-
-
+            <button type="button" class="icon-button" id="fecharCamera" aria-label="Fechar câmera">×</button>
         </div>
-
-
-
-        <video
-            id="cameraVideo"
-            autoplay
-            playsinline
-            muted
-        ></video>
-
-
-
-        <canvas
-            id="cameraCanvas"
-            hidden
-        ></canvas>
-
-
-
-        <p
-            id="cameraMensagem"
-            class="camera-message"
-        >
-
-            Posicione a evidência dentro do quadro.
-
-        </p>
-
-
-
-        <button
-            type="button"
-            class="capture-button"
-            id="capturarFoto"
-        >
-
-            ● Capturar foto
-
-        </button>
-
-
+        <video id="cameraVideo" autoplay playsinline muted></video>
+        <canvas id="cameraCanvas" hidden></canvas>
+        <p id="cameraMensagem" class="camera-message">Posicione a evidência dentro do quadro.</p>
+        <button type="button" class="capture-button" id="capturarFoto">● Capturar foto</button>
     </div>
-
 </div>
 
-
-
-<!-- ======================================
-     SCRIPTS
-======================================= -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="js/supabase.js"></script>
-
-<script src="js/configuracoes.js"></script>
-<script src="js/auth.js"></script>
-
-<script src="js/notificacoes.js"></script>
-
-
+<!-- REMOVIDO: configuracoes.js, auth.js e notificacoes.js -->
 
 <script>
+    // REMOVIDO: verificarLogin();
 
-
-    // ======================================
-    // LOGIN
-    // ======================================
-
-    verificarLogin();
-
-
-
-    // ======================================
-    // VARIÁVEIS
-    // ======================================
-
-    const parametros =
-        new URLSearchParams(
-            window.location.search
-        );
-
-
-    const obraSelecionada =
-        parametros.get("obra");
-
-
+    const parametros = new URLSearchParams(window.location.search);
+    const obraSelecionada = parametros.get("obra");
     const fotos = [];
-
-
     let cameraStream = null;
-
-
     const maxFotos = 10;
+    const $ = id => document.getElementById(id);
 
-
-    const $ =
-        id => document.getElementById(id);
-
-
-
-    // ======================================
-    // DATA ATUAL
-    // ======================================
-
-    $("data").value =
-        new Date()
-            .toISOString()
-            .split("T")[0];
-
-
-
-    // ======================================
-    // RENDERIZAR FOTOS
-    // ======================================
+    $("data").value = new Date().toISOString().split("T")[0];
 
     function renderizarFotos() {
+        $("photoCounter").textContent = `${fotos.length}/${maxFotos}`;
+        $("previewFotos").innerHTML = fotos.length
+            ? fotos.map((foto, index) => `
+                <figure class="photo-item">
+                    <img src="${foto.url}" alt="Evidência ${index + 1}">
+                    <button type="button" class="remove-photo" data-index="${index}" aria-label="Remover foto ${index + 1}">×</button>
+                    <figcaption>Foto ${index + 1}</figcaption>
+                </figure>`).join("")
+            : `<div class="photo-empty">Nenhuma foto adicionada.</div>`;
 
-        $("photoCounter").textContent =
-            `${fotos.length}/${maxFotos}`;
-
-
-        $("previewFotos").innerHTML =
-            fotos.length
-
-            ?
-
-            fotos.map(
-                (foto, index) => `
-
-                    <figure class="photo-item">
-
-                        <img
-                            src="${foto.url}"
-                            alt="Evidência ${index + 1}"
-                        >
-
-                        <button
-                            type="button"
-                            class="remove-photo"
-                            data-index="${index}"
-                            aria-label="Remover foto ${index + 1}"
-                        >
-                            ×
-                        </button>
-
-                        <figcaption>
-                            Foto ${index + 1}
-                        </figcaption>
-
-                    </figure>
-
-                `
-            ).join("")
-
-            :
-
-            `
-                <div class="photo-empty">
-
-                    Nenhuma foto adicionada.
-                    Use a câmera ou selecione imagens do dispositivo.
-
-                </div>
-            `;
-
-
-        document
-            .querySelectorAll(".remove-photo")
-            .forEach(botao => {
-
-                botao.addEventListener(
-                    "click",
-                    () =>
-                        removerFoto(
-                            Number(
-                                botao.dataset.index
-                            )
-                        )
-                );
-
-            });
-
+        document.querySelectorAll(".remove-photo").forEach(botao => {
+            botao.addEventListener("click", () => removerFoto(Number(botao.dataset.index)));
+        });
     }
-
-
-
-    // ======================================
-    // ADICIONAR ARQUIVOS
-    // ======================================
 
     function adicionarArquivos(arquivos) {
-
-        const disponiveis =
-            maxFotos - fotos.length;
-
-
-        Array
-            .from(arquivos)
-
-            .filter(
-                arquivo =>
-                    arquivo.type.startsWith("image/")
-            )
-
-            .slice(
-                0,
-                disponiveis
-            )
-
-            .forEach(
-                arquivo => {
-
-                    fotos.push({
-
-                        arquivo,
-
-                        url:
-                            URL.createObjectURL(
-                                arquivo
-                            )
-
-                    });
-
-                }
-            );
-
-
+        const disponiveis = maxFotos - fotos.length;
+        Array.from(arquivos).filter(a => a.type.startsWith("image/")).slice(0, disponiveis).forEach(arquivo => {
+            fotos.push({ arquivo, url: URL.createObjectURL(arquivo) });
+        });
         renderizarFotos();
-
-
-        if (
-            arquivos.length >
-            disponiveis
-        ) {
-
-            $("mensagemFormulario").textContent =
-                "O limite de 10 fotos foi atingido.";
-
-        }
-
+        if (arquivos.length > disponiveis) $("mensagemFormulario").textContent = "O limite de 10 fotos foi atingido.";
     }
-
-
-
-    // ======================================
-    // REMOVER FOTO
-    // ======================================
 
     function removerFoto(index) {
-
-        URL.revokeObjectURL(
-            fotos[index].url
-        );
-
-
-        fotos.splice(
-            index,
-            1
-        );
-
-
+        URL.revokeObjectURL(fotos[index].url);
+        fotos.splice(index, 1);
         renderizarFotos();
-
     }
 
-
-
-    // ======================================
-    // SELETOR DE FOTOS
-    // ======================================
-
-    $("seletorFotos")
-        .addEventListener(
-            "change",
-            evento => {
-
-                adicionarArquivos(
-                    evento.target.files
-                );
-
-                evento.target.value = "";
-
-            }
-        );
-
-
-
-    // ======================================
-    // ABRIR CÂMERA
-    // ======================================
+    $("seletorFotos").addEventListener("change", evento => {
+        adicionarArquivos(evento.target.files);
+        evento.target.value = "";
+    });
 
     async function abrirCamera() {
-
-        if (
-            !navigator.mediaDevices?.getUserMedia
-        ) {
-
-            $("cameraMensagem").textContent =
-                "Seu navegador não permite acesso direto à câmera. Use “Escolher fotos”.";
-
+        if (!navigator.mediaDevices?.getUserMedia) {
+            $("cameraMensagem").textContent = "Seu navegador não permite acesso direto à câmera.";
             $("cameraModal").hidden = false;
-
             return;
-
         }
-
-
         try {
-
-            cameraStream =
-                await navigator.mediaDevices.getUserMedia({
-
-                    video: {
-
-                        facingMode: {
-                            ideal: "environment"
-                        }
-
-                    },
-
-                    audio: false
-
-                });
-
-
-            $("cameraVideo").srcObject =
-                cameraStream;
-
-
-            $("cameraModal").hidden =
-                false;
-
+            cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
+            $("cameraVideo").srcObject = cameraStream;
+            $("cameraModal").hidden = false;
+        } catch (erro) {
+            $("mensagemFormulario").textContent = "Não foi possível abrir a câmera.";
         }
-
-        catch (erro) {
-
-            console.error(erro);
-
-
-            $("mensagemFormulario").textContent =
-                "Não foi possível abrir a câmera. Verifique a permissão do navegador ou use a seleção de fotos.";
-
-        }
-
     }
-
-
-
-    // ======================================
-    // FECHAR CÂMERA
-    // ======================================
 
     function fecharCamera() {
-
-        if (cameraStream) {
-
-            cameraStream
-                .getTracks()
-                .forEach(
-                    track =>
-                        track.stop()
-                );
-
-        }
-
-
+        if (cameraStream) cameraStream.getTracks().forEach(track => track.stop());
         cameraStream = null;
-
-
-        $("cameraVideo").srcObject =
-            null;
-
-
-        $("cameraModal").hidden =
-            true;
-
+        $("cameraVideo").srcObject = null;
+        $("cameraModal").hidden = true;
     }
-
-
-
-    // ======================================
-    // CAPTURAR FOTO
-    // ======================================
 
     function capturarFoto() {
-
-        if (
-            fotos.length >= maxFotos
-        ) {
-
-            $("cameraMensagem").textContent =
-                "Limite de 10 fotos atingido.";
-
+        if (fotos.length >= maxFotos) {
+            $("cameraMensagem").textContent = "Limite de 10 fotos atingido.";
             return;
-
         }
-
-
-        const video =
-            $("cameraVideo");
-
-
-        const canvas =
-            $("cameraCanvas");
-
-
-        canvas.width =
-            video.videoWidth;
-
-
-        canvas.height =
-            video.videoHeight;
-
-
-        canvas
-            .getContext("2d")
-            .drawImage(
-                video,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-
-
-        canvas.toBlob(
-
-            blob => {
-
-                if (!blob) {
-                    return;
-                }
-
-
-                adicionarArquivos([
-
-                    new File(
-                        [blob],
-                        `inspecao-${Date.now()}.jpg`,
-                        {
-                            type: "image/jpeg"
-                        }
-                    )
-
-                ]);
-
-
-                $("cameraMensagem").textContent =
-                    "Foto adicionada. Você pode capturar outra evidência.";
-
-            },
-
-            "image/jpeg",
-
-            0.9
-
-        );
-
+        const video = $("cameraVideo");
+        const canvas = $("cameraCanvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(blob => {
+            if (!blob) return;
+            adicionarArquivos([new File([blob], `inspecao-${Date.now()}.jpg`, { type: "image/jpeg" })]);
+            $("cameraMensagem").textContent = "Foto adicionada.";
+        }, "image/jpeg", 0.9);
     }
 
-
-
-    // ======================================
-    // EVENTOS DA CÂMERA
-    // ======================================
-
-    $("abrirCamera")
-        .addEventListener(
-            "click",
-            abrirCamera
-        );
-
-
-    $("fecharCamera")
-        .addEventListener(
-            "click",
-            fecharCamera
-        );
-
-
-    $("capturarFoto")
-        .addEventListener(
-            "click",
-            capturarFoto
-        );
-
-
-    $("cameraModal")
-        .addEventListener(
-            "click",
-            evento => {
-
-                if (
-                    evento.target ===
-                    $("cameraModal")
-                ) {
-
-                    fecharCamera();
-
-                }
-
-            }
-        );
-
-
-    document.addEventListener(
-        "keydown",
-        evento => {
-
-            if (
-                evento.key === "Escape" &&
-                !$("cameraModal").hidden
-            ) {
-
-                fecharCamera();
-
-            }
-
-        }
-    );
-
-
-
-    // ======================================
-    // CARREGAR OBRAS
-    // ======================================
+    $("abrirCamera").addEventListener("click", abrirCamera);
+    $("fecharCamera").addEventListener("click", fecharCamera);
+    $("capturarFoto").addEventListener("click", capturarFoto);
+    $("cameraModal").addEventListener("click", evento => { if (evento.target === $("cameraModal")) fecharCamera(); });
+    document.addEventListener("keydown", evento => { if (evento.key === "Escape" && !$("cameraModal").hidden) fecharCamera(); });
 
     async function carregarObras() {
+        const select = $("obra");
+        const { data, error } = await banco.from("obras").select("*").order("id", { ascending: false });
 
-        const select =
-            $("obra");
-
-
-        const {
-            data,
-            error
-        } =
-            await banco
-                .from("obras")
-                .select("*")
-                .order(
-                    "id",
-                    {
-                        ascending: false
-                    }
-                );
-
-
-        if (
-            error ||
-            !data?.length
-        ) {
-
-            select.innerHTML = `
-
-                <option value="">
-
-                    ${
-                        error
-                            ? "Erro ao carregar obras"
-                            : "Nenhuma obra cadastrada"
-                    }
-
-                </option>
-
-            `;
-
+        if (error || !data?.length) {
+            select.innerHTML = `<option value="">${error ? "Erro ao carregar obras" : "Nenhuma obra cadastrada"}</option>`;
             return;
-
         }
-
-
-        select.innerHTML =
-
-            `
-                <option value="">
-                    Selecione uma obra
-                </option>
-            `
-
-            +
-
-            data
-                .map(
-                    obra => `
-
-                        <option
-                            value="${obra.id}"
-                            ${
-                                obra.id == obraSelecionada
-                                    ? "selected"
-                                    : ""
-                            }
-                        >
-
-                            ${obra.nome}
-
-                        </option>
-
-                    `
-                )
-                .join("");
-
+        select.innerHTML = `<option value="">Selecione uma obra</option>` + data.map(obra => `
+            <option value="${obra.id}" ${obra.id == obraSelecionada ? "selected" : ""}>${obra.nome}</option>`).join("");
     }
 
+    $("formInspecao").addEventListener("submit", async evento => {
+        evento.preventDefault();
+        const botao = $("salvarButton");
+        const mensagem = $("mensagemFormulario");
+        botao.disabled = true;
+        botao.textContent = "Salvando...";
+        mensagem.textContent = "";
 
+        const obraId = Number($("obra").value);
+        const tipo = $("tipo").value;
+        const dataInspecao = $("data").value;
+        const responsavel = $("responsavel").value.trim();
+        const observacao = $("observacao").value.trim();
+        const status = $("status").value;
 
-    // ======================================
-    // SALVAR INSPEÇÃO
-    // ======================================
+        if (!obraId) {
+            mensagem.textContent = "Selecione uma obra antes de salvar.";
+            botao.disabled = false;
+            botao.textContent = "💾 Salvar inspeção";
+            return;
+        }
 
-    $("formInspecao")
-        .addEventListener(
-            "submit",
-            async evento => {
+        const payload = { obra_id: obraId, tipo, data_inspecao: dataInspecao, responsavel, observacao, status };
 
-                evento.preventDefault();
+        const { data: inspecao, error } = await banco.from("inspecoes").insert([payload]).select("id").single();
 
+        if (error) {
+            mensagem.textContent = "Não foi possível salvar a inspeção.";
+            botao.disabled = false;
+            botao.textContent = "💾 Salvar inspeção";
+            return;
+        }
 
-                const botao =
-                    $("salvarButton");
-
-
-                const mensagem =
-                    $("mensagemFormulario");
-
-
-                botao.disabled =
-                    true;
-
-
-                botao.textContent =
-                    "Salvando...";
-
-
-                mensagem.textContent =
-                    "";
-
-
-
-                const obraId =
-                    Number(
-                        $("obra").value
-                    );
-
-
-                const tipo =
-                    $("tipo").value;
-
-
-                const dataInspecao =
-                    $("data").value;
-
-
-                const responsavel =
-                    $("responsavel")
-                        .value
-                        .trim();
-
-
-                const observacao =
-                    $("observacao")
-                        .value
-                        .trim();
-
-
-                const status =
-                    $("status").value;
-
-
-
-                const selectObra =
-                    $("obra");
-
-
-                const obraNome =
-                    selectObra
-                        .options[
-                            selectObra.selectedIndex
-                        ]
-                        ?.text ||
-                    "Obra não identificada";
-
-
-
-                // ==================================
-                // VALIDAR OBRA
-                // ==================================
-
-                if (!obraId) {
-
-                    mensagem.textContent =
-                        "Selecione uma obra antes de salvar.";
-
-
-                    botao.disabled =
-                        false;
-
-
-                    botao.textContent =
-                        "💾 Salvar inspeção";
-
-
-                    return;
-
+        // UPLOAD DAS FOTOS
+        if (fotos.length && inspecao?.id) {
+            const registros = [];
+            for (const [indice, foto] of fotos.entries()) {
+                const caminho = `inspecoes/${inspecao.id}/${Date.now()}-${indice}.jpg`;
+                const upload = await banco.storage.from("inspecao-fotos").upload(caminho, foto.arquivo, { contentType: foto.arquivo.type, upsert: false });
+                if (!upload.error) {
+                    registros.push({ inspecao_id: inspecao.id, caminho, nome_arquivo: foto.arquivo.name, ordem: indice + 1 });
                 }
-
-
-
-                // ==================================
-                // PAYLOAD
-                // ==================================
-
-                const payload = {
-
-                    obra_id:
-                        obraId,
-
-                    tipo:
-                        tipo,
-
-                    data_inspecao:
-                        dataInspecao,
-
-                    responsavel:
-                        responsavel,
-
-                    observacao:
-                        observacao,
-
-                    status:
-                        status
-
-                };
-
-
-
-                // ==================================
-                // SALVAR NO SUPABASE
-                // ==================================
-
-                const {
-
-                    data: inspecao,
-
-                    error
-
-                } =
-                    await banco
-                        .from("inspecoes")
-                        .insert([payload])
-                        .select("id")
-                        .single();
-
-
-
-                if (error) {
-
-                    console.error(
-                        "Erro ao salvar inspeção:",
-                        error
-                    );
-
-
-                    mensagem.textContent =
-                        "Não foi possível salvar a inspeção. Verifique os dados e tente novamente.";
-
-
-                    botao.disabled =
-                        false;
-
-
-                    botao.textContent =
-                        "💾 Salvar inspeção";
-
-
-                    return;
-
-                }
-
-
-
-                // ==================================
-                // UPLOAD DAS FOTOS
-                // ==================================
-
-                if (
-                    fotos.length &&
-                    inspecao?.id
-                ) {
-
-                    const registros = [];
-
-
-                    for (
-                        const [
-                            indice,
-                            foto
-                        ]
-                        of fotos.entries()
-                    ) {
-
-                        const caminho =
-                            `inspecoes/${inspecao.id}/${Date.now()}-${indice}.jpg`;
-
-
-                        const upload =
-                            await banco.storage
-                                .from(
-                                    "inspecao-fotos"
-                                )
-                                .upload(
-                                    caminho,
-                                    foto.arquivo,
-                                    {
-
-                                        contentType:
-                                            foto.arquivo.type,
-
-                                        upsert:
-                                            false
-
-                                    }
-                                );
-
-
-                        if (
-                            !upload.error
-                        ) {
-
-                            registros.push({
-
-                                inspecao_id:
-                                    inspecao.id,
-
-                                caminho:
-                                    caminho,
-
-                                nome_arquivo:
-                                    foto.arquivo.name,
-
-                                ordem:
-                                    indice + 1
-
-                            });
-
-                        }
-
-                        else {
-
-                            console.error(
-                                "Erro ao enviar foto:",
-                                upload.error
-                            );
-
-                        }
-
-                    }
-
-
-
-                    if (
-                        registros.length
-                    ) {
-
-                        const {
-                            error:
-                                erroFotos
-                        } =
-                            await banco
-                                .from(
-                                    "inspecao_fotos"
-                                )
-                                .insert(
-                                    registros
-                                );
-
-
-                        if (
-                            erroFotos
-                        ) {
-
-                            console.error(
-                                "Erro ao registrar fotos:",
-                                erroFotos
-                            );
-
-                        }
-
-                    }
-
-                }
-
-
-
-                // ==================================
-                // NOTIFICAÇÃO AUTOMÁTICA
-                // ==================================
-
-                let prioridade =
-                    "informativo";
-
-
-                let titulo =
-                    "📋 Nova inspeção registrada";
-
-
-                let mensagemNotificacao =
-                    `Uma nova inspeção de ${tipo.toLowerCase()} foi registrada na obra ${obraNome}.`;
-
-
-                let problema =
-                    null;
-
-
-                let impacto =
-                    null;
-
-
-                let recomendacao =
-                    null;
-
-
-
-                // ==================================
-                // REPROVADA
-                // ==================================
-
-                if (
-                    status.toLowerCase() ===
-                    "reprovado"
-                ) {
-
-                    prioridade =
-                        "critico";
-
-
-                    titulo =
-                        "🔴 Inspeção reprovada";
-
-
-                    mensagemNotificacao =
-                        `A inspeção de ${tipo.toLowerCase()} da obra ${obraNome} foi reprovada.`;
-
-
-                    problema =
-                        observacao ||
-                        "A inspeção foi registrada como reprovada.";
-
-
-                    impacto =
-                        "A situação identificada pode exigir correção antes da continuidade da etapa.";
-
-
-                    recomendacao =
-                        "Realizar avaliação técnica e registrar a ação corretiva necessária.";
-
-                }
-
-
-
-                // ==================================
-                // APROVADA
-                // ==================================
-
-                else if (
-                    status.toLowerCase() ===
-                    "aprovado"
-                ) {
-
-                    prioridade =
-                        "concluido";
-
-
-                    titulo =
-                        "🟢 Inspeção aprovada";
-
-
-                    mensagemNotificacao =
-                        `A inspeção de ${tipo.toLowerCase()} da obra ${obraNome} foi aprovada.`;
-
-                }
-
-
-
-                // ==================================
-                // PENDENTE
-                // ==================================
-
-                else {
-
-                    prioridade =
-                        "informativo";
-
-
-                    titulo =
-                        "🟡 Nova inspeção pendente";
-
-
-                    mensagemNotificacao =
-                        `Uma inspeção de ${tipo.toLowerCase()} foi registrada e está aguardando avaliação.`;
-
-
-                    if (observacao) {
-
-                        problema =
-                            observacao;
-
-
-                        impacto =
-                            "A inspeção ainda precisa ser avaliada pela equipe responsável.";
-
-
-                        recomendacao =
-                            "Revisar as evidências e concluir a avaliação técnica.";
-
-                    }
-
-                }
-
-
-
-                // ==================================
-                // SALVAR NOTIFICAÇÃO
-                // ==================================
-
-                const notificacao =
-                    await criarNotificacao({
-
-                        titulo:
-
-                            titulo,
-
-                        mensagem:
-
-                            mensagemNotificacao,
-
-                        categoria:
-
-                            "inspecao",
-
-                        prioridade:
-
-                            prioridade,
-
-                        obra_id:
-
-                            obraId,
-
-                        problema:
-
-                            problema,
-
-                        impacto:
-
-                            impacto,
-
-                        recomendacao:
-
-                            recomendacao
-
-                    });
-
-
-
-                if (!notificacao) {
-
-                    console.warn(
-                        "A inspeção foi salva, mas a notificação não pôde ser criada."
-                    );
-
-                }
-
-
-
-                // ==================================
-                // FINALIZAR
-                // ==================================
-
-                fecharCamera();
-
-
-                alert(
-                    "✅ Inspeção cadastrada com sucesso!"
-                );
-
-
-                window.location.href =
-                    "inspecoes.html";
-
             }
+            if (registros.length) {
+                await banco.from("inspecao_fotos").insert(registros);
+            }
+        }
 
-        );
-
-
-
-    // ======================================
-    // INICIALIZAÇÃO
-    // ======================================
+        fecharCamera();
+        alert("✅ Inspeção cadastrada com sucesso!");
+        window.location.href = "inspecoes.html";
+    });
 
     carregarObras();
-
     renderizarFotos();
-
-
 </script>
-```
 
 </body>
-
 </html>
