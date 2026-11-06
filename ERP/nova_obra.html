@@ -2,78 +2,57 @@
 <html lang="pt-BR">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nova Obra - SmartInspect AI</title>
-
-<link rel="stylesheet" href="css/style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Obra - SmartInspect AI</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 
 <body>
 
+<!-- O MENU VAI CARREGAR AQUI -->
 <div class="menu-container"></div>
 
 <div class="content">
 
-<h1>🏢 Nova Obra</h1>
+    <h1>🏢 Nova Obra</h1>
+    <p>Cadastro de uma nova obra</p>
 
-<p>
-Cadastro de uma nova obra
-</p>
+    <div class="card">
 
-<div class="card">
+        <label>🏢 Nome da Obra</label>
+        <input id="nome" type="text" placeholder="Ex: Residencial Alpha">
 
-<label>
-🏢 Nome da Obra
-</label>
-<input id="nome" type="text" placeholder="Ex: Residencial Alpha">
+        <label>📍 Endereço</label>
+        <input id="endereco" type="text" placeholder="Rua, número, cidade">
 
-<label>
-📍 Endereço
-</label>
-<input id="endereco" type="text" placeholder="Rua, número, cidade">
+        <label>👷 Responsável Técnico</label>
+        <input id="responsavel" type="text" placeholder="Nome do engenheiro/técnico">
 
-<label>
-👷 Responsável Técnico
-</label>
-<input id="responsavel" type="text" placeholder="Nome do engenheiro/técnico">
+        <label>📅 Data de Início</label>
+        <input id="data_inicio" type="date">
 
-<label>
-📅 Data de Início
-</label>
-<input id="data_inicio" type="date">
+        <label>📌 Status</label>
+        <select id="status">
+            <option value="Planejamento">Planejamento</option>
+            <option value="Em andamento">Em andamento</option>
+            <option value="Finalizada">Finalizada</option>
+        </select>
 
-<label>
-📌 Status
-</label>
-<select id="status">
-    <option value="Planejamento">Planejamento</option>
-    <option value="Em andamento">Em andamento</option>
-    <option value="Finalizada">Finalizada</option>
-</select>
+        <br><br>
+        <button onclick="salvarObra()">💾 Salvar Obra</button>
+        <p id="mensagem"></p>
 
-<br><br>
-
-<button onclick="salvarObra()">
-💾 Salvar Obra
-</button>
-
-<p id="mensagem"></p>
-
-</div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
-<!-- REMOVIDO auth.js, configuracoes.js e a função protegerPagina() -->
+<!-- SCRIPT DO MENU DE VOLTA -->
+<script src="js/sidebar.js"></script>
 
 <script>
     async function salvarObra(){
-
         const nome = document.getElementById("nome").value.trim();
         const endereco = document.getElementById("endereco").value.trim();
         const responsavel = document.getElementById("responsavel").value.trim();
@@ -96,7 +75,7 @@ Cadastro de uma nova obra
             responsavel: responsavel,
             data_inicio: data_inicio,
             status: status,
-            criado_por: user ? user.id : null // Usa o ID do auth.users
+            criado_por: user ? user.id : null
         }]);
 
         if(error){
