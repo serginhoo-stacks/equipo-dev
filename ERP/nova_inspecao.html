@@ -38,7 +38,6 @@
     </header>
 
     <form id="formInspecao" class="inspection-layout">
-        <!-- DADOS PRINCIPAIS -->
         <section class="card form-panel">
             <div class="panel-heading">
                 <div>
@@ -89,7 +88,6 @@
             </div>
         </section>
 
-        <!-- FOTOS -->
         <section class="card photo-panel">
             <div class="panel-heading">
                 <div>
@@ -116,7 +114,6 @@
             <p class="photo-note">É possível adicionar até 10 fotos. A captura pela câmera funciona melhor em conexão HTTPS.</p>
         </section>
 
-        <!-- AÇÕES -->
         <div class="form-actions">
             <a class="secondary-button" href="inspecoes.html">Cancelar</a>
             <button type="submit" class="primary-button" id="salvarButton">💾 Salvar inspeção</button>
@@ -125,7 +122,6 @@
     </form>
 </main>
 
-<!-- MODAL DA CÂMERA -->
 <div class="camera-modal" id="cameraModal" hidden>
     <div class="camera-dialog" role="dialog" aria-modal="true" aria-labelledby="cameraTitle">
         <div class="camera-dialog-header">
@@ -144,7 +140,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
-<!-- REMOVIDO: configuracoes.js, auth.js e notificacoes.js -->
+<!-- REMOVIDO: auth.js, configuracoes.js, notificacoes.js -->
 
 <script>
     // REMOVIDO: verificarLogin();
