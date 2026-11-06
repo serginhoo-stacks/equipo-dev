@@ -63,7 +63,7 @@ border-bottom:1px solid #ddd;
 
 
 
-button{
+button, .btn-voltar {
 padding:12px 20px;
 border:none;
 border-radius:10px;
@@ -71,12 +71,25 @@ background:#0066cc;
 color:white;
 cursor:pointer;
 margin-top:10px;
+font-weight: bold;
+text-decoration: none;
+display: inline-block;
+transition: 0.2s;
+}
+
+button:hover, .btn-voltar:hover {
+background: #004b99;
+transform: translateY(-2px);
 }
 
 
-
-.voltar{
+.btn-voltar {
 background:#555;
+margin-bottom: 20px;
+}
+
+.btn-voltar:hover {
+background: #333;
 }
 
 
@@ -96,11 +109,10 @@ background:#555;
 <div class="content">
 
 
-<button class="voltar" onclick="history.back()">
-
-⬅ Voltar
-
-</button>
+<!-- BOTÃO DE VOLTAR PARA O PAINEL DO USUÁRIO -->
+<a href="../login.html" class="btn-voltar">
+    ⬅ Voltar ao Painel
+</a>
 
 
 <h1>👤 Meu Perfil</h1>
@@ -242,7 +254,6 @@ accept="image/*"
 <script src="js/supabase.js"></script>
 
 <script src="js/sidebar.js"></script>
-<!-- REMOVIDO: configuracoes.js e auth.js -->
 
 <script>
 
@@ -263,7 +274,7 @@ const {data:{user}} = await banco.auth.getUser();
 
 if(!user){
 
-window.location.href="login.html";
+window.location.href="../login.html";
 return;
 
 }
