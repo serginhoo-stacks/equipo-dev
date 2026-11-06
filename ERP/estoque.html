@@ -80,32 +80,13 @@
                 <p>📌 <strong>Status:</strong> ${item.status || "Disponível"}</p>
                 
                 <div class="estoque-actions">
-                    <button onclick="movimentarEstoque(${item.id})">🔄 Movimentar</button>
-                    <button onclick="editarMaterial(${item.id})">✏️ Editar</button>
-                    <button onclick="verLogs(${item.id})">📋 Logs</button>
+                    <button onclick="window.location.href='movimentar_estoque.html?id=${item.id}'">🔄 Movimentar</button>
+                    <button onclick="window.location.href='novo_estoque.html?id=${item.id}'">✏️ Editar</button>
+                    <button onclick="window.location.href='logs_estoque.html?id=${item.id}'">📋 Logs</button>
                     <button onclick="excluirMaterial(${item.id})">🗑 Excluir</button>
                 </div>
             </div>`;
         });
-    }
-
-    // AQUI ESTÁ A MÁGICA: Passando o token para as outras páginas não pedirem login
-    async function movimentarEstoque(id){ 
-        const {data} = await banco.auth.getSession();
-        const token = data.session ? data.session.access_token : '';
-        window.location.href = `movimentar_estoque.html?id=${id}&token=${token}`; 
-    }
-    
-    async function verLogs(id){ 
-        const {data} = await banco.auth.getSession();
-        const token = data.session ? data.session.access_token : '';
-        window.location.href = `logs_estoque.html?id=${id}&token=${token}`; 
-    }
-    
-    async function editarMaterial(id){ 
-        const {data} = await banco.auth.getSession();
-        const token = data.session ? data.session.access_token : '';
-        window.location.href = `novo_estoque.html?id=${id}&token=${token}`; 
     }
 
     async function excluirMaterial(id){
