@@ -15,387 +15,112 @@
 
 <body>
 
-
 <!-- SIDEBAR PADRÃO -->
-
 <div class="menu-container"></div>
-
-
 
 <div class="content">
 
-
 <h1>🏠 Imóveis</h1>
 
-<p>
-Lista de imóveis cadastrados
-</p>
-
-
+<p>Lista de imóveis cadastrados</p>
 
 <button onclick="location.href='novo_imovel.html'">
-
 ➕ Novo Imóvel
-
 </button>
-
-
-
 
 <div id="listaImoveis">
-
-
-<p>
-Carregando imóveis...
-</p>
-
-
+<p>Carregando imóveis...</p>
 </div>
 
-
-
 </div>
-
-
-
-
-
 
 <footer class="rodape">
-
-
-<p>
-🚀 SmartInspect AI
-</p>
-
-
-<p>
-Desenvolvido por <strong>Sérgio and Gabriel</strong>
-</p>
-
-
-<p>
-Versão 1.0.1
-</p>
-
-
+<p>🚀 SmartInspect AI</p>
+<p>Desenvolvido por <strong>Sérgio and Gabriel</strong></p>
+<p>Versão 1.0.1</p>
 </footer>
 
-
-
-
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="js/supabase.js"></script>
-
-<script src="js/configuracoes.js"></script>
-<script src="js/auth.js"></script>
-
 <script src="js/sidebar.js"></script>
 
-
-
-
-
 <script>
-
-
-verificarLogin();
-
-
-
-
-
-async function carregarImoveis(){
-
-
-
-const {data,error}=await banco
-
-.from("imoveis")
-
-.select(`
-
-*,
-
-obras(
-
-nome
-
-)
-
-`)
-
-.order("id",{ascending:false});
-
-
-
-
-
-const lista=document.getElementById("listaImoveis");
-
-
-
-
-if(error){
-
-console.log(error);
-
-lista.innerHTML="❌ Erro ao carregar imóveis";
-
-return;
-
-}
-
-
-
-
-
-if(!data || data.length===0){
-
-
-lista.innerHTML="Nenhum imóvel cadastrado";
-
-
-return;
-
-
-}
-
-
-
-
-
-lista.innerHTML="";
-
-
-
-
-
-data.forEach(imovel=>{
-
-
-lista.innerHTML += `
-
-
-
-<div class="card">
-
-
-
-
-
-${imovel.foto ?
-
-`
-
-<img src="${imovel.foto}"
-
-style="width:220px;height:150px;object-fit:cover;border-radius:12px;">
-
-`
-
-:
-
-`
-
-<p>📷 Sem foto</p>
-
-`
-
-}
-
-
-
-
-
-
-<h2>
-
-🏠 ${imovel.nome}
-
-</h2>
-
-
-
-
-
-<p>
-
-🏢 Obra:
-
-${imovel.obras ? imovel.obras.nome : "Sem obra"}
-
-</p>
-
-
-
-
-
-<p>
-
-🏷 Tipo:
-
-${imovel.tipo || ""}
-
-</p>
-
-
-
-
-
-<p>
-
-📍 Endereço:
-
-${imovel.endereco || ""}
-
-</p>
-
-
-
-
-
-<p>
-
-👤 Cliente:
-
-${imovel.cliente || ""}
-
-</p>
-
-
-
-
-
-<p>
-
-📌 Status:
-
-${imovel.status || ""}
-
-</p>
-
-
-
-
-
-<p>
-
-📝 Observação:
-
-${imovel.observacao || "Sem observação"}
-
-</p>
-
-
-
-
-
-<br>
-
-
-
-<button onclick="excluirImovel(${imovel.id})">
-
-🗑 Excluir
-
-</button>
-
-
-
-
-</div>
-
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-async function excluirImovel(id){
-
-
-const confirmar = confirm(
-
-"Tem certeza que deseja excluir este imóvel?"
-
-);
-
-
-
-if(!confirmar) return;
-
-
-
-
-
-const {error}=await banco
-
-.from("imoveis")
-
-.delete()
-
-.eq("id",id);
-
-
-
-
-
-if(error){
-
-console.log(error);
-
-alert("❌ Erro ao excluir");
-
-return;
-
-}
-
-
-
-
-alert("✅ Imóvel excluído");
-
-
-carregarImoveis();
-
-
-
-}
-
-
-
-
-
-
-
-carregarImoveis();
-
-
-
+    // NÃO CHAMA MAIS O verificarLogin()
+
+    async function carregarImoveis(){
+
+        const {data,error}=await banco
+        .from("imoveis")
+        .select(`
+            *,
+            obras(
+                nome
+            )
+        `)
+        .order("id",{ascending:false});
+
+        const lista=document.getElementById("listaImoveis");
+
+        if(error){
+            console.log(error);
+            lista.innerHTML="❌ Erro ao carregar imóveis";
+            return;
+        }
+
+        if(!data || data.length===0){
+            lista.innerHTML="Nenhum imóvel cadastrado";
+            return;
+        }
+
+        lista.innerHTML="";
+
+        data.forEach(imovel=>{
+
+            lista.innerHTML += `
+            <div class="card">
+                ${imovel.foto ? 
+                    `<img src="${imovel.foto}" style="width:220px;height:150px;object-fit:cover;border-radius:12px;">` 
+                    : `<p>📷 Sem foto</p>`
+                }
+                <h2>🏠 ${imovel.nome}</h2>
+                <p>🏢 Obra: ${imovel.obras ? imovel.obras.nome : "Sem obra"}</p>
+                <p>🏷 Tipo: ${imovel.tipo || ""}</p>
+                <p>📍 Endereço: ${imovel.endereco || ""}</p>
+                <p>👤 Cliente: ${imovel.cliente || ""}</p>
+                <p>📌 Status: ${imovel.status || ""}</p>
+                <p>📝 Observação: ${imovel.observacao || "Sem observação"}</p>
+                <br>
+                <button onclick="excluirImovel(${imovel.id})">🗑 Excluir</button>
+            </div>
+            `;
+
+        });
+
+    }
+
+    async function excluirImovel(id){
+
+        const confirmar = confirm("Tem certeza que deseja excluir este imóvel?");
+        if(!confirmar) return;
+
+        const {error}=await banco
+        .from("imoveis")
+        .delete()
+        .eq("id",id);
+
+        if(error){
+            console.log(error);
+            alert("❌ Erro ao excluir");
+            return;
+        }
+
+        alert("✅ Imóvel excluído");
+        carregarImoveis();
+
+    }
+
+    carregarImoveis();
 </script>
 
-
-
 </body>
-
 </html>
