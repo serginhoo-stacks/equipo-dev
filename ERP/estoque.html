@@ -46,7 +46,6 @@
             return;
         }
 
-        // 1. Busca o nome e a quantidade atual do material
         const { data: material } = await banco.from("estoque").select("material, quantidade, unidade").eq("id", estoqueId).single();
         
         if (material) {
@@ -55,7 +54,6 @@
             document.getElementById("saldoMaterial").textContent = `Saldo atual: ${material.quantidade} ${material.unidade || 'un'}`;
         }
 
-        // 2. Busca os logs
         const { data, error } = await banco
             .from("movimentacoes_estoque")
             .select("*")
