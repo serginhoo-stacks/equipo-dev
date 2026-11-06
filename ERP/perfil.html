@@ -14,105 +14,69 @@
 <style>
 
 .perfil-box{
-
 max-width:500px;
 margin:auto;
-
 }
 
 
 .card-perfil{
-
 background:white;
-
 padding:30px;
-
 border-radius:20px;
-
 box-shadow:0 5px 20px #0002;
-
 text-align:center;
-
 }
 
 
 
 .foto-perfil{
-
 width:150px;
-
 height:150px;
-
 border-radius:50%;
-
 object-fit:cover;
-
 border:4px solid #0066cc;
-
 }
 
 
 
 .cargo{
-
 display:inline-block;
-
 background:#0066cc;
-
 color:white;
-
 padding:8px 20px;
-
 border-radius:20px;
-
 }
 
 
 
 .info{
-
 text-align:left;
-
 margin-top:20px;
-
 }
 
 
 
 .info p{
-
 padding:10px;
-
 border-bottom:1px solid #ddd;
-
 }
 
 
 
 button{
-
 padding:12px 20px;
-
 border:none;
-
 border-radius:10px;
-
 background:#0066cc;
-
 color:white;
-
 cursor:pointer;
-
 margin-top:10px;
-
 }
 
 
 
 .voltar{
-
 background:#555;
-
 }
 
 
@@ -260,7 +224,6 @@ accept="image/*"
 
 </div>
 
-
 </div>
 
 
@@ -279,17 +242,12 @@ accept="image/*"
 <script src="js/supabase.js"></script>
 
 <script src="js/sidebar.js"></script>
-
-<script src="js/configuracoes.js"></script>
-<script src="js/auth.js"></script>
-
-
+<!-- REMOVIDO: configuracoes.js e auth.js -->
 
 <script>
 
 
 let usuarioAtual=null;
-
 
 
 
@@ -306,10 +264,10 @@ const {data:{user}} = await banco.auth.getUser();
 if(!user){
 
 window.location.href="login.html";
-
 return;
 
 }
+
 
 
 
@@ -337,9 +295,7 @@ const {data,error}=await banco
 if(error){
 
 console.log(error);
-
 alert("Erro ao carregar usuário");
-
 return;
 
 }
@@ -395,6 +351,8 @@ data.status || "ativo";
 
 
 
+
+
 if(data.foto_url){
 
 
@@ -433,13 +391,14 @@ document.getElementById("foto").files[0];
 
 
 
+
 if(!arquivo){
 
 alert("Selecione uma foto");
-
 return;
 
 }
+
 
 
 
@@ -456,7 +415,6 @@ const {data:{user}} = await banco.auth.getUser();
 if(!user){
 
 alert("Usuário não encontrado");
-
 return;
 
 }
@@ -466,9 +424,12 @@ return;
 
 
 
+
+
 const nomeArquivo =
 
 `${user.id}/${Date.now()}-${arquivo.name}`;
+
 
 
 
@@ -502,17 +463,17 @@ upsert:true
 
 
 
+
 if(uploadError){
 
 
 console.log(uploadError);
-
 alert("Erro ao enviar foto");
-
 return;
 
 
 }
+
 
 
 
@@ -534,9 +495,11 @@ const {data:urlData}=banco.storage
 
 
 
+
 const fotoUrl =
 
 urlData.publicUrl;
+
 
 
 
@@ -564,13 +527,12 @@ foto_url:fotoUrl
 
 
 
+
 if(updateError){
 
 
 console.log(updateError);
-
 alert("Erro ao salvar foto");
-
 return;
 
 
@@ -582,9 +544,13 @@ return;
 
 
 
+
+
 document.getElementById("fotoPerfil").src=
 
 fotoUrl;
+
+
 
 
 
@@ -614,8 +580,6 @@ alert("✅ Foto salva com sucesso!");
 
 
 }
-
-
 
 
 
