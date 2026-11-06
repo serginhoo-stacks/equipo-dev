@@ -1,115 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Obras - SmartInspect AI</title>
-
-<link rel="stylesheet" href="css/style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obras - SmartInspect AI</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
-
 <body>
 
-<div class="menu-container"></div>
+    <!-- O MENU VAI SER INJETADO AQUI -->
+    <div class="menu-container"></div>
 
-<div class="content">
+    <div class="content">
+        <h1>🏢 Obras</h1>
+        <p>Gerenciamento das obras cadastradas</p>
 
-<h1>🏢 Obras</h1>
+        <button onclick="location.href='nova_obra.html'">➕ Nova Obra</button>
 
-<p>
-Gerenciamento das obras cadastradas
-</p>
+        <div id="listaObras"><p>Carregando obras...</p></div>
+    </div>
 
-<button onclick="location.href='nova_obra.html'">
-➕ Nova Obra
-</button>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/sidebar.js"></script>
 
-<div id="listaObras">
-<p>Carregando obras...</p>
-</div>
+    <script>
+        async function carregarObras(){
+            const {data,error}=await banco.from("obras").select("*").order("id",{ascending:false});
+            const lista=document.getElementById("listaObras");
 
-</div>
+            if(error){ lista.innerHTML="❌ Erro ao carregar obras"; return; }
+            if(!data || data.length===0){ lista.innerHTML="Nenhuma obra cadastrada"; return; }
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<!-- REMOVIDO O js/sidebar.js PARA EVITAR O LOGIN -->
-
-<script>
-    // NÃO CHAMA MAIS O verificarLogin()
-
-    async function carregarObras(){
-
-        const {data,error}=await banco
-        .from("obras")
-        .select("*")
-        .order("id",{ascending:false});
-
-        const lista=document.getElementById("listaObras");
-
-        if(error){
-            console.log(error);
-            lista.innerHTML="❌ Erro ao carregar obras";
-            return;
+            lista.innerHTML="";
+            data.forEach(obra=>{
+                lista.innerHTML += `
+                <div class="card">
+                    <h2>🏢 ${obra.nome}</h2>
+                    <p>📍 Endereço: ${obra.endereco || "Não informado"}</p>
+                    <p>👷 Responsável: ${obra.responsavel || "Não informado"}</p>
+                    <p>📌 Status: ${obra.status || "Ativa"}</p>
+                    <br>
+                    <button onclick="verObra(${obra.id})">👁 Ver detalhes</button>
+                    <button onclick="excluirObra(${obra.id})">🗑 Excluir</button>
+                </div>`;
+            });
         }
 
-        if(!data || data.length===0){
-            lista.innerHTML="Nenhuma obra cadastrada";
-            return;
+        function verObra(id){ window.location.href="detalhes_obra.html?id="+id; }
+
+        async function excluirObra(id){
+            if(!confirm("Deseja excluir esta obra?")) return;
+            await banco.from("obras").delete().eq("id",id);
+            carregarObras();
         }
 
-        lista.innerHTML="";
-
-        data.forEach(obra=>{
-
-            lista.innerHTML += `
-            <div class="card">
-                <h2>🏢 ${obra.nome}</h2>
-                <p>📍 Endereço: ${obra.endereco || "Não informado"}</p>
-                <p>👷 Responsável: ${obra.responsavel || "Não informado"}</p>
-                <p>📅 Início: ${obra.inicio || "-"}</p>
-                <p>📌 Status: ${obra.status || "Ativa"}</p>
-                <br>
-                <button onclick="verObra(${obra.id})">👁 Ver detalhes</button>
-                <button onclick="excluirObra(${obra.id})">🗑 Excluir</button>
-            </div>
-            `;
-
-        });
-
-    }
-
-    function verObra(id){
-        window.location.href="detalhes_obra.html?id="+id;
-    }
-
-    async function excluirObra(id){
-
-        const confirmar = confirm("Deseja excluir esta obra?");
-        if(!confirmar)return;
-
-        const {error}=await banco
-        .from("obras")
-        .delete()
-        .eq("id",id);
-
-        if(error){
-            console.log(error);
-            alert("Erro ao excluir");
-            return;
-        }
-
-        alert("Obra excluída");
         carregarObras();
-
-    }
-
-    carregarObras();
-</script>
-
+    </script>
 </body>
 </html>
