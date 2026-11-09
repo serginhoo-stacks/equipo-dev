@@ -15,14 +15,28 @@
   </style>
 </head>
 <body hidden>
-  <header class="topbar"><a class="brand" href="./painel-pessoal.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a><div class="top-actions"><span class="session" id="sessionLabel">Verificando sessão…</span><a class="button" href="./painel-pessoal.html">← Voltar ao painel</a><button id="logoutButton" class="button" type="button">Sair</button></div></header>
-  <main class="page" hidden id="plansPage"><section class="headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Planos e assinaturas</h1><p class="lead">Escolha a estrutura que melhor acompanha o crescimento da sua operação. Os planos abaixo são carregados diretamente do seu projeto.</p></div><a class="button primary" href="./painel-pessoal.html">Ir para o painel →</a></section><div id="status" class="status">Carregando planos…</div><section id="plans" class="plans" aria-live="polite"></section></main>
+<header class="topbar">
+    <a class="brand" href="./index.html">
+        <span class="brand-mark"><img src="./imagens/logo.png" alt=""></span>
+        <strong>SmartInspect <b>AI</b></strong>
+    </a>
+    <div class="top-actions">
+        <a class="button primary" href="./login.html">Entrar</a>
+    </div>
+</header>
+  <main class="page" hidden id="plansPage"><section class="headline"><div><p class="eyebrow">SMARTINSPECT AI</p><h1>Planos e assinaturas</h1><p class="lead">Escolha a estrutura que melhor acompanha o crescimento da sua operação.</p></div></section><section id="plans" class="plans" aria-live="polite"></section></main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./js/supabase.js"></script>
   <script>
     (()=>{
       "use strict";
       const $=id=>document.getElementById(id), db=window.banco;
-      const status=(text,error=false)=>{const el=$("status");el.textContent=text;el.className="status"+(error?" error":"");};
+      const status = (text, error = false) => {
+    const el = $("status");
+    if (el) {
+        el.textContent = text;
+        el.className = "status" + (error ? " error" : "");
+    }
+};
       const parseDetails=(value)=>{if(value&&typeof value==="object")return value;if(typeof value!=="string")return {};try{const parsed=JSON.parse(value);return parsed&&typeof parsed==="object"?parsed:{descricao:value};}catch{return value?{descricao:value}:{}}};
       const defaultPlans=[
         {id:"essencial",nome:"Plano Essencial",preco:0,periodicidade:"mensal",recursos:{descricao:"Para começar a organizar sua operação com segurança e simplicidade.",imagem:"./imagens/image2.png",recursos:["Perfil e autenticação","Painel pessoal","Acesso ao chat","Suporte à estrutura futura"]}},
@@ -31,9 +45,36 @@
       ];
       const money=value=>{if(value===null||value===undefined||value==="")return "Preço não definido";const n=Number(value);return Number.isFinite(n)?n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}):String(value);};
       const render=(rows)=>{const box=$("plans");box.replaceChildren();if(!rows.length){const empty=document.createElement("div");empty.className="empty";empty.textContent="Nenhum plano está disponível no momento.";box.append(empty);return;}for(const plan of rows){const details=parseDetails(plan.recursos),card=document.createElement("article");card.className="plan";const cover=document.createElement("div");cover.className="plan-cover";if(details.imagem_url||details.imagem){const image=document.createElement("img");image.src=details.imagem_url||details.imagem;image.alt="Imagem do plano "+(plan.nome||"");cover.append(image);}else{const symbol=document.createElement("span");symbol.className="plan-symbol";symbol.textContent=(plan.nome||"P").trim().charAt(0).toUpperCase();cover.append(symbol);}const body=document.createElement("div");body.className="plan-body";const title=document.createElement("h2");title.textContent=plan.nome||"Plano SmartInspect";const description=document.createElement("p");description.className="plan-description";description.textContent=details.descricao||details.description||"Estrutura configurável para sua operação.";const price=document.createElement("div");price.className="price";price.textContent=money(plan.preco);if(plan.preco!==null&&plan.preco!==undefined&&plan.preco!==""){const period=document.createElement("small");period.textContent="/ "+(plan.periodicidade||"período");price.append(period);}const list=document.createElement("ul");list.className="features";const features=Array.isArray(details)?details:Array.isArray(details.recursos)?details.recursos:Array.isArray(details.features)?details.features:[];for(const item of features.slice(0,8)){const li=document.createElement("li");li.textContent=typeof item==="object"?(item.nome||item.name||item.text||""):String(item);if(li.textContent)list.append(li);}if(!list.children.length){const li=document.createElement("li");li.textContent="Acesso aos recursos autorizados do plano";list.append(li);}const button=document.createElement("a");button.className="button primary";button.href="./painel-pessoal.html";button.textContent="Continuar pelo painel";body.append(title,description,price,list,button);card.append(cover,body);box.append(card);}};
-      async function init(){if(!db||!window.supabaseConfigStatus?.pronto){location.replace("./login.html");return;}const session=await db.auth.getSession();if(session.error||!session.data.session?.user){location.replace("./login.html");return;}$("sessionLabel").textContent="Sessão protegida";document.body.hidden=false;$("plansPage").hidden=false;$("logoutButton").onclick=async()=>{await db.auth.signOut();location.replace("./login.html")};const result=await db.from("planos").select("id,nome,preco,periodicidade,recursos,ativo").eq("ativo",true).order("preco",{ascending:true});const rows=result.error||!result.data?.length?defaultPlans:result.data;render(rows);status(result.error?"Exibindo os planos iniciais enquanto a tabela é configurada.":"Planos disponíveis para sua conta.");}
-      init().catch(error=>{console.error(error);location.replace("./login.html")});
-    })();
+      //****** Versão pública da Página Planos(sem verificação de login)*****
+       document.body.hidden = false;
+       document.getElementById("plansPage").hidden = false;
+      //**********************************************************************
+async function init() {
+    // Torna a página visível
+    document.body.hidden = false;
+    const plansPage = document.getElementById("plansPage");
+    if (plansPage) plansPage.hidden = false;
+
+    // Tenta buscar do Supabase, mas usa os defaultPlans se falhar
+    let rows = defaultPlans;
+    try {
+        const result = await db.from("planos").select("id,nome,preco,periodicidade,recursos,ativo").eq("ativo", true).order("preco", { ascending: true });
+        if (!result.error && result.data && result.data.length > 0) {
+            rows = result.data;
+        }
+    } catch (e) {
+        console.warn("Usando planos padrão (banco indisponível).");
+    }
+
+    render(rows);}
+
+// Executa a inicialização
+init().catch(error => {
+    console.error(error);
+    // Mesmo com erro, tenta renderizar os planos padrão
+    render(defaultPlans);
+    status("Exibindo os planos iniciais.");
+});    })();
   </script>
 </body>
 </html>
