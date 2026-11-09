@@ -4,7 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obras - SmartInspect AI</title>
+    
+    <!-- Importando a fonte e o CSS base -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS customizado para aplicar a mesma identidade visual do site -->
+    <style>
+        /* Fundo azul com a imagem (igual ao index) */
+        body {
+            background-color: #054F77 !important;
+            background-image: url('../imagens/fundo.png') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Ajuste do conteúdo principal para não ficar embaixo do menu */
+        .content {
+            margin-left: 260px; 
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Título com brilho */
+        .content h1 { color: #ffffff; text-shadow: 0 0 10px rgba(92, 236, 255, 0.4); }
+        .content p { color: #b0cde6; margin-bottom: 20px; }
+
+        /* Botão principal com visual neon */
+        .content > button {
+            background: linear-gradient(135deg, #5cecff, #008cff);
+            color: #03111d;
+            font-weight: 800;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(92, 236, 255, 0.3);
+            transition: 0.3s;
+        }
+        .content > button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(92, 236, 255, 0.6);
+        }
+
+        /* Cards de Obras (Vidro Fumê azulado) */
+        .card {
+            background: rgba(13, 28, 50, 0.75) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(92, 236, 255, 0.3) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+            color: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(92, 236, 255, 0.8) !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(92, 236, 255, 0.2) !important;
+            transform: translateY(-2px);
+        }
+
+        /* Textos de dentro do card */
+        .card h2 { color: #5cecff; margin-bottom: 10px; text-shadow: 0 0 5px rgba(92, 236, 255, 0.3); }
+        .card p { color: #b0cde6; margin-bottom: 5px; font-size: 14px; }
+
+        /* Botões de dentro do card (Ver detalhes e Excluir) */
+        .card button {
+            background: rgba(92, 236, 255, 0.1);
+            color: #5cecff;
+            border: 1px solid rgba(92, 236, 255, 0.4);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .card button:hover {
+            background: rgba(92, 236, 255, 0.2);
+            box-shadow: 0 0 15px rgba(92, 236, 255, 0.4);
+        }
+
+        /* Responsividade */
+        @media(max-width: 900px) {
+            .content { margin-left: 0; padding: 20px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -29,8 +122,8 @@
             const {data,error}=await banco.from("obras").select("*").order("id",{ascending:false});
             const lista=document.getElementById("listaObras");
 
-            if(error){ lista.innerHTML="❌ Erro ao carregar obras"; return; }
-            if(!data || data.length===0){ lista.innerHTML="Nenhuma obra cadastrada"; return; }
+            if(error){ lista.innerHTML="<p style='color:#ff5a70;'>❌ Erro ao carregar obras</p>"; return; }
+            if(!data || data.length===0){ lista.innerHTML="<p style='color:#b0cde6;'>Nenhuma obra cadastrada</p>"; return; }
 
             lista.innerHTML="";
             data.forEach(obra=>{
