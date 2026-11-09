@@ -1,151 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Meu Perfil - SmartInspect AI</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-<style>
-.perfil-box{ max-width:500px; margin:auto; }
-.card-perfil{ background:white; padding:30px; border-radius:20px; box-shadow:0 5px 20px #0002; text-align:center; }
-.foto-perfil{ width:150px; height:150px; border-radius:50%; object-fit:cover; border:4px solid #0066cc; }
-.cargo{ display:inline-block; background:#0066cc; color:white; padding:8px 20px; border-radius:20px; }
-.info{ text-align:left; margin-top:20px; }
-.info p{ padding:10px; border-bottom:1px solid #ddd; }
-
-button, .btn-voltar {
-    padding:12px 20px; border:none; border-radius:10px; background:#0066cc; color:white; 
-    cursor:pointer; margin-top:10px; font-weight: bold; text-decoration: none;
-    display: inline-block; transition: 0.2s;
-}
-button:hover, .btn-voltar:hover { background: #004b99; transform: translateY(-2px); }
-.btn-voltar { background:#555; margin-bottom: 20px; }
-.btn-voltar:hover { background: #333; }
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando...</title>
+    <style>
+        body {
+            display: flex; align-items: center; justify-content: center; height: 100vh;
+            background: #054F77; color: white; font-family: 'Inter', sans-serif;
+            flex-direction: column; gap: 20px;
+        }
+        .loader {
+            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1);
+            border-top-color: #5cecff; border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+    <script>
+        // Assim que a página carregar, redireciona direto para o painel pessoal na raiz
+        document.addEventListener("DOMContentLoaded", () => {
+            window.location.href = "../painel-pessoal.html";
+        });
+    </script>
 </head>
-
 <body>
-
-<div class="menu-container"></div>
-
-<div class="content">
-
-<!-- BOTÃO DE VOLTAR PARA O PAINEL PESSOAL NA RAIZ -->
-<a href="../painel-pessoal.html" class="btn-voltar">
-    ⬅ Voltar ao Painel
-</a>
-
-<h1>👤 Meu Perfil</h1>
-
-<div class="perfil-box">
-    <div class="card-perfil">
-        <img id="fotoPerfil" class="foto-perfil" src="imagens/avatar.png" onerror="this.src='imagens/logo.png'">
-        
-        <h2 id="nome">Carregando...</h2>
-        <span id="cargo" class="cargo"></span>
-
-        <div class="info">
-            <p>📧 Email:<br><span id="email"></span></p>
-            <p>🆔 ID:<br><span id="idUsuario"></span></p>
-            <p>🟢 Status:<br><span id="status"></span></p>
-        </div>
-
-        <input type="file" id="foto" accept="image/*">
-        <br>
-        <button onclick="salvarFoto()">📷 Alterar foto</button>
-    </div>
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/sidebar.js"></script>
-
-<script>
-let usuarioAtual = null;
-
-async function carregarPerfil(){
-    const { data: { user } } = await banco.auth.getUser();
-
-    // Se não achar usuário, manda pro painel
-    if(!user){
-        window.location.href = "../painel-pessoal.html";
-        return;
-    }
-
-    const { data, error } = await banco.from("usuarios").select("*").eq("auth_id", user.id).single();
-
-    if(error){
-        console.log(error);
-        alert("Erro ao carregar usuário");
-        return;
-    }
-
-    usuarioAtual = data;
-
-    document.getElementById("nome").innerHTML = data.nome || "Sem nome";
-    document.getElementById("email").innerHTML = data.email || "";
-    document.getElementById("cargo").innerHTML = data.nivel_acesso || "usuario";
-    document.getElementById("idUsuario").innerHTML = data.id;
-    document.getElementById("status").innerHTML = data.status || "ativo";
-
-    if(data.foto_url){
-        document.getElementById("fotoPerfil").src = data.foto_url;
-    }
-}
-
-async function salvarFoto(){
-    const arquivo = document.getElementById("foto").files[0];
-
-    if(!arquivo){
-        alert("Selecione uma foto");
-        return;
-    }
-
-    const { data: { user } } = await banco.auth.getUser();
-
-    if(!user){
-        alert("Usuário não encontrado");
-        return;
-    }
-
-    const nomeArquivo = `${user.id}/${Date.now()}-${arquivo.name}`;
-
-    const { error: uploadError } = await banco.storage.from("fotos").upload(nomeArquivo, arquivo, { upsert: true });
-
-    if(uploadError){
-        console.log(uploadError);
-        alert("Erro ao enviar foto");
-        return;
-    }
-
-    const { data: urlData } = banco.storage.from("fotos").getPublicUrl(nomeArquivo);
-    const fotoUrl = urlData.publicUrl;
-
-    const { error: updateError } = await banco.from("usuarios").update({ foto_url: fotoUrl }).eq("auth_id", user.id);
-
-    if(updateError){
-        console.log(updateError);
-        alert("Erro ao salvar foto");
-        return;
-    }
-
-    document.getElementById("fotoPerfil").src = fotoUrl;
-    usuarioAtual.foto_url = fotoUrl;
-    localStorage.setItem("usuario", JSON.stringify(usuarioAtual));
-
-    alert("✅ Foto salva com sucesso!");
-}
-
-carregarPerfil();
-</script>
-
+    <div class="loader"></div>
+    <h2>Voltando para o seu painel...</h2>
 </body>
 </html>
