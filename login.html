@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-    <link rel="icon" type="image/png" href="./imagens/favicon.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#050b18">
+    <link rel="icon" type="image/png" href="./imagens/favicon.png">
     <title>Entrar — SmartInspect AI</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,12 +34,13 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            isolation: isolate;
         }
 
         .bg-container {
             position: fixed;
             inset: -5%;
-            z-index: -1;
+            z-index: -2;
             transition: transform 0.1s ease-out;
             will-change: transform;
             pointer-events: none;
@@ -57,7 +58,7 @@
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: 
+            background:
                 radial-gradient(circle at 10% 20%, rgba(34, 157, 255, 0.15), transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(155, 124, 255, 0.1), transparent 40%),
                 linear-gradient(135deg, rgba(5, 11, 24, 0.9), rgba(5, 11, 24, 0.7));
@@ -72,7 +73,7 @@
             gap: 60px;
             align-items: center;
             position: relative;
-            z-index: 10;
+            z-index: 1;
         }
 
         .auth-intro {
@@ -96,19 +97,11 @@
         }
 
         .auth-brand-mark {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: rgba(92, 236, 255, 0.1);
-            border: 1px solid var(--si-border-hover);
-            color: var(--si-cyan);
-            box-shadow: 0 0 20px rgba(92, 236, 255, 0.2);
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            flex-shrink: 0;
         }
-
-        .auth-brand-mark svg { width: 22px; height: 22px; }
 
         .auth-eyebrow {
             font-size: 12px;
@@ -128,42 +121,14 @@
         .auth-intro h1 span {
             background: linear-gradient(90deg, var(--si-cyan), var(--si-blue));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .auth-intro-copy {
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--si-muted);
-            max-width: 400px;
-        }
-
-        .auth-feature-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 10px;
-        }
-
-        .auth-feature-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            color: #d8eaf4;
-            font-weight: 400;
-        }
-
-        .auth-feature-list svg {
-            width: 18px;
-            height: 18px;
-            color: var(--si-cyan);
-            background: rgba(92, 236, 255, 0.1);
-            border-radius: 50%;
-            padding: 3px;
-            flex-shrink: 0;
-        }
+        .auth-intro-copy { font-size: 16px; line-height: 1.6; color: var(--si-muted); max-width: 400px; }
+        .auth-feature-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
+        .auth-feature-list li { display: flex; align-items: center; gap: 12px; font-size: 14px; color: #d8eaf4; font-weight: 400; }
+        .auth-feature-list svg { width: 18px; height: 18px; color: var(--si-cyan); background: rgba(92, 236, 255, 0.1); border-radius: 50%; padding: 3px; flex-shrink: 0; }
 
         .auth-card {
             background: var(--si-surface);
@@ -182,56 +147,42 @@
 
         .auth-card h2 { font-size: 28px; letter-spacing: -0.5px; margin-bottom: 8px; }
         .auth-card-lead { font-size: 14px; color: var(--si-muted); margin-bottom: 30px; }
-
         .auth-form { display: flex; flex-direction: column; gap: 20px; }
         .auth-field { display: flex; flex-direction: column; gap: 8px; }
         .auth-field label { font-size: 12px; font-weight: 600; color: #d8eaf4; letter-spacing: 0.5px; }
-        .auth-field input {
-            width: 100%; height: 48px; padding: 0 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--si-border);
-            border-radius: 12px; color: white; font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .auth-field input:focus {
-            outline: none; border-color: var(--si-cyan);
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 0 3px rgba(92, 236, 255, 0.15);
-        }
-
-        .auth-form-row {
-            display: flex; align-items: center; justify-content: space-between;
-            font-size: 12px; flex-wrap: wrap; gap: 10px;
-        }
-
+        .auth-field input:not([type="checkbox"]) { width: 100%; height: 48px; padding: 0 16px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--si-border); border-radius: 12px; color: white; font-size: 14px; transition: all 0.3s ease; }
+        .auth-field input:focus { outline: none; border-color: var(--si-cyan); background: rgba(0, 0, 0, 0.5); box-shadow: 0 0 0 3px rgba(92, 236, 255, 0.15); }
+        .auth-form-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; flex-wrap: wrap; gap: 10px; }
         .auth-remember { display: flex; align-items: center; gap: 8px; color: var(--si-muted); cursor: pointer; }
         .auth-text-link { color: var(--si-cyan); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
         .auth-text-link:hover { color: white; }
 
         .auth-submit {
-            height: 52px; border: none; border-radius: 12px;
+            min-height: 52px;
+            border: none;
+            border-radius: 12px;
             background: linear-gradient(135deg, var(--si-cyan), var(--si-blue));
-            color: #03111d; font-size: 15px; font-weight: 800;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            cursor: pointer; margin-top: 10px; transition: all 0.3s ease;
+            color: #03111d;
+            font-size: 15px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
             box-shadow: 0 10px 20px rgba(92, 236, 255, 0.2);
             width: 100%;
         }
 
-        .auth-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(92, 236, 255, 0.4); }
-
-        .auth-message {
-            display: none; padding: 12px; border-radius: 8px;
-            background: rgba(255, 90, 112, 0.1);
-            border: 1px solid rgba(255, 90, 112, 0.3);
-            color: #ffb5bc; font-size: 13px; margin-bottom: 20px;
-        }
+        .auth-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(92, 236, 255, 0.4); }
+        .auth-submit:disabled { cursor: wait; opacity: 0.7; }
+        .auth-submit svg { width: 20px; height: 20px; }
+        .auth-message { display: none; padding: 12px; border-radius: 8px; background: rgba(255, 90, 112, 0.1); border: 1px solid rgba(255, 90, 112, 0.3); color: #ffb5bc; font-size: 13px; margin-bottom: 20px; }
         .auth-message[data-visible="true"] { display: block; }
 
-        @keyframes fadeSlideUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeSlideUp { to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 968px) {
             .auth-shell { grid-template-columns: 1fr; gap: 40px; padding: 40px 0; width: 90%; }
@@ -246,44 +197,42 @@
             .auth-card { padding: 25px 20px; border-radius: 20px; }
             .auth-form-row { flex-direction: column; align-items: flex-start; gap: 12px; }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
     </style>
 </head>
 
 <body class="auth-page login-page">
-
-    <div class="bg-container" id="bg-container">
-        <video class="login-background-video" autoplay muted loop playsinline preload="auto" poster="./imagens/fundo.png" aria-hidden="true">
+    <div class="bg-container" id="bg-container" aria-hidden="true">
+        <video class="login-background-video" autoplay muted loop playsinline preload="metadata" poster="./imagens/fundo.png">
             <source src="./imagens/fundoglobo.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="bg-shader"></div>
+    <div class="bg-shader" aria-hidden="true"></div>
 
     <main class="auth-shell">
         <section class="auth-intro">
-            <a class="auth-brand" href="./index.html">
-                <span class="auth-brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"></path>
-                        <path d="m8 12 2.5 2.5L16.5 8"></path>
-                    </svg>
-                </span>
+            <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — página inicial">
+                <img class="auth-brand-mark" src="./imagens/logo.png" alt="Logo SmartInspect AI">
                 <span class="auth-brand-name">SmartInspect <span>AI</span></span>
             </a>
             <div class="auth-eyebrow">Gestão inteligente de obras</div>
             <h1>Sua obra, sob <span>controle.</span></h1>
             <p class="auth-intro-copy">Entre para acompanhar as informações e a operação da sua empresa no SmartInspect AI.</p>
             <ul class="auth-feature-list">
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Dados organizados em um único lugar</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Acompanhamento de obras e inspeções</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>Acesso protegido pelo Supabase Auth</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Dados organizados em um único lugar</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Acompanhamento de obras e inspeções</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Acesso protegido pelo Supabase Auth</li>
             </ul>
         </section>
 
-        <section class="auth-card">
-            <h2>Bem-vindo de volta</h2>
+        <section class="auth-card" aria-labelledby="loginTitle">
+            <h2 id="loginTitle">Bem-vindo de volta</h2>
             <p class="auth-card-lead">Entre com o e-mail e a senha cadastrados.</p>
 
-            <div id="authMessage" class="auth-message" role="status" aria-live="polite" data-visible="false"></div>
+            <div id="authMessage" class="auth-message" role="alert" aria-live="polite" data-visible="false"></div>
 
             <form id="loginForm" class="auth-form">
                 <div class="auth-field">
@@ -296,14 +245,14 @@
                 </div>
                 <div class="auth-form-row">
                     <label class="auth-remember">
-                        <input id="rememberLogin" type="checkbox" checked>
+                        <input id="rememberLogin" name="rememberLogin" type="checkbox" checked>
                         <span>Manter sessão iniciada</span>
                     </label>
-                    <a class="auth-text-link" href="#recuperar">Esqueci minha senha</a>
+                    <a class="auth-text-link" href="./recuperar-senha.html">Esqueci minha senha</a>
                 </div>
                 <button class="auth-submit" type="submit" id="submitBtn">
-                    Entrar
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+                    <span>Entrar</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
                 </button>
             </form>
         </section>
@@ -311,56 +260,63 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./js/supabase.js"></script>
-
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("loginForm");
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("senha");
-        const submitBtn = document.getElementById("submitBtn");
-        const msgBox = document.getElementById("authMessage");
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("loginForm");
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("senha");
+            const submitBtn = document.getElementById("submitBtn");
+            const msgBox = document.getElementById("authMessage");
+            const defaultButtonContent = submitBtn.innerHTML;
 
-        // Se já estiver logado, manda direto pro painel
-        window.banco.auth.getSession().then(({ data }) => {
-            if (data.session) {
-                window.location.href = "./painel-pessoal.html";
-            }
-        });
-
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = "Entrando...";
-            msgBox.setAttribute("data-visible", "false");
-
-            try {
-                const { data, error } = await window.banco.auth.signInWithPassword({
-                    email: email,
-                    password: password,
-                });
-
-                if (error) throw error;
-
-                // FORÇA A GRAVAÇÃO DA SESSÃO E REDIRECIONA PARA O PAINEL PESSOAL
-                await window.banco.auth.setSession({
-                    access_token: data.session.access_token,
-                    refresh_token: data.session.refresh_token
-                });
-
-                window.location.href = "./painel-pessoal.html";
-                
-            } catch (error) {
-                msgBox.textContent = error.message || "Erro ao fazer login. Verifique suas credenciais.";
+            function showMessage(message) {
+                msgBox.textContent = message;
                 msgBox.setAttribute("data-visible", "true");
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `Entrar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>`;
             }
+
+            function setLoading(isLoading) {
+                submitBtn.disabled = isLoading;
+                submitBtn.innerHTML = isLoading ? "Entrando..." : defaultButtonContent;
+            }
+
+            // O arquivo ./js/supabase.js deve criar window.banco como cliente Supabase.
+            const supabaseClient = window.banco;
+            if (!supabaseClient?.auth) {
+                showMessage("Não foi possível inicializar o login. Confira a configuração em ./js/supabase.js.");
+                submitBtn.disabled = true;
+                return;
+            }
+
+            supabaseClient.auth.getSession()
+                .then(({ data, error }) => {
+                    if (error) throw error;
+                    if (data?.session) window.location.replace("./painel-pessoal.html");
+                })
+                .catch((error) => {
+                    console.error("Erro ao verificar sessão:", error);
+                    showMessage("Não foi possível verificar sua sessão. Tente novamente.");
+                });
+
+            form.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                msgBox.setAttribute("data-visible", "false");
+                setLoading(true);
+
+                try {
+                    const { error } = await supabaseClient.auth.signInWithPassword({
+                        email: emailInput.value.trim(),
+                        password: passwordInput.value
+                    });
+
+                    if (error) throw error;
+                    window.location.replace("./painel-pessoal.html");
+                } catch (error) {
+                    console.error("Erro ao fazer login:", error);
+                    showMessage(error?.message || "Erro ao fazer login. Verifique suas credenciais e tente novamente.");
+                    setLoading(false);
+                }
+            });
         });
-    });
     </script>
 </body>
 </html>
-
