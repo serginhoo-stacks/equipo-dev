@@ -1002,6 +1002,62 @@ footer, .si-footer { background: rgba(2, 5, 10, .88) !important; }
 @media (max-width: 560px) { .si-team-section { padding: 64px 20px !important; } .si-team-grid { grid-template-columns: 1fr; max-width: 380px; gap: 16px; } .si-team-card:nth-child(3) { grid-column: auto !important; width: 100% !important; } .si-team-photo { width: 170px !important; height: 170px !important; } .si-team-heading { margin-bottom: 34px; } }
 @media (prefers-reduced-motion: reduce) { .si-team-card { transition: none !important; } }
 
+
+
+/* Painel demonstrativo: cartões clicáveis com explicação expansível. */
+.preview-cards { gap: 10px !important; }
+button.preview-card {
+  appearance: none; width: 100%; min-width: 0; display: flex; flex-direction: column;
+  align-items: flex-start; gap: 4px; color: inherit; font: inherit; text-align: left;
+  cursor: pointer; min-height: 112px;
+}
+button.preview-card:hover, button.preview-card[aria-expanded="true"] {
+  background: rgba(75, 205, 240, .12) !important; border-color: rgba(99, 229, 255, .62) !important;
+}
+button.preview-card:focus-visible { outline: 2px solid #63e5ff; outline-offset: 3px; }
+.preview-card-icon { display: grid; place-items: center; width: 28px; height: 28px; margin-bottom: 4px; color: #63e5ff; }
+.preview-card-icon svg, .recurso-icon svg {
+  display: block; width: 24px; height: 24px; fill: none; stroke: currentColor;
+  stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+}
+.preview-detail { display: block; margin-top: 7px; padding-top: 8px; border-top: 1px solid rgba(130,225,255,.16); color: #c2d2df; font-size: 11px; line-height: 1.5; }
+.preview-detail[hidden] { display: none !important; }
+.preview-card[aria-expanded="true"] strong { color: #63e5ff; }
+
+/* Planos/assinaturas: cartões mais compactos, com mais respiro entre eles. */
+.lower-panel {
+  width: min(100% - 40px, 1040px) !important; max-width: 1040px !important;
+  margin: 26px auto !important; padding: 24px !important; border-radius: 20px !important;
+}
+.lower-panel .plans-list, #plansList.plans-list {
+  width: min(100%, 860px); margin: 18px auto 0; gap: 20px !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important; align-items: stretch;
+}
+#plansList .plan-preview {
+  width: 100%; max-width: 270px; min-width: 0; min-height: 0;
+  margin: 0 auto; padding: 12px !important; border-radius: 16px !important;
+}
+#plansList .plan-preview-cover {
+  height: 118px !important; max-height: 118px; aspect-ratio: 16 / 9 !important;
+  margin: -12px -12px 10px !important; overflow: hidden; border-radius: 16px 16px 0 0 !important;
+}
+#plansList .plan-preview-cover img { padding: 9px !important; }
+#plansList .plan-preview h3 { font-size: 15px !important; }
+#plansList .plan-preview p { font-size: 11px !important; line-height: 1.5; }
+#plansList .plan-preview strong { font-size: 12px !important; }
+@media (max-width: 900px) {
+  .lower-panel .plans-list, #plansList.plans-list { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; width: min(100%, 600px); }
+}
+@media (max-width: 600px) {
+  .lower-panel { width: calc(100% - 28px) !important; padding: 18px 14px !important; }
+  .lower-panel .plans-list, #plansList.plans-list { grid-template-columns: 1fr !important; width: min(100%, 340px); gap: 16px !important; }
+  #plansList .plan-preview { max-width: 340px; }
+  #plansList .plan-preview-cover { height: 140px !important; max-height: 140px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  button.preview-card { transition: none !important; }
+}
+
 </style>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -1018,13 +1074,13 @@ footer, .si-footer { background: rgba(2, 5, 10, .88) !important; }
 
     <nav id="nav">
         <a href="#inicio">Início</a>
-        <a href="#sobre">Sobre</a>
+        <a href="./sobre.html">Sobre</a>
         <a href="#recursos">Recursos</a>
         <a href="#como-funciona">Como funciona</a>
         <a href="#descricao" class="btn-login">Ver descrição</a>
     </nav>
 
-    <button class="menu-mobile" id="menuMobile" aria-label="Abrir menu">☰</button>
+    <button class="menu-mobile" id="menuMobile" aria-label="Abrir menu"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
 </header>
 
 <main>
@@ -1068,12 +1124,25 @@ footer, .si-footer { background: rgba(2, 5, 10, .88) !important; }
                     </div>
                 </div>
 
-                <div class="preview-cards">
-                    <div class="preview-card"><div class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M2 21h20M8 7h2m4 0h2M8 11h2m4 0h2M8 15h2m4 0h2M10 21v-3h4v3"/></svg></div><small>Obras ativas</small><strong>12</strong></div>
-                    <div class="preview-card"><div class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V3h6v1.5M8 10h8M8 14h8M8 18h5"/></svg></div><small>Inspeções</small><strong>48</strong></div>
-                    <div class="preview-card"><div class="preview-card-icon">⚠️</div><small>Pendências</small><strong>07</strong></div>
-                    <div class="preview-card"><div class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4m-9 4v10m-4-12 9-4"/></svg></div><small>Materiais</small><strong>126</strong></div>
-                </div>
+                <div class="preview-cards" aria-label="Resumo demonstrativo do painel">
+  <button class="preview-card" type="button" aria-expanded="false" aria-controls="metric-obras-detail">
+    <span class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M2 21h20M8 7h2m4 0h2M8 11h2m4 0h2M8 15h2m4 0h2M10 21v-3h4v3"/></svg></span>
+    <small>Obras ativas</small><strong>12</strong><span class="preview-detail" id="metric-obras-detail" hidden>Resumo das obras em andamento, com acesso a progresso, prazos e responsáveis.</span>
+  </button>
+  <button class="preview-card" type="button" aria-expanded="false" aria-controls="metric-inspecoes-detail">
+    <span class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V3h6v1.5M8 10h8M8 14h8M8 18h5"/></svg></span>
+    <small>Inspeções</small><strong>48</strong><span class="preview-detail" id="metric-inspecoes-detail" hidden>Mostra inspeções registradas e facilita acompanhar resultados, observações e histórico.</span>
+  </button>
+  <button class="preview-card" type="button" aria-expanded="false" aria-controls="metric-pendencias-detail">
+    <span class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5m0 3h.01"/></svg></span>
+    <small>Pendências</small><strong>07</strong><span class="preview-detail" id="metric-pendencias-detail" hidden>Reúne itens que precisam de atenção, para identificar o que está em aberto e acompanhar a resolução.</span>
+  </button>
+  <button class="preview-card" type="button" aria-expanded="false" aria-controls="metric-materiais-detail">
+    <span class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4m-9 4v10m-4-12 9-4"/></svg></span>
+    <small>Materiais</small><strong>126</strong><span class="preview-detail" id="metric-materiais-detail" hidden>Apresenta o resumo de materiais cadastrados e ajuda a consultar disponibilidade e estoque.</span>
+  </button>
+</div>
+                
 
                 <div class="preview-chart"></div>
             </div>
@@ -1081,43 +1150,7 @@ footer, .si-footer { background: rgba(2, 5, 10, .88) !important; }
     </div>
 </section>
 
-<section class="sobre" id="sobre">
-<div class="section-container">
-    <div class="section-header reveal">
-        <div class="section-label">Sobre o sistema</div>
-        <h2>Tudo o que sua obra precisa, em um só lugar.</h2>
-        <p>O SmartInspect AI centraliza informações importantes para tornar o acompanhamento das atividades mais organizado, rápido e eficiente.</p>
-    </div>
 
-    <div class="sobre-grid">
-        <div class="sobre-texto reveal">
-            <h3>Uma plataforma pensada para facilitar o dia a dia.</h3>
-            <p>Acompanhe informações das obras, registre inspeções, controle materiais e visualize problemas encontrados durante o processo.</p>
-            <p>Com uma interface simples e organizada, a equipe consegue encontrar as informações necessárias sem precisar depender de diversos sistemas diferentes.</p>
-
-            <div class="sobre-lista">
-                <div class="sobre-item"><div class="sobre-item-icon">✓</div><div><strong>Organização</strong><span>Informações centralizadas em um único sistema.</span></div></div>
-                <div class="sobre-item"><div class="sobre-item-icon">⚡</div><div><strong>Agilidade</strong><span>Acesso rápido aos dados importantes da operação.</span></div></div>
-                <div class="sobre-item"><div class="sobre-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/></svg></div><div><strong>Controle</strong><span>Acesso organizado de acordo com cada usuário.</span></div></div>
-            </div>
-        </div>
-
-        <div class="reveal">
-            <div class="dashboard-preview">
-                <div class="preview-top">
-                    <div class="preview-title">Visão geral</div>
-                    <div class="preview-status"><span></span>Online</div>
-                </div>
-                <div class="preview-card">
-                    <small>Acompanhamento da operação</small>
-                    <strong>Inteligente</strong>
-                    <div class="preview-chart"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
 
 <section class="recursos" id="recursos">
 <div class="section-container">
@@ -1130,7 +1163,7 @@ footer, .si-footer { background: rgba(2, 5, 10, .88) !important; }
     <div class="recursos-grid">
         <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M2 21h20M8 7h2m4 0h2M8 11h2m4 0h2M8 15h2m4 0h2M10 21v-3h4v3"/></svg></div><h3>Gestão de obras</h3><p>Acompanhe suas obras e mantenha informações importantes organizadas em um único ambiente.</p></div>
         <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V3h6v1.5M8 10h8M8 14h8M8 18h5"/></svg></div><h3>Inspeções</h3><p>Registre e acompanhe inspeções realizadas durante o andamento das atividades.</p></div>
-        <div class="recurso-card reveal"><div class="recurso-icon">⚠️</div><h3>Não conformidades</h3><p>Identifique problemas e acompanhe as pendências que precisam de atenção.</p></div>
+        <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5m0 3h.01"/></svg></div><h3>Não conformidades</h3><p>Identifique problemas e acompanhe as pendências que precisam de atenção.</p></div>
         <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4m-9 4v10m-4-12 9-4"/></svg></div><h3>Estoque</h3><p>Tenha uma visão organizada dos materiais cadastrados e disponíveis.</p></div>
         <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m6-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm6-7.5a4 4 0 0 1 0 7.8M20 15a4 4 0 0 1 2 3.5V21"/></svg></div><h3>Equipe online</h3><p>Visualize os usuários conectados e acompanhe a presença da equipe.</p></div>
         <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v18h18M8 16v-4m5 4V6m5 10V9"/></svg></div><h3>Dashboard</h3><p>Visualize informações importantes através de uma interface clara, rápida e intuitiva.</p></div>
@@ -1420,6 +1453,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     card.addEventListener('pointerleave', () => {
       card.style.removeProperty('--tilt-x');
       card.style.removeProperty('--tilt-y');
+    });
+  });
+})();
+</script>
+
+
+<script>
+(() => {
+  document.querySelectorAll('button.preview-card[aria-controls]').forEach((card) => {
+    card.addEventListener('click', () => {
+      const detail = document.getElementById(card.getAttribute('aria-controls'));
+      if (!detail) return;
+      const expanded = card.getAttribute('aria-expanded') === 'true';
+      card.setAttribute('aria-expanded', String(!expanded));
+      detail.hidden = expanded;
     });
   });
 })();
