@@ -1084,6 +1084,37 @@ button.preview-card:focus-visible { outline: 2px solid #63e5ff; outline-offset: 
 @keyframes metric-dialog-in { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (prefers-reduced-motion: reduce) { .metric-dialog[open] { animation: none; } }
 
+
+/* Ajustes desta versão da página, mantidos dentro do index.html. */
+@media (min-width: 901px) {
+  header { padding-left: max(6%, calc((100vw - 1150px) / 2)) !important; padding-right: max(6%, calc((100vw - 1150px) / 2)) !important; }
+  .hero-content { max-width: 1150px !important; }
+}
+.logo-icon { background: linear-gradient(145deg,#7c3aed,#4c1d95) !important; border:1px solid rgba(196,150,255,.72) !important; box-shadow:0 8px 24px rgba(124,58,237,.42),inset 0 1px rgba(255,255,255,.24) !important; }
+.logo-icon:hover { box-shadow:0 0 28px rgba(168,85,247,.72) !important; }
+.hero-video-bg { width:100% !important; height:100% !important; min-width:0 !important; min-height:0 !important; object-fit:contain !important; object-position:center !important; background:#03070d; opacity:.96 !important; filter:brightness(1.24) saturate(1.08) contrast(1.03) !important; }
+.hero-overlay { background:linear-gradient(90deg,rgba(2,5,10,.26),rgba(2,5,10,.10)) !important; }
+.dashboard-preview { animation:siDashboardFloat 4.6s ease-in-out infinite !important; will-change:transform; }
+@keyframes siDashboardFloat { 0%,100% {transform:perspective(1000px) rotateY(-5deg) rotateX(2deg) translateY(0)} 50% {transform:perspective(1000px) rotateY(-5deg) rotateX(2deg) translateY(-13px)} }
+@media(max-width:600px) { .dashboard-preview { animation:siDashboardFloatMobile 4.6s ease-in-out infinite !important; } @keyframes siDashboardFloatMobile { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} } }
+.hero { min-height:calc(100vh - 22px); min-height:calc(100svh - 22px); padding-bottom:112px !important; }
+#recursos { margin-top:-22px !important; padding-top:82px !important; }
+.scroll-cue { position:absolute; z-index:5; left:50%; bottom:18px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:10px; padding:9px 14px; color:#e6faff; border:1px solid rgba(92,236,255,.32); border-radius:999px; background:rgba(4,10,18,.48); backdrop-filter:blur(12px); font-size:11px; font-weight:700; letter-spacing:.04em; box-shadow:0 5px 24px rgba(0,0,0,.25); animation:siCuePulse 2.2s ease-in-out infinite; }
+.scroll-cue svg { width:17px; height:17px; color:#63e5ff; animation:siCueArrow 1.25s ease-in-out infinite; }
+@keyframes siCuePulse { 0%,100%{box-shadow:0 5px 24px rgba(0,0,0,.25),0 0 0 rgba(92,236,255,0)} 50%{box-shadow:0 5px 24px rgba(0,0,0,.25),0 0 20px rgba(92,236,255,.22)} }
+@keyframes siCueArrow { 0%,100%{transform:translateY(-2px)} 50%{transform:translateY(3px)} }
+.preview-chart { position:relative; height:100px; overflow:hidden; }
+.preview-chart::after { display:none !important; }
+.preview-chart-line { position:absolute; inset:12px 12px 10px; width:calc(100% - 24px); height:calc(100% - 22px); overflow:visible; }
+.preview-chart-line polyline { fill:none; stroke:#5cecff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 5px rgba(92,236,255,.72)); stroke-dasharray:420; stroke-dashoffset:420; animation:siChartDraw 2.4s ease-out .35s forwards; }
+@keyframes siChartDraw { to {stroke-dashoffset:0} }
+.quick-nav { position:fixed; z-index:998; right:18px; bottom:max(18px,env(safe-area-inset-bottom)); display:grid; gap:8px; }
+.quick-nav a { display:flex; align-items:center; gap:8px; min-width:86px; padding:10px 12px; border:1px solid rgba(92,236,255,.32); border-radius:999px; color:#eafaff; background:rgba(4,10,18,.78); backdrop-filter:blur(14px); box-shadow:0 8px 26px rgba(0,0,0,.3); font-size:11px; font-weight:750; transition:transform .2s,border-color .2s,background .2s; }
+.quick-nav a:hover { transform:translateY(-2px); border-color:#5cecff; background:rgba(9,24,38,.94); }
+.quick-nav svg { width:17px; height:17px; color:#63e5ff; }
+@media(max-width:600px) { .quick-nav {right:10px;bottom:max(10px,env(safe-area-inset-bottom))} .quick-nav a {min-width:0;padding:10px} .quick-nav a span {display:none} }
+@media(prefers-reduced-motion:reduce) { .dashboard-preview,.scroll-cue,.scroll-cue svg {animation:none !important} .preview-chart-line polyline {stroke-dashoffset:0;animation:none !important} }
+
 </style>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -1170,10 +1201,11 @@ button.preview-card:focus-visible { outline: 2px solid #63e5ff; outline-offset: 
 </div>
                 
 
-                <div class="preview-chart"></div>
+                <div class="preview-chart" role="img" aria-label="Gráfico demonstrativo de atividade crescente"><svg class="preview-chart-line" viewBox="0 0 420 80" preserveAspectRatio="none" aria-hidden="true"><polyline points="4,62 58,52 106,58 155,34 206,43 255,23 308,31 360,10 416,16"/></svg></div>
             </div>
         </div>
     </div>
+<a class="scroll-cue" href="#recursos" aria-label="Role para baixo para ver mais conteúdo"><span>Mais conteúdo abaixo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15m-6-6 6 6 6-6"/></svg></a>
 </section>
 
 
@@ -1519,5 +1551,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 })();
 </script>
 
+<nav class="quick-nav" aria-label="Atalhos da página"><a href="#rodape" aria-label="Ir para as redes sociais no rodapé" title="Redes sociais"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/></svg><span>Redes</span></a><a href="#inicio" aria-label="Voltar ao topo da página" title="Voltar ao topo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V5m-6 6 6-6 6 6"/></svg><span>Topo</span></a></nav>
 </body>
 </html>
