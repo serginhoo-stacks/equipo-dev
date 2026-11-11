@@ -5,7 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecionando para o ERP...</title>
     <style>
-        body { display: flex; align-items: center; justify-content: center; height: 100vh; background: #050b18; color: white; font-family: sans-serif; }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #050b18;
+            color: white;
+            font-family: sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -15,25 +24,34 @@
     <script src="js/supabase.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            // 1. Verifica login
-            const { data: sessionData } = await window.banco.auth.getSession();
-            if (!sessionData.session) {
-                window.location.href = 'login.html';
-                return;
+            try {
+                // Confirma que há uma sessão autenticada.
+                const { data: sessionData, error: sessionError } = await window.banco.auth.getSession();
+
+                if (sessionError || !sessionData?.session) {
+                    window.location.replace("login.html");
+                    return;
+                }
+
+                // Lê o ID da empresa recebido pelo painel pessoal.
+                const urlParams = new URLSearchParams(window.location.search);
+                const empresaId = urlParams.get("empresa");
+
+                if (!empresaId) {
+                    alert("Nenhuma empresa selecionada.");
+                    window.location.replace("painel-pessoal.html");
+                    return;
+                }
+
+                // Abre o dashboard do ERP. Essa página carrega a sidebar compartilhada.
+                // Mantém o ID da empresa na URL para o contexto do ERP.
+                const destino = new URL("ERP/dashboard.html", window.location.href);
+                destino.searchParams.set("empresa_id", empresaId);
+                window.location.replace(destino.href);
+            } catch (error) {
+                console.error("Não foi possível entrar no ERP:", error);
+                window.location.replace("login.html");
             }
-
-            // 2. Pega o ID da empresa
-            const urlParams = new URLSearchParams(window.location.search);
-            const empresaId = urlParams.get('empresa');
-
-            if (!empresaId) {
-                alert("Nenhuma empresa selecionada.");
-                window.location.href = 'login.html';
-                return;
-            }
-
-            // 3. Redireciona direto para a lista de Obras (em vez do Dashboard)
-            window.location.href = `ERP/obras.html?empresa=${empresaId}`;
         });
     </script>
 </body>
