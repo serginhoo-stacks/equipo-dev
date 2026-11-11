@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>document.documentElement.classList.add("session-checking");</script>
-<link rel="icon" type="image/png" href="./imagens/favcon%20(1).png">
+<link rel="icon" type="image/png" href="./imagens/favicon.png">
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -950,6 +950,23 @@ footer, .si-footer { background: rgba(2, 5, 10, .88) !important; }
 .recurso-icon svg { width: 25px; height: 25px; }
 .sobre-item-icon svg { width: 18px; height: 18px; }
 
+
+/* Logo SmartInspect: a imagem fonte é horizontal (512 × 294, proporção 1.741:1). */
+.logo-icon {
+  width: 66px !important; height: 38px !important; flex: 0 0 66px !important;
+  overflow: hidden; border-radius: 8px !important;
+}
+.logo-icon img {
+  display: block; width: 100% !important; height: 100% !important;
+  max-width: none; object-fit: contain !important; object-position: center;
+}
+.si-footer-identity img[src$="imagens/logo.png"] {
+  width: 87px !important; height: 50px !important; flex: 0 0 87px;
+  object-fit: contain !important;
+}
+@media (max-width: 380px) {
+  .logo-icon { width: 58px !important; flex-basis: 58px !important; }
+}
 </style>
 <link rel="stylesheet" href="css/style.css">
 </head>
