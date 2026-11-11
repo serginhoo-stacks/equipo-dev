@@ -157,6 +157,14 @@
 @keyframes authGateSpin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .auth-gate-spinner { animation-duration: 2s; } }
 
+
+/* Ajustes solicitados: painel centralizado, sem bloco de chat nem cartões laterais. */
+.content-grid{grid-template-columns:minmax(0,1fr)!important;max-width:1000px;margin-inline:auto}
+.content-grid>.side-column{display:none!important}
+.personal-shell{width:min(1000px,calc(100% - 36px));margin-inline:auto}
+#chatNav,#chatView{display:none!important}
+@media(max-width:640px){.personal-shell{width:calc(100% - 22px)}}
+
 </style>
 </head>
 <body class="personal-page auth-pending">
@@ -168,7 +176,7 @@
     <button id="authRetry" type="button" hidden>Recarregar painel</button>
   </div>
 </div>
-<header class="personal-header"><a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a><nav class="app-nav" aria-label="Navegação"><button id="panelNav" type="button" aria-current="page">Painel</button><button id="chatNav" type="button">Chat</button><button id="notificationNav" type="button">Notificações <span id="notificationBadge" class="notification-badge" hidden>0</span></button></nav><div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button" type="button">Sair</button></div></header>
+<header class="personal-header"><a class="brand" href="./index.html"><span class="brand-mark"><img src="./imagens/logo.png" alt=""></span><strong>SmartInspect <b>AI</b></strong></a><nav class="app-nav" aria-label="Navegação"><button id="panelNav" type="button" aria-current="page">Painel</button><button id="chatNav" type="button" hidden>Chat</button><button id="notificationNav" type="button">Notificações <span id="notificationBadge" class="notification-badge" hidden>0</span></button></nav><div class="header-actions"><span id="headerEmail" class="header-email"></span><button id="logoutButton" class="ghost-button" type="button">Sair</button></div></header>
 <main id="panelView" class="personal-shell">
 <section class="welcome-row"><div><p class="eyebrow">PAINEL PESSOAL</p><h1>Olá, <span id="userName">usuário</span>.</h1><p class="lead">Seu espaço pessoal para organizar seu perfil e suas conversas.</p></div><div class="session-pill"><i></i> Sessão protegida</div></section>
 <button id="profileOpen" class="profile-summary" type="button" aria-haspopup="dialog" data-spotlight><img id="profileCardAvatar" src="./imagens/favicon.png" alt="Foto de perfil"><span><strong id="profileCardName">Carregando perfil…</strong><small id="profileCardHandle">Configure seu telefone do chat</small><small id="profileCardEmail">Seu perfil SmartInspect</small></span><span class="profile-hint">Clique para editar →</span></button>
