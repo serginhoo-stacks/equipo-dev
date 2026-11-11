@@ -1,0 +1,432 @@
+/*
+  SmartInspect — responsive.css
+  Mobile-first: celulares (320 px+) até monitores 4K (3840 px+).
+  Usa viewport, orientação, áreas seguras e tipo de interação; não depende da marca do aparelho.
+  Carregar DEPOIS de style.css.
+*/
+
+:root {
+  --si-responsive-min: 320px;
+  --si-responsive-max: 3840px;
+  --si-container-width: 1600px;
+  --si-space-xs: 4px;
+  --si-space-sm: 8px;
+  --si-space-md: 16px;
+  --si-space-lg: 24px;
+  --si-space-xl: 32px;
+  --si-mobile-padding: 12px;
+  --si-tablet-padding: 20px;
+  --si-desktop-padding: 32px;
+  --si-safe-top: env(safe-area-inset-top, 0px);
+  --si-safe-right: env(safe-area-inset-right, 0px);
+  --si-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --si-safe-left: env(safe-area-inset-left, 0px);
+}
+
+/* Base fluida: não fixa a largura mínima para não criar rolagem lateral. */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  width: 100%;
+  max-width: 100%;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+video,
+iframe,
+canvas,
+svg { max-width: 100%; }
+
+img,
+video { height: auto; }
+
+input,
+select,
+textarea,
+button { max-width: 100%; font: inherit; }
+
+input,
+select,
+textarea { min-width: 0; }
+
+button,
+a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+main,
+section,
+article,
+aside,
+header,
+footer,
+nav,
+div { min-width: 0; }
+
+pre,
+code { max-width: 100%; overflow-x: auto; }
+
+table { max-width: 100%; border-collapse: collapse; }
+
+/* Regras aplicadas aos elementos reais do ERP compartilhado. */
+body.has-erp-sidebar .content {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+body.has-erp-sidebar .content > *,
+body.has-erp-sidebar .content :is(.card, .panel, .panel-card, .dashboard-panel, .obra-card) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+body.has-erp-sidebar :is(.dashboard-shell, .dashboard-body-grid, .dashboard-lower-grid, .dashboard-panel-content, .works-grid, .online-list, .obras-module, .obras-grid) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+body.has-erp-sidebar .content :is(img, video, iframe, canvas) {
+  max-width: 100%;
+}
+
+body.has-erp-sidebar .content :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+body.has-erp-sidebar :is(.table-container, .table-responsive, .table-wrapper, .dashboard-table-wrap, .si-table-container) {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
+}
+
+body.has-erp-sidebar :is(.dashboard-table-wrap, .si-table-container) table { min-width: 560px; }
+body.has-erp-sidebar .content :is(.page-header, .cabecalho, .report-row, .acoes, .form-actions, .obras-form-actions) { min-width: 0; }
+
+/* Classes utilitárias opcionais do sistema SmartInspect (para telas novas). */
+.si-container,
+.si-content,
+.si-page-content,
+.si-responsive-width { width: 100%; max-width: 100%; min-width: 0; }
+.si-container { max-width: var(--si-container-width); margin-inline: auto; padding-inline: var(--si-mobile-padding); }
+.si-content,
+.si-page-content { padding: var(--si-mobile-padding); }
+.si-responsive-img { display: block; width: 100%; height: auto; object-fit: contain; }
+.si-image-cover { width: 100%; height: 100%; object-fit: cover; }
+.si-media { width: 100%; max-width: 100%; overflow: hidden; }
+.si-media :is(iframe, video) { display: block; width: 100%; aspect-ratio: 16 / 9; }
+.si-grid,
+.si-grid-auto,
+.si-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: var(--si-space-md); }
+.si-grid-2,
+.si-grid-3,
+.si-grid-4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--si-space-md); }
+.si-flex { display: flex; min-width: 0; align-items: center; gap: var(--si-space-md); }
+.si-flex-wrap,
+.si-button-group,
+.si-form-actions { display: flex; flex-wrap: wrap; gap: var(--si-space-sm); }
+.si-flex-between { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: var(--si-space-md); }
+.si-card,
+.si-stat-card { width: 100%; min-width: 0; overflow-wrap: anywhere; }
+.si-table-container { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.si-table-container table { width: 100%; min-width: 560px; }
+.si-table-container th,
+.si-table-container td { overflow-wrap: anywhere; }
+.si-form-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--si-space-md); }
+.si-form-group { display: flex; width: 100%; min-width: 0; flex-direction: column; gap: var(--si-space-sm); }
+.si-form-group :is(input, select, textarea) { width: 100%; min-width: 0; max-width: 100%; }
+.si-button,
+.si-touch-target { min-width: 44px; min-height: 44px; touch-action: manipulation; }
+.si-title { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.5rem); line-height: 1.2; overflow-wrap: anywhere; }
+.si-subtitle { font-size: clamp(1.1rem, .95rem + .5vw, 1.7rem); line-height: 1.3; }
+.si-text { font-size: clamp(.875rem, .84rem + .15vw, 1.125rem); line-height: 1.6; }
+.si-text-small { font-size: clamp(.75rem, .7rem + .1vw, .875rem); }
+.si-no-overflow { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.si-scroll-x { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.si-responsive-height { height: auto; max-height: 100%; }
+.si-mobile-only { display: none !important; }
+.si-no-print { }
+
+/* Celulares compactos: 320–359 px. */
+@media (max-width: 359px) {
+  .si-container { padding-inline: 10px; }
+  .si-grid-2,
+  .si-grid-3,
+  .si-grid-4,
+  .si-form-grid { grid-template-columns: minmax(0, 1fr); }
+
+  body.has-erp-sidebar:not(.dashboard-page) .content,
+  body.has-erp-sidebar.dashboard-page .content {
+    padding: calc(68px + var(--si-safe-top)) calc(10px + var(--si-safe-right)) calc(18px + var(--si-safe-bottom)) calc(10px + var(--si-safe-left));
+  }
+
+  body.erp-page--dashboard .dashboard-metrics { grid-template-columns: minmax(0, 1fr); }
+  body.erp-page--dashboard .dashboard-header { align-items: stretch; }
+  body.erp-page--dashboard .dashboard-actions { width: 100%; flex-wrap: wrap; }
+  body.erp-page--dashboard .dashboard-search { width: 100%; flex: 1 1 100%; }
+  body.erp-page--dashboard .dashboard-user { max-width: 100%; }
+  body.erp-page--dashboard .dashboard-panel-header { align-items: flex-start; flex-direction: column; }
+  body.erp-page--dashboard .dashboard-panel-header > :is(select, button) { width: 100%; }
+
+  body.erp-page--obras .obras-heading,
+  body.erp-page--obras .obras-section-heading { align-items: stretch; }
+  body.erp-page--obras .obras-heading > button,
+  body.erp-page--obras .obras-section-heading > button,
+  body.erp-page--obras .obra-card-actions > button,
+  body.erp-page--obras .obras-form-actions > button { width: 100%; }
+  body.erp-page--obras .obra-card-meta,
+  body.erp-page--obras .obra-detail-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Celulares padrão: 360–479 px. */
+@media (min-width: 360px) and (max-width: 479px) {
+  .si-container { padding-inline: 12px; }
+  .si-grid-3,
+  .si-grid-4,
+  .si-form-grid { grid-template-columns: minmax(0, 1fr); }
+  body.erp-page--dashboard .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Celulares grandes: 480–599 px. */
+@media (min-width: 480px) and (max-width: 599px) {
+  .si-container { padding-inline: 14px; }
+  .si-grid-2,
+  .si-grid-3,
+  .si-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .si-form-grid { grid-template-columns: minmax(0, 1fr); }
+  body.erp-page--dashboard .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Todos os celulares até 599 px. */
+@media (max-width: 599px) {
+  body.has-erp-sidebar:not(.dashboard-page) .content,
+  body.has-erp-sidebar.dashboard-page .content {
+    padding-top: calc(68px + var(--si-safe-top));
+    padding-right: calc(12px + var(--si-safe-right));
+    padding-bottom: calc(20px + var(--si-safe-bottom));
+    padding-left: calc(12px + var(--si-safe-left));
+  }
+
+  .si-dashboard { grid-template-columns: minmax(0, 1fr); }
+  .si-main-content { width: 100%; padding: var(--si-mobile-padding); }
+  .si-grid-3,
+  .si-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .si-form-grid { grid-template-columns: minmax(0, 1fr); }
+  .si-flex-mobile-column { align-items: stretch; flex-direction: column; }
+  .si-mobile-full { width: 100% !important; }
+  .si-mobile-hidden,
+  .si-desktop-only { display: none !important; }
+  .si-mobile-only { display: block !important; }
+
+  body.erp-page--dashboard .dashboard-header { align-items: stretch; flex-direction: column; }
+  body.erp-page--dashboard .dashboard-actions { width: 100%; flex-wrap: wrap; }
+  body.erp-page--dashboard .dashboard-search { flex: 1 1 180px; }
+  body.erp-page--dashboard .dashboard-body-grid,
+  body.erp-page--dashboard .dashboard-lower-grid { grid-template-columns: minmax(0, 1fr); }
+  body.erp-page--dashboard .dashboard-panel-header { align-items: flex-start; flex-wrap: wrap; gap: 10px; }
+  body.erp-page--dashboard .dashboard-metrics { gap: 10px; }
+  body.erp-page--dashboard .dashboard-metric { min-width: 0; padding: 14px; }
+  body.erp-page--dashboard .dashboard-metric-value { font-size: clamp(20px, 7vw, 28px); }
+  body.erp-page--dashboard .works-grid { grid-template-columns: minmax(0, 1fr); }
+  body.erp-page--dashboard .work-card { min-width: 0; }
+  body.erp-page--dashboard .contact-panel { align-items: flex-start; flex-direction: column; }
+
+  body.erp-page--obras .obras-heading,
+  body.erp-page--obras .obras-section-heading { align-items: flex-start; flex-direction: column; }
+  body.erp-page--obras .obras-heading > button,
+  body.erp-page--obras .obras-section-heading > button { width: 100%; }
+  body.erp-page--obras .obra-card-actions { flex-wrap: wrap; }
+  body.erp-page--obras .obra-detail-grid { grid-template-columns: minmax(0, 1fr); }
+  body.erp-page--obras .obra-inspection-card { grid-template-columns: minmax(0, 1fr); }
+  body.erp-page--obras .obra-inspection-card dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  body.erp-page--suporte .chat { height: min(600px, 68svh); min-height: 320px; }
+  body.erp-page--suporte .mensagens { padding: 14px; }
+  body.erp-page--suporte .area-envio { align-items: stretch; flex-wrap: wrap; }
+  body.erp-page--suporte .area-envio textarea { min-width: 0; }
+  body.erp-page--suporte .btn-enviar { flex: 1 1 100%; }
+}
+
+/* Tablets compactos: 600–767 px. */
+@media (min-width: 600px) and (max-width: 767px) {
+  .si-container { padding-inline: 18px; }
+  .si-grid-3,
+  .si-grid-4,
+  .si-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .si-main-content { padding: 18px; }
+  body.erp-page--dashboard .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.erp-page--dashboard .dashboard-body-grid,
+  body.erp-page--dashboard .dashboard-lower-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Tablets: 768–900 px; a sidebar continua abrindo como gaveta. */
+@media (min-width: 768px) and (max-width: 900px) {
+  .si-container { padding-inline: 20px; }
+  .si-grid-3,
+  .si-grid-4,
+  .si-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.erp-page--dashboard .dashboard-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body.erp-page--dashboard .dashboard-body-grid,
+  body.erp-page--dashboard .dashboard-lower-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Ajustes comuns até o breakpoint de gaveta da sidebar. */
+@media (max-width: 900px) {
+  body.has-erp-sidebar:not(.dashboard-page) .content,
+  body.has-erp-sidebar.dashboard-page .content {
+    padding-top: calc(72px + var(--si-safe-top));
+  }
+
+  .erp-sidebar-toggle {
+    top: calc(12px + var(--si-safe-top));
+    left: calc(12px + var(--si-safe-left));
+  }
+
+  .erp-sidebar-backdrop:not([hidden]) { touch-action: manipulation; }
+  body.has-erp-sidebar .content :is(.page-header, .cabecalho, .report-row, .acoes, .form-actions) { flex-wrap: wrap; }
+}
+
+/* Tablets grandes e notebooks pequenos: 901–1199 px. */
+@media (min-width: 901px) and (max-width: 1199px) {
+  .si-container { max-width: 1100px; padding-inline: var(--si-tablet-padding); }
+  .si-grid-3,
+  .si-grid-4,
+  .si-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.erp-page--dashboard .dashboard-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body.erp-page--dashboard .dashboard-body-grid,
+  body.erp-page--dashboard .dashboard-lower-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.erp-page--obras .obra-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Notebooks: 1200–1439 px. */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .si-container { max-width: 1280px; padding-inline: 28px; }
+  .si-grid-3,
+  .si-grid-4,
+  .si-stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Desktops: 1440–1919 px. */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .si-container { max-width: 1600px; padding-inline: var(--si-desktop-padding); }
+  .si-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Full HD e monitores grandes: 1920 px+. */
+@media (min-width: 1920px) {
+  .si-container { max-width: 1800px; }
+  body.has-erp-sidebar .content { padding-inline: clamp(32px, 2vw, 56px); }
+  body.has-erp-sidebar .content > :is(.dashboard-shell, .obras-module) { width: 100%; max-width: 1800px; margin-inline: auto; }
+}
+
+/* QHD e ultrawide: 2560 px+. */
+@media (min-width: 2560px) {
+  .si-container { max-width: 2200px; }
+  body.has-erp-sidebar .content > :is(.dashboard-shell, .obras-module) { max-width: 2200px; }
+}
+
+/* Monitores 4K: 3200–3840 px+. */
+@media (min-width: 3200px) {
+  .si-container { max-width: 2400px; }
+  body.has-erp-sidebar .content > :is(.dashboard-shell, .obras-module) { max-width: 2400px; }
+  .si-grid,
+  .si-grid-auto,
+  .si-stats-grid { gap: 28px; }
+}
+
+/* Celulares/tablets em paisagem com pouca altura. */
+@media (orientation: landscape) and (max-height: 500px) {
+  body.has-erp-sidebar .erp-sidebar { height: 100vh; height: 100dvh; }
+  body.erp-page--suporte .chat { height: min(420px, 62svh); min-height: 220px; }
+  .si-landscape-adjust { min-height: auto; }
+}
+
+/* Controles maiores em telas touch, mesmo em tablets e notebooks híbridos. */
+@media (hover: none) and (pointer: coarse) {
+  .erp-nav-link,
+  .erp-nav-sublink,
+  .erp-sidebar-toggle,
+  .erp-sidebar-close,
+  .erp-sidebar-collapse,
+  .si-button,
+  .si-touch-target { min-height: 44px; }
+
+  .si-hover-effect:hover,
+  body.erp-page--obras :is(.obras-primary-button, .obras-secondary-button, .obras-danger-button):hover { transform: none; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .si-hover-effect { transition: transform .2s ease; }
+  .si-hover-effect:hover { transform: translateY(-2px); }
+}
+
+@supports (padding: env(safe-area-inset-top)) {
+  .si-safe-area {
+    padding-top: var(--si-safe-top);
+    padding-right: var(--si-safe-right);
+    padding-bottom: var(--si-safe-bottom);
+    padding-left: var(--si-safe-left);
+  }
+
+  .si-fixed-bottom { padding-bottom: calc(12px + var(--si-safe-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media print {
+  body.has-erp-sidebar { min-height: auto; padding-left: 0 !important; overflow: visible; background: #fff !important; color: #000 !important; }
+  .erp-sidebar,
+  .erp-sidebar-toggle,
+  .erp-sidebar-backdrop,
+  .si-no-print { display: none !important; }
+  body.has-erp-sidebar .content { padding: 0 !important; color: #000 !important; }
+  .si-container { width: 100%; max-width: none; }
+  .si-card,
+  .card,
+  .dashboard-panel { break-inside: avoid; box-shadow: none !important; }
+  .si-table-container,
+  .table-container,
+  .table-responsive { overflow: visible !important; }
+}
+
+
+/* Precedência final dos intervalos de celular compacto/padrão. */
+@media (max-width: 479px) {
+  .si-grid-3,
+  .si-grid-4 { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (min-width: 480px) and (max-width: 599px) {
+  .si-grid-3,
+  .si-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 359px) {
+  body.has-erp-sidebar:not(.dashboard-page) .content,
+  body.has-erp-sidebar.dashboard-page .content {
+    padding-right: calc(10px + var(--si-safe-right));
+    padding-left: calc(10px + var(--si-safe-left));
+  }
+}
