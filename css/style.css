@@ -1931,96 +1931,6 @@ color:#dc3545;
 
 }
 
-/* Estilos globais migrados de ERP/obras.html; escopo: body.erp-page--obras. */
-/* Fundo azul com a imagem (igual ao index) */
-        body.erp-page--obras{
-            background-color: #054F77 !important;
-            background-image: url("[bad string]
-
-            background-size: cover !important;
-            background-position: center !important;
-            background-attachment: fixed !important;
-            background-repeat: no-repeat !important;
-            color: #ffffff;
-            font-family: "Inter", sans-serif;
-        }
-
-        /* Ajuste do conteúdo principal para não ficar embaixo do menu */
-        .content {
-            margin-left: 260px;
-            padding: 40px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Título com brilho */
-        .content h1 { color: #ffffff; text-shadow: 0 0 10px rgba(92, 236, 255, 0.4); }
-        .content p { color: #b0cde6; margin-bottom: 20px; }
-
-        /* Botão principal com visual neon */
-        .content > button {
-            background: linear-gradient(135deg, #5cecff, #008cff);
-            color: #03111d;
-            font-weight: 800;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(92, 236, 255, 0.3);
-            transition: 0.3s;
-        }
-        .content > button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(92, 236, 255, 0.6);
-        }
-
-        /* Cards de Obras (Vidro Fumê azulado) */
-        .card {
-            background: rgba(13, 28, 50, 0.75) !important;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(92, 236, 255, 0.3) !important;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
-            color: #ffffff;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: 0.3s;
-        }
-        .card:hover {
-            border-color: rgba(92, 236, 255, 0.8) !important;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(92, 236, 255, 0.2) !important;
-            transform: translateY(-2px);
-        }
-
-        /* Textos de dentro do card */
-        .card h2 { color: #5cecff; margin-bottom: 10px; text-shadow: 0 0 5px rgba(92, 236, 255, 0.3); }
-        .card p { color: #b0cde6; margin-bottom: 5px; font-size: 14px; }
-
-        /* Botões de dentro do card (Ver detalhes e Excluir) */
-        .card button {
-            background: rgba(92, 236, 255, 0.1);
-            color: #5cecff;
-            border: 1px solid rgba(92, 236, 255, 0.4);
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 10px;
-            margin-right: 5px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .card button:hover {
-            background: rgba(92, 236, 255, 0.2);
-            box-shadow: 0 0 15px rgba(92, 236, 255, 0.4);
-        }
-
-        /* Responsividade */
-        @media(max-width: 900px) {
-            .content { margin-left: 0; padding: 20px; }
-        }
-    )}
-
 /* Estilos globais migrados de ERP/perfil.html; escopo: body.erp-page--perfil. */
 body.erp-page--perfil{
             display: flex; align-items: center; justify-content: center; height: 100vh;
@@ -2326,3 +2236,88 @@ body.erp-page--obras .erp-empty-text { color: #b0cde6; }
 body.erp-page--suporte .support-state { padding: 40px; text-align: center; }
 body.erp-page--suporte .support-state--error { color: var(--red); }
 body.erp-page--suporte .support-helper { color: var(--muted); }
+
+
+/* Módulo unificado de Obras: listagem, cadastro e detalhes na mesma rota. */
+body.erp-page--obras .obras-module { width: min(100%, 1180px); margin: 0 auto; }
+body.erp-page--obras .obras-view { display: block; }
+body.erp-page--obras .obras-view[hidden] { display: none !important; }
+body.erp-page--obras .obras-heading,
+body.erp-page--obras .obras-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+body.erp-page--obras .obras-heading h1,
+body.erp-page--obras .obras-section-heading h2 { margin: 0; color: var(--text, #e7f5ff); }
+body.erp-page--obras .obras-kicker { margin: 0 0 8px; color: var(--cyan, #5cecff); font-size: 11px; font-weight: 800; letter-spacing: .13em; }
+body.erp-page--obras .obras-intro { margin: 8px 0 0; color: var(--muted, #91a8bd); }
+body.erp-page--obras .obras-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; }
+body.erp-page--obras .obra-card { min-width: 0; padding: 22px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
+body.erp-page--obras .obra-card-heading,
+body.erp-page--obras .obra-card-actions,
+body.erp-page--obras .obras-form-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+body.erp-page--obras .obra-card-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; color: var(--cyan, #5cecff); background: rgba(92,236,255,.1); }
+body.erp-page--obras .obra-card-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--obras .obra-status { display: inline-flex; align-items: center; padding: 6px 10px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 999px; color: var(--cyan, #5cecff); font-size: 12px; font-weight: 700; background: rgba(92,236,255,.07); }
+body.erp-page--obras .obra-card h2 { margin: 18px 0 8px; color: var(--text, #e7f5ff); font-size: 19px; overflow-wrap: anywhere; }
+body.erp-page--obras .obra-card-address { min-height: 24px; color: var(--muted, #91a8bd); }
+body.erp-page--obras .obra-card-meta,
+body.erp-page--obras .obra-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 20px 0; }
+body.erp-page--obras .obra-card-meta div,
+body.erp-page--obras .obra-detail-grid div { min-width: 0; }
+body.erp-page--obras .obra-card-meta dt,
+body.erp-page--obras .obra-detail-grid dt,
+body.erp-page--obras .obra-inspection-card dt { margin-bottom: 5px; color: var(--muted, #91a8bd); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+body.erp-page--obras .obra-card-meta dd,
+body.erp-page--obras .obra-detail-grid dd,
+body.erp-page--obras .obra-inspection-card dd { margin: 0; color: var(--text, #e7f5ff); overflow-wrap: anywhere; }
+body.erp-page--obras .obra-card-actions { justify-content: flex-start; padding-top: 16px; border-top: 1px solid var(--border, rgba(133,216,255,.18)); }
+body.erp-page--obras .obras-primary-button,
+body.erp-page--obras .obras-secondary-button,
+body.erp-page--obras .obras-danger-button { min-height: 42px; padding: 10px 15px; border: 1px solid transparent; border-radius: 11px; font: inherit; font-weight: 700; cursor: pointer; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+body.erp-page--obras .obras-primary-button { color: #04111f; background: linear-gradient(135deg, var(--cyan, #5cecff), #7eb6ff); box-shadow: 0 8px 24px rgba(92,236,255,.18); }
+body.erp-page--obras .obras-secondary-button { color: var(--text, #e7f5ff); border-color: var(--border, rgba(133,216,255,.18)); background: rgba(255,255,255,.05); }
+body.erp-page--obras .obras-danger-button { color: #ff9cab; border-color: rgba(255,135,153,.24); background: rgba(255,135,153,.08); }
+body.erp-page--obras :is(.obras-primary-button, .obras-secondary-button, .obras-danger-button):hover { transform: translateY(-1px); }
+body.erp-page--obras :is(.obras-primary-button, .obras-secondary-button, .obras-danger-button):disabled { opacity: .6; cursor: wait; transform: none; }
+body.erp-page--obras .obras-form { display: grid; max-width: 760px; gap: 12px; padding: clamp(18px, 3vw, 30px); border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
+body.erp-page--obras .obras-form label { margin-top: 8px; color: var(--text, #e7f5ff); font-weight: 650; }
+body.erp-page--obras .obras-form label span { color: var(--cyan, #5cecff); }
+body.erp-page--obras .obras-form :is(input, select) { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 10px; color: var(--text, #e7f5ff); background: rgba(3,11,23,.62); }
+body.erp-page--obras .obras-form :is(input, select):focus { outline: 2px solid rgba(92,236,255,.3); border-color: var(--cyan, #5cecff); }
+body.erp-page--obras .obras-form-actions { justify-content: flex-start; flex-wrap: wrap; margin-top: 8px; }
+body.erp-page--obras .obras-feedback { min-height: 20px; margin: 2px 0 0; color: var(--muted, #91a8bd); }
+body.erp-page--obras .obras-feedback.is-error { color: var(--red, #ff8799); }
+body.erp-page--obras .obras-feedback.is-success { color: var(--green, #35e58a); }
+body.erp-page--obras .obras-empty-state { grid-column: 1 / -1; padding: 22px; border: 1px dashed var(--border, rgba(133,216,255,.18)); border-radius: 14px; color: var(--muted, #91a8bd); background: rgba(255,255,255,.025); }
+body.erp-page--obras .obra-detail-card { padding: clamp(18px, 3vw, 28px); border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
+body.erp-page--obras .obra-detail-heading h2 { margin: 12px 0 0; color: var(--text, #e7f5ff); overflow-wrap: anywhere; }
+body.erp-page--obras .obra-detail-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 0; }
+body.erp-page--obras .obras-inspections { margin-top: 30px; }
+body.erp-page--obras .obras-inspection-list { display: grid; gap: 14px; }
+body.erp-page--obras .obra-inspection-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; padding: 18px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 15px; }
+body.erp-page--obras .obra-inspection-card h3 { margin: 0 0 7px; color: var(--text, #e7f5ff); }
+body.erp-page--obras .obra-inspection-card p { margin: 0; color: var(--muted, #91a8bd); }
+body.erp-page--obras .obra-inspection-card dl { display: flex; flex-wrap: wrap; gap: 16px; margin: 0; }
+@media (max-width: 680px) {
+  body.erp-page--obras .obras-heading, body.erp-page--obras .obras-section-heading { align-items: flex-start; flex-direction: column; }
+  body.erp-page--obras .obras-heading .obras-primary-button, body.erp-page--obras .obras-section-heading .obras-primary-button { width: 100%; }
+  body.erp-page--obras .obra-detail-grid { grid-template-columns: 1fr; }
+  body.erp-page--obras .obra-inspection-card { grid-template-columns: 1fr; }
+  body.erp-page--obras .obra-card-actions { flex-wrap: wrap; }
+}
+
+
+/* Links sem ícone mantêm o nome legível quando a sidebar está recolhida. */
+body.has-erp-sidebar.erp-sidebar-collapsed .erp-nav-link[data-sidebar-iconless] {
+  min-height: 48px;
+  padding: 4px 2px;
+  justify-content: center;
+}
+body.has-erp-sidebar.erp-sidebar-collapsed .erp-nav-link[data-sidebar-iconless] > span:not(.erp-nav-badge) {
+  display: block !important;
+  max-width: 100%;
+  color: #dceafa;
+  font-size: 8px;
+  line-height: 1.1;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
