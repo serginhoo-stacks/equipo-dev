@@ -2303,21 +2303,3 @@ body.erp-page--obras .obra-inspection-card dl { display: flex; flex-wrap: wrap; 
   body.erp-page--obras .obra-inspection-card { grid-template-columns: 1fr; }
   body.erp-page--obras .obra-card-actions { flex-wrap: wrap; }
 }
-
-
-/* Links sem ícone mantêm o nome legível quando a sidebar está recolhida. */
-body.has-erp-sidebar.erp-sidebar-collapsed .erp-nav-link[data-sidebar-iconless] {
-  min-height: 48px;
-  padding: 4px 2px;
-  justify-content: center;
-}
-body.has-erp-sidebar.erp-sidebar-collapsed .erp-nav-link[data-sidebar-iconless] > span:not(.erp-nav-badge) {
-  display: block !important;
-  max-width: 100%;
-  color: #dceafa;
-  font-size: 8px;
-  line-height: 1.1;
-  text-align: center;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
