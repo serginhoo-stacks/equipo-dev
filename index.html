@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <script>document.documentElement.classList.add("session-checking");</script>
-<link rel="icon" type="image/png" href="./imagens/favcon%20(1).png>
+<link rel="icon" type="image/png" href="./imagens/favcon%20(1).png">
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -819,6 +819,137 @@ body {
 .plan-preview strong {
     color: #5cecff !important; /* Preço ciano */
 }
+
+
+/* ===== SmartInspect: visual futurista escuro + glassmorphism ===== */
+:root {
+  color-scheme: dark;
+  --azul: #28d7ff;
+  --azul-escuro: #07101b;
+  --azul-claro: #d8f6ff;
+  --texto: #f5fbff;
+  --texto-secundario: #b2c2d3;
+  --branco: #ffffff;
+  --borda: rgba(130, 225, 255, .24);
+  --neon: #63e5ff;
+  --sombra: 0 22px 70px rgba(0, 0, 0, .48);
+  --glass: rgba(8, 13, 22, .58);
+  --glass-strong: rgba(7, 11, 18, .78);
+}
+
+html { color-scheme: dark; }
+body {
+  color: var(--texto) !important;
+  background-color: #030508 !important;
+  background-image:
+    linear-gradient(180deg, rgba(2, 5, 10, .20), rgba(2, 5, 10, .42)),
+    url('./imagens/fundo.png') !important;
+  background-position: center, center;
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+}
+
+header {
+  background: rgba(3, 6, 12, .68) !important;
+  border-bottom: 1px solid rgba(99, 229, 255, .22) !important;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, .28) !important;
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+header.scrolled { background: rgba(3, 6, 12, .88) !important; }
+.logo-icon, .btn-login, .btn-primary, .passo-numero {
+  background: linear-gradient(135deg, #8af0ff, #20a9e8) !important;
+  box-shadow: 0 8px 30px rgba(32, 169, 232, .24);
+}
+nav a { color: #e5f4ff !important; }
+nav a:hover { color: var(--neon) !important; }
+.menu-mobile { background: rgba(99, 229, 255, .12) !important; }
+
+.hero { background: transparent !important; }
+.hero-video-bg { opacity: .82 !important; filter: saturate(.82) contrast(1.06); }
+.hero-overlay {
+  background: linear-gradient(90deg, rgba(2, 5, 10, .48), rgba(2, 5, 10, .27)) !important;
+}
+.hero h1, .section-header h2, .sobre-texto h3, .recurso-card h3,
+.passo h3, .destaque h2 { color: #f7fbff !important; }
+.hero-description, .section-header p, .sobre-texto p, .recurso-card p,
+.passo p, .destaque p { color: #c1cfdd !important; }
+
+.sobre, .recursos, .como, .estatisticas, .destaque, .si-team-section,
+.lower-panel {
+  background: linear-gradient(135deg, rgba(5, 9, 16, .60), rgba(8, 15, 25, .48)) !important;
+  border-top: 1px solid rgba(130, 225, 255, .13) !important;
+  backdrop-filter: blur(12px) saturate(125%);
+  -webkit-backdrop-filter: blur(12px) saturate(125%);
+}
+.recurso-card, .passo, .estatistica, .sobre-item, .plan-preview,
+.dashboard-preview {
+  background: linear-gradient(145deg, rgba(18, 27, 40, .66), rgba(6, 10, 18, .57)) !important;
+  border: 1px solid rgba(130, 225, 255, .19) !important;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(255, 255, 255, .055);
+  backdrop-filter: blur(16px) saturate(135%);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+}
+.recurso-card, .passo, .estatistica, .plan-preview {
+  transform: perspective(900px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) translateY(var(--hover-y, 0px));
+  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease, background .28s ease;
+  will-change: transform;
+}
+.recurso-card:hover, .passo:hover, .estatistica:hover, .plan-preview:hover {
+  --hover-y: -7px;
+  border-color: rgba(99, 229, 255, .66) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, .40), 0 0 28px rgba(51, 197, 242, .12), inset 0 1px 0 rgba(255, 255, 255, .09);
+}
+.dashboard-preview { border-color: rgba(99, 229, 255, .38) !important; }
+.btn-primary, .btn-secondary, .btn-login, .logo-icon, .si-footer-social {
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+}
+.btn-primary:hover, .btn-secondary:hover, .btn-login:hover, .logo-icon:hover {
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 0 30px rgba(99, 229, 255, .30);
+}
+.estatistica strong, .section-label, .si-team-role { color: var(--neon) !important; }
+.si-team-info h3 { color: #f7fbff !important; }
+.si-team-info p { color: #b2c2d3 !important; }
+.si-team-card { transform-style: preserve-3d; }
+.si-team-photo {
+  border-color: rgba(99, 229, 255, .58) !important;
+  box-shadow: 0 0 0 8px rgba(99, 229, 255, .07), 0 18px 45px rgba(0, 0, 0, .42), 0 0 26px rgba(99, 229, 255, .13) !important;
+}
+@keyframes siPhotoFall {
+  0% { opacity: 0; transform: translateY(-190px) rotate(-9deg) scale(.70); }
+  62% { opacity: 1; transform: translateY(13px) rotate(2deg) scale(1.04); }
+  82% { transform: translateY(-5px) rotate(-1deg) scale(.99); }
+  100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+.si-team-card:hover .si-team-photo { filter: saturate(1.12) contrast(1.06); }
+footer, .si-footer { background: rgba(2, 5, 10, .88) !important; }
+:focus-visible { outline: 2px solid var(--neon); outline-offset: 4px; }
+
+@media (max-width: 900px) {
+  nav { background: rgba(3, 6, 12, .94) !important; backdrop-filter: blur(20px); }
+}
+@media (pointer: coarse) {
+  .recurso-card, .passo, .estatistica, .plan-preview { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .si-team-card { opacity: 1 !important; transform: none !important; }
+  .si-team-photo { animation: none !important; }
+}
+
+
+/* Ícones vetoriais: tamanho e traço uniformes no tema futurista. */
+.preview-card-icon svg, .recurso-icon svg, .sobre-item-icon svg {
+  display: block; width: 1.15em; height: 1.15em; fill: none;
+  stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+}
+.preview-card-icon svg { width: 25px; height: 25px; }
+.recurso-icon svg { width: 25px; height: 25px; }
+.sobre-item-icon svg { width: 18px; height: 18px; }
+
 </style>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -886,10 +1017,10 @@ body {
                 </div>
 
                 <div class="preview-cards">
-                    <div class="preview-card"><div class="preview-card-icon">🏢</div><small>Obras ativas</small><strong>12</strong></div>
-                    <div class="preview-card"><div class="preview-card-icon">📋</div><small>Inspeções</small><strong>48</strong></div>
+                    <div class="preview-card"><div class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M2 21h20M8 7h2m4 0h2M8 11h2m4 0h2M8 15h2m4 0h2M10 21v-3h4v3"/></svg></div><small>Obras ativas</small><strong>12</strong></div>
+                    <div class="preview-card"><div class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V3h6v1.5M8 10h8M8 14h8M8 18h5"/></svg></div><small>Inspeções</small><strong>48</strong></div>
                     <div class="preview-card"><div class="preview-card-icon">⚠️</div><small>Pendências</small><strong>07</strong></div>
-                    <div class="preview-card"><div class="preview-card-icon">📦</div><small>Materiais</small><strong>126</strong></div>
+                    <div class="preview-card"><div class="preview-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4m-9 4v10m-4-12 9-4"/></svg></div><small>Materiais</small><strong>126</strong></div>
                 </div>
 
                 <div class="preview-chart"></div>
@@ -915,7 +1046,7 @@ body {
             <div class="sobre-lista">
                 <div class="sobre-item"><div class="sobre-item-icon">✓</div><div><strong>Organização</strong><span>Informações centralizadas em um único sistema.</span></div></div>
                 <div class="sobre-item"><div class="sobre-item-icon">⚡</div><div><strong>Agilidade</strong><span>Acesso rápido aos dados importantes da operação.</span></div></div>
-                <div class="sobre-item"><div class="sobre-item-icon">🔐</div><div><strong>Controle</strong><span>Acesso organizado de acordo com cada usuário.</span></div></div>
+                <div class="sobre-item"><div class="sobre-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/></svg></div><div><strong>Controle</strong><span>Acesso organizado de acordo com cada usuário.</span></div></div>
             </div>
         </div>
 
@@ -945,12 +1076,12 @@ body {
     </div>
 
     <div class="recursos-grid">
-        <div class="recurso-card reveal"><div class="recurso-icon">🏢</div><h3>Gestão de obras</h3><p>Acompanhe suas obras e mantenha informações importantes organizadas em um único ambiente.</p></div>
-        <div class="recurso-card reveal"><div class="recurso-icon">📋</div><h3>Inspeções</h3><p>Registre e acompanhe inspeções realizadas durante o andamento das atividades.</p></div>
+        <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M2 21h20M8 7h2m4 0h2M8 11h2m4 0h2M8 15h2m4 0h2M10 21v-3h4v3"/></svg></div><h3>Gestão de obras</h3><p>Acompanhe suas obras e mantenha informações importantes organizadas em um único ambiente.</p></div>
+        <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V3h6v1.5M8 10h8M8 14h8M8 18h5"/></svg></div><h3>Inspeções</h3><p>Registre e acompanhe inspeções realizadas durante o andamento das atividades.</p></div>
         <div class="recurso-card reveal"><div class="recurso-icon">⚠️</div><h3>Não conformidades</h3><p>Identifique problemas e acompanhe as pendências que precisam de atenção.</p></div>
-        <div class="recurso-card reveal"><div class="recurso-icon">📦</div><h3>Estoque</h3><p>Tenha uma visão organizada dos materiais cadastrados e disponíveis.</p></div>
-        <div class="recurso-card reveal"><div class="recurso-icon">👥</div><h3>Equipe online</h3><p>Visualize os usuários conectados e acompanhe a presença da equipe.</p></div>
-        <div class="recurso-card reveal"><div class="recurso-icon">📊</div><h3>Dashboard</h3><p>Visualize informações importantes através de uma interface clara, rápida e intuitiva.</p></div>
+        <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4m-9 4v10m-4-12 9-4"/></svg></div><h3>Estoque</h3><p>Tenha uma visão organizada dos materiais cadastrados e disponíveis.</p></div>
+        <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m6-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm6-7.5a4 4 0 0 1 0 7.8M20 15a4 4 0 0 1 2 3.5V21"/></svg></div><h3>Equipe online</h3><p>Visualize os usuários conectados e acompanhe a presença da equipe.</p></div>
+        <div class="recurso-card reveal"><div class="recurso-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v18h18M8 16v-4m5 4V6m5 10V9"/></svg></div><h3>Dashboard</h3><p>Visualize informações importantes através de uma interface clara, rápida e intuitiva.</p></div>
     </div>
 </div>
 </section>
@@ -1237,5 +1368,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   })();
 </script>
+
+<script>
+/* Inclinação sutil com o ponteiro; desativada em telas touch e para redução de movimento. */
+(() => {
+  if (!window.matchMedia('(pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cards = document.querySelectorAll('.recurso-card, .passo, .estatistica, .plan-preview');
+  cards.forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - .5;
+      const y = (event.clientY - rect.top) / rect.height - .5;
+      card.style.setProperty('--tilt-x', `${(x * 5).toFixed(2)}deg`);
+      card.style.setProperty('--tilt-y', `${(-y * 5).toFixed(2)}deg`);
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.removeProperty('--tilt-x');
+      card.style.removeProperty('--tilt-y');
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
