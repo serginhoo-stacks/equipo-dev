@@ -1,15 +1,113 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Navegação — SmartInspect AI</title>
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-  <div class="menu-container"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/supabase.js"></script>
-  <script src="../js/sidebar.js"></script>
-</body>
-</html>
+<button class="erp-sidebar-backdrop" type="button" data-sidebar-backdrop aria-label="Fechar menu" hidden></button>
+<button class="erp-sidebar-toggle" type="button" data-sidebar-toggle aria-controls="erpSidebar" aria-expanded="false" aria-label="Abrir menu">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+</button>
+
+<aside class="erp-sidebar" id="erpSidebar" aria-label="Navegação do SmartInspect AI">
+  <div class="erp-sidebar-brand">
+    <a class="erp-sidebar-brand-link" href="dashboard.html" data-company-context aria-label="SmartInspect AI — início do ERP">
+      <img src="../imagens/logo.png" alt="" width="42" height="42">
+      <span><strong>SmartInspect</strong><small>AI · ERP</small></span>
+    </a>
+    <button class="erp-sidebar-collapse" type="button" data-sidebar-collapse aria-controls="erpSidebar" aria-expanded="true" aria-label="Recolher menu" title="Recolher menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 18-6-6 6-6"></path></svg>
+    </button>
+    <button class="erp-sidebar-close" type="button" data-sidebar-close aria-label="Fechar menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"></path></svg>
+    </button>
+  </div>
+
+  <div class="erp-sidebar-workspace" aria-label="Ambiente atual">
+    <span class="erp-sidebar-workspace-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"></path></svg>
+    </span>
+    <span><small>AMBIENTE ATUAL</small><strong data-sidebar-company>Empresa selecionada</strong></span>
+  </div>
+
+  <nav class="erp-sidebar-nav" aria-label="Menu principal">
+    <section class="erp-nav-section" aria-labelledby="navOverview">
+      <h2 id="navOverview" class="erp-nav-heading">Visão geral</h2>
+      <a class="erp-nav-link" href="dashboard.html" data-pages="dashboard" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"></rect><rect x="13" y="3" width="8" height="5" rx="1.5"></rect><rect x="13" y="10" width="8" height="11" rx="1.5"></rect><rect x="3" y="13" width="8" height="8" rx="1.5"></rect></svg><span>Dashboard</span>
+      </a>
+    </section>
+
+    <section class="erp-nav-section" aria-labelledby="navOperations">
+      <h2 id="navOperations" class="erp-nav-heading">Operação</h2>
+      <a class="erp-nav-link" href="obras.html" data-pages="obras nova_obra obra_cadastrada detalhes_obra" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5M9 9h.01M15 9h.01M9 12h.01M15 12h.01"></path></svg><span>Obras</span>
+      </a>
+      <a class="erp-nav-sublink" href="nova_obra.html" data-pages="nova_obra" data-company-context><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span>Nova obra</span></a>
+      <a class="erp-nav-link" href="imoveis.html" data-pages="imoveis novo_imovel" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"></path></svg><span>Imóveis</span>
+      </a>
+      <a class="erp-nav-sublink" href="novo_imovel.html" data-pages="novo_imovel" data-company-context><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span>Novo imóvel</span></a>
+      <a class="erp-nav-link" href="inspecoes.html" data-pages="inspecoes nova_inspecao detalhes_inspecao" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h6M9 3h6a2 2 0 0 1 2 2v1h2v15H5V6h2V5a2 2 0 0 1 2-2Z"></path><path d="m9 14 2 2 4-4M9 10h.01"></path></svg><span>Inspeções</span>
+      </a>
+      <a class="erp-nav-sublink" href="nova_inspecao.html" data-pages="nova_inspecao" data-company-context><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span>Nova inspeção</span></a>
+    </section>
+
+    <section class="erp-nav-section" aria-labelledby="navResources">
+      <h2 id="navResources" class="erp-nav-heading">Recursos</h2>
+      <a class="erp-nav-link" href="estoque.html" id="menuEstoque" data-pages="estoque novo_estoque movimentar_estoque logs_estoque" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="m3.3 7 8.7 5 8.7-5M12 22V12"></path></svg><span>Estoque</span><span id="badgeEstoque" class="erp-nav-badge" hidden></span>
+      </a>
+      <a class="erp-nav-sublink" href="novo_estoque.html" data-pages="novo_estoque" data-company-context><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span>Cadastrar item</span></a>
+      <a class="erp-nav-sublink" href="movimentar_estoque.html" data-pages="movimentar_estoque" data-company-context><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h14l-4-4M17 17H3l4 4"></path></svg><span>Movimentações</span></a>
+      <a class="erp-nav-sublink" href="logs_estoque.html" data-pages="logs_estoque" data-company-context><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>Histórico do estoque</span></a>
+      <a class="erp-nav-link" href="relatorios.html" data-pages="relatorios" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h17M8 16v-5M13 16V8M18 16v-8"></path></svg><span>Relatórios</span>
+      </a>
+      <a class="erp-nav-link" href="ia.html" data-pages="ia" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z"></path><path d="m19 14 1.2 2.8L23 18l-2.8 1.2L19 22l-1.2-2.8L15 18l2.8-1.2L19 14ZM5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Z"></path></svg><span>Inteligência artificial</span>
+      </a>
+    </section>
+
+    <section class="erp-nav-section" aria-labelledby="navPeople">
+      <h2 id="navPeople" class="erp-nav-heading">Equipe e acesso</h2>
+      <a class="erp-nav-link" href="equipe.html" data-pages="equipe" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"></path></svg><span>Equipe</span>
+      </a>
+      <a class="erp-nav-link admin-only" href="admin.html" data-pages="admin" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"></path></svg><span>Aprovação de usuários</span>
+      </a>
+    </section>
+
+    <section class="erp-nav-section" aria-labelledby="navCommunication">
+      <h2 id="navCommunication" class="erp-nav-heading">Comunicação</h2>
+      <a class="erp-nav-link" href="notificacoes.html" id="menuNotificacoes" data-pages="notificacoes" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></svg><span>Notificações</span><span id="badgeNotificacoes" class="erp-nav-badge" hidden></span>
+      </a>
+      <a class="erp-nav-link" href="solicitacoes.html" data-pages="solicitacoes" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"></path></svg><span>Solicitações</span>
+      </a>
+      <a class="erp-nav-link" href="suporte.html" data-pages="suporte" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"></path></svg><span>Suporte</span>
+      </a>
+      <a class="erp-nav-link admin-only" href="atendimento.html" data-pages="atendimento" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14v-3a9 9 0 0 1 18 0v3M3 14a2 2 0 0 0 2 2h2v-6H5a2 2 0 0 0-2 2ZM21 14a2 2 0 0 1-2 2h-2v-6h2a2 2 0 0 1 2 2ZM17 20h-4"></path></svg><span>Central de atendimento</span>
+      </a>
+    </section>
+
+    <section class="erp-nav-section" aria-labelledby="navSettings">
+      <h2 id="navSettings" class="erp-nav-heading">Conta</h2>
+      <a class="erp-nav-link" href="configuracoes.html" data-pages="configuracoes" data-company-context>
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.5.9l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.5-.9l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-1.8l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.5-.9l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.5.9l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 1.7Z"></path></svg><span>Configurações</span>
+      </a>
+      <a class="erp-nav-link" href="../painel-pessoal.html" data-pages="painel-pessoal">
+        <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M10 14 21 3M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"></path></svg><span>Minhas empresas</span>
+      </a>
+    </section>
+  </nav>
+
+  <footer class="erp-sidebar-footer">
+    <div class="erp-sidebar-user" aria-label="Usuário conectado">
+      <span class="erp-sidebar-avatar" aria-hidden="true" data-sidebar-avatar>U</span>
+      <span class="erp-sidebar-user-copy"><strong data-sidebar-user-name>Usuário</strong><small data-sidebar-user-role>Conta conectada</small></span>
+    </div>
+    <button class="erp-sidebar-logout" type="button" data-sidebar-logout>
+      <svg class="erp-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 19V5a2 2 0 0 0-2-2h-5"></path></svg><span>Sair da conta</span>
+    </button>
+  </footer>
+</aside>
