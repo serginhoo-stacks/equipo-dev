@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Movimentar Estoque - SmartInspect AI</title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="erp-page--movimentar-estoque">
 
 <div class="menu-container"></div>
 
@@ -20,7 +20,7 @@
         <a href="estoque.html" class="secondary-button">← Voltar ao Estoque</a>
     </header>
 
-    <section class="card" id="formularioMovimentacao" style="display: none;">
+    <section class="card" id="formularioMovimentacao" hidden>
         <form id="formMovimentar">
             <label>Material
                 <input id="materialNome" type="text" disabled>
@@ -50,7 +50,7 @@
 
             <br>
             <button type="submit" class="primary-button" id="btnSalvar">💾 Salvar Movimentação</button>
-            <p id="mensagem" style="margin-top: 15px;"></p>
+            <p id="mensagem" class="erp-message-inline"></p>
         </form>
     </section>
     
@@ -60,8 +60,8 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/sidebar.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/sidebar.js"></script>
 
 <script>
     const parametros = new URLSearchParams(window.location.search);
@@ -89,8 +89,8 @@
         $("materialNome").value = data.material;
         $("quantidadeAtual").value = `${data.quantidade} ${data.unidade || 'un'}`;
         
-        $("carregando").style.display = "none";
-        $("formularioMovimentacao").style.display = "block";
+        $("carregando").hidden = true;
+        $("formularioMovimentacao").hidden = false;
     }
 
     $("formMovimentar").addEventListener("submit", async (e) => {

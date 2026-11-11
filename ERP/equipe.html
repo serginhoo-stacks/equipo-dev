@@ -8,26 +8,13 @@
 
 <title>Equipe - SmartInspect AI</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 
-<style>
-.equipe-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
-.membro{ background:white; padding:20px; border-radius:15px; box-shadow:0 3px 10px #0002; display:flex; align-items:center; gap:15px; }
-.avatar-box{ position:relative; }
-.foto-perfil{ width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #0066cc; background:#eee; }
-.ponto-online{ position:absolute; right:5px; bottom:5px; width:16px; height:16px; border-radius:50%; background:#999; border:2px solid white; }
-.ponto-online.ativo{ background:#16a34a; box-shadow:0 0 8px #16a34a; }
-.status{ font-size:14px; font-weight:600; }
-.online{ color:#16a34a; }
-.offline{ color:gray; }
-.cargo{ background:#0066cc; color:white; padding:5px 10px; border-radius:10px; font-size:13px; }
-.permissoes{ margin-top:10px; font-size:13px; line-height:1.6; }
-.ultimo-acesso{ font-size:13px; color:#666; margin-top:8px; }
-</style>
+
 
 </head>
 
-<body>
+<body class="erp-page--equipe">
 
 <!-- SIDEBAR PADRÃO -->
 <div class="menu-container"></div>
@@ -45,8 +32,8 @@ Carregando equipe...
 
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/sidebar.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/sidebar.js"></script>
 <!-- REMOVIDO: auth.js e configuracoes.js -->
 
 <script>
@@ -104,7 +91,7 @@ Carregando equipe...
             lista.innerHTML += `
             <div class="membro">
                 <div class="avatar-box">
-                    <img class="foto-perfil" src="${usuario.foto_url || 'imagens/avatar.png'}" onerror="this.src='imagens/avatar.png'">
+                    <img class="foto-perfil" src="${usuario.foto_url || 'imagens/avatar.png'}" onerror="this.src='../imagens/avatar.png'">
                     <span class="ponto-online ${online ? 'ativo' : ''}"></span>
                 </div>
 

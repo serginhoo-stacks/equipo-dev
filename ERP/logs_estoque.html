@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Logs de Estoque - SmartInspect AI</title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="erp-page--logs-estoque">
 
 <div class="menu-container"></div>
 
@@ -17,11 +17,11 @@
             <h1>📋 Histórico do Material</h1>
             <p class="subtitle">Acompanhe todas as entradas e saídas deste item.</p>
         </div>
-        <a href="estoque.html" class="secondary-button" style="text-decoration:none; padding: 10px 15px; background: #eee; border-radius: 8px; color: #333;">← Voltar ao Estoque</a>
+        <a href="estoque.html" class="secondary-button logs-back-link">← Voltar ao Estoque</a>
     </header>
 
-    <div id="infoMaterial" class="card" style="margin-bottom: 20px; display: none;">
-        <h2 id="nomeMaterial" style="margin-bottom: 10px;"></h2>
+    <div id="infoMaterial" class="card stock-material-info" hidden>
+        <h2 id="nomeMaterial" class="stock-material-title"></h2>
         <p id="saldoMaterial"></p>
     </div>
 
@@ -31,8 +31,8 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/sidebar.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/sidebar.js"></script>
 
 <script>
     const parametros = new URLSearchParams(window.location.search);
@@ -49,7 +49,7 @@
         const { data: material } = await banco.from("estoque").select("material, quantidade, unidade").eq("id", estoqueId).single();
         
         if (material) {
-            infoMaterial.style.display = "block";
+            infoMaterial.hidden = false;
             document.getElementById("nomeMaterial").textContent = `📦 ${material.material}`;
             document.getElementById("saldoMaterial").textContent = `Saldo atual: ${material.quantidade} ${material.unidade || 'un'}`;
         }
@@ -63,7 +63,7 @@
         if (error) {
             lista.innerHTML = `
                 <p>⚠️ Não foi possível carregar os logs.</p>
-                <p style="font-size:12px; color:#666;">Verifique se a tabela <strong>movimentacoes_estoque</strong> existe no seu Supabase.</p>
+                <p class="erp-help-note">Verifique se a tabela <strong>movimentacoes_estoque</strong> existe no seu Supabase.</p>
             `;
             return;
         }
@@ -75,13 +75,13 @@
 
         lista.innerHTML = "";
         data.forEach(log => {
-            const cor = log.tipo === 'entrada' ? '#16a36a' : '#c53b3b';
+            const tipoClass = log.tipo === 'entrada' ? 'entrada' : 'saida';
             const icone = log.tipo === 'entrada' ? '🟢 Entrada' : '🔴 Saída';
             
             lista.innerHTML += `
-                <div style="border-bottom: 1px solid #eee; padding: 15px 0;">
-                    <strong style="color: ${cor}; font-size: 16px;">${icone}</strong>
-                    <p style="margin-top: 5px;"><strong>Quantidade:</strong> ${log.quantidade}</p>
+                <div class="stock-log-row">
+                    <strong class="stock-log-type stock-log-type--${tipoClass}">${icone}</strong>
+                    <p class="stock-log-copy"><strong>Quantidade:</strong> ${log.quantidade}</p>
                     <p><strong>Data:</strong> ${new Date(log.created_at || Date.now()).toLocaleString('pt-BR')}</p>
                     <p><strong>Responsável:</strong> ${log.responsavel || 'Não informado'}</p>
                     ${log.observacao ? `<p><strong>Obs:</strong> ${log.observacao}</p>` : ''}

@@ -6,68 +6,10 @@
 <title>Dashboard — SmartInspect AI</title>
 <!-- Ajuste do caminho do CSS para voltar uma pasta -->
 <link rel="stylesheet" href="../css/style.css">
-<style id="dashboard-styles">
-/* SmartInspect AI — Dashboard SaaS */
-:root{--si-blue:#1268d5;--si-blue-dark:#0e3f78;--si-ink:#102a43;--si-muted:#6b7c93;--si-line:#e5edf5;--si-bg:#f5f8fc;--si-green:#16a36a;--si-orange:#c87800;--si-red:#c53b3b;}
-.dashboard-page{background:var(--si-bg);color:var(--si-ink);}
-.dashboard-page .content{padding:34px clamp(20px,3vw,44px) 24px;overflow:visible;background:var(--si-bg); margin-left: 250px; /* Empurra o conteúdo para não ficar embaixo do menu */ transition: margin 0.3s;}
-.dashboard-page .content::before{opacity:.025;right:3%;left:auto;top:18%;width:520px;height:520px;transform:none;}
-.dashboard-shell{max-width:1500px;margin:0 auto;}
-.dashboard-header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px;}
-.dashboard-kicker{margin:0 0 8px;color:var(--si-blue);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;}
-.dashboard-header h1{margin:0;color:var(--si-ink);font-size:clamp(26px,3vw,38px);letter-spacing:-.03em;}
-.dashboard-intro{margin:8px 0 0;color:var(--si-muted);font-size:14px;}
-.dashboard-actions{display:flex;align-items:center;gap:10px;}
-.dashboard-search{display:flex;align-items:center;gap:8px;width:min(240px,30vw);padding:10px 12px;border:1px solid var(--si-line);border-radius:11px;background:#fff;color:var(--si-muted);}
-.dashboard-search input{width:100%;border:0;outline:0;background:transparent;color:var(--si-ink);font:inherit;font-size:13px;}
-.dashboard-icon-button{display:grid;place-items:center;width:40px;height:40px;border:1px solid var(--si-line);border-radius:11px;background:#fff;color:var(--si-muted);cursor:pointer;}
-.dashboard-icon-button:hover{border-color:#b9d4f3;color:var(--si-blue);background:#f8fbff;}
-.dashboard-user{display:flex;align-items:center;gap:9px;padding-left:6px;}
-.dashboard-user-avatar{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#dcecff;color:var(--si-blue);font-size:13px;font-weight:800;overflow:hidden;}
-.dashboard-user-avatar img{width:100%;height:100%;object-fit:cover;}
-.dashboard-user-name{display:block;color:var(--si-ink);font-size:12px;font-weight:800;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.dashboard-user-role{display:block;margin-top:2px;color:var(--si-muted);font-size:10px;text-transform:capitalize;}
-.dashboard-summary{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:16px 18px;border:1px solid #dbe9f8;border-radius:14px;background:linear-gradient(100deg,#edf6ff,#fff);box-shadow:0 6px 18px rgba(25,83,145,.05);}
-.dashboard-summary-icon{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:10px;background:#dcecff;color:var(--si-blue);}
-.dashboard-summary strong{display:block;color:var(--si-ink);font-size:13px;}
-.dashboard-summary p{margin:3px 0 0;color:var(--si-muted);font-size:13px;}
-.dashboard-metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;}
-.dashboard-metric{position:relative;min-height:138px;padding:18px;border:1px solid var(--si-line);border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(16,42,67,.045);transition:transform .18s,box-shadow .18s;}
-.dashboard-metric:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,42,67,.09);}
-.dashboard-metric-icon{display:grid;place-items:center;width:34px;height:34px;margin-bottom:18px;border-radius:10px;background:#eaf3ff;color:var(--si-blue);}
-.dashboard-metric-icon.green{background:#e8f8f0;color:var(--si-green)}.dashboard-metric-icon.orange{background:#fff5e5;color:var(--si-orange)}.dashboard-metric-icon.red{background:#fff0ef;color:var(--si-red)}.dashboard-metric-icon.purple{background:#f2edff;color:#7351c7}
-.dashboard-metric-label{display:block;color:var(--si-muted);font-size:11px;font-weight:700;}
-.dashboard-metric-value{display:block;margin-top:5px;color:var(--si-ink);font-size:27px;font-weight:800;letter-spacing:-.03em;}
-.dashboard-metric-note{display:block;margin-top:4px;color:#9aaabd;font-size:10px;}
-.dashboard-body-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(320px,.8fr);gap:18px;margin-top:18px;}
-.dashboard-panel{border:1px solid var(--si-line);border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(16,42,67,.045);}
-.dashboard-panel-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 0;}
-.dashboard-panel-header h2{margin:0;color:var(--si-ink);font-size:16px;letter-spacing:-.01em;}.dashboard-panel-header p{margin:5px 0 0;color:var(--si-muted);font-size:12px;}.dashboard-panel-content{padding:18px 22px 22px;}
-.dashboard-filter{padding:8px 10px;border:1px solid var(--si-line);border-radius:9px;background:#fff;color:var(--si-muted);font:inherit;font-size:11px;outline:0;}
-.dashboard-chart{display:grid;grid-template-columns:repeat(var(--chart-columns,7),minmax(8px,1fr));align-items:end;gap:10px;height:190px;padding:18px 4px 26px;border-bottom:1px solid var(--si-line);background:repeating-linear-gradient(to top,transparent 0,transparent 45px,#eef3f8 46px);}
-.dashboard-chart-bar{position:relative;min-height:3px;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#4da0f5,var(--si-blue));}
-.dashboard-chart-bar span{position:absolute;right:0;bottom:-23px;left:0;text-align:center;color:#9aaabd;font-size:10px;}.dashboard-chart-empty{display:grid;place-items:center;height:190px;color:var(--si-muted);font-size:12px;text-align:center;}
-.ai-panel{overflow:hidden;background:linear-gradient(145deg,#103f78,#1268d5);color:#fff;}.ai-panel .dashboard-panel-header h2,.ai-panel .dashboard-panel-header p{color:#fff}.ai-panel .dashboard-panel-header p{opacity:.72}.ai-panel .dashboard-panel-content{padding-top:20px}.ai-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid rgba(255,255,255,.2);border-radius:999px;color:#dcecff;background:rgba(255,255,255,.1);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.ai-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.ai-metric{padding:13px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(255,255,255,.09)}.ai-metric strong{display:block;font-size:23px}.ai-metric span{display:block;margin-top:4px;color:#dcecff;font-size:10px}.dashboard-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;margin-top:17px;padding:0 12px;border:0;border-radius:9px;background:#fff;color:var(--si-blue-dark);font:inherit;font-size:12px;font-weight:800;text-decoration:none;cursor:pointer}.dashboard-button:hover{background:#edf6ff}.dashboard-button.disabled{opacity:.65;cursor:not-allowed}
-.dashboard-section{margin-top:18px;}.dashboard-section .dashboard-panel-content{padding-top:12px}.dashboard-list-empty,.dashboard-error{padding:20px 0;color:var(--si-muted);font-size:12px}.dashboard-error{color:var(--si-orange)}
-.dashboard-table{width:100%;border-collapse:collapse;font-size:12px}.dashboard-table th{padding:10px 8px;border-bottom:1px solid var(--si-line);color:#9aaabd;font-size:10px;font-weight:800;text-align:left;text-transform:uppercase;letter-spacing:.05em}.dashboard-table td{padding:13px 8px;border-bottom:1px solid #f0f4f8;color:#486581}.dashboard-table tr:last-child td{border-bottom:0}.priority{display:inline-flex;align-items:center;gap:6px;font-weight:800}.priority::before{content:"";width:7px;height:7px;border-radius:50%;background:#b9c7d5}.priority.high{color:var(--si-red)}.priority.high::before{background:var(--si-red)}.priority.medium{color:var(--si-orange)}.priority.medium::before{background:var(--si-orange)}.priority.low{color:#b28a20}.priority.low::before{background:#e6bd3b}.status-tag{display:inline-flex;padding:5px 8px;border-radius:999px;background:#eef4fa;color:#627d98;font-size:10px;font-weight:700}
-.works-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.work-card{padding:16px;border:1px solid var(--si-line);border-radius:12px;background:#fbfdff}.work-card h3{margin:0;color:var(--si-ink);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.work-card p{margin:6px 0;color:var(--si-muted);font-size:11px}.work-progress{height:6px;margin:14px 0 8px;overflow:hidden;border-radius:999px;background:#e9f0f6}.work-progress span{display:block;height:100%;border-radius:inherit;background:var(--si-blue)}.work-meta{display:flex;justify-content:space-between;gap:8px;color:#829ab1;font-size:10px}.work-link{display:inline-flex;margin-top:12px;color:var(--si-blue);font-size:11px;font-weight:800;text-decoration:none}
-.dashboard-lower-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:18px}.online-list{display:grid;gap:8px}.online-user{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f4f8}.online-user:last-child{border-bottom:0}.online-avatar{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#e1efff;color:var(--si-blue);font-size:11px;font-weight:800;overflow:hidden}.online-avatar img{width:100%;height:100%;object-fit:cover}.online-name{display:block;color:var(--si-ink);font-size:12px;font-weight:800}.online-role{display:block;margin-top:3px;color:var(--si-muted);font-size:10px}.online-status{margin-left:auto;color:var(--si-green);font-size:10px;font-weight:800}.online-status::before{content:"";display:inline-block;width:7px;height:7px;margin-right:5px;border-radius:50%;background:var(--si-green)}
-.contact-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:18px;padding:18px 22px}.contact-panel h2{margin:0;color:var(--si-ink);font-size:15px}.contact-panel p{margin:5px 0 0;color:var(--si-muted);font-size:12px}.contact-links{display:flex;gap:8px;flex-wrap:wrap}.contact-link{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--si-line);border-radius:10px;background:#fff}.contact-link img{width:21px;height:21px;object-fit:contain}.dashboard-footer{margin-top:28px;padding:20px 0;color:#829ab1;font-size:11px;text-align:center;border-top:1px solid var(--si-line)}.dashboard-footer strong{color:var(--si-ink)}
-.skeleton{display:inline-block;width:42px;height:24px;border-radius:5px;background:linear-gradient(90deg,#edf2f7,#fff,#edf2f7);background-size:200% 100%;animation:si-shimmer 1.3s infinite}@keyframes si-shimmer{to{background-position:-200% 0}}
 
-/* Esconde o menu lateral antigo (se existir) e ajusta para o novo */
-body.dashboard-page { margin-left: 0; }
-@media(max-width: 768px) {
-    .dashboard-page .content { margin-left: 0; padding: 14px; }
-}
-
-@media(max-width:1200px){.dashboard-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.works-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:900px){.dashboard-header{align-items:stretch;flex-direction:column}.dashboard-actions{width:100%}.dashboard-search{width:100%;flex:1}.dashboard-body-grid,.dashboard-lower-grid{grid-template-columns:1fr}}
-@media(max-width:640px){.dashboard-page .content{padding:24px 14px 18px; margin-left: 0;}.dashboard-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.dashboard-metric{min-height:126px;padding:14px}.dashboard-metric-value{font-size:23px}.dashboard-chart{gap:5px}.works-grid{grid-template-columns:1fr}.dashboard-table{min-width:650px}.dashboard-table-wrap{overflow-x:auto}.contact-panel{align-items:flex-start;flex-direction:column}.dashboard-user-name{max-width:90px}}
-</style>
 <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="app-shell dashboard-page">
+<body class="app-shell dashboard-page erp-page--dashboard">
 <!-- SIDEBAR -->
 <div class="menu-container"></div>
 
@@ -112,13 +54,13 @@ body.dashboard-page { margin-left: 0; }
             <div class="dashboard-panel-content"><div id="inspectionChart" class="dashboard-chart-empty">Carregando dados do Supabase...</div><div class="dashboard-chart-periods"><button type="button" data-chart-days="7" class="active">7 dias</button><button type="button" data-chart-days="30">30 dias</button><button type="button" data-chart-days="90">90 dias</button></div></div>
         </article>
         <article class="dashboard-panel ai-panel">
-            <div class="dashboard-panel-header"><div><span class="ai-badge"><i data-lucide="sparkles" size="12"></i> SmartInspect AI</span><h2 style="margin-top:13px">Análises inteligentes</h2><p>Insights para decisões mais rápidas nas suas inspeções.</p></div></div>
-            <div class="dashboard-panel-content"><div class="ai-metrics"><div class="ai-metric"><strong id="aiAnalyses">—</strong><span>Análises realizadas</span></div><div class="ai-metric"><strong id="aiProblems">—</strong><span>Problemas identificados</span></div></div><p id="aiNote" style="margin:16px 0 0;color:#dcecff;font-size:11px;line-height:1.5">Preparado para os dados de IA disponíveis no sistema.</p></div>
+            <div class="dashboard-panel-header"><div><span class="ai-badge"><i data-lucide="sparkles" size="12"></i> SmartInspect AI</span><h2 class="dashboard-ai-title">Análises inteligentes</h2><p>Insights para decisões mais rápidas nas suas inspeções.</p></div></div>
+            <div class="dashboard-panel-content"><div class="ai-metrics"><div class="ai-metric"><strong id="aiAnalyses">—</strong><span>Análises realizadas</span></div><div class="ai-metric"><strong id="aiProblems">—</strong><span>Problemas identificados</span></div></div><p id="aiNote" class="dashboard-ai-note">Preparado para os dados de IA disponíveis no sistema.</p></div>
         </article>
     </section>
 
     <section class="dashboard-section dashboard-panel">
-        <div class="dashboard-panel-header"><div><h2>Pendências que precisam de atenção</h2><p>Itens encontrados nos registros disponíveis</p></div><i data-lucide="list-checks" size="20" style="color:var(--si-blue)"></i></div>
+        <div class="dashboard-panel-header"><div><h2>Pendências que precisam de atenção</h2><p>Itens encontrados nos registros disponíveis</p></div><i data-lucide="list-checks" size="20" class="dashboard-icon-accent"></i></div>
         <div id="priorityList" class="dashboard-panel-content"><div class="dashboard-list-empty">Carregando pendências...</div></div>
     </section>
 
@@ -128,8 +70,8 @@ body.dashboard-page { margin-left: 0; }
     </section>
 
     <section class="dashboard-lower-grid">
-        <article class="dashboard-panel"><div class="dashboard-panel-header"><div><h2>Equipe online</h2><p>Presença atualizada em tempo real</p></div><i data-lucide="radio" size="19" style="color:var(--si-green)"></i></div><div id="usuariosOnline" class="dashboard-panel-content online-list"><div class="dashboard-list-empty">Carregando equipe...</div></div></article>
-        <article class="dashboard-panel"><div class="dashboard-panel-header"><div><h2>Atividade recente</h2><p>Área preparada para notificações e eventos</p></div><i data-lucide="bell" size="19" style="color:var(--si-blue)"></i></div><div class="dashboard-panel-content"><div class="dashboard-list-empty">Ainda não existem eventos disponíveis para exibir.</div></div></article>
+        <article class="dashboard-panel"><div class="dashboard-panel-header"><div><h2>Equipe online</h2><p>Presença atualizada em tempo real</p></div><i data-lucide="radio" size="19" class="dashboard-icon-green"></i></div><div id="usuariosOnline" class="dashboard-panel-content online-list"><div class="dashboard-list-empty">Carregando equipe...</div></div></article>
+        <article class="dashboard-panel"><div class="dashboard-panel-header"><div><h2>Atividade recente</h2><p>Área preparada para notificações e eventos</p></div><i data-lucide="bell" size="19" class="dashboard-icon-accent"></i></div><div class="dashboard-panel-content"><div class="dashboard-list-empty">Ainda não existem eventos disponíveis para exibir.</div></div></article>
     </section>
 
     <section class="dashboard-panel contact-panel"><div><h2>Fale conosco</h2><p>Entre em contato com a equipe Grupo MonteiroMelo.</p></div></section>
@@ -242,7 +184,7 @@ body.dashboard-page { margin-left: 0; }
             const progress = Number(field(work,["progresso","percentual","progresso_percentual"],NaN));
             const hasProgress = Number.isFinite(progress) && progress >= 0 && progress <= 100;
             const inspections = state.inspections.filter((item) => String(field(item,["obra_id","id_obra"],"")) === String(work.id)).length;
-            return `<article class="work-card"><h3>${esc(field(work,["nome","titulo"],"Obra sem nome"))}</h3><p>${esc(field(work,["responsavel","responsavel_nome"],"Responsável não informado"))}</p>${hasProgress ? `<div class="work-progress"><span style="width:${progress}%"></span></div><div class="work-meta"><span>${progress}% concluído</span><span>${inspections} inspeções</span></div>` : `<div class="work-progress"><span style="width:0%"></span></div><div class="work-meta"><span>Progresso não informado</span><span>${inspections} inspeções</span></div>`}<a class="work-link" href="detalhes_obra.html?id=${encodeURIComponent(work.id || "")}">Ver obra <i data-lucide="arrow-up-right"></i></a></article>`;
+            return `<article class="work-card"><h3>${esc(field(work,["nome","titulo"],"Obra sem nome"))}</h3><p>${esc(field(work,["responsavel","responsavel_nome"],"Responsável não informado"))}</p>${hasProgress ? `<div class="work-progress"><span style="width:${progress}%"></span></div><div class="work-meta"><span>${progress}% concluído</span><span>${inspections} inspeções</span></div>` : `<div class="work-progress"><span class="work-progress-bar--empty"></span></div><div class="work-meta"><span>Progresso não informado</span><span>${inspections} inspeções</span></div>`}<a class="work-link" href="detalhes_obra.html?id=${encodeURIComponent(work.id || "")}">Ver obra <i data-lucide="arrow-up-right"></i></a></article>`;
         }).join("");
         if (window.lucide) lucide.createIcons();
     }

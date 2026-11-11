@@ -4,26 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Relatórios - SmartInspect AI</title>
-<link rel="stylesheet" href="css/style.css">
-<style>
-.report-editor { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-.report-editor .full { grid-column: 1 / -1; }
-.report-preview { background: #f8fafc; border: 1px solid #ddd; border-radius: 12px; padding: 25px; margin-top: 20px; }
-.report-preview h2 { margin-top: 0; }
-.report-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-.report-actions button { cursor: pointer; }
-.report-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 15px; }
-.status-badge { display: inline-block; padding: 5px 10px; border-radius: 20px; background: #e5e7eb; font-size: 13px; }
-#mensagemRelatorio { margin-top: 15px; font-weight: bold; }
-textarea { width: 100%; box-sizing: border-box; resize: vertical; }
-@media(max-width: 800px) {
-    .report-editor { grid-template-columns: 1fr; }
-    .report-editor .full { grid-column: auto; }
-    .report-row { flex-direction: column; align-items: flex-start; }
-}
-</style>
+<link rel="stylesheet" href="../css/style.css">
+
 </head>
-<body>
+<body class="erp-page--relatorios">
 
 <!-- O MENU LATERAL ESTÁ AQUI -->
 <div class="menu-container"></div>
@@ -39,7 +23,7 @@ textarea { width: 100%; box-sizing: border-box; resize: vertical; }
     </div>
 
     <!-- EDITOR DO RELATÓRIO -->
-    <div id="editorRelatorio" class="card" style="display:none;">
+    <div id="editorRelatorio" class="card" hidden>
         <h2>✏️ Editar relatório</h2>
         <div class="report-editor">
             <label>Número do relatório<input id="numeroRelatorio" type="text" readonly></label>
@@ -70,7 +54,7 @@ textarea { width: 100%; box-sizing: border-box; resize: vertical; }
     </div>
 
     <!-- PRÉ-VISUALIZAÇÃO -->
-    <div id="previewContainer" class="card" style="display:none;">
+    <div id="previewContainer" class="card" hidden>
         <h2>👁️ Pré-visualização</h2>
         <div id="previewRelatorio" class="report-preview"></div>
     </div>
@@ -78,9 +62,9 @@ textarea { width: 100%; box-sizing: border-box; resize: vertical; }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/supabase.js"></script>
+<script src="../js/supabase.js"></script>
 <!-- O SCRIPT DO MENU LATERAL ESTÁ AQUI -->
-<script src="js/sidebar.js"></script>
+<script src="../js/sidebar.js"></script>
 <!-- REMOVIDO: auth.js, configuracoes.js e verificarLogin() -->
 
 <script>
@@ -144,16 +128,16 @@ textarea { width: 100%; box-sizing: border-box; resize: vertical; }
         $("nomeArquivo").value = `${numero}.pdf`;
         $("mensagemPersonalizada").value = "";
         $("mensagemRelatorio").innerHTML = "";
-        $("previewContainer").style.display = "none";
-        $("editorRelatorio").style.display = "block";
+        $("previewContainer").hidden = true;
+        $("editorRelatorio").hidden = false;
 
         window.scrollTo({ top: $("editorRelatorio").offsetTop - 20, behavior: "smooth" });
     }
 
     function fecharEditor() {
         inspecaoAtual = null;
-        $("editorRelatorio").style.display = "none";
-        $("previewContainer").style.display = "none";
+        $("editorRelatorio").hidden = true;
+        $("previewContainer").hidden = true;
     }
 
     function obterDadosRelatorio() {
@@ -193,7 +177,7 @@ textarea { width: 100%; box-sizing: border-box; resize: vertical; }
                 <h3>💬 Mensagem ao destinatário</h3>
                 <p>${esc(dados.mensagem || "Nenhuma mensagem personalizada.")}</p>
             `;
-            $("previewContainer").style.display = "block";
+            $("previewContainer").hidden = false;
             window.scrollTo({ top: $("previewContainer").offsetTop - 20, behavior: "smooth" });
         } catch (erro) { alert(erro.message); }
     }

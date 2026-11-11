@@ -8,12 +8,12 @@
 
 <title>Imóveis - SmartInspect AI</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 
 </head>
 
 
-<body>
+<body class="erp-page--imoveis">
 
 <!-- SIDEBAR PADRÃO -->
 <div class="menu-container"></div>
@@ -41,8 +41,8 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/sidebar.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/sidebar.js"></script>
 
 <script>
     // NÃO CHAMA MAIS O verificarLogin()
@@ -79,7 +79,7 @@
             lista.innerHTML += `
             <div class="card">
                 ${imovel.foto ? 
-                    `<img src="${imovel.foto}" style="width:220px;height:150px;object-fit:cover;border-radius:12px;">` 
+                    `<img src="${imovel.foto}" class="erp-property-photo">`
                     : `<p>📷 Sem foto</p>`
                 }
                 <h2>🏠 ${imovel.nome}</h2>

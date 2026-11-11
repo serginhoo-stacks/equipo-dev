@@ -9,134 +9,19 @@
 
 <title>Solicitações - SmartInspect AI</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 
-<style>
 
-.solicitacao-card {
-
-background: white;
-padding: 22px;
-border-radius: 16px;
-margin-bottom: 18px;
-box-shadow: 0 4px 14px rgba(0,0,0,.10);
-
-}
-
-.solicitacao-card h2 {
-
-margin-top: 0;
-
-}
-
-.cargo-select {
-
-width: 100%;
-padding: 12px;
-margin-top: 8px;
-margin-bottom: 15px;
-border-radius: 8px;
-border: 1px solid #ccc;
-font-size: 15px;
-
-}
-
-.acoes {
-
-display: flex;
-gap: 10px;
-flex-wrap: wrap;
-
-}
-
-.btn-aprovar {
-
-background: #16a34a;
-color: white;
-border: none;
-padding: 11px 18px;
-border-radius: 8px;
-cursor: pointer;
-
-}
-
-.btn-recusar {
-
-background: #dc2626;
-color: white;
-border: none;
-padding: 11px 18px;
-border-radius: 8px;
-cursor: pointer;
-
-}
-
-.btn-aprovar:hover,
-.btn-recusar:hover {
-
-opacity: .85;
-
-}
-
-.vazio {
-
-background: white;
-padding: 25px;
-border-radius: 15px;
-text-align: center;
-
-}
-
-</style>
 
 </head>
 
 
-<body>
+<body class="erp-page--solicitacoes">
+<div class="menu-container"></div>
 
 
-<div class="sidebar">
-
-<div class="logo">
-
-<img src="imagens/logo.png" alt="SmartInspect AI">
-
-<h2>SmartInspect AI</h2>
-
-</div>
 
 
-<a href="index.html">📊 Dashboard</a>
-
-<a href="imoveis.html">🏠 Imóveis</a>
-
-<a href="obras.html">🏢 Obras</a>
-
-<a href="inspecoes.html">📋 Inspeções</a>
-
-<a href="estoque.html">📦 Estoque</a>
-
-<a href="ia.html">🤖 IA</a>
-
-<a href="relatorios.html">📄 Relatórios</a>
-
-<a href="equipe.html">👷 Equipe</a>
-
-<a href="usuarios.html">👥 Usuários</a>
-
-<a href="solicitacoes.html">👤 Solicitações</a>
-
-
-<br>
-
-
-<a href="#" onclick="sair()">
-
-🚪 Sair
-
-</a>
-
-</div>
 
 
 
@@ -169,12 +54,12 @@ Carregando solicitações...
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/supabase.js"></script>
+<script src="../js/supabase.js"></script>
 
-<script src="js/configuracoes.js"></script>
-<script src="js/auth.js"></script>
+<script src="../js/configuracoes.js"></script>
+<script src="../js/auth.js"></script>
 
-<script src="js/sidebar.js"></script>
+<script src="../js/sidebar.js"></script>
 
 
 

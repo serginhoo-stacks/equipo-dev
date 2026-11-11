@@ -4,27 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecionando...</title>
-    <style>
-        body {
-            display: flex; align-items: center; justify-content: center; height: 100vh;
-            background: #054F77; color: white; font-family: 'Inter', sans-serif;
-            flex-direction: column; gap: 20px;
-        }
-        .loader {
-            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1);
-            border-top-color: #5cecff; border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
+
     <script>
         // Assim que a página carregar, redireciona direto para o painel pessoal na raiz
         document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "../painel-pessoal.html";
         });
     </script>
+<link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="erp-page--perfil">
     <div class="loader"></div>
     <h2>Voltando para o seu painel...</h2>
 </body>

@@ -9,161 +9,13 @@
 
 <title>Notificações - SmartInspect AI</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 
-<style>
 
-.notificacoes-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.contador-notificacoes {
-    background: #ef4444;
-    color: white;
-    border-radius: 20px;
-    padding: 6px 12px;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.filtros-notificacoes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.filtro {
-    border: 1px solid #ddd;
-    background: white;
-    padding: 9px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.filtro.active {
-    background: #0066cc;
-    color: white;
-    border-color: #0066cc;
-}
-
-.notificacao {
-    position: relative;
-    border-left: 6px solid #ccc;
-    margin-bottom: 15px;
-}
-
-.notificacao.critico {
-    border-left-color: #dc2626;
-}
-
-.notificacao.atencao {
-    border-left-color: #f97316;
-}
-
-.notificacao.informativo {
-    border-left-color: #eab308;
-}
-
-.notificacao.concluido {
-    border-left-color: #16a34a;
-}
-
-.notificacao.lida {
-    opacity: .65;
-}
-
-.notificacao-topo {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-}
-
-.prioridade {
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.critico .prioridade {
-    color: #dc2626;
-}
-
-.atencao .prioridade {
-    color: #f97316;
-}
-
-.informativo .prioridade {
-    color: #ca8a04;
-}
-
-.concluido .prioridade {
-    color: #16a34a;
-}
-
-.notificacao h3 {
-    margin: 8px 0;
-}
-
-.notificacao p {
-    margin: 7px 0;
-}
-
-.notificacao-acoes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 15px;
-}
-
-.botao-pequeno {
-    border: none;
-    padding: 8px 12px;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.botao-lida {
-    background: #e5e7eb;
-}
-
-.botao-excluir {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: #777;
-}
-
-.data-notificacao {
-    color: #777;
-    font-size: 13px;
-}
-
-@media(max-width: 700px) {
-
-    .notificacoes-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .notificacao-topo {
-        flex-direction: column;
-    }
-
-}
-
-</style>
 
 </head>
 
-<body>
+<body class="erp-page--notificacoes">
 
 <div class="menu-container"></div>
 
@@ -262,12 +114,12 @@ Carregando notificações...
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/supabase.js"></script>
+<script src="../js/supabase.js"></script>
 
-<script src="js/configuracoes.js"></script>
-<script src="js/auth.js"></script>
+<script src="../js/configuracoes.js"></script>
+<script src="../js/auth.js"></script>
 
-<script src="js/sidebar.js"></script>
+<script src="../js/sidebar.js"></script>
 
 <script>
 

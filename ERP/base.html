@@ -8,174 +8,14 @@
 
 <title>Dashboard - SmartInspect AI</title>
 
-<link rel="stylesheet" href="css/style.css">
-
-<style>
-
-/* =========================
-   EQUIPE ONLINE
-========================= */
-
-.equipe-online-card{
-    margin-top:25px;
-}
-
-.usuarios-online{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    margin-top:15px;
-}
-
-.usuario-online{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:10px;
-    border-radius:10px;
-    background:#f7f9fc;
-}
-
-.avatar-online{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    object-fit:cover;
-    border:2px solid #0066cc;
-}
-
-.ponto-online-dashboard{
-    width:10px;
-    height:10px;
-    background:#22c55e;
-    border-radius:50%;
-    margin-left:-20px;
-    margin-top:30px;
-    border:2px solid white;
-}
-
-.nome-online{
-    font-weight:bold;
-    color:#222;
-}
-
-.cargo-online{
-    font-size:13px;
-    color:#777;
-}
-
-.sem-usuarios{
-    color:#777;
-    padding:15px 0;
-}
+<link rel="stylesheet" href="../css/style.css">
 
 
-/* =========================
-   REDES SOCIAIS
-========================= */
-
-.redes-card{
-    margin-top:25px;
-    padding:25px;
-    background:white;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,0.08);
-}
-
-.redes-card h2{
-    margin:0;
-    color:#222;
-}
-
-.redes-subtitulo{
-    margin-top:6px;
-    color:#777;
-    font-size:14px;
-}
-
-.redes-container{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    margin-top:20px;
-    flex-wrap:wrap;
-}
-
-.rede{
-    width:55px;
-    height:55px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:12px;
-    background:#f5f7fa;
-    transition:0.2s;
-    text-decoration:none;
-}
-
-.rede img{
-    width:32px;
-    height:32px;
-    object-fit:contain;
-}
-
-.rede:hover{
-    transform:translateY(-3px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-
-/* =========================
-   RODAPÉ CENTRALIZADO
-========================= */
-
-footer{
-    text-align:center;
-    width:100%;
-    margin:60px auto 20px auto;
-    padding:25px 0;
-    color:#666;
-    line-height:1.8;
-}
-
-footer strong{
-    color:#333;
-}
-
-
-/* =========================
-   RESPONSIVO
-========================= */
-
-@media(max-width:600px){
-
-    .redes-container{
-        gap:12px;
-    }
-
-    .rede{
-        width:50px;
-        height:50px;
-    }
-
-    .rede img{
-        width:29px;
-        height:29px;
-    }
-
-    footer{
-        margin-top:40px;
-        padding:20px 10px;
-    }
-
-}
-
-</style>
 
 </head>
 
 
-<body class="app-shell">
+<body class="app-shell erp-page--base">
 
 
 <!-- =========================
@@ -342,7 +182,7 @@ footer strong{
             >
 
                 <img
-                    src="imagens/instagram.png"
+                    src="../imagens/instagram.png"
                     alt="Instagram"
                 >
 
@@ -360,7 +200,7 @@ footer strong{
             >
 
                 <img
-                    src="imagens/whatsapp.png"
+                    src="../imagens/whatsapp.png"
                     alt="WhatsApp"
                 >
 
@@ -376,7 +216,7 @@ footer strong{
             >
 
                 <img
-                    src="imagens/email.png"
+                    src="../imagens/email.png"
                     alt="E-mail"
                 >
 
@@ -394,7 +234,7 @@ footer strong{
             >
 
                 <img
-                    src="imagens/discord.png"
+                    src="../imagens/discord.png"
                     alt="Discord"
                 >
 
@@ -436,13 +276,13 @@ footer strong{
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/supabase.js"></script>
+<script src="../js/supabase.js"></script>
 
-<script src="js/configuracoes.js"></script>
+<script src="../js/configuracoes.js"></script>
 
-<script src="js/auth.js"></script>
+<script src="../js/auth.js"></script>
 
-<script src="js/sidebar.js"></script>
+<script src="../js/sidebar.js"></script>
 
 
 <script>
@@ -632,7 +472,7 @@ document.addEventListener("DOMContentLoaded", async function(){
                     <img
                         src="${foto}"
                         class="avatar-online"
-                        onerror="this.src='imagens/avatar.png'"
+                        onerror="this.src='../imagens/avatar.png'"
                     >
 
                     <span class="ponto-online-dashboard"></span>

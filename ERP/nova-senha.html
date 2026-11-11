@@ -8,201 +8,14 @@
 
 <title>Nova senha - SmartInspect AI</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 
-<style>
 
-*{
-box-sizing:border-box;
-}
-
-body{
-
-margin:0;
-
-font-family:Arial,sans-serif;
-
-}
-
-.login-background{
-
-min-height:100vh;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-background:
-
-linear-gradient(
-rgba(0,0,0,0.65),
-rgba(0,0,0,0.65)
-),
-
-url("imagens/logo.png");
-
-background-size:cover;
-
-background-position:center;
-
-padding:20px;
-
-}
-
-.login-card{
-
-background:white;
-
-width:100%;
-
-max-width:380px;
-
-padding:40px;
-
-border-radius:20px;
-
-text-align:center;
-
-box-shadow:0 10px 35px rgba(0,0,0,0.4);
-
-}
-
-.login-logo{
-
-width:130px;
-
-height:auto;
-
-margin-bottom:15px;
-
-}
-
-h1{
-
-color:#1f4e79;
-
-margin-bottom:10px;
-
-}
-
-p{
-
-color:#555;
-
-line-height:1.5;
-
-}
-
-label{
-
-display:block;
-
-text-align:left;
-
-margin-top:18px;
-
-font-weight:bold;
-
-}
-
-input{
-
-width:100%;
-
-padding:13px;
-
-margin-top:6px;
-
-border-radius:8px;
-
-border:1px solid #ccc;
-
-font-size:15px;
-
-}
-
-input:focus{
-
-outline:none;
-
-border-color:#1f6feb;
-
-box-shadow:0 0 0 2px rgba(31,111,235,.12);
-
-}
-
-button{
-
-width:100%;
-
-padding:14px;
-
-margin-top:22px;
-
-border:none;
-
-border-radius:10px;
-
-background:#1f6feb;
-
-color:white;
-
-font-size:16px;
-
-cursor:pointer;
-
-}
-
-button:hover{
-
-background:#1555b0;
-
-}
-
-.voltar{
-
-display:block;
-
-margin-top:18px;
-
-color:#1f6feb;
-
-cursor:pointer;
-
-text-decoration:none;
-
-}
-
-#mensagem{
-
-margin-top:18px;
-
-font-weight:bold;
-
-min-height:20px;
-
-}
-
-.sucesso{
-
-color:#198754;
-
-}
-
-.erro{
-
-color:#dc3545;
-
-}
-
-</style>
 
 </head>
 
 
-<body>
+<body class="erp-page--nova-senha">
 
 
 <div class="login-background">
@@ -212,7 +25,7 @@ color:#dc3545;
 
 
 <img
-src="imagens/logo.png"
+src="../imagens/logo.png"
 class="login-logo"
 alt="SmartInspect AI"
 >
@@ -284,7 +97,7 @@ href="login.html"
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/supabase.js"></script>
+<script src="../js/supabase.js"></script>
 
 
 <script>
