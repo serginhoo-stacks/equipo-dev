@@ -1041,7 +1041,14 @@ button.preview-card:focus-visible { outline: 2px solid #63e5ff; outline-offset: 
   height: 118px !important; max-height: 118px; aspect-ratio: 16 / 9 !important;
   margin: -12px -12px 10px !important; overflow: hidden; border-radius: 16px 16px 0 0 !important;
 }
-#plansList .plan-preview-cover img { padding: 9px !important; }
+#plansList .plan-preview-cover {
+  display: flex !important; align-items: center !important; justify-content: center !important;
+}
+#plansList .plan-preview-cover img {
+  width: 100% !important; height: 100% !important;
+  object-fit: contain !important; object-position: center !important;
+  padding: 8px !important; box-sizing: border-box !important;
+}
 #plansList .plan-preview h3 { font-size: 15px !important; }
 #plansList .plan-preview p { font-size: 11px !important; line-height: 1.5; }
 #plansList .plan-preview strong { font-size: 12px !important; }
