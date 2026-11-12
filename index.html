@@ -1889,21 +1889,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Planos padrão (caso o banco falhe)
     const defaultPlans = [
-        { id: "essencial", nome: "Plano Essencial", preco: 0, periodicidade: "mensal", recursos: { descricao: "Para começar a organizar sua operação com segurança e simplicidade.", imagem: "./imagens/autonomo.png" } },
-        { id: "profissional", nome: "Plano Profissional", preco: 49.9, periodicidade: "mensal", recursos: { descricao: "Para equipes que precisam colaborar, conversar e acompanhar seus ambientes.", imagem: "./imagens/micro-empresarial.png" } },
-        { id: "empresarial", nome: "Plano Empresarial", preco: 129.9, periodicidade: "mensal", recursos: { descricao: "Para operações em crescimento, com mais pessoas, empresas e recursos avançados.", imagem: "./imagens/empresarial.png" } },
+        { id: "essencial", nome: "Autônomo", preco: 0, periodicidade: "mensal", recursos: { descricao: "Para começar a organizar sua operação com segurança e simplicidade.", imagem: "./imagens/autonomo.png" } },
+        { id: "profissional", nome: "Micro-empresarial", preco: 49.9, periodicidade: "mensal", recursos: { descricao: "Para equipes que precisam colaborar, conversar e acompanhar seus ambientes.", imagem: "./imagens/micro-empresarial.png" } },
+        { id: "empresarial", nome: "Empresarial", preco: 129.9, periodicidade: "mensal", recursos: { descricao: "Para operações em crescimento, com mais pessoas, empresas e recursos avançados.", imagem: "./imagens/empresarial.png" } },
     ];
 
     let rows = defaultPlans;
     try {
-        const { data, error } = await banco.from("planos").select("id,nome,preco,periodicidade,recursos,ativo").eq("ativo", true).order("preco", { ascending: true }).limit(3);
+        const { data, error } = await banco.from("planos").select("id,nome,periodicidade,recursos,ativo").eq("ativo", true).order("preco", { ascending: true }).limit(3);
         if (!error && data && data.length > 0) rows = data;
     } catch (e) {
         console.warn("Usando planos padrão (banco indisponível).");
     }
 
     box.replaceChildren();
-    for (const plan of rows) {
+    for (const originalPlan of rows) {
+        const fixedNames = { essencial: "Autônomo", autonomo: "Autônomo", profissional: "Micro-empresarial", "micro-empresarial": "Micro-empresarial", empresarial: "Empresarial" };
+        const plan = { ...originalPlan, nome: fixedNames[String(originalPlan.id || "").toLowerCase()] || originalPlan.nome };
         const details = (typeof plan.recursos === "object" && plan.recursos) ? plan.recursos : {};
         const card = document.createElement("article");
         card.className = "plan-preview";
@@ -1929,10 +1931,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const description = document.createElement("p");
         description.textContent = details.descricao || "Estrutura configurável para sua operação.";
 
-        const price = document.createElement("strong");
-        price.textContent = plan.preco == null ? "Preço não definido" : `${Number(plan.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} / ${plan.periodicidade || "período"}`;
-
-        card.append(cover, title, description, price);
+        card.append(cover, title, description);
         box.append(card);
     }
 });
