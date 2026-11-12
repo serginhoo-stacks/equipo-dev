@@ -2012,5 +2012,50 @@ document.addEventListener("DOMContentLoaded", async () => {
 .logo-icon { background: #000000 !important; }
 </style>
 
+<style id="centralizar-textos-planos-final">
+/* Centralização das caixas e textos dos planos, sem alterar o restante da página. */
+.lower-panel .panel-heading {
+  align-items: center !important;
+  text-align: center !important;
+}
+.lower-panel .panel-heading > div {
+  width: 100%;
+  text-align: center !important;
+}
+.lower-panel .panel-heading h2,
+.lower-panel .panel-heading p {
+  text-align: center !important;
+}
+.lower-panel .panel-heading .link-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+#plansList .plan-preview {
+  align-items: center !important;
+  text-align: center !important;
+}
+#plansList .plan-preview h3,
+#plansList .plan-preview p,
+#plansList .plan-preview strong {
+  width: 100%;
+  text-align: center !important;
+}
+#plansList .empty-inline {
+  text-align: center !important;
+}
+</style>
+
+<style id="texto-preto-cards-planos-final">
+/* Texto preto nas caixas azuis dos cards de planos. */
+#plansList .plan-preview,
+#plansList .plan-preview h3,
+#plansList .plan-preview p,
+#plansList .plan-preview strong {
+  color: #000000 !important;
+}
+</style>
+
 </body>
 </html>
