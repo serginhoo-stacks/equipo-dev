@@ -78,6 +78,11 @@
           card.id="plano-"+(plan.id||"");
           const rawPlanName=(String(plan.id||"")+" "+String(plan.nome||"")).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
           const photoPrefix=rawPlanName.includes("micro")||rawPlanName.includes("profissional")?"micro-empresarial":rawPlanName.includes("empresarial")?"empresarial":rawPlanName.includes("autonomo")||rawPlanName.includes("essencial")?"autonomo":"";
+          const termPrices={
+            autonomo:{"sem-fidelidade":59.99,"3-meses":49.99,"12-meses":39.99},
+            "micro-empresarial":{"sem-fidelidade":89.99,"3-meses":79.99,"12-meses":69.99},
+            empresarial:{"sem-fidelidade":79.99,"3-meses":69.99,"12-meses":59.99}
+          }[photoPrefix]||{};
           let coverImage=null;
           const cover=document.createElement("div");cover.className="plan-cover";
           const initialImage=photoPrefix?`./imagens/${photoPrefix}.png`:(details.imagem_url||details.imagem);
@@ -86,7 +91,7 @@
           const body=document.createElement("div");body.className="plan-body";
           const title=document.createElement("h2");title.textContent=plan.nome||"Plano SmartInspect";
           const description=document.createElement("p");description.className="plan-description";description.textContent=details.descricao||details.description||"Estrutura configurável para sua operação.";
-          const price=document.createElement("div");price.className="price";price.textContent=money(plan.preco);
+          const price=document.createElement("div");price.className="price";price.textContent=money(termPrices["sem-fidelidade"]??plan.preco);
           if(plan.preco!==null&&plan.preco!==undefined&&plan.preco!==""){const period=document.createElement("small");period.textContent="/ "+(plan.periodicidade||"período");price.append(period);}
           const toggle=document.createElement("button");toggle.type="button";toggle.className="details-toggle";toggle.textContent="Ver detalhes e valores";toggle.setAttribute("aria-expanded","false");
           const panel=document.createElement("section");panel.className="plan-details";panel.hidden=true;
@@ -98,7 +103,7 @@
           const termsHeading=document.createElement("h3");termsHeading.textContent="Escolha a fidelidade";termsHeading.style.marginTop="18px";panel.append(termsHeading);
           const terms=document.createElement("div");terms.className="term-options";
           const termChoices=[["sem-fidelidade","Sem fidelidade"],["3-meses","3 meses de fidelidade"],["12-meses","12 meses de fidelidade"]];
-          for(const [termKey,termLabel] of termChoices){const option=document.createElement("button");option.type="button";option.className="term-option";option.setAttribute("aria-pressed","false");option.dataset.term=termKey;const label=document.createElement("strong");label.textContent=termLabel;const value=document.createElement("span");value.textContent="Valor a definir pela tabela";option.append(label,value);option.addEventListener("click",()=>{terms.querySelectorAll(".term-option").forEach(item=>item.setAttribute("aria-pressed","false"));option.setAttribute("aria-pressed","true");if(coverImage&&photoPrefix){coverImage.src=`./imagens/${photoPrefix}-${termKey}.png`;coverImage.alt=`Imagem do plano ${plan.nome||""} — ${termLabel}`;}});terms.append(option);}panel.append(terms);
+          for(const [termKey,termLabel] of termChoices){const option=document.createElement("button");option.type="button";option.className="term-option";option.setAttribute("aria-pressed","false");option.dataset.term=termKey;const label=document.createElement("strong");label.textContent=termLabel;const value=document.createElement("span");value.textContent=termPrices[termKey]!==undefined?money(termPrices[termKey])+" / mês":"Valor a definir pela tabela";option.append(label,value);option.addEventListener("click",()=>{terms.querySelectorAll(".term-option").forEach(item=>item.setAttribute("aria-pressed","false"));option.setAttribute("aria-pressed","true");if(termPrices[termKey]!==undefined&&price.firstChild){price.firstChild.textContent=money(termPrices[termKey]);}if(coverImage&&photoPrefix){coverImage.src=`./imagens/${photoPrefix}-${termKey}.png`;coverImage.alt=`Imagem do plano ${plan.nome||""} — ${termLabel}`;}});terms.append(option);}panel.append(terms);
           toggle.addEventListener("click",()=>{const open=panel.hidden;panel.hidden=!open;toggle.setAttribute("aria-expanded",String(open));toggle.textContent=open?"Ocultar detalhes":"Ver detalhes e valores";});
           body.append(title,description,price,toggle,panel);card.append(cover,body);box.append(card);
         }
