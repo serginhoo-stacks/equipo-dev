@@ -1108,11 +1108,6 @@ button.preview-card:focus-visible { outline: 2px solid #63e5ff; outline-offset: 
 .preview-chart-line { position:absolute; inset:12px 12px 10px; width:calc(100% - 24px); height:calc(100% - 22px); overflow:visible; }
 .preview-chart-line polyline { fill:none; stroke:#5cecff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 5px rgba(92,236,255,.72)); stroke-dasharray:420; stroke-dashoffset:420; animation:siChartDraw 2.4s ease-out .35s forwards; }
 @keyframes siChartDraw { to {stroke-dashoffset:0} }
-.quick-nav { position:fixed; z-index:998; right:18px; bottom:max(18px,env(safe-area-inset-bottom)); display:grid; gap:8px; }
-.quick-nav a { display:flex; align-items:center; gap:8px; min-width:86px; padding:10px 12px; border:1px solid rgba(92,236,255,.32); border-radius:999px; color:#eafaff; background:rgba(4,10,18,.78); backdrop-filter:blur(14px); box-shadow:0 8px 26px rgba(0,0,0,.3); font-size:11px; font-weight:750; transition:transform .2s,border-color .2s,background .2s; }
-.quick-nav a:hover { transform:translateY(-2px); border-color:#5cecff; background:rgba(9,24,38,.94); }
-.quick-nav svg { width:17px; height:17px; color:#63e5ff; }
-@media(max-width:600px) { .quick-nav {right:10px;bottom:max(10px,env(safe-area-inset-bottom))} .quick-nav a {min-width:0;padding:10px} .quick-nav a span {display:none} }
 @media(prefers-reduced-motion:reduce) { .dashboard-preview,.scroll-cue,.scroll-cue svg {animation:none !important} .preview-chart-line polyline {stroke-dashoffset:0;animation:none !important} }
 
 </style>
@@ -1185,16 +1180,6 @@ main, section, header, footer, .section-container,
 .si-footer-panel {
   min-width: 0;
   overflow-wrap: anywhere;
-}
-.quick-nav {
-  right: max(14px, env(safe-area-inset-right)) !important;
-  bottom: max(14px, env(safe-area-inset-bottom)) !important;
-  z-index: 1001 !important;
-}
-.quick-nav a {
-  min-height: 44px;
-  justify-content: center;
-  touch-action: manipulation;
 }
 button, a {
   -webkit-tap-highlight-color: transparent;
@@ -1524,19 +1509,6 @@ button, a {
     width: calc(100% - 28px) !important;
     max-width: 460px;
     padding: 30px 20px 22px !important;
-  }
-  .quick-nav {
-    right: 12px !important;
-    bottom: max(12px, env(safe-area-inset-bottom)) !important;
-  }
-  .quick-nav a {
-    width: 44px;
-    height: 44px;
-    min-width: 44px !important;
-    padding: 0 !important;
-  }
-  .quick-nav a span {
-    display: none !important;
   }
   .scroll-cue {
     bottom: 20px !important;
@@ -2034,6 +2006,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 })();
 </script>
 
-<nav class="quick-nav" aria-label="Atalho da página"><a href="#inicio" aria-label="Voltar ao topo da página" title="Voltar ao topo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V5m-6 6 6-6 6 6"/></svg><span>Topo</span></a></nav>
+
 </body>
 </html>
