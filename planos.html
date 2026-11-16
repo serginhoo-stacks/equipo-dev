@@ -81,8 +81,8 @@
           const photoPrefix=rawPlanName.includes("micro")||rawPlanName.includes("profissional")?"micro-empresarial":rawPlanName.includes("empresarial")?"empresarial":rawPlanName.includes("autonomo")||rawPlanName.includes("essencial")?"autonomo":"";
           const termPrices={
             autonomo:{"sem-fidelidade":59.99,"3-meses":49.99,"12-meses":39.99},
-            "micro-empresarial":{"sem-fidelidade":89.99,"3-meses":79.99,"12-meses":69.99},
-            empresarial:{"sem-fidelidade":79.99,"3-meses":69.99,"12-meses":59.99}
+            "micro-empresarial":{"sem-fidelidade":79.99,"3-meses":69.99,"12-meses":59.99},
+            empresarial:{"sem-fidelidade":89.99,"3-meses":79.99,"12-meses":69.99}
           }[photoPrefix]||{};
           let coverImage=null;
           const cover=document.createElement("div");cover.className="plan-cover";
