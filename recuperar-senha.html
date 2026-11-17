@@ -106,6 +106,9 @@
     .submit-button:focus-visible, .back-link:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
     .feedback { min-height: 20px; margin: 14px 0 0; color: #a7f4c8; font-size: 12px; line-height: 1.6; }
     .feedback.error { color: #ffb5bc; }
+    .form-step[hidden] { display: none; }
+    .form-step label:not(:first-child) { margin-top: 16px; }
+    .submit-button:disabled { opacity: .65; cursor: wait; transform: none; }
     .back-link { display: inline-flex; margin-top: 17px; color: #dffaff; font-size: 12px; text-decoration: none; }
     .back-link:hover { color: var(--cyan); }
     @media (max-width: 480px) { body { padding: 16px; } .recovery-card { border-radius: 18px; } }
@@ -120,26 +123,105 @@
 
     <p class="eyebrow">Acesso à conta</p>
     <h1>Recuperar senha</h1>
-    <p class="description">Informe o e-mail cadastrado. Se houver uma conta associada, enviaremos as instruções para redefinir sua senha.</p>
+    <p class="description">Informe seu e-mail para receber um código de recuperação. Depois, use o código para escolher uma nova senha.</p>
 
     <form id="recoveryForm">
-      <label for="email">E-mail</label>
-      <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com" required>
-      <button class="submit-button" type="submit">Enviar instruções</button>
+      <section class="form-step" id="emailStep">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com" required>
+        <button class="submit-button" type="submit">Enviar código</button>
+      </section>
+
+      <section class="form-step" id="codeStep" hidden>
+        <label for="token">Código de recuperação</label>
+        <input id="token" name="token" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Digite o código recebido">
+        <label for="newPassword">Nova senha</label>
+        <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres">
+        <label for="confirmPassword">Confirme a nova senha</label>
+        <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Digite a senha novamente">
+        <button class="submit-button" type="submit">Validar código e alterar senha</button>
+      </section>
       <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
     </form>
 
     <a class="back-link" href="login.html">← Voltar para entrar</a>
   </main>
 
+  <!-- Supabase Auth envia o e-mail; o Resend é usado como SMTP configurado no projeto Supabase. -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // A tela está pronta. Conecte este submit ao endpoint de recuperação do seu backend.
-    document.getElementById('recoveryForm').addEventListener('submit', function (event) {
+    // Preencha com Project URL e chave publishable/anon do Supabase.
+    // Nunca coloque a service_role key no navegador.
+    const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
+    const SUPABASE_ANON_KEY = 'SUA_CHAVE_PUBLICA_ANON';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const recoveryForm = document.getElementById('recoveryForm');
+    const emailInput = document.getElementById('email');
+    const tokenInput = document.getElementById('token');
+    const newPasswordInput = document.getElementById('newPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    let codeWasSent = false;
+
+    recoveryForm.addEventListener('submit', async function (event) {
       event.preventDefault();
+      const activeStep = codeWasSent ? document.getElementById('codeStep') : document.getElementById('emailStep');
+      const requiredFields = activeStep.querySelectorAll('input[required]');
+      for (const field of requiredFields) {
+        if (!field.reportValidity()) return;
+      }
+
       const feedback = document.getElementById('feedback');
-      if (!this.reportValidity()) return;
+      const button = activeStep.querySelector('button[type="submit"]');
+      const email = emailInput.value.trim();
       feedback.classList.remove('error');
-      feedback.textContent = 'Interface pronta. Conecte o formulário ao serviço de envio de recuperação de senha.';
+      feedback.textContent = '';
+      button.disabled = true;
+      const originalButtonText = button.textContent;
+      button.textContent = codeWasSent ? 'Validando...' : 'Enviando...';
+
+      try {
+        if (SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY === 'SUA_CHAVE_PUBLICA_ANON') {
+          throw new Error('Configure SUPABASE_URL e SUPABASE_ANON_KEY no arquivo.');
+        }
+
+        if (!codeWasSent) {
+          const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
+          if (error) throw error;
+          codeWasSent = true;
+          emailInput.readOnly = true;
+          document.getElementById('emailStep').hidden = true;
+          document.getElementById('codeStep').hidden = false;
+          document.getElementById('codeStep').querySelectorAll('input').forEach((field) => { field.required = true; });
+          tokenInput.focus();
+          feedback.textContent = 'Se houver uma conta associada, o código foi enviado. Confira também a pasta de spam.';
+        } else {
+          if (newPasswordInput.value !== confirmPasswordInput.value) {
+            throw new Error('As senhas não coincidem. Confira e tente novamente.');
+          }
+          const { error: verifyError } = await supabaseClient.auth.verifyOtp({
+            email,
+            token: tokenInput.value.trim(),
+            type: 'recovery'
+          });
+          if (verifyError) throw verifyError;
+
+          const { error: passwordError } = await supabaseClient.auth.updateUser({
+            password: newPasswordInput.value
+          });
+          if (passwordError) throw passwordError;
+
+          feedback.textContent = 'Senha alterada com sucesso. Você já pode entrar com a nova senha.';
+          document.getElementById('codeStep').hidden = true;
+        }
+      } catch (error) {
+        console.error('Falha ao solicitar recuperação de senha:', error);
+        feedback.classList.add('error');
+        feedback.textContent = error.message || 'Não foi possível enviar a solicitação. Tente novamente.';
+      } finally {
+        button.disabled = false;
+        button.textContent = originalButtonText;
+      }
     });
   </script>
 </body>
