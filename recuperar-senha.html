@@ -1,228 +1,382 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#050b18">
-  <title>Recuperar senha | SmartInspect</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050b18">
+    <link rel="icon" type="image/png" href="./imagens/favicon.png">
+    <meta name="description" content="Recupere o acesso à sua conta SmartInspect AI.">
+    <title>Recuperar senha — SmartInspect AI</title>
 
-  <!-- Ajuste o caminho caso seu favicon esteja em outra pasta. -->
-  <link rel="icon" href="../imagens/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../imagens/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Folha de estilos compartilhada do projeto. -->
-  <link rel="stylesheet" href="../css/style.css">
+    <style>
+        :root {
+            --si-bg: #050b18;
+            --si-surface: rgba(13, 28, 50, 0.65);
+            --si-border: rgba(133, 216, 255, 0.15);
+            --si-border-hover: rgba(92, 236, 255, 0.5);
+            --si-cyan: #5cecff;
+            --si-blue: #229dff;
+            --si-text: #f4fbff;
+            --si-muted: #91a8bd;
+        }
 
-  <style>
-    :root {
-      --bg: #050b18;
-      --bg2: #081426;
-      --border: rgba(133, 216, 255, .18);
-      --cyan: #5cecff;
-      --blue: #229dff;
-      --text: #e7f5ff;
-      --muted: #91a8bd;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      color: var(--text);
-      font: 14px Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at 10% 0, rgba(34,157,255,.18), transparent 28rem),
-        radial-gradient(circle at 90% 65%, rgba(155,124,255,.16), transparent 30rem),
-        linear-gradient(135deg, var(--bg), var(--bg2) 55%, #050b18);
-    }
-    .recovery-card {
-      width: min(100%, 440px);
-      padding: clamp(25px, 7vw, 42px);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      background: linear-gradient(145deg, rgba(18,42,72,.88), rgba(7,18,35,.9));
-      box-shadow: 0 25px 75px rgba(0,0,0,.38), inset 0 1px rgba(255,255,255,.06);
-      backdrop-filter: blur(18px);
-    }
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: #fff;
-      text-decoration: none;
-      font-size: 17px;
-      font-weight: 750;
-      letter-spacing: -.4px;
-    }
-    .brand-mark {
-      display: grid;
-      width: 44px;
-      height: 44px;
-      overflow: hidden;
-      place-items: center;
-      border: 1px solid rgba(92,236,255,.34);
-      border-radius: 13px;
-      background: rgba(92,236,255,.1);
-      box-shadow: 0 0 24px rgba(92,236,255,.12);
-    }
-    .brand-mark img { width: 100%; height: 100%; object-fit: contain; }
-    .brand b { color: var(--cyan); }
-    .eyebrow { margin: 32px 0 9px; color: var(--cyan); font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-    h1 { margin: 0; color: #fff; font-family: "Space Grotesk", Inter, sans-serif; font-size: clamp(28px, 7vw, 36px); letter-spacing: -.055em; }
-    .description { margin: 12px 0 25px; color: var(--muted); line-height: 1.7; }
-    label { display: block; margin-bottom: 8px; color: #d7e9f5; font-size: 12px; font-weight: 700; }
-    input {
-      width: 100%;
-      height: 48px;
-      padding: 0 13px;
-      border: 1px solid rgba(133,216,255,.2);
-      border-radius: 11px;
-      outline: 0;
-      color: #fff;
-      background: rgba(3,11,23,.62);
-      font: inherit;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    input::placeholder { color: #71879c; }
-    input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(92,236,255,.1); }
-    .submit-button {
-      width: 100%;
-      min-height: 46px;
-      margin-top: 17px;
-      border: 0;
-      border-radius: 11px;
-      color: #03111d;
-      background: linear-gradient(135deg, var(--cyan), #42bfff);
-      box-shadow: 0 9px 24px rgba(92,236,255,.13);
-      font: inherit;
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .submit-button:hover { transform: translateY(-2px); box-shadow: 0 13px 30px rgba(92,236,255,.24); }
-    .submit-button:focus-visible, .back-link:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-    .feedback { min-height: 20px; margin: 14px 0 0; color: #a7f4c8; font-size: 12px; line-height: 1.6; }
-    .feedback.error { color: #ffb5bc; }
-    .form-step[hidden] { display: none; }
-    .form-step label:not(:first-child) { margin-top: 16px; }
-    .submit-button:disabled { opacity: .65; cursor: wait; transform: none; }
-    .back-link { display: inline-flex; margin-top: 17px; color: #dffaff; font-size: 12px; text-decoration: none; }
-    .back-link:hover { color: var(--cyan); }
-    @media (max-width: 480px) { body { padding: 16px; } .recovery-card { border-radius: 18px; } }
-  </style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--si-bg);
+            color: var(--si-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .bg-container {
+            position: fixed;
+            inset: -5%;
+            z-index: -2;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .login-background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.25;
+            filter: saturate(1.2) contrast(1.1);
+        }
+
+        .bg-shader {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(34, 157, 255, 0.15), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(155, 124, 255, 0.1), transparent 40%),
+                linear-gradient(135deg, rgba(5, 11, 24, 0.9), rgba(5, 11, 24, 0.7));
+            pointer-events: none;
+        }
+
+        .auth-shell {
+            width: min(1200px, 95%);
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-intro {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .auth-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-brand-mark {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .auth-eyebrow {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--si-cyan);
+            margin-top: 10px;
+        }
+
+        .auth-intro h1 {
+            font-size: clamp(42px, 5vw, 64px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+
+        .auth-intro h1 span {
+            background: linear-gradient(90deg, var(--si-cyan), var(--si-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-intro-copy { font-size: 16px; line-height: 1.6; color: var(--si-muted); max-width: 400px; }
+        .auth-feature-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
+        .auth-feature-list li { display: flex; align-items: center; gap: 12px; font-size: 14px; color: #d8eaf4; font-weight: 400; }
+        .auth-feature-list svg { width: 18px; height: 18px; color: var(--si-cyan); background: rgba(92, 236, 255, 0.1); border-radius: 50%; padding: 3px; flex-shrink: 0; }
+
+        .auth-card {
+            background: var(--si-surface);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--si-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .auth-card h2 { font-size: 28px; letter-spacing: -0.5px; margin-bottom: 8px; }
+        .auth-card-lead { font-size: 14px; color: var(--si-muted); margin-bottom: 30px; }
+        .auth-form { display: flex; flex-direction: column; gap: 20px; }
+        .auth-field { display: flex; flex-direction: column; gap: 8px; }
+        .auth-field label { font-size: 12px; font-weight: 600; color: #d8eaf4; letter-spacing: 0.5px; }
+        .auth-field input:not([type="checkbox"]) { width: 100%; height: 48px; padding: 0 16px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--si-border); border-radius: 12px; color: white; font-size: 14px; transition: all 0.3s ease; }
+        .auth-field input:focus { outline: none; border-color: var(--si-cyan); background: rgba(0, 0, 0, 0.5); box-shadow: 0 0 0 3px rgba(92, 236, 255, 0.15); }
+        .auth-form-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; flex-wrap: wrap; gap: 10px; }
+        .auth-remember { display: flex; align-items: center; gap: 8px; color: var(--si-muted); cursor: pointer; }
+        .auth-text-link { color: var(--si-cyan); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+        .auth-text-link:hover { color: white; }
+
+        .auth-submit {
+            min-height: 52px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--si-cyan), var(--si-blue));
+            color: #03111d;
+            font-size: 15px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(92, 236, 255, 0.2);
+            width: 100%;
+        }
+
+        .auth-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(92, 236, 255, 0.4); }
+        .auth-submit:disabled { cursor: wait; opacity: 0.7; }
+        .auth-submit svg { width: 20px; height: 20px; }
+        .auth-message { display: none; padding: 12px; border-radius: 8px; background: rgba(255, 90, 112, 0.1); border: 1px solid rgba(255, 90, 112, 0.3); color: #ffb5bc; font-size: 13px; margin-bottom: 20px; }
+        .auth-message[data-visible="true"] { display: block; }
+        .auth-message.is-success { background: rgba(53, 229, 138, .1); border-color: rgba(53, 229, 138, .3); color: #adf4c9; }
+        .auth-link-button { border: 0; padding: 0; background: none; font: inherit; cursor: pointer; }
+        [hidden] { display: none !important; }
+
+        @keyframes fadeSlideUp { to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 968px) {
+            .auth-shell { grid-template-columns: 1fr; gap: 40px; padding: 40px 0; width: 90%; }
+            .auth-intro { text-align: center; align-items: center; }
+            .auth-intro-copy { max-width: 100%; }
+            .auth-feature-list { align-items: flex-start; margin: 0 auto; }
+        }
+
+        @media (max-width: 600px) {
+            body { align-items: flex-start; }
+            .auth-shell { margin: 20px auto; gap: 30px; }
+            .auth-card { padding: 25px 20px; border-radius: 20px; }
+            .auth-form-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+    </style>
 </head>
-<body>
-  <main class="recovery-card">
-    <a class="brand" href="../index.html" aria-label="SmartInspect - página inicial">
-      <span class="brand-mark"><img src="../imagens/logo.png" alt=""></span>
-      <span>Smart<b>Inspect</b></span>
-    </a>
 
-    <p class="eyebrow">Acesso à conta</p>
-    <h1>Recuperar senha</h1>
-    <p class="description">Informe seu e-mail para receber um código de recuperação. Depois, use o código para escolher uma nova senha.</p>
+<body class="auth-page login-page">
+    <div class="bg-container" id="bg-container" aria-hidden="true">
+        <video class="login-background-video" autoplay muted loop playsinline preload="metadata" poster="./imagens/fundo.png">
+            <source src="./imagens/fundoglobo.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="bg-shader" aria-hidden="true"></div>
 
-    <form id="recoveryForm">
-      <section class="form-step" id="emailStep">
-        <label for="email">E-mail</label>
-        <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com" required>
-        <button class="submit-button" type="submit">Enviar código</button>
-      </section>
+    <main class="auth-shell">
+        <section class="auth-intro">
+            <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — página inicial">
+                <img class="auth-brand-mark" src="./imagens/logo.png" alt="Logo SmartInspect AI">
+                <span class="auth-brand-name">SmartInspect <span>AI</span></span>
+            </a>
+            <div class="auth-eyebrow">Gestão inteligente de obras</div>
+            <h1>Sua obra, sob <span>controle.</span></h1>
+            <p class="auth-intro-copy">Entre para acompanhar as informações e a operação da sua empresa no SmartInspect AI.</p>
+            <ul class="auth-feature-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Dados organizados em um único lugar</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Acompanhamento de obras e inspeções</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Acesso protegido pelo Supabase Auth</li>
+            </ul>
+        </section>
 
-      <section class="form-step" id="codeStep" hidden>
-        <label for="token">Código de recuperação</label>
-        <input id="token" name="token" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Digite o código recebido">
-        <label for="newPassword">Nova senha</label>
-        <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres">
-        <label for="confirmPassword">Confirme a nova senha</label>
-        <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Digite a senha novamente">
-        <button class="submit-button" type="submit">Validar código e alterar senha</button>
-      </section>
-      <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
-    </form>
+        <section class="auth-card" aria-labelledby="recoveryTitle">
+            <h2 id="recoveryTitle">Recuperar senha</h2>
+            <p class="auth-card-lead">Informe seu e-mail para receber um código e definir uma nova senha.</p>
 
-    <a class="back-link" href="login.html">← Voltar para entrar</a>
-  </main>
+            <div id="authMessage" class="auth-message" role="status" aria-live="polite" data-visible="false"></div>
 
-  <!-- Supabase Auth envia o e-mail; o Resend é usado como SMTP configurado no projeto Supabase. -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    // Preencha com Project URL e chave publishable/anon do Supabase.
-    // Nunca coloque a service_role key no navegador.
-    const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-    const SUPABASE_ANON_KEY = 'SUA_CHAVE_PUBLICA_ANON';
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            <form id="recoveryForm" class="auth-form" novalidate>
+                <div id="emailStep" class="auth-field">
+                    <label for="recoveryEmail">E-mail</label>
+                    <input id="recoveryEmail" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
+                </div>
 
-    const recoveryForm = document.getElementById('recoveryForm');
-    const emailInput = document.getElementById('email');
-    const tokenInput = document.getElementById('token');
-    const newPasswordInput = document.getElementById('newPassword');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
-    let codeWasSent = false;
+                <div id="codeStep" class="auth-field" hidden>
+                    <label for="recoveryCode">Código de recuperação</label>
+                    <input id="recoveryCode" name="token" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Digite o código enviado por e-mail">
+                    <label for="newPassword" style="margin-top: 10px;">Nova senha</label>
+                    <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Mínimo de 6 caracteres">
+                    <label for="confirmPassword" style="margin-top: 10px;">Confirmar nova senha</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Digite novamente">
+                    <button class="auth-text-link auth-link-button" type="button" id="resendCode" style="margin-top: 14px;">Enviar o código novamente</button>
+                </div>
 
-    recoveryForm.addEventListener('submit', async function (event) {
-      event.preventDefault();
-      const activeStep = codeWasSent ? document.getElementById('codeStep') : document.getElementById('emailStep');
-      const requiredFields = activeStep.querySelectorAll('input[required]');
-      for (const field of requiredFields) {
-        if (!field.reportValidity()) return;
-      }
+                <button class="auth-submit" type="submit" id="submitBtn">
+                    <span>Enviar código</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="m22 2-7 20-4-9-9-4Z"></path></svg>
+                </button>
+            </form>
 
-      const feedback = document.getElementById('feedback');
-      const button = activeStep.querySelector('button[type="submit"]');
-      const email = emailInput.value.trim();
-      feedback.classList.remove('error');
-      feedback.textContent = '';
-      button.disabled = true;
-      const originalButtonText = button.textContent;
-      button.textContent = codeWasSent ? 'Validando...' : 'Enviando...';
+            <p class="auth-card-lead" style="margin: 20px 0 0; text-align: center;">
+                Lembrou sua senha? <a class="auth-text-link" href="./login.html">Voltar para entrar</a>
+            </p>
+            <p class="auth-card-lead" style="margin: 10px 0 0; text-align: center;">
+                Não tem uma conta? <a class="auth-text-link" href="./cadastro.html">Criar conta</a>
+            </p>
+        </section>
+    </main>
 
-      try {
-        if (SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY === 'SUA_CHAVE_PUBLICA_ANON') {
-          throw new Error('Configure SUPABASE_URL e SUPABASE_ANON_KEY no arquivo.');
-        }
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/supabase.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("recoveryForm");
+            const emailInput = document.getElementById("recoveryEmail");
+            const codeInput = document.getElementById("recoveryCode");
+            const passwordInput = document.getElementById("newPassword");
+            const confirmInput = document.getElementById("confirmPassword");
+            const emailStep = document.getElementById("emailStep");
+            const codeStep = document.getElementById("codeStep");
+            const button = document.getElementById("submitBtn");
+            const resendButton = document.getElementById("resendCode");
+            const messageBox = document.getElementById("authMessage");
+            const client = window.banco;
+            let codeSent = false;
+            let recoveryVerified = false;
 
-        if (!codeWasSent) {
-          const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
-          if (error) throw error;
-          codeWasSent = true;
-          emailInput.readOnly = true;
-          document.getElementById('emailStep').hidden = true;
-          document.getElementById('codeStep').hidden = false;
-          document.getElementById('codeStep').querySelectorAll('input').forEach((field) => { field.required = true; });
-          tokenInput.focus();
-          feedback.textContent = 'Se houver uma conta associada, o código foi enviado. Confira também a pasta de spam.';
-        } else {
-          if (newPasswordInput.value !== confirmPasswordInput.value) {
-            throw new Error('As senhas não coincidem. Confira e tente novamente.');
-          }
-          const { error: verifyError } = await supabaseClient.auth.verifyOtp({
-            email,
-            token: tokenInput.value.trim(),
-            type: 'recovery'
-          });
-          if (verifyError) throw verifyError;
+            function showMessage(message, success = false) {
+                messageBox.textContent = message;
+                messageBox.classList.toggle("is-success", success);
+                messageBox.setAttribute("data-visible", "true");
+            }
 
-          const { error: passwordError } = await supabaseClient.auth.updateUser({
-            password: newPasswordInput.value
-          });
-          if (passwordError) throw passwordError;
+            if (!client?.auth) {
+                showMessage("Não foi possível iniciar a recuperação. Confira a configuração do Supabase em ./js/supabase.js.");
+                button.disabled = true;
+                return;
+            }
 
-          feedback.textContent = 'Senha alterada com sucesso. Você já pode entrar com a nova senha.';
-          document.getElementById('codeStep').hidden = true;
-        }
-      } catch (error) {
-        console.error('Falha ao solicitar recuperação de senha:', error);
-        feedback.classList.add('error');
-        feedback.textContent = error.message || 'Não foi possível enviar a solicitação. Tente novamente.';
-      } finally {
-        button.disabled = false;
-        button.textContent = originalButtonText;
-      }
-    });
-  </script>
+            async function sendCode() {
+                const email = emailInput.value.trim();
+                if (!email || !emailInput.checkValidity()) {
+                    emailInput.reportValidity();
+                    return;
+                }
+                resendButton.disabled = true;
+                try {
+                    const { error } = await client.auth.resetPasswordForEmail(email);
+                    if (error) throw error;
+                    codeSent = true;
+                    emailInput.readOnly = true;
+                    emailStep.hidden = true;
+                    codeStep.hidden = false;
+                    codeStep.querySelectorAll("input").forEach((input) => { input.required = true; });
+                    button.querySelector("span").textContent = "Validar código e alterar senha";
+                    showMessage("Se houver uma conta para esse e-mail, enviamos um código. Confira também a pasta de spam.", true);
+                    codeInput.focus();
+                } catch (error) {
+                    console.error("Falha ao enviar o código de recuperação:", error);
+                    showMessage("Não foi possível enviar o código agora. Confira o e-mail e tente novamente.");
+                } finally {
+                    resendButton.disabled = false;
+                }
+            }
+
+            resendButton.addEventListener("click", async () => {
+                messageBox.setAttribute("data-visible", "false");
+                await sendCode();
+            });
+
+            form.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                messageBox.setAttribute("data-visible", "false");
+
+                if (!codeSent) {
+                    await sendCode();
+                    return;
+                }
+
+                for (const input of codeStep.querySelectorAll("input[required]")) {
+                    if (!input.reportValidity()) return;
+                }
+                if (passwordInput.value !== confirmInput.value) {
+                    confirmInput.setCustomValidity("As senhas não coincidem.");
+                    confirmInput.reportValidity();
+                    confirmInput.setCustomValidity("");
+                    return;
+                }
+
+                button.disabled = true;
+                button.querySelector("span").textContent = "Validando...";
+                try {
+                    if (!recoveryVerified) {
+                        const { error } = await client.auth.verifyOtp({
+                            email: emailInput.value.trim(),
+                            token: codeInput.value.trim(),
+                            type: "recovery"
+                        });
+                        if (error) throw new Error("Código inválido ou expirado. Confira o código recebido ou solicite outro.");
+                        recoveryVerified = true;
+                    }
+
+                    const { error } = await client.auth.updateUser({ password: passwordInput.value });
+                    if (error) throw error;
+
+                    form.hidden = true;
+                    document.getElementById("recoveryTitle").textContent = "Senha atualizada";
+                    showMessage("Sua senha foi alterada. Agora você pode entrar com a nova senha.", true);
+                } catch (error) {
+                    console.error("Falha ao concluir a recuperação:", error);
+                    showMessage(error.message || "Não foi possível alterar a senha. Tente novamente.");
+                } finally {
+                    button.disabled = false;
+                    button.querySelector("span").textContent = "Validar código e alterar senha";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
