@@ -2292,8 +2292,10 @@ body.erp-page--obras .obras-danger-button { color: #ff9cab; border-color: rgba(2
 body.erp-page--obras :is(.obras-primary-button, .obras-secondary-button, .obras-danger-button):hover { transform: translateY(-1px); }
 body.erp-page--obras :is(.obras-primary-button, .obras-secondary-button, .obras-danger-button):disabled { opacity: .6; cursor: wait; transform: none; }
 body.erp-page--obras .obras-form { display: grid; max-width: 760px; gap: 12px; padding: clamp(18px, 3vw, 30px); border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
-body.erp-page--obras .obras-form label { margin-top: 8px; color: var(--text, #e7f5ff); font-weight: 650; }
+body.erp-page--obras .obras-form label { display: flex; align-items: center; gap: 8px; margin-top: 8px; color: var(--text, #e7f5ff); font-weight: 650; }
 body.erp-page--obras .obras-form label span { color: var(--cyan, #5cecff); }
+body.erp-page--obras .obras-form label .obras-field-hint { margin-left: auto; }
+body.erp-page--obras .obras-form label .obras-field-icon { display: block; width: 16px; height: 16px; flex: 0 0 16px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 body.erp-page--obras .obras-form :is(input, select) { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 10px; color: var(--text, #e7f5ff); background: rgba(3,11,23,.62); }
 body.erp-page--obras .obras-form :is(input, select):focus { outline: 2px solid rgba(92,236,255,.3); border-color: var(--cyan, #5cecff); }
 body.erp-page--obras .obras-form-actions { justify-content: flex-start; flex-wrap: wrap; margin-top: 8px; }
@@ -2325,4 +2327,17 @@ body.erp-page--obras .obras-empty-state {
 }
 body.erp-page--obras .obras-secondary-button {
   background: linear-gradient(135deg, rgba(92,236,255,.12), rgba(34,157,255,.14));
+}
+body.erp-page--obras .obra-detail-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+body.erp-page--obras .obra-detail-title,
+body.erp-page--obras .obras-section-title { display: flex; align-items: center; gap: 14px; min-width: 0; }
+body.erp-page--obras .obra-detail-grid dt,
+body.erp-page--obras .obra-inspection-card dt { display: flex; align-items: center; gap: 7px; }
+body.erp-page--obras .obra-detail-grid dt svg,
+body.erp-page--obras .obra-inspection-card dt svg { display: block; width: 15px; height: 15px; flex: 0 0 15px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--obras .obra-inspection-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+body.erp-page--obras .obra-inspection-card .obra-inspection-heading h3 { margin: 0; }
+body.erp-page--obras .obra-inspection-card .obra-inspection-observation { margin: 0 0 14px; }
+body.has-erp-sidebar.erp-page--obras :is(.obra-detail-card, .obra-inspection-card) {
+  background: linear-gradient(145deg, rgba(34,157,255,.25), rgba(92,236,255,.10)), rgba(7,18,35,.96) !important;
 }
