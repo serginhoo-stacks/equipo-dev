@@ -1436,7 +1436,7 @@ body.erp-page--detalhes-inspecao .inspection-details{ max-width: 1200px; margin:
 
 /* Estilos globais migrados de ERP/equipe.html; escopo: body.erp-page--equipe. */
 body.erp-page--equipe .equipe-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
-body.erp-page--equipe .membro{ background:white; padding:20px; border-radius:15px; box-shadow:0 3px 10px #0002; display:flex; align-items:center; gap:15px; }
+body.erp-page--equipe .membro{ color:var(--text,#e7f5ff); background:linear-gradient(145deg,rgba(34,157,255,.22),rgba(92,236,255,.08)),rgba(7,18,35,.96); border:1px solid var(--border,rgba(133,216,255,.18)); padding:20px; border-radius:15px; box-shadow:0 18px 45px rgba(0,0,0,.2); display:flex; align-items:center; gap:15px; }
 body.erp-page--equipe .avatar-box{ position:relative; }
 body.erp-page--equipe .foto-perfil{ width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #0066cc; background:#eee; }
 body.erp-page--equipe .ponto-online{ position:absolute; right:5px; bottom:5px; width:16px; height:16px; border-radius:50%; background:#999; border:2px solid white; }
@@ -1446,7 +1446,7 @@ body.erp-page--equipe .online{ color:#16a34a; }
 body.erp-page--equipe .offline{ color:gray; }
 body.erp-page--equipe .cargo{ background:#0066cc; color:white; padding:5px 10px; border-radius:10px; font-size:13px; }
 body.erp-page--equipe .permissoes{ margin-top:10px; font-size:13px; line-height:1.6; }
-body.erp-page--equipe .ultimo-acesso{ font-size:13px; color:#666; margin-top:8px; }
+body.erp-page--equipe .ultimo-acesso{ font-size:13px; color:var(--muted,#91a8bd); margin-top:8px; }
 
 /* Estilos globais migrados de ERP/ia.html; escopo: body.erp-page--ia. */
 body.erp-page--ia .chat-container{
@@ -1462,7 +1462,9 @@ body.erp-page--ia .chat-box{
 
     overflow-y:auto;
 
-    background:#f5f7fb;
+    background:linear-gradient(145deg,rgba(34,157,255,.22),rgba(92,236,255,.08)),rgba(7,18,35,.96);
+    color:var(--text,#e7f5ff);
+    border:1px solid var(--border,rgba(133,216,255,.18));
 
     padding:20px;
 
@@ -1492,7 +1494,9 @@ body.erp-page--ia .mensagem{
 
 body.erp-page--ia .mensagem.ia{
 
-    background:white;
+    background:linear-gradient(145deg,rgba(34,157,255,.22),rgba(92,236,255,.08)),rgba(7,18,35,.96);
+    color:var(--text,#e7f5ff);
+    border:1px solid var(--border,rgba(133,216,255,.18));
 
     box-shadow:0 2px 8px #0002;
 
@@ -1588,7 +1592,9 @@ body.erp-page--ia .chat-input button:disabled{
 
 body.erp-page--ia .resultado-ia{
 
-    background:#f5f5f5;
+    background:linear-gradient(145deg,rgba(34,157,255,.22),rgba(92,236,255,.08)),rgba(7,18,35,.96);
+    color:var(--text,#e7f5ff);
+    border:1px solid var(--border,rgba(133,216,255,.18));
 
     padding:20px;
 
@@ -1624,8 +1630,9 @@ body.erp-page--notificacoes .filtros-notificacoes{
 }
 
 body.erp-page--notificacoes .filtro{
-    border: 1px solid #ddd;
-    background: white;
+    border: 1px solid var(--border,rgba(133,216,255,.18));
+    color: var(--text,#e7f5ff);
+    background: linear-gradient(135deg,rgba(92,236,255,.18),rgba(34,157,255,.16));
     padding: 9px 15px;
     border-radius: 8px;
     cursor: pointer;
