@@ -2310,3 +2310,12 @@ body.erp-page--obras .obra-inspection-card dl { display: flex; flex-wrap: wrap; 
   body.erp-page--obras .obra-inspection-card { grid-template-columns: 1fr; }
   body.erp-page--obras .obra-card-actions { flex-wrap: wrap; }
 }
+body.has-erp-sidebar.erp-page--obras .obra-card {
+  background: linear-gradient(145deg, rgba(34,157,255,.25), rgba(92,236,255,.10)), rgba(7,18,35,.96) !important;
+}
+body.erp-page--obras .obras-empty-state {
+  background: linear-gradient(135deg, rgba(92,236,255,.12), rgba(34,157,255,.14));
+}
+body.erp-page--obras .obras-secondary-button {
+  background: linear-gradient(135deg, rgba(92,236,255,.12), rgba(34,157,255,.14));
+}
