@@ -1,298 +1,453 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Registrar inspeção técnica com fotos pelo dispositivo">
-<title>Nova Inspeção — SmartInspect AI</title>
-<link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Registre inspeções técnicas e evidências fotográficas no SmartInspect AI.">
+    <title>Nova inspeção - SmartInspect AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
-
 <body class="erp-page--nova-inspecao">
-<div class="menu-container"></div>
+    <div class="menu-container"></div>
 
-
-
-
-<main class="content inspection-page">
-    <header class="page-header">
-        <div>
-            <p class="eyebrow">REGISTRO TÉCNICO</p>
-            <h1>Nova inspeção</h1>
-            <p class="subtitle">Registre os dados da obra e evidências fotográficas no local.</p>
-        </div>
-        <a class="back-link" href="inspecoes.html">← Voltar para inspeções</a>
-    </header>
-
-    <form id="formInspecao" class="inspection-layout">
-        <section class="card form-panel">
-            <div class="panel-heading">
+    <main class="content erp-ui-shell erp-inspection-page">
+        <header class="erp-ui-page-heading">
+            <div class="erp-ui-title-lockup">
+                <span class="erp-ui-icon-tile" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+                </span>
                 <div>
-                    <p class="eyebrow">DADOS PRINCIPAIS</p>
-                    <h2>Informações da inspeção</h2>
+                    <p class="erp-ui-page-kicker">REGISTRO TÉCNICO</p>
+                    <h1>Nova inspeção</h1>
+                    <p class="erp-ui-page-lead">Registre os dados da obra e as evidências fotográficas no local.</p>
                 </div>
-                <span class="panel-icon">✎</span>
+            </div>
+            <a class="erp-ui-button erp-ui-button--secondary" href="inspecoes.html">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+                <span>Voltar às inspeções</span>
+            </a>
+        </header>
+
+        <form id="formInspecao" class="erp-inspection-form">
+            <div class="erp-inspection-layout">
+                <section class="card erp-inspection-panel" aria-labelledby="tituloDadosInspecao">
+                    <div class="erp-ui-panel-heading">
+                        <div>
+                            <p class="erp-ui-page-kicker">DADOS PRINCIPAIS</p>
+                            <h2 id="tituloDadosInspecao">Informações da inspeção</h2>
+                        </div>
+                        <span class="erp-ui-panel-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path></svg>
+                        </span>
+                    </div>
+
+                    <div class="erp-inspection-fields">
+                        <div class="erp-ui-field">
+                            <label for="obra"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path></svg>Obra <span class="erp-ui-field-hint">Obrigatório</span></label>
+                            <select id="obra" required><option value="">Carregando obras…</option></select>
+                        </div>
+                        <div class="erp-ui-field">
+                            <label for="tipo"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10M7 12h10"></path></svg>Tipo de inspeção <span class="erp-ui-field-hint">Obrigatório</span></label>
+                            <select id="tipo" required>
+                                <option value="Estrutura">Estrutura</option>
+                                <option value="Alvenaria">Alvenaria</option>
+                                <option value="Revestimento">Revestimento</option>
+                                <option value="Instalações">Instalações</option>
+                                <option value="Acabamento">Acabamento</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="erp-ui-field">
+                            <label for="data"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path></svg>Data da inspeção <span class="erp-ui-field-hint">Obrigatório</span></label>
+                            <input type="date" id="data" required>
+                        </div>
+                        <div class="erp-ui-field">
+                            <label for="responsavel"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path></svg>Responsável técnico <span class="erp-ui-field-hint">Obrigatório</span></label>
+                            <input id="responsavel" type="text" maxlength="160" placeholder="Nome do inspetor" required>
+                        </div>
+                        <div class="erp-ui-field erp-ui-field--full">
+                            <label for="status"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg>Status</label>
+                            <select id="status">
+                                <option value="Pendente">Pendente</option>
+                                <option value="Aprovado">Aprovado</option>
+                                <option value="Reprovado">Reprovado</option>
+                            </select>
+                        </div>
+                        <div class="erp-ui-field erp-ui-field--full">
+                            <label for="observacao"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v13H8l-4 4z"></path><path d="M8 9h8M8 13h5"></path></svg>Observações</label>
+                            <textarea id="observacao" rows="5" placeholder="Descreva a situação encontrada, local e recomendações"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card erp-photo-panel" aria-labelledby="tituloFotosInspecao">
+                    <div class="erp-ui-panel-heading">
+                        <div>
+                            <p class="erp-ui-page-kicker">EVIDÊNCIAS</p>
+                            <h2 id="tituloFotosInspecao">Fotos da inspeção</h2>
+                        </div>
+                        <span class="erp-photo-counter" id="photoCounter">0/10</span>
+                    </div>
+
+                    <p class="erp-photo-help">Fotografe trincas, fissuras, materiais, acabamentos ou outras ocorrências.</p>
+                    <div class="erp-photo-actions">
+                        <button type="button" class="erp-ui-button erp-ui-button--secondary" id="abrirCamera">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h-4l-2 3H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                            <span>Abrir câmera</span>
+                        </button>
+                        <label class="erp-ui-button erp-ui-button--secondary erp-upload-label" for="seletorFotos">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M4 16v4h16v-4"></path></svg>
+                            <span>Escolher fotos</span>
+                            <input id="seletorFotos" type="file" accept="image/*" capture="environment" multiple hidden>
+                        </label>
+                    </div>
+
+                    <div id="previewFotos" class="erp-photo-grid" aria-live="polite">
+                        <div class="erp-photo-empty">Nenhuma foto adicionada. Use a câmera ou selecione imagens do dispositivo.</div>
+                    </div>
+                    <p class="erp-photo-note">É possível adicionar até 10 fotos. O acesso à câmera requer uma conexão segura (HTTPS).</p>
+                </section>
             </div>
 
-            <div class="form-grid">
-                <label>
-                    Obra
-                    <select id="obra" required>
-                        <option value="">Carregando obras...</option>
-                    </select>
-                </label>
-                <label>
-                    Tipo de inspeção
-                    <select id="tipo" required>
-                        <option value="Estrutura">Estrutura</option>
-                        <option value="Alvenaria">Alvenaria</option>
-                        <option value="Revestimento">Revestimento</option>
-                        <option value="Instalações">Instalações</option>
-                        <option value="Acabamento">Acabamento</option>
-                        <option value="Outros">Outros</option>
-                    </select>
-                </label>
-                <label>
-                    Data da inspeção
-                    <input type="date" id="data" required>
-                </label>
-                <label>
-                    Responsável técnico
-                    <input id="responsavel" type="text" placeholder="Nome do inspetor" required>
-                </label>
-                <label class="full-field">
-                    Status
-                    <select id="status">
-                        <option value="Pendente">Pendente</option>
-                        <option value="Aprovado">Aprovado</option>
-                        <option value="Reprovado">Reprovado</option>
-                    </select>
-                </label>
-                <label class="full-field">
-                    Observações
-                    <textarea id="observacao" rows="5" placeholder="Descreva a situação encontrada, local e recomendações"></textarea>
-                </label>
+            <div class="erp-ui-form-actions">
+                <a class="erp-ui-button erp-ui-button--secondary" href="inspecoes.html">Cancelar</a>
+                <button type="submit" class="erp-ui-button erp-ui-button--primary" id="salvarButton">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12l4 4v14H3V3h2Zm2 0v6h10V3M7 21v-8h10v8"></path></svg>
+                    <span id="salvarButtonTexto">Salvar inspeção</span>
+                </button>
             </div>
-        </section>
+            <p id="mensagemFormulario" class="erp-ui-feedback" role="status" aria-live="polite"></p>
+        </form>
+    </main>
 
-        <section class="card photo-panel">
-            <div class="panel-heading">
+    <div class="erp-camera-modal" id="cameraModal" hidden>
+        <div class="erp-camera-dialog" role="dialog" aria-modal="true" aria-labelledby="cameraTitle" tabindex="-1">
+            <header class="erp-camera-dialog-header">
                 <div>
-                    <p class="eyebrow">EVIDÊNCIAS</p>
-                    <h2>Fotos da inspeção</h2>
+                    <p class="erp-ui-page-kicker">CAPTURA NO LOCAL</p>
+                    <h2 id="cameraTitle">Câmera da inspeção</h2>
                 </div>
-                <span class="photo-counter" id="photoCounter">0/10</span>
-            </div>
-
-            <p class="photo-help">Fotografe trincas, fissuras, materiais, acabamentos ou qualquer não conformidade encontrada.</p>
-
-            <div class="photo-actions">
-                <button type="button" class="camera-button" id="abrirCamera">⌾ Abrir câmera</button>
-                <label class="upload-button" for="seletorFotos">
-                    ▧ Escolher fotos
-                    <input id="seletorFotos" type="file" accept="image/*" capture="environment" multiple hidden>
-                </label>
-            </div>
-
-            <div id="previewFotos" class="photo-grid" aria-live="polite">
-                <div class="photo-empty">Nenhuma foto adicionada. Use a câmera ou selecione imagens do dispositivo.</div>
-            </div>
-
-            <p class="photo-note">É possível adicionar até 10 fotos. A captura pela câmera funciona melhor em conexão HTTPS.</p>
-        </section>
-
-        <div class="form-actions">
-            <a class="secondary-button" href="inspecoes.html">Cancelar</a>
-            <button type="submit" class="primary-button" id="salvarButton">💾 Salvar inspeção</button>
+                <button type="button" class="erp-camera-close" id="fecharCamera" aria-label="Fechar câmera">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"></path></svg>
+                </button>
+            </header>
+            <video id="cameraVideo" autoplay playsinline muted></video>
+            <canvas id="cameraCanvas" hidden></canvas>
+            <p id="cameraMensagem" class="erp-camera-message" role="status">Posicione a evidência dentro do quadro.</p>
+            <button type="button" class="erp-ui-button erp-ui-button--primary erp-capture-button" id="capturarFoto">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle></svg>
+                <span>Capturar foto</span>
+            </button>
         </div>
-        <p id="mensagemFormulario" class="dashboard-message" role="status"></p>
-    </form>
-</main>
-
-<div class="camera-modal" id="cameraModal" hidden>
-    <div class="camera-dialog" role="dialog" aria-modal="true" aria-labelledby="cameraTitle">
-        <div class="camera-dialog-header">
-            <div>
-                <p class="eyebrow">CAPTURA NO LOCAL</p>
-                <h2 id="cameraTitle">Câmera da inspeção</h2>
-            </div>
-            <button type="button" class="icon-button" id="fecharCamera" aria-label="Fechar câmera">×</button>
-        </div>
-        <video id="cameraVideo" autoplay playsinline muted></video>
-        <canvas id="cameraCanvas" hidden></canvas>
-        <p id="cameraMensagem" class="camera-message">Posicione a evidência dentro do quadro.</p>
-        <button type="button" class="capture-button" id="capturarFoto">● Capturar foto</button>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-<!-- REMOVIDO: auth.js, configuracoes.js, notificacoes.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/sidebar.js"></script>
 
-<script>
-    // REMOVIDO: verificarLogin();
+    <script>
+        "use strict";
 
-    const parametros = new URLSearchParams(window.location.search);
-    const obraSelecionada = parametros.get("obra");
-    const fotos = [];
-    let cameraStream = null;
-    const maxFotos = 10;
-    const $ = id => document.getElementById(id);
+        const parametros = new URLSearchParams(window.location.search);
+        const obraSelecionada = parametros.get("obra");
+        const fotos = [];
+        const maxFotos = 10;
+        let cameraStream = null;
+        const $ = (id) => document.getElementById(id);
 
-    $("data").value = new Date().toISOString().split("T")[0];
+        function criarIcone(tipo) {
+            const desenhos = {
+                fechar: '<path d="m18 6-12 12M6 6l12 12"></path>',
+                camera: '<path d="M14 5h-4l-2 3H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-3z"></path><circle cx="12" cy="13" r="3"></circle>'
+            };
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 24 24");
+            svg.setAttribute("aria-hidden", "true");
+            svg.innerHTML = desenhos[tipo] || "";
+            return svg;
+        }
 
-    function renderizarFotos() {
-        $("photoCounter").textContent = `${fotos.length}/${maxFotos}`;
-        $("previewFotos").innerHTML = fotos.length
-            ? fotos.map((foto, index) => `
-                <figure class="photo-item">
-                    <img src="${foto.url}" alt="Evidência ${index + 1}">
-                    <button type="button" class="remove-photo" data-index="${index}" aria-label="Remover foto ${index + 1}">×</button>
-                    <figcaption>Foto ${index + 1}</figcaption>
-                </figure>`).join("")
-            : `<div class="photo-empty">Nenhuma foto adicionada.</div>`;
+        function mostrarMensagem(texto, tipo = "") {
+            const elemento = $("mensagemFormulario");
+            elemento.textContent = texto;
+            elemento.className = `erp-ui-feedback ${tipo}`.trim();
+        }
 
-        document.querySelectorAll(".remove-photo").forEach(botao => {
-            botao.addEventListener("click", () => removerFoto(Number(botao.dataset.index)));
+        function definirDataAtual() {
+            const hoje = new Date();
+            const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+            const dia = String(hoje.getDate()).padStart(2, "0");
+            $("data").value = `${hoje.getFullYear()}-${mes}-${dia}`;
+        }
+
+        function renderizarFotos() {
+            $("photoCounter").textContent = `${fotos.length}/${maxFotos}`;
+            const preview = $("previewFotos");
+            preview.replaceChildren();
+
+            if (!fotos.length) {
+                const vazio = document.createElement("div");
+                vazio.className = "erp-photo-empty";
+                vazio.textContent = "Nenhuma foto adicionada. Use a câmera ou selecione imagens do dispositivo.";
+                preview.append(vazio);
+                return;
+            }
+
+            fotos.forEach((foto, index) => {
+                const figura = document.createElement("figure");
+                figura.className = "erp-photo-item";
+                const imagem = document.createElement("img");
+                imagem.src = foto.url;
+                imagem.alt = `Evidência fotográfica ${index + 1}`;
+                imagem.loading = "lazy";
+
+                const remover = document.createElement("button");
+                remover.type = "button";
+                remover.className = "erp-photo-remove";
+                remover.setAttribute("aria-label", `Remover foto ${index + 1}`);
+                remover.append(criarIcone("fechar"));
+                remover.addEventListener("click", () => removerFoto(index));
+
+                const legenda = document.createElement("figcaption");
+                legenda.textContent = `Foto ${index + 1}`;
+                figura.append(imagem, remover, legenda);
+                preview.append(figura);
+            });
+        }
+
+        function adicionarArquivos(arquivos) {
+            const selecionados = Array.from(arquivos || []);
+            const imagens = selecionados.filter((arquivo) => arquivo.type.startsWith("image/"));
+            const vagas = Math.max(0, maxFotos - fotos.length);
+            imagens.slice(0, vagas).forEach((arquivo) => {
+                fotos.push({ arquivo, url: URL.createObjectURL(arquivo) });
+            });
+            renderizarFotos();
+
+            if (imagens.length > vagas) {
+                mostrarMensagem(`Limite de ${maxFotos} fotos por inspeção atingido.`, "is-error");
+            } else if (imagens.length < selecionados.length) {
+                mostrarMensagem("Alguns arquivos foram ignorados. Selecione somente imagens.", "is-error");
+            } else if (imagens.length) {
+                mostrarMensagem("");
+            }
+        }
+
+        function removerFoto(index) {
+            const foto = fotos[index];
+            if (!foto) return;
+            URL.revokeObjectURL(foto.url);
+            fotos.splice(index, 1);
+            renderizarFotos();
+        }
+
+        function limparFotos() {
+            fotos.forEach((foto) => URL.revokeObjectURL(foto.url));
+            fotos.length = 0;
+            renderizarFotos();
+        }
+
+        $("seletorFotos").addEventListener("change", (evento) => {
+            adicionarArquivos(evento.target.files);
+            evento.target.value = "";
         });
-    }
 
-    function adicionarArquivos(arquivos) {
-        const disponiveis = maxFotos - fotos.length;
-        Array.from(arquivos).filter(a => a.type.startsWith("image/")).slice(0, disponiveis).forEach(arquivo => {
-            fotos.push({ arquivo, url: URL.createObjectURL(arquivo) });
+        async function abrirCamera() {
+            if (fotos.length >= maxFotos) {
+                mostrarMensagem(`Limite de ${maxFotos} fotos por inspeção atingido.`, "is-error");
+                return;
+            }
+            if (!navigator.mediaDevices?.getUserMedia) {
+                mostrarMensagem("Este navegador não permite acesso direto à câmera.", "is-error");
+                return;
+            }
+            try {
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: { ideal: "environment" } },
+                    audio: false
+                });
+                $("cameraMensagem").textContent = "Posicione a evidência dentro do quadro.";
+                $("cameraVideo").srcObject = cameraStream;
+                $("cameraModal").hidden = false;
+                $("cameraModal").querySelector("[role='dialog']").focus();
+            } catch (erro) {
+                console.error("Erro ao abrir a câmera:", erro);
+                mostrarMensagem("Não foi possível abrir a câmera. Verifique a permissão do navegador.", "is-error");
+            }
+        }
+
+        function fecharCamera() {
+            if (cameraStream) cameraStream.getTracks().forEach((track) => track.stop());
+            cameraStream = null;
+            $("cameraVideo").srcObject = null;
+            $("cameraModal").hidden = true;
+        }
+
+        function capturarFoto() {
+            if (fotos.length >= maxFotos) {
+                $("cameraMensagem").textContent = `Limite de ${maxFotos} fotos atingido.`;
+                return;
+            }
+            const video = $("cameraVideo");
+            if (!video.videoWidth || !video.videoHeight) {
+                $("cameraMensagem").textContent = "A câmera ainda está iniciando. Tente novamente em instantes.";
+                return;
+            }
+            const canvas = $("cameraCanvas");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+                if (!blob) {
+                    $("cameraMensagem").textContent = "Não foi possível capturar a foto. Tente novamente.";
+                    return;
+                }
+                adicionarArquivos([new File([blob], `inspecao-${Date.now()}.jpg`, { type: "image/jpeg" })]);
+                $("cameraMensagem").textContent = "Foto adicionada.";
+            }, "image/jpeg", 0.9);
+        }
+
+        $("abrirCamera").addEventListener("click", abrirCamera);
+        $("fecharCamera").addEventListener("click", fecharCamera);
+        $("capturarFoto").addEventListener("click", capturarFoto);
+        $("cameraModal").addEventListener("click", (evento) => {
+            if (evento.target === $("cameraModal")) fecharCamera();
         });
-        renderizarFotos();
-        if (arquivos.length > disponiveis) $("mensagemFormulario").textContent = "O limite de 10 fotos foi atingido.";
-    }
+        document.addEventListener("keydown", (evento) => {
+            if (evento.key === "Escape" && !$("cameraModal").hidden) fecharCamera();
+        });
 
-    function removerFoto(index) {
-        URL.revokeObjectURL(fotos[index].url);
-        fotos.splice(index, 1);
-        renderizarFotos();
-    }
+        async function carregarObras() {
+            const select = $("obra");
+            try {
+                if (!window.banco?.from) throw new Error("Cliente Supabase indisponível.");
+                const { data, error } = await window.banco
+                    .from("obras")
+                    .select("id, nome")
+                    .order("id", { ascending: false });
+                if (error) throw error;
 
-    $("seletorFotos").addEventListener("change", evento => {
-        adicionarArquivos(evento.target.files);
-        evento.target.value = "";
-    });
+                if (!Array.isArray(data) || data.length === 0) {
+                    select.replaceChildren(new Option("Nenhuma obra cadastrada", ""));
+                    mostrarMensagem("Cadastre uma obra antes de registrar uma inspeção.", "is-error");
+                    return;
+                }
 
-    async function abrirCamera() {
-        if (!navigator.mediaDevices?.getUserMedia) {
-            $("cameraMensagem").textContent = "Seu navegador não permite acesso direto à câmera.";
-            $("cameraModal").hidden = false;
-            return;
-        }
-        try {
-            cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
-            $("cameraVideo").srcObject = cameraStream;
-            $("cameraModal").hidden = false;
-        } catch (erro) {
-            $("mensagemFormulario").textContent = "Não foi possível abrir a câmera.";
-        }
-    }
-
-    function fecharCamera() {
-        if (cameraStream) cameraStream.getTracks().forEach(track => track.stop());
-        cameraStream = null;
-        $("cameraVideo").srcObject = null;
-        $("cameraModal").hidden = true;
-    }
-
-    function capturarFoto() {
-        if (fotos.length >= maxFotos) {
-            $("cameraMensagem").textContent = "Limite de 10 fotos atingido.";
-            return;
-        }
-        const video = $("cameraVideo");
-        const canvas = $("cameraCanvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob(blob => {
-            if (!blob) return;
-            adicionarArquivos([new File([blob], `inspecao-${Date.now()}.jpg`, { type: "image/jpeg" })]);
-            $("cameraMensagem").textContent = "Foto adicionada.";
-        }, "image/jpeg", 0.9);
-    }
-
-    $("abrirCamera").addEventListener("click", abrirCamera);
-    $("fecharCamera").addEventListener("click", fecharCamera);
-    $("capturarFoto").addEventListener("click", capturarFoto);
-    $("cameraModal").addEventListener("click", evento => { if (evento.target === $("cameraModal")) fecharCamera(); });
-    document.addEventListener("keydown", evento => { if (evento.key === "Escape" && !$("cameraModal").hidden) fecharCamera(); });
-
-    async function carregarObras() {
-        const select = $("obra");
-        const { data, error } = await banco.from("obras").select("*").order("id", { ascending: false });
-
-        if (error || !data?.length) {
-            select.innerHTML = `<option value="">${error ? "Erro ao carregar obras" : "Nenhuma obra cadastrada"}</option>`;
-            return;
-        }
-        select.innerHTML = `<option value="">Selecione uma obra</option>` + data.map(obra => `
-            <option value="${obra.id}" ${obra.id == obraSelecionada ? "selected" : ""}>${obra.nome}</option>`).join("");
-    }
-
-    $("formInspecao").addEventListener("submit", async evento => {
-        evento.preventDefault();
-        const botao = $("salvarButton");
-        const mensagem = $("mensagemFormulario");
-        botao.disabled = true;
-        botao.textContent = "Salvando...";
-        mensagem.textContent = "";
-
-        const obraId = Number($("obra").value);
-        const tipo = $("tipo").value;
-        const dataInspecao = $("data").value;
-        const responsavel = $("responsavel").value.trim();
-        const observacao = $("observacao").value.trim();
-        const status = $("status").value;
-
-        if (!obraId) {
-            mensagem.textContent = "Selecione uma obra antes de salvar.";
-            botao.disabled = false;
-            botao.textContent = "💾 Salvar inspeção";
-            return;
+                const opcoes = [new Option("Selecione uma obra", "")];
+                data.forEach((obra) => {
+                    const opcao = new Option(obra.nome || "Obra sem nome", String(obra.id));
+                    if (obraSelecionada && String(obra.id) === obraSelecionada) opcao.selected = true;
+                    opcoes.push(opcao);
+                });
+                select.replaceChildren(...opcoes);
+            } catch (erro) {
+                console.error("Erro ao carregar obras:", erro);
+                select.replaceChildren(new Option("Erro ao carregar obras", ""));
+                mostrarMensagem("Não foi possível carregar as obras. Atualize a página e tente novamente.", "is-error");
+            }
         }
 
-        const payload = { obra_id: obraId, tipo, data_inspecao: dataInspecao, responsavel, observacao, status };
-
-        const { data: inspecao, error } = await banco.from("inspecoes").insert([payload]).select("id").single();
-
-        if (error) {
-            mensagem.textContent = "Não foi possível salvar a inspeção.";
-            botao.disabled = false;
-            botao.textContent = "💾 Salvar inspeção";
-            return;
+        function extensaoImagem(arquivo) {
+            const tipos = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" };
+            return tipos[arquivo.type] || "img";
         }
 
-        // UPLOAD DAS FOTOS
-        if (fotos.length && inspecao?.id) {
+        async function enviarFotos(inspecaoId) {
+            if (!fotos.length) return 0;
+            const cliente = window.banco;
+            if (!cliente.storage?.from) return fotos.length;
+
             const registros = [];
+            let falhas = 0;
             for (const [indice, foto] of fotos.entries()) {
-                const caminho = `inspecoes/${inspecao.id}/${Date.now()}-${indice}.jpg`;
-                const upload = await banco.storage.from("inspecao-fotos").upload(caminho, foto.arquivo, { contentType: foto.arquivo.type, upsert: false });
-                if (!upload.error) {
-                    registros.push({ inspecao_id: inspecao.id, caminho, nome_arquivo: foto.arquivo.name, ordem: indice + 1 });
+                const caminho = `inspecoes/${inspecaoId}/${Date.now()}-${indice}.${extensaoImagem(foto.arquivo)}`;
+                try {
+                    const { error } = await cliente.storage
+                        .from("inspecao-fotos")
+                        .upload(caminho, foto.arquivo, { contentType: foto.arquivo.type, upsert: false });
+                    if (error) throw error;
+                    registros.push({ inspecao_id: inspecaoId, caminho, nome_arquivo: foto.arquivo.name, ordem: indice + 1 });
+                } catch (erro) {
+                    console.error("Erro ao enviar foto da inspeção:", erro);
+                    falhas += 1;
                 }
             }
+
             if (registros.length) {
-                await banco.from("inspecao_fotos").insert(registros);
+                const { error } = await cliente.from("inspecao_fotos").insert(registros);
+                if (error) {
+                    console.error("Erro ao registrar as fotos:", error);
+                    falhas += registros.length;
+                }
             }
+            return falhas;
         }
 
-        fecharCamera();
-        alert("✅ Inspeção cadastrada com sucesso!");
-        window.location.href = "inspecoes.html";
-    });
+        $("formInspecao").addEventListener("submit", async (evento) => {
+            evento.preventDefault();
+            const form = evento.currentTarget;
+            if (!form.reportValidity()) return;
 
-    carregarObras();
-    renderizarFotos();
-</script>
+            const cliente = window.banco;
+            if (!cliente?.from) {
+                mostrarMensagem("Não foi possível conectar ao serviço. Recarregue a página e tente novamente.", "is-error");
+                return;
+            }
 
+            const obraId = Number($("obra").value);
+            if (!obraId) {
+                mostrarMensagem("Selecione uma obra antes de salvar.", "is-error");
+                $("obra").focus();
+                return;
+            }
 
-<script src="../js/sidebar.js"></script>
+            const botao = $("salvarButton");
+            const textoBotao = $("salvarButtonTexto");
+            botao.disabled = true;
+            textoBotao.textContent = "Salvando…";
+            mostrarMensagem("Salvando inspeção…");
+
+            const payload = {
+                obra_id: obraId,
+                tipo: $("tipo").value,
+                data_inspecao: $("data").value,
+                responsavel: $("responsavel").value.trim(),
+                observacao: $("observacao").value.trim(),
+                status: $("status").value
+            };
+
+            let inspecao;
+            try {
+                const resultado = await cliente.from("inspecoes").insert([payload]).select("id").single();
+                if (resultado.error) throw resultado.error;
+                inspecao = resultado.data;
+            } catch (erro) {
+                console.error("Erro ao salvar inspeção:", erro);
+                mostrarMensagem("Não foi possível salvar a inspeção. Confira os dados e tente novamente.", "is-error");
+                botao.disabled = false;
+                textoBotao.textContent = "Salvar inspeção";
+                return;
+            }
+
+            let falhasFotos = 0;
+            if (inspecao?.id) falhasFotos = await enviarFotos(inspecao.id);
+            fecharCamera();
+            limparFotos();
+            if (falhasFotos) {
+                mostrarMensagem(`Inspeção salva, mas ${falhasFotos} foto(s) não puderam ser anexadas.`, "is-warning");
+            } else {
+                mostrarMensagem("Inspeção cadastrada com sucesso.", "is-success");
+            }
+            window.setTimeout(() => { window.location.href = "inspecoes.html"; }, 1500);
+        });
+
+        definirDataAtual();
+        carregarObras();
+        renderizarFotos();
+    </script>
 </body>
 </html>
