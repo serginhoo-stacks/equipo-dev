@@ -2253,6 +2253,8 @@ body.erp-page--obras .obras-heading,
 body.erp-page--obras .obras-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
 body.erp-page--obras .obras-heading h1,
 body.erp-page--obras .obras-section-heading h2 { margin: 0; color: var(--text, #e7f5ff); }
+body.erp-page--obras .obras-title-lockup { display: flex; align-items: center; gap: 14px; min-width: 0; }
+body.erp-page--obras .obras-title-lockup > div { min-width: 0; }
 body.erp-page--obras .obras-kicker { margin: 0 0 8px; color: var(--cyan, #5cecff); font-size: 11px; font-weight: 800; letter-spacing: .13em; }
 body.erp-page--obras .obras-intro { margin: 8px 0 0; color: var(--muted, #91a8bd); }
 body.erp-page--obras .obras-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; }
@@ -2278,7 +2280,12 @@ body.erp-page--obras .obra-inspection-card dd { margin: 0; color: var(--text, #e
 body.erp-page--obras .obra-card-actions { justify-content: flex-start; padding-top: 16px; border-top: 1px solid var(--border, rgba(133,216,255,.18)); }
 body.erp-page--obras .obras-primary-button,
 body.erp-page--obras .obras-secondary-button,
-body.erp-page--obras .obras-danger-button { min-height: 42px; padding: 10px 15px; border: 1px solid transparent; border-radius: 11px; font: inherit; font-weight: 700; cursor: pointer; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+body.erp-page--obras .obras-danger-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 10px 15px; border: 1px solid transparent; border-radius: 11px; font: inherit; font-weight: 700; cursor: pointer; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+body.erp-page--obras .obras-button-icon,
+body.erp-page--obras .obras-secondary-button svg,
+body.erp-page--obras .obras-danger-button svg { display: block; width: 18px; height: 18px; flex: 0 0 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--obras .obra-card-address { display: flex; align-items: flex-start; gap: 8px; }
+body.erp-page--obras .obra-card-address svg { display: block; width: 16px; height: 16px; flex: 0 0 16px; margin-top: 2px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 body.erp-page--obras .obras-primary-button { color: #04111f; background: linear-gradient(135deg, var(--cyan, #5cecff), #7eb6ff); box-shadow: 0 8px 24px rgba(92,236,255,.18); }
 body.erp-page--obras .obras-secondary-button { color: var(--text, #e7f5ff); border-color: var(--border, rgba(133,216,255,.18)); background: rgba(255,255,255,.05); }
 body.erp-page--obras .obras-danger-button { color: #ff9cab; border-color: rgba(255,135,153,.24); background: rgba(255,135,153,.08); }
