@@ -340,12 +340,23 @@
                 }
 
                 for (const input of codeStep.querySelectorAll("input[required]")) {
-                    if (!input.reportValidity()) return;
+                    if (!input.value.trim()) {
+                        showMessage("Preencha o código, a nova senha e a confirmação da senha para continuar.");
+                        input.focus();
+                        return;
+                    }
+                    if (!input.reportValidity()) {
+                        showMessage("Confira os campos: a senha precisa ter pelo menos 6 caracteres.");
+                        input.focus();
+                        return;
+                    }
                 }
                 if (passwordInput.value !== confirmInput.value) {
+                    showMessage("As senhas não coincidem. Digite a mesma senha nos dois campos.");
                     confirmInput.setCustomValidity("As senhas não coincidem.");
                     confirmInput.reportValidity();
                     confirmInput.setCustomValidity("");
+                    confirmInput.focus();
                     return;
                 }
 
