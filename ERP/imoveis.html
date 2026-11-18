@@ -1,127 +1,215 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Imóveis - SmartInspect AI</title>
-
-<link rel="stylesheet" href="../css/style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consulte os imóveis cadastrados no SmartInspect AI.">
+    <title>Imóveis - SmartInspect AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
-
-
 <body class="erp-page--imoveis">
+    <div class="menu-container"></div>
 
-<!-- SIDEBAR PADRÃO -->
-<div class="menu-container"></div>
-
-<div class="content">
-
-<h1>🏠 Imóveis</h1>
-
-<p>Lista de imóveis cadastrados</p>
-
-<button onclick="location.href='novo_imovel.html'">
-➕ Novo Imóvel
-</button>
-
-<div id="listaImoveis">
-<p>Carregando imóveis...</p>
-</div>
-
-</div>
-
-<footer class="rodape">
-<p>🚀 SmartInspect AI</p>
-<p>Desenvolvido por <strong>Sérgio and Gabriel</strong></p>
-<p>Versão 1.0.1</p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-<script src="../js/sidebar.js"></script>
-
-<script>
-    // NÃO CHAMA MAIS O verificarLogin()
-
-    async function carregarImoveis(){
-
-        const {data,error}=await banco
-        .from("imoveis")
-        .select(`
-            *,
-            obras(
-                nome
-            )
-        `)
-        .order("id",{ascending:false});
-
-        const lista=document.getElementById("listaImoveis");
-
-        if(error){
-            console.log(error);
-            lista.innerHTML="❌ Erro ao carregar imóveis";
-            return;
-        }
-
-        if(!data || data.length===0){
-            lista.innerHTML="Nenhum imóvel cadastrado";
-            return;
-        }
-
-        lista.innerHTML="";
-
-        data.forEach(imovel=>{
-
-            lista.innerHTML += `
-            <div class="card">
-                ${imovel.foto ? 
-                    `<img src="${imovel.foto}" class="erp-property-photo">`
-                    : `<p>📷 Sem foto</p>`
-                }
-                <h2>🏠 ${imovel.nome}</h2>
-                <p>🏢 Obra: ${imovel.obras ? imovel.obras.nome : "Sem obra"}</p>
-                <p>🏷 Tipo: ${imovel.tipo || ""}</p>
-                <p>📍 Endereço: ${imovel.endereco || ""}</p>
-                <p>👤 Cliente: ${imovel.cliente || ""}</p>
-                <p>📌 Status: ${imovel.status || ""}</p>
-                <p>📝 Observação: ${imovel.observacao || "Sem observação"}</p>
-                <br>
-                <button onclick="excluirImovel(${imovel.id})">🗑 Excluir</button>
+    <main class="content erp-ui-shell">
+        <header class="erp-ui-page-heading">
+            <div class="erp-ui-title-lockup">
+                <span class="erp-ui-icon-tile" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"></path></svg>
+                </span>
+                <div>
+                    <p class="erp-ui-page-kicker">PORTFÓLIO IMOBILIÁRIO</p>
+                    <h1>Imóveis</h1>
+                    <p class="erp-ui-page-lead">Consulte os imóveis cadastrados e suas informações principais.</p>
+                </div>
             </div>
-            `;
+            <button id="btnNovoImovel" class="erp-ui-button erp-ui-button--primary" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                <span>Novo imóvel</span>
+            </button>
+        </header>
 
+        <p id="imoveisFeedback" class="erp-ui-feedback" role="status" aria-live="polite"></p>
+        <section id="listaImoveis" class="erp-property-grid" aria-label="Imóveis cadastrados" aria-live="polite">
+            <p class="erp-ui-empty-state">Carregando imóveis…</p>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/sidebar.js"></script>
+
+    <script>
+        "use strict";
+
+        const listaImoveis = document.getElementById("listaImoveis");
+        const feedbackImoveis = document.getElementById("imoveisFeedback");
+
+        function criarElemento(tag, className, texto) {
+            const elemento = document.createElement(tag);
+            if (className) elemento.className = className;
+            if (texto !== undefined) elemento.textContent = texto;
+            return elemento;
+        }
+
+        function criarIcone(tipo) {
+            const desenhos = {
+                imovel: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"></path>',
+                obra: '<path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path>',
+                tipo: '<rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 10h18M10 21V10"></path>',
+                local: '<path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle>',
+                cliente: '<path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>',
+                observacao: '<path d="M4 4h16v13H8l-4 4z"></path><path d="M8 9h8M8 13h5"></path>',
+                excluir: '<path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v7m6-7v7"></path>',
+                semFoto: '<rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path>'
+            };
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 24 24");
+            svg.setAttribute("aria-hidden", "true");
+            svg.innerHTML = desenhos[tipo] || "";
+            return svg;
+        }
+
+        function mostrarFeedback(texto, tipo = "") {
+            feedbackImoveis.textContent = texto;
+            feedbackImoveis.className = `erp-ui-feedback ${tipo}`.trim();
+        }
+
+        function mostrarEstado(texto) {
+            listaImoveis.replaceChildren(criarElemento("p", "erp-ui-empty-state", texto));
+        }
+
+        function criarCampo(tipo, rotulo, valor) {
+            const campo = document.createElement("div");
+            const titulo = document.createElement("dt");
+            titulo.append(criarIcone(tipo), document.createTextNode(rotulo));
+            campo.append(titulo, criarElemento("dd", "", valor || "Não informado"));
+            return campo;
+        }
+
+        function urlDeFoto(valor) {
+            if (!valor) return "";
+            try {
+                const url = new URL(String(valor), window.location.href);
+                return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+            } catch {
+                return "";
+            }
+        }
+
+        function criarCardImovel(imovel) {
+            const card = criarElemento("article", "card erp-property-card");
+            const midia = criarElemento("div", "erp-property-media");
+            const url = urlDeFoto(imovel.foto);
+
+            if (url) {
+                const imagem = document.createElement("img");
+                imagem.className = "erp-property-photo";
+                imagem.src = url;
+                imagem.alt = imovel.nome ? `Foto do imóvel ${imovel.nome}` : "Foto do imóvel";
+                imagem.loading = "lazy";
+                imagem.addEventListener("error", () => {
+                    midia.replaceChildren(criarPlaceHolderFoto());
+                }, { once: true });
+                midia.append(imagem);
+            } else {
+                midia.append(criarPlaceHolderFoto());
+            }
+
+            const conteudo = criarElemento("div", "erp-property-content");
+            const cabecalho = criarElemento("div", "erp-property-heading");
+            cabecalho.append(
+                criarElemento("h2", "", imovel.nome || "Imóvel sem nome"),
+                criarElemento("span", "erp-ui-status", imovel.status || "Sem status")
+            );
+
+            const obra = Array.isArray(imovel.obras) ? imovel.obras[0] : imovel.obras;
+            const detalhes = document.createElement("dl");
+            detalhes.className = "erp-property-data";
+            detalhes.append(
+                criarCampo("obra", "Obra", obra?.nome || "Sem obra vinculada"),
+                criarCampo("tipo", "Tipo", imovel.tipo),
+                criarCampo("local", "Endereço", imovel.endereco),
+                criarCampo("cliente", "Cliente", imovel.cliente)
+            );
+
+            conteudo.append(cabecalho, detalhes);
+            if (imovel.observacao) {
+                const observacao = criarElemento("p", "erp-property-observation");
+                observacao.append(criarIcone("observacao"), document.createTextNode(imovel.observacao));
+                conteudo.append(observacao);
+            }
+
+            const acoes = criarElemento("div", "erp-ui-card-actions");
+            const excluir = criarElemento("button", "erp-ui-button erp-ui-button--danger");
+            excluir.type = "button";
+            excluir.dataset.action = "excluir";
+            excluir.dataset.id = String(imovel.id);
+            excluir.append(criarIcone("excluir"), document.createTextNode("Excluir"));
+            acoes.append(excluir);
+            conteudo.append(acoes);
+            card.append(midia, conteudo);
+            return card;
+        }
+
+        function criarPlaceHolderFoto() {
+            const placeholder = criarElemento("div", "erp-property-photo-placeholder");
+            placeholder.append(criarIcone("semFoto"), criarElemento("span", "", "Sem foto cadastrada"));
+            return placeholder;
+        }
+
+        async function carregarImoveis() {
+            mostrarEstado("Carregando imóveis…");
+            mostrarFeedback("");
+            try {
+                const cliente = window.banco;
+                if (!cliente?.from) throw new Error("Cliente Supabase indisponível.");
+
+                const { data, error } = await cliente
+                    .from("imoveis")
+                    .select("id, nome, tipo, endereco, cliente, status, observacao, foto, obras(nome)")
+                    .order("id", { ascending: false });
+                if (error) throw error;
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    mostrarEstado("Nenhum imóvel cadastrado ainda.");
+                    return;
+                }
+                listaImoveis.replaceChildren(...data.map(criarCardImovel));
+            } catch (erro) {
+                console.error("Erro ao carregar imóveis:", erro);
+                mostrarEstado("Não foi possível carregar os imóveis.");
+                mostrarFeedback("Confira sua conexão e tente atualizar a página.", "is-error");
+            }
+        }
+
+        document.getElementById("btnNovoImovel").addEventListener("click", () => {
+            window.location.href = "novo_imovel.html";
         });
 
-    }
+        listaImoveis.addEventListener("click", async (evento) => {
+            const botao = evento.target.closest('button[data-action="excluir"]');
+            if (!botao || !listaImoveis.contains(botao)) return;
+            const id = botao.dataset.id;
+            if (!window.confirm("Tem certeza que deseja excluir este imóvel?")) return;
 
-    async function excluirImovel(id){
+            botao.disabled = true;
+            try {
+                const { error } = await window.banco.from("imoveis").delete().eq("id", id);
+                if (error) throw error;
+                await carregarImoveis();
+                mostrarFeedback("Imóvel excluído com sucesso.", "is-success");
+            } catch (erro) {
+                console.error("Erro ao excluir imóvel:", erro);
+                botao.disabled = false;
+                mostrarFeedback("Não foi possível excluir o imóvel. Tente novamente.", "is-error");
+            }
+        });
 
-        const confirmar = confirm("Tem certeza que deseja excluir este imóvel?");
-        if(!confirmar) return;
-
-        const {error}=await banco
-        .from("imoveis")
-        .delete()
-        .eq("id",id);
-
-        if(error){
-            console.log(error);
-            alert("❌ Erro ao excluir");
-            return;
-        }
-
-        alert("✅ Imóvel excluído");
         carregarImoveis();
-
-    }
-
-    carregarImoveis();
-</script>
-
+    </script>
 </body>
 </html>
