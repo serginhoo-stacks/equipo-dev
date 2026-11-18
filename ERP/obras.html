@@ -3,64 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerencie as obras cadastradas no SmartInspect AI.">
     <title>Obras - SmartInspect AI</title>
-    
-    <!-- Importando a fonte e o CSS base -->
+
+    <!-- Fonte e identidade visual compartilhada do ERP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
-
-    <!-- CSS customizado para aplicar a mesma identidade visual do site -->
-
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
 <body class="erp-page--obras">
-
-    <!-- O MENU VAI SER INJETADO AQUI -->
+    <!-- O menu lateral é carregado pelo script compartilhado do ERP -->
     <div class="menu-container"></div>
 
-    <div class="content">
-        <h1>🏢 Obras</h1>
-        <p>Gerenciamento das obras cadastradas</p>
+    <main class="content obras-module">
+        <!-- LISTAGEM DE OBRAS -->
+        <section class="obras-view" aria-labelledby="obrasTitle">
+            <header class="obras-heading">
+                <div class="obras-title-lockup">
+                    <span class="obra-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path></svg>
+                    </span>
+                    <div>
+                    <p class="obras-kicker">GESTÃO DE OBRAS</p>
+                    <h1 id="obrasTitle">Obras</h1>
+                    <p class="obras-intro">Gerencie as obras cadastradas e acompanhe seus dados principais.</p>
+                    </div>
+                </div>
+                <button id="btnNovaObra" class="obras-primary-button" type="button">
+                    <svg class="obras-button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                    <span>Nova obra</span>
+                </button>
+            </header>
 
-        <button onclick="location.href='nova_obra.html'">➕ Nova Obra</button>
+            <p id="obrasFeedback" class="obras-feedback" role="status" aria-live="polite"></p>
+            <div id="listaObras" class="obras-grid" aria-live="polite">
+                <p class="obras-empty-state">Carregando obras…</p>
+            </div>
+        </section>
+    </main>
 
-        <div id="listaObras"><p>Carregando obras...</p></div>
-    </div>
-
+    <!-- SCRIPTS DO SUPABASE E DO MENU -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase.js"></script>
     <script src="../js/sidebar.js"></script>
 
     <script>
-        async function carregarObras(){
-            const {data,error}=await banco.from("obras").select("*").order("id",{ascending:false});
-            const lista=document.getElementById("listaObras");
+        "use strict";
 
-            if(error){ lista.innerHTML="<p class='erp-error-text'>❌ Erro ao carregar obras</p>"; return; }
-            if(!data || data.length===0){ lista.innerHTML="<p class='erp-empty-text'>Nenhuma obra cadastrada</p>"; return; }
+        const listaObras = document.getElementById("listaObras");
+        const feedbackObras = document.getElementById("obrasFeedback");
 
-            lista.innerHTML="";
-            data.forEach(obra=>{
-                lista.innerHTML += `
-                <div class="card">
-                    <h2>🏢 ${obra.nome}</h2>
-                    <p>📍 Endereço: ${obra.endereco || "Não informado"}</p>
-                    <p>👷 Responsável: ${obra.responsavel || "Não informado"}</p>
-                    <p>📌 Status: ${obra.status || "Ativa"}</p>
-                    <br>
-                    <button onclick="verObra(${obra.id})">👁 Ver detalhes</button>
-                    <button onclick="excluirObra(${obra.id})">🗑 Excluir</button>
-                </div>`;
-            });
+        function criarElemento(tag, className, texto) {
+            const elemento = document.createElement(tag);
+            if (className) elemento.className = className;
+            if (texto !== undefined) elemento.textContent = texto;
+            return elemento;
         }
 
-        function verObra(id){ window.location.href="detalhes_obra.html?id="+id; }
-
-        async function excluirObra(id){
-            if(!confirm("Deseja excluir esta obra?")) return;
-            await banco.from("obras").delete().eq("id",id);
-            carregarObras();
+        function criarIcone(tipo) {
+            const desenhos = {
+                obra: '<path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path>',
+                local: '<path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle>',
+                ver: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle>',
+                excluir: '<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6m4 0V4h6v2m-5 4v7m4-7v7"></path>'
+            };
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 24 24");
+            svg.setAttribute("aria-hidden", "true");
+            svg.innerHTML = desenhos[tipo] || "";
+            return svg;
         }
+
+        function mostrarFeedback(texto, classe = "") {
+            feedbackObras.textContent = texto;
+            feedbackObras.className = `obras-feedback ${classe}`.trim();
+        }
+
+        function criarCampoMeta(rotulo, valor) {
+            const campo = document.createElement("div");
+            campo.append(
+                criarElemento("dt", "", rotulo),
+                criarElemento("dd", "", valor || "Não informado")
+            );
+            return campo;
+        }
+
+        function criarCardObra(obra) {
+            const card = criarElemento("article", "card obra-card");
+            const cabecalho = criarElemento("div", "obra-card-heading");
+            const icone = criarElemento("span", "obra-card-icon");
+            icone.setAttribute("aria-hidden", "true");
+            icone.append(criarIcone("obra"));
+
+            const status = criarElemento("span", "obra-status", obra.status || "Ativa");
+            cabecalho.append(icone, status);
+
+            const titulo = criarElemento("h2", "", obra.nome || "Obra sem nome");
+            const endereco = criarElemento("p", "obra-card-address");
+            endereco.append(criarIcone("local"), document.createTextNode(obra.endereco || "Endereço não informado"));
+            const meta = criarElemento("dl", "obra-card-meta");
+            meta.append(
+                criarCampoMeta("Responsável", obra.responsavel),
+                criarCampoMeta("Data de início", obra.data_inicio)
+            );
+
+            const acoes = criarElemento("div", "obra-card-actions");
+            const ver = criarElemento("button", "obras-secondary-button");
+            ver.type = "button";
+            ver.dataset.action = "ver";
+            ver.dataset.id = String(obra.id);
+            ver.append(criarIcone("ver"), document.createTextNode("Ver detalhes"));
+
+            const excluir = criarElemento("button", "obras-danger-button");
+            excluir.type = "button";
+            excluir.dataset.action = "excluir";
+            excluir.dataset.id = String(obra.id);
+            excluir.append(criarIcone("excluir"), document.createTextNode("Excluir"));
+
+            acoes.append(ver, excluir);
+            card.append(cabecalho, titulo, endereco, meta, acoes);
+            return card;
+        }
+
+        function mostrarEstadoLista(texto) {
+            listaObras.replaceChildren(criarElemento("p", "obras-empty-state", texto));
+        }
+
+        async function carregarObras() {
+            mostrarEstadoLista("Carregando obras…");
+            mostrarFeedback("");
+
+            try {
+                const cliente = window.banco;
+                if (!cliente) throw new Error("Cliente Supabase indisponível.");
+
+                const { data, error } = await cliente
+                    .from("obras")
+                    .select("*")
+                    .order("id", { ascending: false });
+
+                if (error) throw error;
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    mostrarEstadoLista("Nenhuma obra cadastrada ainda.");
+                    return;
+                }
+
+                listaObras.replaceChildren(...data.map(criarCardObra));
+            } catch (erro) {
+                console.error("Erro ao carregar obras:", erro);
+                mostrarEstadoLista("Não foi possível carregar as obras. Tente novamente.");
+                mostrarFeedback("Confira sua conexão e tente atualizar a página.", "is-error");
+            }
+        }
+
+        document.getElementById("btnNovaObra").addEventListener("click", () => {
+            window.location.href = "nova_obra.html";
+        });
+
+        listaObras.addEventListener("click", async (evento) => {
+            const botao = evento.target.closest("button[data-action]");
+            if (!botao || !listaObras.contains(botao)) return;
+
+            const { action, id } = botao.dataset;
+            if (action === "ver") {
+                window.location.href = `detalhes_obra.html?id=${encodeURIComponent(id)}`;
+                return;
+            }
+
+            if (action !== "excluir" || !window.confirm("Deseja excluir esta obra?")) return;
+
+            botao.disabled = true;
+            try {
+                const { error } = await window.banco.from("obras").delete().eq("id", id);
+                if (error) throw error;
+                mostrarFeedback("Obra excluída com sucesso.", "is-success");
+                await carregarObras();
+            } catch (erro) {
+                console.error("Erro ao excluir obra:", erro);
+                botao.disabled = false;
+                mostrarFeedback("Não foi possível excluir a obra. Tente novamente.", "is-error");
+            }
+        });
 
         carregarObras();
     </script>
