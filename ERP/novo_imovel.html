@@ -1,168 +1,213 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Novo Imóvel - SmartInspect AI</title>
-
-<link rel="stylesheet" href="../css/style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cadastre um imóvel vinculado a uma obra no SmartInspect AI.">
+    <title>Novo imóvel - SmartInspect AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
-
-
 <body class="erp-page--novo-imovel">
+    <div class="menu-container"></div>
 
-<div class="menu-container"></div>
+    <main class="content erp-ui-shell">
+        <header class="erp-ui-page-heading">
+            <div class="erp-ui-title-lockup">
+                <span class="erp-ui-icon-tile" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"></path></svg>
+                </span>
+                <div>
+                    <p class="erp-ui-page-kicker">PORTFÓLIO IMOBILIÁRIO</p>
+                    <h1>Novo imóvel</h1>
+                    <p class="erp-ui-page-lead">Cadastre um imóvel e vincule-o a uma obra existente.</p>
+                </div>
+            </div>
+            <a class="erp-ui-button erp-ui-button--secondary" href="imoveis.html">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+                <span>Voltar aos imóveis</span>
+            </a>
+        </header>
 
-<div class="content">
+        <form id="formNovoImovel" class="card erp-form-panel">
+            <div class="erp-form-grid">
+                <div class="erp-ui-field erp-ui-field--full">
+                    <label for="obra"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path></svg>Obra <span class="erp-ui-field-hint">Obrigatório</span></label>
+                    <select id="obra" name="obra" required>
+                        <option value="">Carregando obras…</option>
+                    </select>
+                </div>
 
-<h1>🏠 Novo Imóvel</h1>
+                <div class="erp-ui-field">
+                    <label for="nome"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"></path></svg>Nome do imóvel <span class="erp-ui-field-hint">Obrigatório</span></label>
+                    <input id="nome" name="nome" type="text" maxlength="160" placeholder="Ex.: Apartamento 101" required>
+                </div>
 
-<p>
-Cadastro de imóvel vinculado à obra
-</p>
+                <div class="erp-ui-field">
+                    <label for="tipo"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 10h18M10 21V10"></path></svg>Tipo</label>
+                    <select id="tipo" name="tipo">
+                        <option value="Apartamento">Apartamento</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Comercial">Comercial</option>
+                        <option value="Galpão">Galpão</option>
+                    </select>
+                </div>
 
-<div class="card">
+                <div class="erp-ui-field">
+                    <label for="endereco"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>Endereço</label>
+                    <input id="endereco" name="endereco" type="text" maxlength="240" placeholder="Endereço do imóvel">
+                </div>
 
-<label>🏢 Obra</label>
-<select id="obra">
-<option>Carregando obras...</option>
-</select>
+                <div class="erp-ui-field">
+                    <label for="cliente"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path></svg>Cliente</label>
+                    <input id="cliente" name="cliente" type="text" maxlength="160" placeholder="Nome do cliente">
+                </div>
 
-<label>🏠 Nome do imóvel</label>
-<input id="nome" type="text" placeholder="Ex: Apartamento 101">
+                <div class="erp-ui-field">
+                    <label for="foto"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></svg>Foto do imóvel <span class="erp-ui-field-hint">Opcional</span></label>
+                    <input id="foto" name="foto" type="file" accept="image/*">
+                </div>
 
-<label>🏷 Tipo</label>
-<select id="tipo">
-<option>Apartamento</option>
-<option>Casa</option>
-<option>Comercial</option>
-<option>Galpão</option>
-</select>
+                <div class="erp-ui-field">
+                    <label for="status"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg>Status</label>
+                    <select id="status" name="status" required>
+                        <option value="Em construção">Em construção</option>
+                        <option value="Pronto">Pronto</option>
+                        <option value="Entregue">Entregue</option>
+                    </select>
+                </div>
 
-<label>📍 Endereço</label>
-<input id="endereco" placeholder="Endereço do imóvel">
+                <div class="erp-ui-field erp-ui-field--full">
+                    <label for="observacao"><svg class="erp-ui-field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v13H8l-4 4z"></path><path d="M8 9h8M8 13h5"></path></svg>Observação</label>
+                    <textarea id="observacao" name="observacao" rows="5" placeholder="Informações adicionais sobre o imóvel"></textarea>
+                </div>
+            </div>
 
-<label>👤 Cliente</label>
-<input id="cliente" placeholder="Nome do cliente">
+            <div class="erp-ui-form-actions">
+                <button id="btnSalvarImovel" class="erp-ui-button erp-ui-button--primary" type="submit">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12l4 4v14H3V3h2Zm2 0v6h10V3M7 21v-8h10v8"></path></svg>
+                    <span id="btnSalvarTexto">Salvar imóvel</span>
+                </button>
+                <a class="erp-ui-button erp-ui-button--secondary" href="imoveis.html">Cancelar</a>
+            </div>
+            <p id="mensagem" class="erp-ui-feedback" role="status" aria-live="polite"></p>
+        </form>
+    </main>
 
-<label>📷 Foto do imóvel</label>
-<input id="foto" type="file" accept="image/*">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/sidebar.js"></script>
 
-<label>📌 Status</label>
-<select id="status">
-<option>Em construção</option>
-<option>Pronto</option>
-<option>Entregue</option>
-</select>
+    <script>
+        "use strict";
 
-<label>📝 Observação</label>
-<textarea id="observacao" rows="5"></textarea>
+        const form = document.getElementById("formNovoImovel");
+        const selectObra = document.getElementById("obra");
+        const mensagem = document.getElementById("mensagem");
+        const botaoSalvar = document.getElementById("btnSalvarImovel");
+        const textoBotao = document.getElementById("btnSalvarTexto");
 
-<br>
-<button onclick="salvarImovel()">
-💾 Salvar Imóvel
-</button>
-
-<p id="mensagem"></p>
-
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-<script src="../js/sidebar.js"></script>
-<!-- REMOVIDO: configuracoes.js e auth.js -->
-
-<script>
-    // REMOVIDO: protegerPagina("imoveis");
-
-    // carregar obras
-    async function carregarObras(){
-        const {data,error}=await banco
-        .from("obras")
-        .select("*")
-        .order("id",{ascending:false});
-
-        const select=document.getElementById("obra");
-        select.innerHTML="";
-
-        if(error){
-            console.log(error);
-            select.innerHTML="<option>Erro ao carregar obras</option>";
-            return;
+        function mostrarMensagem(texto, tipo = "") {
+            mensagem.textContent = texto;
+            mensagem.className = `erp-ui-feedback ${tipo}`.trim();
         }
 
-        data.forEach(obra=>{
-            select.innerHTML += `
-            <option value="${obra.id}">
-            ${obra.nome}
-            </option>
-            `;
-        });
-    }
+        async function carregarObras() {
+            selectObra.replaceChildren(new Option("Carregando obras…", ""));
+            try {
+                if (!window.banco?.from) throw new Error("Cliente Supabase indisponível.");
+                const { data, error } = await window.banco
+                    .from("obras")
+                    .select("id, nome")
+                    .order("id", { ascending: false });
+                if (error) throw error;
 
-    // salvar imóvel
-    async function salvarImovel(){
-        const arquivo = document.getElementById("foto").files[0];
-        let fotoUrl=null;
+                selectObra.replaceChildren(new Option("Selecione uma obra", ""));
+                if (!Array.isArray(data) || data.length === 0) {
+                    selectObra.replaceChildren(new Option("Nenhuma obra cadastrada", ""));
+                    mostrarMensagem("Cadastre uma obra antes de adicionar um imóvel.", "is-error");
+                    return;
+                }
+                data.forEach((obra) => {
+                    const option = new Option(obra.nome || "Obra sem nome", String(obra.id));
+                    selectObra.add(option);
+                });
+            } catch (erro) {
+                console.error("Erro ao carregar obras:", erro);
+                selectObra.replaceChildren(new Option("Erro ao carregar obras", ""));
+                mostrarMensagem("Não foi possível carregar as obras. Atualize a página e tente novamente.", "is-error");
+            }
+        }
 
-        // upload foto
-        if(arquivo){
-            const nomeArquivo = Date.now()+"_"+arquivo.name;
-            const {error:erroUpload}=await banco.storage
-            .from("imoveis")
-            .upload(nomeArquivo,arquivo);
+        form.addEventListener("submit", async (evento) => {
+            evento.preventDefault();
+            mostrarMensagem("");
 
-            if(erroUpload){
-                console.log(erroUpload);
-                alert("Erro ao enviar foto");
+            const nome = document.getElementById("nome").value.trim();
+            const obraId = selectObra.value;
+            if (!obraId || !nome) {
+                mostrarMensagem("Selecione uma obra e informe o nome do imóvel.", "is-error");
                 return;
             }
 
-            const url=banco.storage
-            .from("imoveis")
-            .getPublicUrl(nomeArquivo);
+            const cliente = window.banco;
+            if (!cliente?.from) {
+                mostrarMensagem("Não foi possível conectar ao serviço. Recarregue a página e tente novamente.", "is-error");
+                return;
+            }
 
-            fotoUrl=url.data.publicUrl;
-        }
+            const arquivo = document.getElementById("foto").files[0];
+            if (arquivo && !arquivo.type.startsWith("image/")) {
+                mostrarMensagem("Selecione um arquivo de imagem válido.", "is-error");
+                return;
+            }
 
-        const {error}=await banco
-        .from("imoveis")
-        .insert([{
-            obra_id: document.getElementById("obra").value,
-            nome: document.getElementById("nome").value,
-            tipo: document.getElementById("tipo").value,
-            endereco: document.getElementById("endereco").value,
-            cliente: document.getElementById("cliente").value,
-            foto: fotoUrl,
-            status: document.getElementById("status").value,
-            observacao: document.getElementById("observacao").value
-        }]);
+            botaoSalvar.disabled = true;
+            textoBotao.textContent = "Salvando…";
+            mostrarMensagem("Salvando imóvel…");
 
-        if(error){
-            console.log(error);
-            document.getElementById("mensagem").innerHTML = "❌ Erro ao salvar imóvel";
-            return;
-        }
+            try {
+                let fotoUrl = null;
+                if (arquivo) {
+                    if (!cliente.storage?.from) throw new Error("Armazenamento de arquivos indisponível.");
+                    const nomeSeguro = arquivo.name.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9._-]/g, "_");
+                    const caminho = `${Date.now()}_${nomeSeguro || "imagem"}`;
+                    const { error: erroUpload } = await cliente.storage
+                        .from("imoveis")
+                        .upload(caminho, arquivo, { contentType: arquivo.type, upsert: false });
+                    if (erroUpload) throw erroUpload;
+                    const resultadoUrl = cliente.storage.from("imoveis").getPublicUrl(caminho);
+                    fotoUrl = resultadoUrl?.data?.publicUrl || null;
+                }
 
-        document.getElementById("mensagem").innerHTML = "✅ Imóvel cadastrado com sucesso!";
-    }
+                const { error } = await cliente.from("imoveis").insert([{
+                    obra_id: obraId,
+                    nome,
+                    tipo: document.getElementById("tipo").value,
+                    endereco: document.getElementById("endereco").value.trim() || null,
+                    cliente: document.getElementById("cliente").value.trim() || null,
+                    foto: fotoUrl,
+                    status: document.getElementById("status").value,
+                    observacao: document.getElementById("observacao").value.trim() || null
+                }]);
+                if (error) throw error;
 
-    // iniciar
-    carregarObras();
-</script>
+                mostrarMensagem("Imóvel cadastrado com sucesso.", "is-success");
+                form.reset();
+                await carregarObras();
+            } catch (erro) {
+                console.error("Erro ao cadastrar imóvel:", erro);
+                mostrarMensagem("Não foi possível salvar o imóvel. Confira os dados e tente novamente.", "is-error");
+            } finally {
+                botaoSalvar.disabled = false;
+                textoBotao.textContent = "Salvar imóvel";
+            }
+        });
 
-<footer class="rodape">
-<p>🚀 SmartInspect AI</p>
-<p>Desenvolvido por <strong>Sérgio and Gabriel</strong></p>
-<p>Versão 1.0.1</p>
-</footer>
-
+        carregarObras();
+    </script>
 </body>
 </html>
