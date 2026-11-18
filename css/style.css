@@ -2481,6 +2481,108 @@ body.has-erp-sidebar:not(.dashboard-page)[class*="erp-page--"] .content :is(.erp
   body.erp-page--inspecoes .erp-inspection-card-heading { align-items: flex-start; flex-direction: column; }
   body.erp-page--imoveis .erp-property-heading { align-items: flex-start; flex-direction: column; }
 }
+/* Telas do módulo Estoque: mesma linguagem azul-ciano, sem alterar os fluxos existentes. */
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-shell { width: min(100%, 1180px); margin: 0 auto; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-page-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-title-lockup { display: flex; min-width: 0; align-items: center; gap: 14px; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-title-lockup > div { min-width: 0; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-page-heading h1 { margin: 0; color: var(--text, #e7f5ff); font-size: clamp(26px, 4vw, 36px); letter-spacing: -.025em; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-kicker { margin: 0 0 7px; color: var(--cyan, #5cecff); font-size: 10px; font-weight: 800; letter-spacing: .14em; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-lead { margin: 8px 0 0; color: var(--muted, #91a8bd); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-icon-tile { display: grid; width: 46px; height: 46px; flex: 0 0 46px; place-items: center; border: 1px solid rgba(92,236,255,.2); border-radius: 14px; color: var(--cyan, #5cecff); background: linear-gradient(135deg, rgba(92,236,255,.15), rgba(34,157,255,.13)); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-icon-tile svg { display: block; width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-button { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 8px; padding: 10px 14px; border: 1px solid transparent; border-radius: 11px; color: var(--text, #e7f5ff); font: inherit; font-size: 12px; font-weight: 700; line-height: 1.2; text-decoration: none; cursor: pointer; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-button svg { display: block; width: 17px; height: 17px; flex: 0 0 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-button--primary { color: #04111f; background: linear-gradient(135deg, var(--cyan, #5cecff), #7eb6ff); box-shadow: 0 8px 24px rgba(92,236,255,.18); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-button--secondary { border-color: var(--border, rgba(133,216,255,.18)); background: linear-gradient(135deg, rgba(92,236,255,.12), rgba(34,157,255,.14)); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-button--danger { color: #ff9cab; border-color: rgba(255,135,153,.24); background: rgba(255,135,153,.08); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-button:hover:not(:disabled) { transform: translateY(-1px); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-button:disabled { opacity: .55; cursor: not-allowed; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-button:focus-visible { outline: 2px solid var(--cyan, #5cecff); outline-offset: 3px; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-feedback { min-height: 20px; margin: 2px 0 14px; color: var(--muted, #91a8bd); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-feedback:empty { display: none; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-feedback.is-error { color: var(--red, #ff8799); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-feedback.is-success { color: var(--green, #35e58a); }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-feedback.is-warning { color: #ffd080; }
+body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-empty { grid-column: 1 / -1; margin: 0; padding: 22px; border: 1px dashed var(--border, rgba(133,216,255,.18)); border-radius: 14px; color: var(--muted, #91a8bd); background: linear-gradient(135deg, rgba(92,236,255,.12), rgba(34,157,255,.14)); line-height: 1.6; }
+
+body.erp-page--estoque .erp-stock-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); gap: 17px; }
+body.erp-page--estoque .erp-stock-card { min-width: 0; padding: 20px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 17px; }
+body.erp-page--estoque .erp-stock-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+body.erp-page--estoque .erp-stock-title-box { display: flex; min-width: 0; align-items: center; gap: 11px; }
+body.erp-page--estoque .erp-stock-title-box h2 { margin: 0; color: var(--text, #e7f5ff); font-size: 17px; overflow-wrap: anywhere; }
+body.erp-page--estoque .erp-stock-item-icon { display: grid; width: 38px; height: 38px; flex: 0 0 38px; place-items: center; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 11px; color: var(--cyan, #5cecff); background: rgba(92,236,255,.1); }
+body.erp-page--estoque .erp-stock-item-icon svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--estoque .erp-stock-quantity { display: grid; justify-items: end; gap: 6px; text-align: right; }
+body.erp-page--estoque .erp-stock-quantity strong { color: var(--cyan, #5cecff); font-size: 19px; white-space: nowrap; }
+body.erp-page--estoque .erp-stock-badge { display: inline-flex; padding: 5px 8px; border: 1px solid transparent; border-radius: 999px; font-size: 10px; font-weight: 750; white-space: nowrap; }
+body.erp-page--estoque .erp-stock-badge.is-good { color: #91f0bd; border-color: rgba(53,229,138,.22); background: rgba(53,229,138,.08); }
+body.erp-page--estoque .erp-stock-badge.is-low { color: #ffd080; border-color: rgba(255,208,128,.25); background: rgba(255,208,128,.08); }
+body.erp-page--estoque .erp-stock-badge.is-empty { color: #ff9cab; border-color: rgba(255,135,153,.25); background: rgba(255,135,153,.08); }
+body.erp-page--estoque .erp-stock-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; margin: 0; }
+body.erp-page--estoque .erp-stock-meta > div { min-width: 0; }
+body.erp-page--estoque .erp-stock-meta dt { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; color: var(--muted, #91a8bd); font-size: 10px; font-weight: 750; letter-spacing: .05em; text-transform: uppercase; }
+body.erp-page--estoque .erp-stock-meta dt svg { display: block; width: 14px; height: 14px; flex: 0 0 14px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--estoque .erp-stock-meta dd { margin: 0; color: var(--text, #e7f5ff); font-size: 12px; overflow-wrap: anywhere; }
+body.erp-page--estoque .erp-stock-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border, rgba(133,216,255,.18)); }
+body.erp-page--estoque .erp-stock-actions .erp-stock-button { width: 100%; min-width: 0; padding-inline: 8px; }
+body.erp-page--estoque .erp-stock-actions .is-emphasis { color: var(--cyan, #5cecff); border-color: rgba(92,236,255,.23); background: rgba(92,236,255,.08); }
+
+body.erp-page--logs-estoque .erp-stock-summary { display: flex; align-items: center; gap: 15px; margin-bottom: 17px; padding: 19px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 16px; }
+body.erp-page--logs-estoque .erp-stock-summary[hidden] { display: none !important; }
+body.erp-page--logs-estoque .erp-stock-summary-copy { min-width: 0; }
+body.erp-page--logs-estoque .erp-stock-summary-title { margin: 0; color: var(--text, #e7f5ff); font-size: 18px; overflow-wrap: anywhere; }
+body.erp-page--logs-estoque .erp-stock-summary-balance { margin: 6px 0 0; color: var(--muted, #91a8bd); font-size: 13px; }
+body.erp-page--logs-estoque .erp-stock-log-list { display: grid; gap: 0; padding: 4px 20px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 16px; }
+body.erp-page--logs-estoque .erp-stock-log-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--border, rgba(133,216,255,.14)); }
+body.erp-page--logs-estoque .erp-stock-log-row:last-child { border-bottom: 0; }
+body.erp-page--logs-estoque .erp-stock-log-type { display: inline-flex; width: fit-content; height: fit-content; align-items: center; gap: 7px; padding: 7px 9px; border: 1px solid transparent; border-radius: 999px; font-size: 11px; font-weight: 750; }
+body.erp-page--logs-estoque .erp-stock-log-type svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--logs-estoque .erp-stock-log-type.is-entry { color: #91f0bd; border-color: rgba(53,229,138,.22); background: rgba(53,229,138,.08); }
+body.erp-page--logs-estoque .erp-stock-log-type.is-exit { color: #ff9cab; border-color: rgba(255,135,153,.24); background: rgba(255,135,153,.08); }
+body.erp-page--logs-estoque .erp-stock-log-content { min-width: 0; }
+body.erp-page--logs-estoque .erp-stock-log-quantity { margin: 0 0 10px; color: var(--text, #e7f5ff); font-size: 14px; font-weight: 750; }
+body.erp-page--logs-estoque .erp-stock-log-details { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+body.erp-page--logs-estoque .erp-stock-log-detail { display: flex; align-items: center; gap: 5px; margin: 0; color: var(--muted, #91a8bd); font-size: 11px; }
+body.erp-page--logs-estoque .erp-stock-log-detail svg, body.erp-page--logs-estoque .erp-stock-log-observation svg { width: 14px; height: 14px; flex: 0 0 14px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--logs-estoque .erp-stock-log-detail strong { color: var(--text, #e7f5ff); }
+body.erp-page--logs-estoque .erp-stock-log-observation { display: flex; align-items: flex-start; gap: 6px; margin: 10px 0 0; color: var(--muted, #91a8bd); font-size: 11px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+body.erp-page--movimentar-estoque .erp-stock-form-panel { width: min(100%, 850px); margin: 0 auto; padding: clamp(18px, 3vw, 30px); border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
+body.erp-page--movimentar-estoque .erp-stock-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px 18px; }
+body.erp-page--movimentar-estoque .erp-stock-field { display: grid; min-width: 0; gap: 8px; color: var(--text, #e7f5ff); font-size: 13px; font-weight: 650; }
+body.erp-page--movimentar-estoque .erp-stock-field--full { grid-column: 1 / -1; }
+body.erp-page--movimentar-estoque .erp-stock-field > span { display: flex; align-items: center; gap: 8px; }
+body.erp-page--movimentar-estoque .erp-stock-field > span svg { width: 16px; height: 16px; flex: 0 0 16px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--movimentar-estoque .erp-stock-field :is(input, select, textarea) { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 10px; color: var(--text, #e7f5ff) !important; background: rgba(3,11,23,.62) !important; font: inherit; }
+body.erp-page--movimentar-estoque .erp-stock-field textarea { min-height: 112px; resize: vertical; }
+body.erp-page--movimentar-estoque .erp-stock-field :is(input, select, textarea):focus-visible { outline: 2px solid rgba(92,236,255,.3); border-color: var(--cyan, #5cecff) !important; }
+body.erp-page--movimentar-estoque .erp-stock-field :is(input, select):disabled { opacity: .72; cursor: not-allowed; }
+body.erp-page--movimentar-estoque .erp-stock-form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 21px; }
+body.erp-page--movimentar-estoque .erp-stock-state-card { padding: 20px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 15px; color: var(--muted, #91a8bd); }
+body.erp-page--movimentar-estoque .erp-stock-state-card[hidden] { display: none !important; }
+
+body.has-erp-sidebar:not(.dashboard-page)[class*="erp-page--"] .content :is(.erp-stock-card, .erp-stock-summary, .erp-stock-log-list, .erp-stock-form-panel, .erp-stock-state-card) {
+  color: var(--text, #e7f5ff);
+  border-color: var(--border, rgba(133,216,255,.18)) !important;
+  background: linear-gradient(145deg, rgba(34,157,255,.23), rgba(92,236,255,.09)), rgba(7,18,35,.96) !important;
+  box-shadow: 0 18px 45px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.035);
+}
+@media (max-width: 760px) {
+  body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-page-heading { align-items: flex-start; flex-direction: column; }
+  body:is(.erp-page--estoque, .erp-page--logs-estoque, .erp-page--movimentar-estoque) .erp-stock-page-heading > :is(.erp-stock-button, a) { width: 100%; }
+  body.erp-page--movimentar-estoque .erp-stock-form-grid { grid-template-columns: 1fr; }
+  body.erp-page--movimentar-estoque .erp-stock-form-actions { flex-direction: column-reverse; }
+  body.erp-page--movimentar-estoque .erp-stock-form-actions .erp-stock-button { width: 100%; }
+  body.erp-page--estoque .erp-stock-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  body.erp-page--estoque .erp-stock-card-heading { align-items: flex-start; flex-direction: column; }
+  body.erp-page--estoque .erp-stock-quantity { width: 100%; justify-items: start; text-align: left; }
+  body.erp-page--estoque .erp-stock-meta { grid-template-columns: 1fr; }
+  body.erp-page--logs-estoque .erp-stock-log-row { grid-template-columns: 1fr; gap: 10px; }
+  body.erp-page--logs-estoque .erp-stock-log-list { padding-inline: 14px; }
+}
 @media (max-width: 680px) {
   body.erp-page--obras .obra-detail-heading { align-items: flex-start; flex-direction: column; }
   body.erp-page--obras .obra-stat-card > button { width: 100%; }
