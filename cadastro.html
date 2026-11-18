@@ -8,17 +8,22 @@
     <meta name="description" content="Crie sua conta SmartInspect AI.">
     <title>Criar conta — SmartInspect AI</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/auth-pages.css">
 </head>
 <body class="auth-page">
+    <div class="bg-container" aria-hidden="true">
+        <video class="login-background-video" autoplay muted loop playsinline preload="metadata" poster="./imagens/fundo.png">
+            <source src="./imagens/fundoglobo.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="bg-shader" aria-hidden="true"></div>
     <main class="auth-shell">
         <section class="auth-intro" aria-labelledby="introTitle">
             <a class="auth-brand" href="./index.html" aria-label="SmartInspect AI — início">
-                <span class="auth-brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"></path>
-                        <path d="m8 12 2.5 2.5L16.5 8"></path>
-                    </svg>
-                </span>
+                <img class="auth-brand-mark" src="./imagens/logo.png" alt="Logo SmartInspect AI">
                 <span class="auth-brand-name">SmartInspect <span>AI</span></span>
             </a>
             <div class="auth-eyebrow">Comece por aqui</div>
@@ -46,11 +51,11 @@
                 </div>
                 <div class="auth-field">
                     <label for="senha">Senha</label>
-                    <input id="senha" name="senha" type="password" autocomplete="new-password" placeholder="Crie uma senha" required>
+                    <input id="senha" name="senha" type="password" autocomplete="new-password" placeholder="Crie uma senha" minlength="8" required>
                 </div>
                 <div class="auth-field">
                     <label for="confirmarSenha">Confirmar senha</label>
-                    <input id="confirmarSenha" name="confirmarSenha" type="password" autocomplete="new-password" placeholder="Digite a senha novamente" required>
+                    <input id="confirmarSenha" name="confirmarSenha" type="password" autocomplete="new-password" placeholder="Digite a senha novamente" minlength="8" required>
                 </div>
                 <button class="auth-submit" type="submit">
                     Criar conta
