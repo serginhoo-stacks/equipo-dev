@@ -165,6 +165,11 @@
 .content-grid>.side-column{display:none!important}
 .personal-shell{width:min(1000px,calc(100% - 36px));margin-inline:auto}
 .chat-view{display:none!important}
+.personal-invite-panel .invite-open-button{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;white-space:nowrap}
+.personal-invite-panel .invite-open-button svg{display:block;width:18px;height:18px;flex:0 0 18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.personal-invite-panel .personal-invite-icon{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;border:1px solid rgba(92,236,255,.25);border-radius:12px;color:#5cecff;background:rgba(92,236,255,.08)}
+.personal-invite-panel .personal-invite-icon svg{display:block;width:19px;height:19px;max-width:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:640px){.personal-invite-panel .invite-open-button{white-space:normal}.personal-invite-panel .personal-invite-icon{flex-basis:36px;width:36px;height:36px}.personal-invite-panel .personal-invite-icon svg{width:17px;height:17px}}
 @media(max-width:640px){.personal-shell{width:calc(100% - 22px)}}
 
 </style>
