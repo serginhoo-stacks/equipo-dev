@@ -381,7 +381,12 @@
                     showMessage("Sua senha foi alterada. Agora você pode entrar com a nova senha.", true);
                 } catch (error) {
                     console.error("Falha ao concluir a recuperação:", error);
-                    showMessage(error.message || "Não foi possível alterar a senha. Tente novamente.");
+                    const errorMessage = String(error?.message || "").toLowerCase();
+                    if (errorMessage.includes("new password should be different from the old password")) {
+                        showMessage("A nova senha deve ser diferente da senha atual. Escolha outra senha.");
+                    } else {
+                        showMessage(error.message || "Não foi possível alterar a senha. Tente novamente.");
+                    }
                 } finally {
                     button.disabled = false;
                     button.querySelector("span").textContent = "Validar código e alterar senha";
