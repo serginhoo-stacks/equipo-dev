@@ -1,137 +1,281 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Detalhes da Obra - SmartInspect AI</title>
-<link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Acompanhe os dados e as inspeções de uma obra no SmartInspect AI.">
+    <title>Detalhes da obra - SmartInspect AI</title>
+
+    <!-- Fonte e identidade visual compartilhada do ERP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
+<body class="erp-page--obras">
+    <!-- O menu lateral é carregado pelo script compartilhado do ERP -->
+    <div class="menu-container"></div>
 
-<body class="erp-page--detalhes-obra">
-<div class="menu-container"></div>
-
-
-
-
-<div class="content">
-    <h1>🏢 Detalhes da Obra</h1>
-    <p>Controle técnico da obra</p>
-
-    <div id="dadosObra" class="card">
-        Carregando obra...
-    </div>
-
-    <br>
-
-    <div class="cards">
-        <div class="card">
-            <h2 id="totalInspecoes">0</h2>
-            <p>📋 Inspeções realizadas</p>
-            <button onclick="novaInspecao()">➕ Nova Inspeção</button>
-        </div>
-
-        <div class="card">
-            <h2>⚠️</h2>
-            <p>Não conformidades</p>
-            <button>Ver problemas</button>
-        </div>
-
-        <div class="card">
-            <h2>📷</h2>
-            <p>Fotos</p>
-            <button>Adicionar fotos</button>
-        </div>
-
-        <div class="card">
-            <h2>📄</h2>
-            <p>Relatórios</p>
-            <button>Gerar relatório</button>
-        </div>
-    </div>
-
-    <br>
-    <h2>📋 Histórico de Inspeções</h2>
-    <div id="listaInspecoes">
-        Carregando inspeções...
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-
-<script>
-    // pega o ID da obra na URL
-    const parametros = new URLSearchParams(window.location.search);
-    const obraId = parametros.get("id");
-
-    console.log("ID DA OBRA:", obraId);
-
-    async function carregarObra() {
-        if (!obraId) {
-            document.getElementById("dadosObra").innerHTML = "❌ Nenhuma obra selecionada";
-            return;
-        }
-
-        const { data, error } = await banco.from("obras").select("*").eq("id", obraId).single();
-
-        if (error) {
-            console.log(error);
-            document.getElementById("dadosObra").innerHTML = "❌ Erro ao buscar obra";
-            return;
-        }
-
-        document.getElementById("dadosObra").innerHTML = `
-            <h2>🏢 ${data.nome}</h2>
-            <p>📍 Endereço: ${data.endereco}</p>
-            <p>👷 Responsável: ${data.responsavel}</p>
-            <p>📅 Início: ${data.data_inicio}</p>
-            <p>📌 Status: ${data.status}</p>
-        `;
-    }
-
-    async function carregarInspecoes() {
-        const { data, error } = await banco.from("inspecoes").select("*").eq("obra_id", obraId).order("id", { ascending: false });
-
-        if (error) {
-            console.log(error);
-            document.getElementById("listaInspecoes").innerHTML = "❌ Erro ao carregar inspeções";
-            return;
-        }
-
-        document.getElementById("totalInspecoes").innerHTML = data.length;
-
-        if (data.length === 0) {
-            document.getElementById("listaInspecoes").innerHTML = "Nenhuma inspeção encontrada";
-            return;
-        }
-
-        let lista = "";
-        data.forEach(inspecao => {
-            lista += `
-                <div class="card">
-                    <h3>📋 ${inspecao.tipo}</h3>
-                    <p>📅 Data: ${inspecao.data_inspecao}</p>
-                    <p>👷 Responsável: ${inspecao.responsavel}</p>
-                    <p>📌 Status: ${inspecao.status}</p>
-                    <p>📝 Observação: ${inspecao.observacao || "Sem observação"}</p>
+    <main class="content obras-module">
+        <!-- CABEÇALHO -->
+        <header class="obras-heading">
+            <div class="obras-title-lockup">
+                <span class="obra-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path></svg>
+                </span>
+                <div>
+                    <p class="obras-kicker">GESTÃO DE OBRAS</p>
+                    <h1>Detalhes da obra</h1>
+                    <p class="obras-intro">Controle técnico, inspeções e informações principais da obra.</p>
                 </div>
-            `;
+            </div>
+            <button id="btnVoltarObras" class="obras-secondary-button" type="button">
+                <svg class="obras-button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+                <span>Voltar às obras</span>
+            </button>
+        </header>
+
+        <!-- INFORMAÇÕES DA OBRA -->
+        <section class="card obra-detail-card" aria-labelledby="nomeObra">
+            <div class="obra-detail-heading">
+                <div class="obra-detail-title">
+                    <span class="obra-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path></svg>
+                    </span>
+                    <div>
+                        <p class="obras-kicker">OBRA CADASTRADA</p>
+                        <h2 id="nomeObra">Carregando obra…</h2>
+                    </div>
+                </div>
+                <span id="statusObra" class="obra-status">Carregando…</span>
+            </div>
+
+            <dl class="obra-detail-grid">
+                <div>
+                    <dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>Endereço</dt>
+                    <dd id="endereco">Carregando…</dd>
+                </div>
+                <div>
+                    <dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path></svg>Responsável</dt>
+                    <dd id="responsavel">Carregando…</dd>
+                </div>
+                <div>
+                    <dt><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path></svg>Início</dt>
+                    <dd id="dataInicio">Carregando…</dd>
+                </div>
+            </dl>
+            <p id="obraFeedback" class="obras-feedback" role="status" aria-live="polite"></p>
+        </section>
+
+        <!-- RESUMO E ATALHOS -->
+        <section class="obra-stats-grid" aria-label="Resumo da obra">
+            <article class="card obra-stat-card">
+                <div class="obra-stat-head">
+                    <span class="obra-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></span>
+                    <div><h2 id="totalInspecoes" class="obra-stat-value">0</h2><p class="obra-stat-label">Inspeções realizadas</p></div>
+                </div>
+                <button id="btnNovaInspecao" class="obras-primary-button" type="button">
+                    <svg class="obras-button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                    <span>Nova inspeção</span>
+                </button>
+            </article>
+
+            <article class="card obra-stat-card">
+                <div class="obra-stat-head">
+                    <span class="obra-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m10.3 3.9-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3.1l-8-14a2 2 0 0 0-3.4 0Z"></path><path d="M12 9v4m0 4h.01"></path></svg></span>
+                    <div><p class="obra-stat-label">Não conformidades</p><p class="obra-stat-note">Disponível em breve</p></div>
+                </div>
+                <button class="obras-secondary-button" type="button" disabled>Ver problemas</button>
+            </article>
+
+            <article class="card obra-stat-card">
+                <div class="obra-stat-head">
+                    <span class="obra-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></svg></span>
+                    <div><p class="obra-stat-label">Fotos da obra</p><p class="obra-stat-note">Disponível em breve</p></div>
+                </div>
+                <button class="obras-secondary-button" type="button" disabled>Adicionar fotos</button>
+            </article>
+
+            <article class="card obra-stat-card">
+                <div class="obra-stat-head">
+                    <span class="obra-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"></path><path d="M14 2v6h6M8 13h8M8 17h8"></path></svg></span>
+                    <div><p class="obra-stat-label">Relatórios</p><p class="obra-stat-note">Disponível em breve</p></div>
+                </div>
+                <button class="obras-secondary-button" type="button" disabled>Gerar relatório</button>
+            </article>
+        </section>
+
+        <!-- HISTÓRICO DE INSPEÇÕES -->
+        <section class="obras-inspections" aria-labelledby="tituloInspecoes">
+            <header class="obras-section-heading">
+                <div class="obras-section-title">
+                    <span class="obra-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></span>
+                    <div><p class="obras-kicker">ATIVIDADE DA OBRA</p><h2 id="tituloInspecoes">Histórico de inspeções</h2></div>
+                </div>
+            </header>
+            <div id="listaInspecoes" class="obras-inspection-list" aria-live="polite">
+                <p class="obras-empty-state">Carregando inspeções…</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- SCRIPTS DO SUPABASE E DO MENU -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/sidebar.js"></script>
+
+    <script>
+        "use strict";
+
+        const parametros = new URLSearchParams(window.location.search);
+        const obraId = parametros.get("id");
+        const listaInspecoes = document.getElementById("listaInspecoes");
+        const feedbackObra = document.getElementById("obraFeedback");
+
+        function criarElemento(tag, className, texto) {
+            const elemento = document.createElement(tag);
+            if (className) elemento.className = className;
+            if (texto !== undefined) elemento.textContent = texto;
+            return elemento;
+        }
+
+        function criarIcone(tipo) {
+            const desenhos = {
+                calendario: '<rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path>',
+                responsavel: '<path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>'
+            };
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 24 24");
+            svg.setAttribute("aria-hidden", "true");
+            svg.innerHTML = desenhos[tipo] || "";
+            return svg;
+        }
+
+        function formatarData(valor) {
+            if (!valor) return "Não informado";
+            const texto = String(valor);
+            const iso = texto.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (iso) return `${iso[3]}/${iso[2]}/${iso[1]}`;
+            const data = new Date(texto);
+            return Number.isNaN(data.getTime()) ? texto : new Intl.DateTimeFormat("pt-BR").format(data);
+        }
+
+        function mostrarFeedback(texto, tipo = "") {
+            feedbackObra.textContent = texto;
+            feedbackObra.className = `obras-feedback ${tipo}`.trim();
+        }
+
+        function mostrarEstadoInspecoes(texto) {
+            listaInspecoes.replaceChildren(criarElemento("p", "obras-empty-state", texto));
+        }
+
+        function criarCampoInspecao(rotulo, valor, icone) {
+            const campo = document.createElement("div");
+            const titulo = document.createElement("dt");
+            titulo.append(criarIcone(icone), document.createTextNode(rotulo));
+            campo.append(titulo, criarElemento("dd", "", valor || "Não informado"));
+            return campo;
+        }
+
+        function criarCardInspecao(inspecao) {
+            const card = criarElemento("article", "card obra-inspection-card");
+            const resumo = criarElemento("div", "obra-inspection-summary");
+            const cabecalho = criarElemento("div", "obra-inspection-heading");
+            cabecalho.append(
+                criarElemento("h3", "", inspecao.tipo || "Inspeção"),
+                criarElemento("span", "obra-status", inspecao.status || "Sem status")
+            );
+            resumo.append(
+                cabecalho,
+                criarElemento("p", "obra-inspection-observation", inspecao.observacao || "Sem observação.")
+            );
+
+            const metadados = document.createElement("dl");
+            metadados.append(
+                criarCampoInspecao("Data", formatarData(inspecao.data_inspecao), "calendario"),
+                criarCampoInspecao("Responsável", inspecao.responsavel, "responsavel")
+            );
+            card.append(resumo, metadados);
+            return card;
+        }
+
+        async function carregarObra() {
+            const { data, error } = await window.banco.from("obras").select("*").eq("id", obraId).single();
+            if (error) throw error;
+
+            document.getElementById("nomeObra").textContent = data.nome || "Obra sem nome";
+            document.getElementById("endereco").textContent = data.endereco || "Não informado";
+            document.getElementById("responsavel").textContent = data.responsavel || "Não informado";
+            document.getElementById("dataInicio").textContent = formatarData(data.data_inicio);
+            document.getElementById("statusObra").textContent = data.status || "Ativa";
+        }
+
+        async function carregarInspecoes() {
+            const { data, error } = await window.banco
+                .from("inspecoes")
+                .select("*")
+                .eq("obra_id", obraId)
+                .order("id", { ascending: false });
+            if (error) throw error;
+
+            const inspecoes = Array.isArray(data) ? data : [];
+            document.getElementById("totalInspecoes").textContent = String(inspecoes.length);
+            if (inspecoes.length === 0) {
+                mostrarEstadoInspecoes("Nenhuma inspeção cadastrada nesta obra.");
+                return;
+            }
+            listaInspecoes.replaceChildren(...inspecoes.map(criarCardInspecao));
+        }
+
+        document.getElementById("btnVoltarObras").addEventListener("click", () => {
+            window.location.href = "obras.html";
         });
 
-        document.getElementById("listaInspecoes").innerHTML = lista;
-    }
+        document.getElementById("btnNovaInspecao").addEventListener("click", () => {
+            window.location.href = `nova_inspecao.html?obra=${encodeURIComponent(obraId || "")}`;
+        });
 
-    function novaInspecao() {
-        window.location.href = "nova_inspecao.html?obra=" + obraId;
-    }
+        async function inicializarDetalhes() {
+            if (!obraId) {
+                throw new Error("Nenhuma obra foi selecionada.");
+            }
+            if (!window.banco?.from) {
+                throw new Error("Cliente Supabase indisponível.");
+            }
 
-    carregarObra();
-    carregarInspecoes();
-</script>
+            const resultados = await Promise.allSettled([carregarObra(), carregarInspecoes()]);
+            const falha = resultados.find((resultado) => resultado.status === "rejected");
+            if (falha) {
+                console.error("Erro ao carregar detalhes da obra:", falha.reason);
+                mostrarFeedback("Não foi possível carregar todos os dados da obra. Atualize a página e tente novamente.", "is-error");
+                if (resultados[0].status === "rejected") {
+                    document.getElementById("nomeObra").textContent = "Detalhes indisponíveis";
+                    document.getElementById("endereco").textContent = "—";
+                    document.getElementById("responsavel").textContent = "—";
+                    document.getElementById("dataInicio").textContent = "—";
+                    document.getElementById("statusObra").textContent = "Indisponível";
+                }
+                if (resultados[1].status === "rejected") {
+                    mostrarEstadoInspecoes("Não foi possível carregar as inspeções.");
+                }
+            }
+        }
 
+        document.querySelectorAll(".obra-stat-card button[disabled]").forEach((botao) => {
+            botao.title = "Esta função estará disponível em breve.";
+        });
 
-<script src="../js/sidebar.js"></script>
+        inicializarDetalhes().catch((erro) => {
+            console.error("Erro ao inicializar detalhes da obra:", erro);
+            mostrarFeedback(obraId ? "Não foi possível carregar os dados. Tente novamente." : "Nenhuma obra foi selecionada.", "is-error");
+            document.getElementById("nomeObra").textContent = "Detalhes indisponíveis";
+            document.getElementById("endereco").textContent = "—";
+            document.getElementById("responsavel").textContent = "—";
+            document.getElementById("dataInicio").textContent = "—";
+            document.getElementById("statusObra").textContent = "Indisponível";
+            mostrarEstadoInspecoes("Não há dados para exibir.");
+        });
+    </script>
 </body>
 </html>
