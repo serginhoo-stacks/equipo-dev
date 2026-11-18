@@ -1,401 +1,234 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consulte os dados e as inspeções de uma obra no SmartInspect AI.">
+    <title>Detalhes da obra - SmartInspect AI</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Detalhes da Obra - SmartInspect AI</title>
-
-<link rel="stylesheet" href="../css/style.css">
-
+    <!-- Fonte e identidade visual compartilhada do ERP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
-
-
-<body class="erp-page--obra-cadastrada">
-
-
-<div class="menu-container"></div>
-
-
-
-<div class="content">
-
-
-<button onclick="voltar()">
-⬅ Voltar
-</button>
-
-
-<h1>🏢 Detalhes da Obra</h1>
-
-<p>
-Informações da obra cadastrada
-</p>
-
-
-
-<div class="card">
-
-
-<h2 id="nomeObra">
-Carregando...
-</h2>
-
-
-<p>
-📍 Endereço:
-<span id="endereco"></span>
-</p>
-
-
-<p>
-👷 Responsável:
-<span id="responsavel"></span>
-</p>
-
-
-<p>
-📅 Início:
-<span id="data"></span>
-</p>
-
-
-<p>
-📌 Status:
-<span id="status"></span>
-</p>
-
-
-
-</div>
-
-
-
-
-
-<div class="card">
-
-
-<h2>
-📋 Inspeções da Obra
-</h2>
-
-
-<div id="listaInspecoes">
-
-Carregando inspeções...
-
-</div>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="../js/supabase.js"></script>
-
-<script src="../js/configuracoes.js"></script>
-<script src="../js/auth.js"></script>
-
-<script src="../js/sidebar.js"></script>
-
-
-
-
-<script>
-
-
-if(!protegerPagina("obras")){
-
-throw new Error("Sem permissão");
-
-}
-
-
-
-
-const params = new URLSearchParams(window.location.search);
-
-
-const obraId = params.get("id");
-
-
-
-
-
-
-if(!obraId){
-
-
-alert("Obra não encontrada");
-
-
-window.location.href="obras.html";
-
-
-}
-
-
-
-
-
-
-
-async function carregarObra(){
-
-
-
-const {data,error}=await banco
-
-.from("obras")
-
-.select("*")
-
-.eq("id",obraId)
-
-.single();
-
-
-
-
-
-
-if(error){
-
-
-console.log(error);
-
-
-alert("Erro ao carregar obra");
-
-
-return;
-
-
-}
-
-
-
-
-
-
-document.getElementById("nomeObra").innerHTML =
-"🏢 "+data.nome;
-
-
-
-document.getElementById("endereco").innerHTML =
-data.endereco || "-";
-
-
-
-document.getElementById("responsavel").innerHTML =
-data.responsavel || "-";
-
-
-
-document.getElementById("data").innerHTML =
-data.data_inicio || "-";
-
-
-
-document.getElementById("status").innerHTML =
-data.status || "-";
-
-
-
-carregarInspecoes();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-async function carregarInspecoes(){
-
-
-
-const {data,error}=await banco
-
-.from("inspecoes")
-
-.select("*")
-
-.eq("obra_id",obraId)
-
-.order("id",{ascending:false});
-
-
-
-
-
-const lista =
-document.getElementById("listaInspecoes");
-
-
-
-
-if(error){
-
-
-console.log(error);
-
-
-lista.innerHTML="Erro ao carregar inspeções";
-
-
-return;
-
-
-}
-
-
-
-
-
-if(!data || data.length===0){
-
-
-lista.innerHTML=
-
-"Nenhuma inspeção cadastrada nesta obra";
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-lista.innerHTML="";
-
-
-
-
-
-data.forEach(inspecao=>{
-
-
-
-lista.innerHTML += `
-
-
-<div class="card">
-
-
-<h3>
-📋 ${inspecao.tipo}
-</h3>
-
-
-<p>
-📅 ${inspecao.data_inspecao}
-</p>
-
-
-<p>
-👷 ${inspecao.responsavel}
-</p>
-
-
-<p>
-📌 ${inspecao.status}
-</p>
-
-
-<p>
-${inspecao.observacao || ""}
-</p>
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-
-
-}
-
-
-
-
-
-
-
-function voltar(){
-
-
-window.location.href="obras.html";
-
-
-}
-
-
-
-
-
-
-carregarObra();
-
-
-
-</script>
-
-
-
-
-
-<footer class="rodape">
-
-<p>
-🚀 SmartInspect AI
-</p>
-
-<p>
-Desenvolvido por <strong>Sérgio and Gabriel</strong>
-</p>
-
-<p>
-Versão 1.0.1
-</p>
-
-</footer>
-
-
-
+<body class="erp-page--obras">
+    <!-- O menu lateral é carregado pelo script compartilhado do ERP -->
+    <div class="menu-container"></div>
+
+    <main class="content obras-module">
+        <!-- CABEÇALHO DOS DETALHES -->
+        <header class="obras-heading">
+            <div class="obras-title-lockup">
+                <span class="obra-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path></svg>
+                </span>
+                <div>
+                    <p class="obras-kicker">GESTÃO DE OBRAS</p>
+                    <h1>Detalhes da obra</h1>
+                    <p class="obras-intro">Informações da obra cadastrada e inspeções relacionadas.</p>
+                </div>
+            </div>
+            <button id="btnVoltarObras" class="obras-secondary-button" type="button">
+                <svg class="obras-button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+                <span>Voltar às obras</span>
+            </button>
+        </header>
+
+        <!-- DADOS DA OBRA -->
+        <section class="card obra-detail-card" aria-labelledby="nomeObra">
+            <div class="obra-detail-heading">
+                <div class="obra-detail-title">
+                    <span class="obra-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path></svg>
+                    </span>
+                    <div>
+                        <p class="obras-kicker">OBRA CADASTRADA</p>
+                        <h2 id="nomeObra">Carregando obra…</h2>
+                    </div>
+                </div>
+                <span id="statusObra" class="obra-status">Carregando…</span>
+            </div>
+
+            <dl class="obra-detail-grid">
+                <div>
+                    <dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>Endereço</dt>
+                    <dd id="endereco">Carregando…</dd>
+                </div>
+                <div>
+                    <dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path></svg>Responsável</dt>
+                    <dd id="responsavel">Carregando…</dd>
+                </div>
+                <div>
+                    <dt><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path></svg>Início</dt>
+                    <dd id="data">Carregando…</dd>
+                </div>
+            </dl>
+            <p id="obraFeedback" class="obras-feedback" role="status" aria-live="polite"></p>
+        </section>
+
+        <!-- INSPEÇÕES RELACIONADAS À OBRA -->
+        <section class="obras-inspections" aria-labelledby="tituloInspecoes">
+            <header class="obras-section-heading">
+                <div class="obras-section-title">
+                    <span class="obra-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+                    </span>
+                    <div>
+                        <p class="obras-kicker">ATIVIDADE DA OBRA</p>
+                        <h2 id="tituloInspecoes">Inspeções da obra</h2>
+                    </div>
+                </div>
+            </header>
+            <div id="listaInspecoes" class="obras-inspection-list" aria-live="polite">
+                <p class="obras-empty-state">Carregando inspeções…</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- SCRIPTS DE AUTENTICAÇÃO, SUPABASE E MENU -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/configuracoes.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/sidebar.js"></script>
+
+    <script>
+        "use strict";
+
+        if (!protegerPagina("obras")) {
+            throw new Error("Sem permissão para acessar esta página.");
+        }
+
+        const parametros = new URLSearchParams(window.location.search);
+        const obraId = parametros.get("id");
+        const listaInspecoes = document.getElementById("listaInspecoes");
+        const feedbackObra = document.getElementById("obraFeedback");
+
+        function criarElemento(tag, className, texto) {
+            const elemento = document.createElement(tag);
+            if (className) elemento.className = className;
+            if (texto !== undefined) elemento.textContent = texto;
+            return elemento;
+        }
+
+        function criarIcone(tipo) {
+            const desenhos = {
+                calendario: '<rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path>',
+                responsavel: '<path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>'
+            };
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 24 24");
+            svg.setAttribute("aria-hidden", "true");
+            svg.innerHTML = desenhos[tipo] || "";
+            return svg;
+        }
+
+        function formatarData(valor) {
+            if (!valor) return "Não informado";
+            const texto = String(valor);
+            const dataISO = texto.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (dataISO) return `${dataISO[3]}/${dataISO[2]}/${dataISO[1]}`;
+            const data = new Date(texto);
+            return Number.isNaN(data.getTime()) ? texto : new Intl.DateTimeFormat("pt-BR").format(data);
+        }
+
+        function mostrarFeedback(texto, tipo = "") {
+            feedbackObra.textContent = texto;
+            feedbackObra.className = `obras-feedback ${tipo}`.trim();
+        }
+
+        function mostrarEstadoInspecoes(texto) {
+            listaInspecoes.replaceChildren(criarElemento("p", "obras-empty-state", texto));
+        }
+
+        function criarCampoInspecao(rotulo, valor, icone) {
+            const campo = document.createElement("div");
+            const titulo = document.createElement("dt");
+            titulo.append(criarIcone(icone), document.createTextNode(rotulo));
+            campo.append(titulo, criarElemento("dd", "", valor || "Não informado"));
+            return campo;
+        }
+
+        function criarCardInspecao(inspecao) {
+            const card = criarElemento("article", "card obra-inspection-card");
+            const resumo = criarElemento("div", "obra-inspection-summary");
+            const cabecalho = criarElemento("div", "obra-inspection-heading");
+            const titulo = criarElemento("h3", "", inspecao.tipo || "Inspeção");
+            const status = criarElemento("span", "obra-status", inspecao.status || "Sem status");
+            cabecalho.append(titulo, status);
+
+            const observacao = criarElemento("p", "obra-inspection-observation", inspecao.observacao || "Sem observação.");
+            resumo.append(cabecalho, observacao);
+
+            const metadados = document.createElement("dl");
+            metadados.append(
+                criarCampoInspecao("Data", formatarData(inspecao.data_inspecao), "calendario"),
+                criarCampoInspecao("Responsável", inspecao.responsavel, "responsavel")
+            );
+            card.append(resumo, metadados);
+            return card;
+        }
+
+        async function carregarObra() {
+            const cliente = window.banco;
+            if (!cliente?.from) throw new Error("Cliente Supabase indisponível.");
+
+            const { data, error } = await cliente
+                .from("obras")
+                .select("*")
+                .eq("id", obraId)
+                .single();
+
+            if (error) throw error;
+
+            document.getElementById("nomeObra").textContent = data.nome || "Obra sem nome";
+            document.getElementById("endereco").textContent = data.endereco || "Não informado";
+            document.getElementById("responsavel").textContent = data.responsavel || "Não informado";
+            document.getElementById("data").textContent = formatarData(data.data_inicio);
+            document.getElementById("statusObra").textContent = data.status || "Ativa";
+
+            await carregarInspecoes();
+        }
+
+        async function carregarInspecoes() {
+            const { data, error } = await window.banco
+                .from("inspecoes")
+                .select("*")
+                .eq("obra_id", obraId)
+                .order("id", { ascending: false });
+
+            if (error) throw error;
+
+            if (!Array.isArray(data) || data.length === 0) {
+                mostrarEstadoInspecoes("Nenhuma inspeção cadastrada nesta obra.");
+                return;
+            }
+
+            listaInspecoes.replaceChildren(...data.map(criarCardInspecao));
+        }
+
+        document.getElementById("btnVoltarObras").addEventListener("click", () => {
+            window.location.href = "obras.html";
+        });
+
+        if (!obraId) {
+            mostrarFeedback("Obra não encontrada. Voltando à lista…", "is-error");
+            mostrarEstadoInspecoes("Não foi possível identificar a obra.");
+            window.setTimeout(() => { window.location.replace("obras.html"); }, 1200);
+        } else {
+            carregarObra().catch((erro) => {
+                console.error("Erro ao carregar detalhes da obra:", erro);
+                mostrarFeedback("Não foi possível carregar os detalhes da obra. Tente novamente.", "is-error");
+                document.getElementById("nomeObra").textContent = "Detalhes indisponíveis";
+                document.getElementById("endereco").textContent = "—";
+                document.getElementById("responsavel").textContent = "—";
+                document.getElementById("data").textContent = "—";
+                document.getElementById("statusObra").textContent = "Indisponível";
+                mostrarEstadoInspecoes("Não foi possível carregar as inspeções.");
+            });
+        }
+    </script>
 </body>
-
 </html>
