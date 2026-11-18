@@ -2341,3 +2341,22 @@ body.erp-page--obras .obra-inspection-card .obra-inspection-observation { margin
 body.has-erp-sidebar.erp-page--obras :is(.obra-detail-card, .obra-inspection-card) {
   background: linear-gradient(145deg, rgba(34,157,255,.25), rgba(92,236,255,.10)), rgba(7,18,35,.96) !important;
 }
+body.erp-page--obras .obra-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; margin: 24px 0 30px; }
+body.erp-page--obras .obra-stat-card { display: flex; min-width: 0; flex-direction: column; justify-content: space-between; gap: 18px; padding: 20px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
+body.erp-page--obras .obra-stat-head { display: flex; min-height: 46px; align-items: center; gap: 12px; }
+body.erp-page--obras .obra-stat-icon { display: grid; width: 42px; height: 42px; flex: 0 0 42px; place-items: center; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 13px; color: var(--cyan, #5cecff); background: rgba(92,236,255,.1); }
+body.erp-page--obras .obra-stat-icon svg { display: block; width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--obras .obra-stat-value { margin: 0; color: var(--text, #e7f5ff); font-size: 27px; line-height: 1; }
+body.erp-page--obras .obra-stat-label { margin: 0; color: var(--text, #e7f5ff); font-weight: 650; }
+body.erp-page--obras .obra-stat-note { margin: 5px 0 0; color: var(--muted, #91a8bd); font-size: 12px; }
+body.erp-page--obras .obra-stat-card > button { align-self: flex-start; }
+body.erp-page--obras .obra-stat-card > button:disabled { cursor: not-allowed; }
+body.has-erp-sidebar:not(.dashboard-page).erp-page--obras .content :is(.obra-card, .obra-detail-card, .obra-inspection-card, .obra-stat-card) {
+  color: var(--text, #e7f5ff);
+  background: linear-gradient(145deg, rgba(34,157,255,.25), rgba(92,236,255,.10)), rgba(7,18,35,.96) !important;
+  box-shadow: 0 18px 45px rgba(0,0,0,.2);
+}
+@media (max-width: 680px) {
+  body.erp-page--obras .obra-detail-heading { align-items: flex-start; flex-direction: column; }
+  body.erp-page--obras .obra-stat-card > button { width: 100%; }
+}
