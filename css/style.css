@@ -2356,6 +2356,131 @@ body.has-erp-sidebar:not(.dashboard-page).erp-page--obras .content :is(.obra-car
   background: linear-gradient(145deg, rgba(34,157,255,.25), rgba(92,236,255,.10)), rgba(7,18,35,.96) !important;
   box-shadow: 0 18px 45px rgba(0,0,0,.2);
 }
+/* Componentes compartilhados pelas telas de Imóveis e Inspeções. */
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-shell { width: min(100%, 1180px); margin: 0 auto; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-page-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-title-lockup { display: flex; min-width: 0; align-items: center; gap: 14px; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-title-lockup > div { min-width: 0; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-page-heading h1 { margin: 0; color: var(--text, #e7f5ff); font-size: clamp(26px, 4vw, 36px); letter-spacing: -.025em; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-page-kicker { margin: 0 0 8px; color: var(--cyan, #5cecff); font-size: 10px; font-weight: 800; letter-spacing: .14em; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-page-lead { margin: 8px 0 0; color: var(--muted, #91a8bd); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-icon-tile { display: grid; width: 46px; height: 46px; flex: 0 0 46px; place-items: center; border: 1px solid rgba(92,236,255,.2); border-radius: 14px; color: var(--cyan, #5cecff); background: linear-gradient(135deg, rgba(92,236,255,.15), rgba(34,157,255,.13)); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-icon-tile svg { display: block; width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) :is(.erp-ui-button, .erp-ui-form-actions a) { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 8px; padding: 10px 15px; border: 1px solid transparent; border-radius: 11px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-button svg { display: block; width: 18px; height: 18px; flex: 0 0 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-button--primary { color: #04111f; background: linear-gradient(135deg, var(--cyan, #5cecff), #7eb6ff); box-shadow: 0 8px 24px rgba(92,236,255,.18); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-button--secondary { color: var(--text, #e7f5ff); border-color: var(--border, rgba(133,216,255,.18)); background: linear-gradient(135deg, rgba(92,236,255,.12), rgba(34,157,255,.14)); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-button--danger { color: #ff9cab; border-color: rgba(255,135,153,.24); background: rgba(255,135,153,.08); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-button:hover:not(:disabled) { transform: translateY(-1px); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) :is(.erp-ui-button, .erp-upload-label, .erp-camera-close):focus-visible { outline: 2px solid var(--cyan, #5cecff); outline-offset: 3px; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-feedback { min-height: 20px; margin: 2px 0 14px; color: var(--muted, #91a8bd); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-feedback:empty { display: none; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-feedback.is-error { color: var(--red, #ff8799); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-feedback.is-success { color: var(--green, #35e58a); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-feedback.is-warning { color: #ffd080; }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-empty-state { grid-column: 1 / -1; padding: 22px; border: 1px dashed var(--border, rgba(133,216,255,.18)); border-radius: 14px; color: var(--muted, #91a8bd); background: linear-gradient(135deg, rgba(92,236,255,.12), rgba(34,157,255,.14)); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-status { display: inline-flex; align-items: center; padding: 6px 10px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 999px; color: var(--cyan, #5cecff); font-size: 11px; font-weight: 750; background: rgba(92,236,255,.07); }
+body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-card-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border, rgba(133,216,255,.18)); }
+
+/* Listagem de imóveis */
+body.erp-page--imoveis .erp-property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 18px; }
+body.erp-page--imoveis .erp-property-card { min-width: 0; overflow: hidden; padding: 0; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
+body.erp-page--imoveis .erp-property-media { height: 205px; overflow: hidden; background: linear-gradient(135deg, rgba(92,236,255,.12), rgba(34,157,255,.12)); }
+body.erp-page--imoveis .erp-property-media .erp-property-photo { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+body.erp-page--imoveis .erp-property-photo-placeholder { display: flex; height: 100%; align-items: center; justify-content: center; flex-direction: column; gap: 10px; color: var(--muted, #91a8bd); font-size: 12px; }
+body.erp-page--imoveis .erp-property-photo-placeholder svg { width: 38px; height: 38px; fill: none; stroke: var(--cyan, #5cecff); stroke-width: 1.45; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--imoveis .erp-property-content { padding: 20px; }
+body.erp-page--imoveis .erp-property-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+body.erp-page--imoveis .erp-property-heading h2 { min-width: 0; margin: 0; color: var(--text, #e7f5ff); font-size: 19px; overflow-wrap: anywhere; }
+body.erp-page--imoveis .erp-property-data, body.erp-page--inspecoes .erp-inspection-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0; }
+body.erp-page--imoveis .erp-property-data > div, body.erp-page--inspecoes .erp-inspection-meta > div { min-width: 0; }
+body.erp-page--imoveis .erp-property-data dt, body.erp-page--inspecoes .erp-inspection-meta dt { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; color: var(--muted, #91a8bd); font-size: 10px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+body.erp-page--imoveis .erp-property-data dt svg, body.erp-page--inspecoes .erp-inspection-meta dt svg { display: block; width: 14px; height: 14px; flex: 0 0 14px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--imoveis .erp-property-data dd, body.erp-page--inspecoes .erp-inspection-meta dd { margin: 0; color: var(--text, #e7f5ff); font-size: 13px; overflow-wrap: anywhere; }
+body.erp-page--imoveis .erp-property-observation { display: flex; align-items: flex-start; gap: 8px; margin: 16px 0 0; color: var(--muted, #91a8bd); font-size: 12px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+body.erp-page--imoveis .erp-property-observation svg { display: block; width: 16px; height: 16px; flex: 0 0 16px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Formulários de cadastro */
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-form-panel { width: min(100%, 880px); margin: 0 auto; padding: clamp(18px, 3vw, 30px); border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
+body.erp-page--novo-imovel .erp-form-grid, body.erp-page--nova-inspecao .erp-inspection-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 18px; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field { display: grid; min-width: 0; gap: 8px; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field--full { grid-column: 1 / -1; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field label { display: flex; align-items: center; gap: 8px; color: var(--text, #e7f5ff); font-size: 13px; font-weight: 650; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field-icon { display: block; width: 16px; height: 16px; flex: 0 0 16px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field-hint { margin-left: auto; color: var(--muted, #91a8bd); font-size: 10px; font-weight: 500; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field :is(input, select, textarea) { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 10px; color: var(--text, #e7f5ff) !important; background: rgba(3,11,23,.62) !important; font: inherit; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field textarea { min-height: 120px; resize: vertical; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field :is(input, select, textarea):focus-visible { outline: 2px solid rgba(92,236,255,.3); border-color: var(--cyan, #5cecff) !important; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field input[type="file"] { padding: 7px; }
+body:is(.erp-page--novo-imovel, .erp-page--nova-inspecao) .erp-ui-field input[type="file"]::file-selector-button { margin-right: 10px; padding: 7px 10px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 7px; color: var(--text, #e7f5ff); background: rgba(92,236,255,.1); cursor: pointer; }
+body.erp-page--novo-imovel .erp-ui-form-actions, body.erp-page--nova-inspecao .erp-ui-form-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+/* Listagem e cadastro de inspeções */
+body.erp-page--inspecoes .erp-inspection-list { display: grid; gap: 16px; }
+body.erp-page--inspecoes .erp-inspection-card { min-width: 0; padding: 20px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 17px; }
+body.erp-page--inspecoes .erp-inspection-card-heading, body.erp-page--inspecoes .erp-inspection-title-box { display: flex; align-items: center; gap: 12px; }
+body.erp-page--inspecoes .erp-inspection-card-heading { justify-content: space-between; margin-bottom: 16px; }
+body.erp-page--inspecoes .erp-inspection-title-box { min-width: 0; }
+body.erp-page--inspecoes .erp-inspection-title-box h2 { margin: 0; color: var(--text, #e7f5ff); font-size: 18px; overflow-wrap: anywhere; }
+body.erp-page--inspecoes .erp-inspection-icon { display: grid; width: 40px; height: 40px; flex: 0 0 40px; place-items: center; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 12px; color: var(--cyan, #5cecff); background: rgba(92,236,255,.1); }
+body.erp-page--inspecoes .erp-inspection-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--inspecoes .erp-inspection-observation { display: flex; align-items: flex-start; gap: 8px; margin: 14px 0 0; color: var(--muted, #91a8bd); font-size: 12px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+body.erp-page--inspecoes .erp-inspection-observation svg { width: 16px; height: 16px; flex: 0 0 16px; color: var(--cyan, #5cecff); fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Evidências fotográficas e câmera */
+body.erp-page--nova-inspecao .erp-inspection-form { display: grid; gap: 18px; }
+body.erp-page--nova-inspecao .erp-inspection-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); align-items: start; gap: 18px; }
+body.erp-page--nova-inspecao .erp-inspection-panel, body.erp-page--nova-inspecao .erp-photo-panel { min-width: 0; padding: clamp(18px, 2.6vw, 26px); border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 18px; }
+body.erp-page--nova-inspecao .erp-ui-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+body.erp-page--nova-inspecao .erp-ui-panel-heading h2 { margin: 0; color: var(--text, #e7f5ff); font-size: 18px; }
+body.erp-page--nova-inspecao .erp-ui-panel-heading .erp-ui-page-kicker { margin-bottom: 6px; }
+body.erp-page--nova-inspecao .erp-ui-panel-icon { display: grid; width: 38px; height: 38px; flex: 0 0 38px; place-items: center; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 11px; color: var(--cyan, #5cecff); background: rgba(92,236,255,.1); }
+body.erp-page--nova-inspecao .erp-ui-panel-icon svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.erp-page--nova-inspecao .erp-photo-counter { display: inline-flex; min-width: 52px; justify-content: center; padding: 6px 9px; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 999px; color: var(--cyan, #5cecff); background: rgba(92,236,255,.07); font-size: 12px; font-weight: 750; }
+body.erp-page--nova-inspecao .erp-photo-help, body.erp-page--nova-inspecao .erp-photo-note { color: var(--muted, #91a8bd); font-size: 12px; line-height: 1.6; }
+body.erp-page--nova-inspecao .erp-photo-help { margin: 0 0 16px; }
+body.erp-page--nova-inspecao .erp-photo-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+body.erp-page--nova-inspecao .erp-upload-label { cursor: pointer; }
+body.erp-page--nova-inspecao .erp-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+body.erp-page--nova-inspecao .erp-photo-empty { display: grid; min-height: 130px; grid-column: 1 / -1; place-items: center; padding: 18px; border: 1px dashed var(--border, rgba(133,216,255,.18)); border-radius: 13px; color: var(--muted, #91a8bd); background: rgba(255,255,255,.025); font-size: 12px; line-height: 1.5; text-align: center; }
+body.erp-page--nova-inspecao .erp-photo-item { position: relative; min-width: 0; margin: 0; overflow: hidden; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 12px; background: rgba(3,11,23,.5); }
+body.erp-page--nova-inspecao .erp-photo-item img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+body.erp-page--nova-inspecao .erp-photo-item figcaption { padding: 7px 9px; color: var(--muted, #91a8bd); font-size: 10px; }
+body.erp-page--nova-inspecao .erp-photo-remove { position: absolute; top: 7px; right: 7px; display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(255,255,255,.2); border-radius: 9px; color: #fff; background: rgba(3,11,23,.8); cursor: pointer; }
+body.erp-page--nova-inspecao .erp-photo-remove svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+body.erp-page--nova-inspecao .erp-photo-note { margin: 14px 0 0; font-size: 10px; }
+body.erp-page--nova-inspecao .erp-camera-modal { position: fixed; z-index: 2500; inset: 0; display: grid; place-items: center; padding: 18px; background: rgba(1,7,15,.82); backdrop-filter: blur(8px); }
+body.erp-page--nova-inspecao .erp-camera-modal[hidden] { display: none !important; }
+body.erp-page--nova-inspecao .erp-camera-dialog { width: min(720px, 100%); max-height: calc(100dvh - 36px); overflow: auto; padding: 22px; border: 1px solid var(--border, rgba(133,216,255,.22)); border-radius: 20px; color: var(--text, #e7f5ff); background: linear-gradient(145deg, #102b4a, #071223); box-shadow: 0 24px 80px rgba(0,0,0,.5); }
+body.erp-page--nova-inspecao .erp-camera-dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+body.erp-page--nova-inspecao .erp-camera-dialog-header h2 { margin: 0; color: var(--text, #e7f5ff); font-size: 20px; }
+body.erp-page--nova-inspecao .erp-camera-close { display: grid; width: 38px; height: 38px; flex: 0 0 38px; place-items: center; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 10px; color: var(--text, #e7f5ff); background: rgba(255,255,255,.05); cursor: pointer; }
+body.erp-page--nova-inspecao .erp-camera-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+body.erp-page--nova-inspecao .erp-camera-dialog video { display: block; width: 100%; max-height: 60vh; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--border, rgba(133,216,255,.18)); border-radius: 14px; background: #02070e; }
+body.erp-page--nova-inspecao .erp-camera-message { min-height: 20px; color: var(--muted, #91a8bd); font-size: 12px; }
+body.erp-page--nova-inspecao .erp-capture-button { width: 100%; }
+
+/* Supera o fundo branco legado para estes componentes específicos do ERP. */
+body.has-erp-sidebar:not(.dashboard-page)[class*="erp-page--"] .content :is(.erp-property-card, .erp-form-panel, .erp-inspection-card, .erp-inspection-panel, .erp-photo-panel) {
+  color: var(--text, #e7f5ff);
+  border-color: var(--border, rgba(133,216,255,.18)) !important;
+  background: linear-gradient(145deg, rgba(34,157,255,.23), rgba(92,236,255,.09)), rgba(7,18,35,.96) !important;
+  box-shadow: 0 18px 45px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.035);
+}
+@media (max-width: 760px) {
+  body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-page-heading { align-items: flex-start; flex-direction: column; }
+  body:is(.erp-page--imoveis, .erp-page--novo-imovel, .erp-page--inspecoes, .erp-page--nova-inspecao) .erp-ui-page-heading > :is(.erp-ui-button, a) { width: 100%; }
+  body.erp-page--novo-imovel .erp-form-grid, body.erp-page--nova-inspecao .erp-inspection-fields { grid-template-columns: 1fr; }
+  body.erp-page--nova-inspecao .erp-inspection-layout { grid-template-columns: 1fr; }
+  body.erp-page--nova-inspecao .erp-ui-form-actions { align-items: stretch; flex-direction: column-reverse; }
+  body.erp-page--nova-inspecao .erp-ui-form-actions .erp-ui-button { width: 100%; }
+}
+@media (max-width: 520px) {
+  body.erp-page--imoveis .erp-property-data, body.erp-page--inspecoes .erp-inspection-meta { grid-template-columns: 1fr; }
+  body.erp-page--inspecoes .erp-inspection-card-heading { align-items: flex-start; flex-direction: column; }
+  body.erp-page--imoveis .erp-property-heading { align-items: flex-start; flex-direction: column; }
+}
 @media (max-width: 680px) {
   body.erp-page--obras .obra-detail-heading { align-items: flex-start; flex-direction: column; }
   body.erp-page--obras .obra-stat-card > button { width: 100%; }
