@@ -1,109 +1,223 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estoque - SmartInspect AI</title>
-<link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Controle de materiais, quantidades e movimentações das obras.">
+    <title>Estoque - SmartInspect AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
 <body class="erp-page--estoque">
+    <div class="menu-container"></div>
 
-<div class="menu-container"></div>
+    <main class="content erp-stock-shell">
+        <header class="erp-stock-page-heading">
+            <div class="erp-stock-title-lockup">
+                <span class="erp-stock-icon-tile" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5M12 22V12"></path></svg>
+                </span>
+                <div>
+                    <p class="erp-stock-kicker">CONTROLE DE MATERIAIS</p>
+                    <h1>Estoque</h1>
+                    <p class="erp-stock-lead">Controle materiais, quantidades e movimentações das obras.</p>
+                </div>
+            </div>
+            <a href="novo_estoque.html" class="erp-stock-button erp-stock-button--primary">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                <span>Novo material</span>
+            </a>
+        </header>
 
-<main class="content">
-    <header class="page-header">
-        <div>
-            <p class="eyebrow">CONTROLE DE MATERIAIS</p>
-            <h1>📦 Estoque</h1>
-            <p class="subtitle">Controle de materiais, quantidades e movimentações da obra.</p>
-        </div>
-        <!-- Botão no topo -->
-        <button onclick="location.href='novo_estoque.html'" class="primary-button">
-            ➕ Novo Material
-        </button>
-    </header>
+        <p id="estoqueFeedback" class="erp-stock-feedback" role="status" aria-live="polite"></p>
+        <section id="listaEstoque" class="erp-stock-grid" aria-label="Materiais em estoque" aria-live="polite">
+            <p class="erp-stock-empty">Carregando estoque…</p>
+        </section>
+    </main>
 
-    <div id="listaEstoque">
-        <div class="card">Carregando estoque...</div>
-    </div>
-</main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/sidebar.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-<script src="../js/sidebar.js"></script>
+    <script>
+        "use strict";
 
-<script>
-    const $ = id => document.getElementById(id);
+        const lista = document.getElementById("listaEstoque");
+        const feedback = document.getElementById("estoqueFeedback");
 
-    async function carregarEstoque(){
-        const lista = $("listaEstoque");
-        lista.innerHTML = `<div class="card">⏳ Carregando estoque...</div>`;
-
-        const {data,error} = await banco.from("estoque").select(`*, obras(nome)`).order("id",{ascending:false});
-
-        if(error){
-            lista.innerHTML = `<div class="card">❌ Erro ao carregar estoque.<br>${error.message}</div>`;
-            return;
+        function criarElemento(tag, className = "", texto) {
+            const elemento = document.createElement(tag);
+            if (className) elemento.className = className;
+            if (texto !== undefined) elemento.textContent = texto;
+            return elemento;
         }
 
-        if(!data || data.length === 0){
-            lista.innerHTML = `<div class="card">📦 Nenhum material cadastrado.<br><br>
-                <button onclick="location.href='novo_estoque.html'" class="primary-button">
-                    ➕ Cadastrar primeiro material
-                </button>
-            </div>`;
-            return;
+        function criarIcone(tipo) {
+            const desenhos = {
+                material: '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5M12 22V12"></path>',
+                obra: '<path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"></path>',
+                minimo: '<path d="M12 3 2.8 19h18.4L12 3Z"></path><path d="M12 9v4m0 3h.01"></path>',
+                data: '<rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path>',
+                pessoa: '<path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>',
+                estado: '<circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path>',
+                movimento: '<path d="M7 7h13l-3-3m3 3-3 3M17 17H4l3 3m-3-3 3-3"></path>',
+                editar: '<path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path>',
+                logs: '<rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path>',
+                excluir: '<path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v7m6-7v7"></path>'
+            };
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 24 24");
+            svg.setAttribute("aria-hidden", "true");
+            svg.innerHTML = desenhos[tipo] || "";
+            return svg;
         }
 
-        lista.innerHTML = "";
+        function formatarNumero(valor) {
+            const numero = Number(valor);
+            return new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(Number.isFinite(numero) ? numero : 0);
+        }
 
-        data.forEach(item => {
+        function formatarData(valor) {
+            if (!valor) return "Não informada";
+            const texto = String(valor);
+            const iso = texto.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (iso) return `${iso[3]}/${iso[2]}/${iso[1]}`;
+            const data = new Date(texto);
+            return Number.isNaN(data.getTime()) ? texto : new Intl.DateTimeFormat("pt-BR").format(data);
+        }
+
+        function montarCampo(tipo, rotulo, valor) {
+            const campo = document.createElement("div");
+            const titulo = document.createElement("dt");
+            titulo.append(criarIcone(tipo), document.createTextNode(rotulo));
+            campo.append(titulo, criarElemento("dd", "", valor || "Não informado"));
+            return campo;
+        }
+
+        function montarAcao(tipo, texto, itemId, classe = "") {
+            if (tipo === "excluir") {
+                const botao = criarElemento("button", `erp-stock-button erp-stock-button--danger ${classe}`.trim());
+                botao.type = "button";
+                botao.dataset.action = tipo;
+                botao.dataset.id = String(itemId);
+                botao.append(criarIcone(tipo), document.createTextNode(texto));
+                return botao;
+            }
+            const rotas = {
+                movimentar: "movimentar_estoque.html",
+                editar: "novo_estoque.html",
+                logs: "logs_estoque.html"
+            };
+            const link = criarElemento("a", `erp-stock-button erp-stock-button--secondary ${classe}`.trim());
+            link.href = `${rotas[tipo]}?id=${encodeURIComponent(String(itemId))}`;
+            link.append(criarIcone(tipo), document.createTextNode(texto));
+            return link;
+        }
+
+        function criarCard(item) {
             const quantidade = Number(item.quantidade || 0);
             const minimo = Number(item.estoque_minimo || 0);
-            let statusEstoque = "🟢 Disponível";
-            if(quantidade <= 0) statusEstoque = "🔴 Sem estoque";
-            else if(minimo > 0 && quantidade <= minimo) statusEstoque = "🟠 Estoque baixo";
-
             const unidade = item.unidade || "un";
-            const dataEntrada = item.data_entrada ? new Date(item.data_entrada + "T00:00:00").toLocaleDateString("pt-BR") : "Não informada";
-            const obra = item.obras?.nome || "Obra não informada";
-            const responsavel = item.responsavel || "Não informado";
+            const obraRelacionada = Array.isArray(item.obras) ? item.obras[0] : item.obras;
+            let nivel = "is-good";
+            let rotuloNivel = "Disponível";
+            if (quantidade <= 0) {
+                nivel = "is-empty";
+                rotuloNivel = "Sem estoque";
+            } else if (minimo > 0 && quantidade <= minimo) {
+                nivel = "is-low";
+                rotuloNivel = "Estoque baixo";
+            }
 
-            lista.innerHTML += `
-            <div class="card estoque-card">
-                <div class="estoque-header">
-                    <div><h2>📦 ${item.material || "Material sem nome"}</h2><p>${statusEstoque}</p></div>
-                    <div><strong>${quantidade} ${unidade}</strong></div>
-                </div>
-                <hr>
-                <p>🏢 <strong>Obra:</strong> ${obra}</p>
-                <p>🔢 <strong>Quantidade:</strong> ${quantidade} ${unidade}</p>
-                <p>⚠️ <strong>Estoque mínimo:</strong> ${minimo || "Não definido"}</p>
-                <p>📅 <strong>Entrada:</strong> ${dataEntrada}</p>
-                <p>👤 <strong>Responsável:</strong> ${responsavel}</p>
-                <p>📌 <strong>Status:</strong> ${item.status || "Disponível"}</p>
-                
-                <div class="estoque-actions">
-                    <button onclick="window.location.href='movimentar_estoque.html?id=${item.id}'">🔄 Movimentar</button>
-                    <button onclick="window.location.href='novo_estoque.html?id=${item.id}'">✏️ Editar</button>
-                    <button onclick="window.location.href='logs_estoque.html?id=${item.id}'">📋 Logs</button>
-                    <button onclick="excluirMaterial(${item.id})">🗑 Excluir</button>
-                </div>
-            </div>`;
+            const card = criarElemento("article", "card erp-stock-card");
+            const cabecalho = criarElemento("header", "erp-stock-card-heading");
+            const tituloBox = criarElemento("div", "erp-stock-title-box");
+            const icone = criarElemento("span", "erp-stock-item-icon");
+            icone.append(criarIcone("material"));
+            const titulo = criarElemento("h2", "", item.material || "Material sem nome");
+            tituloBox.append(icone, titulo);
+            const quantidadeBox = criarElemento("div", "erp-stock-quantity");
+            quantidadeBox.append(
+                criarElemento("strong", "", `${formatarNumero(quantidade)} ${unidade}`),
+                criarElemento("span", `erp-stock-badge ${nivel}`, rotuloNivel)
+            );
+            cabecalho.append(tituloBox, quantidadeBox);
+
+            const detalhes = document.createElement("dl");
+            detalhes.className = "erp-stock-meta";
+            detalhes.append(
+                montarCampo("obra", "Obra", obraRelacionada?.nome || "Obra não informada"),
+                montarCampo("minimo", "Estoque mínimo", minimo > 0 ? `${formatarNumero(minimo)} ${unidade}` : "Não definido"),
+                montarCampo("data", "Entrada", formatarData(item.data_entrada)),
+                montarCampo("pessoa", "Responsável", item.responsavel || "Não informado"),
+                montarCampo("estado", "Status do material", item.status || "Disponível")
+            );
+
+            const acoes = criarElemento("div", "erp-stock-actions");
+            acoes.append(
+                montarAcao("movimentar", "Movimentar", item.id, "is-emphasis"),
+                montarAcao("editar", "Editar", item.id),
+                montarAcao("logs", "Histórico", item.id),
+                montarAcao("excluir", "Excluir", item.id)
+            );
+            card.append(cabecalho, detalhes, acoes);
+            return card;
+        }
+
+        function mostrarEstado(texto) {
+            lista.replaceChildren(criarElemento("p", "erp-stock-empty", texto));
+        }
+
+        function mostrarFeedback(texto, tipo = "") {
+            feedback.textContent = texto;
+            feedback.className = `erp-stock-feedback ${tipo}`.trim();
+        }
+
+        async function carregarEstoque() {
+            mostrarEstado("Carregando estoque…");
+            mostrarFeedback("");
+            try {
+                if (!window.banco?.from) throw new Error("Cliente Supabase indisponível.");
+                const { data, error } = await window.banco
+                    .from("estoque")
+                    .select("*, obras(nome)")
+                    .order("id", { ascending: false });
+                if (error) throw error;
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    mostrarEstado("Nenhum material cadastrado no estoque.");
+                    return;
+                }
+                lista.replaceChildren(...data.map(criarCard));
+            } catch (erro) {
+                console.error("Erro ao carregar estoque:", erro);
+                mostrarEstado("Não foi possível carregar o estoque.");
+                mostrarFeedback("Confira sua conexão e tente atualizar a página.", "is-error");
+            }
+        }
+
+        lista.addEventListener("click", async (evento) => {
+            const botao = evento.target.closest('button[data-action="excluir"]');
+            if (!botao || !lista.contains(botao)) return;
+            if (!window.confirm("Deseja realmente excluir este material?")) return;
+
+            botao.disabled = true;
+            try {
+                const { error } = await window.banco.from("estoque").delete().eq("id", botao.dataset.id);
+                if (error) throw error;
+                await carregarEstoque();
+                mostrarFeedback("Material removido com sucesso.", "is-success");
+            } catch (erro) {
+                console.error("Erro ao excluir material:", erro);
+                botao.disabled = false;
+                mostrarFeedback("Não foi possível excluir o material. Ele pode ter movimentações vinculadas.", "is-error");
+            }
         });
-    }
 
-    async function excluirMaterial(id){
-        if(!confirm("Deseja realmente excluir este material?")) return;
-        const {error} = await banco.from("estoque").delete().eq("id",id);
-        if(error){ alert("❌ Não foi possível excluir o material."); return; }
-        alert("✅ Material removido com sucesso.");
         carregarEstoque();
-    }
-
-    carregarEstoque();
-</script>
-
+    </script>
 </body>
 </html>
