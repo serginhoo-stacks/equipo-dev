@@ -1,0 +1,1 @@
+"""Testes automatizados para endpoints e validações da API."""
