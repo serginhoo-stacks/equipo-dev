@@ -1,158 +1,276 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Equipe - SmartInspect AI</title>
-
-<link rel="stylesheet" href="../css/style.css">
-
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Usuários cadastrados, níveis de acesso e presença da equipe SmartInspect AI.">
+    <title>Equipe - SmartInspect AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
-
 <body class="erp-page--equipe">
+    <div class="menu-container"></div>
 
-<!-- SIDEBAR PADRÃO -->
-<div class="menu-container"></div>
-
-<div class="content">
-
-<div class="team-page-heading"><div><h1>👥 Equipe</h1><p>Usuários cadastrados e níveis de acesso</p></div><a class="team-invite-button" href="convites.html" data-company-context><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"></path></svg>Convidar por e-mail</a></div>
-
-<div id="listaEquipe" class="equipe-grid">
-Carregando equipe...
-</div>
-
-</div>
-
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-<script src="../js/sidebar.js"></script>
-<!-- REMOVIDO: auth.js e configuracoes.js -->
-
-<script>
-    let equipe = [];
-    let canalEquipe = null;
-
-    function estaOnline(usuario){
-        if(!usuario.ultimo_heartbeat){ return false; }
-        const ultimoHeartbeat = new Date(usuario.ultimo_heartbeat).getTime();
-        const agora = Date.now();
-        const diferenca = agora - ultimoHeartbeat;
-        return diferenca <= 60000; // 60 segundos
-    }
-
-    async function carregarEquipe(){
-        const {data,error} = await banco.from("usuarios").select("*").order("id", { ascending:false });
-
-        if(error){
-            console.log("Erro ao carregar equipe:", error);
-            document.getElementById("listaEquipe").innerHTML = "❌ Erro ao carregar equipe";
-            return;
-        }
-
-        equipe = data || [];
-        mostrarEquipe();
-    }
-
-    function obterPermissoes(nivel){
-        if(nivel === "adm") return "✅ Controle total do sistema";
-        if(nivel === "engenheiro") return `✅ Obras<br>✅ Inspeções<br>✅ Relatórios<br>✅ IA`;
-        if(nivel === "inspetor") return `✅ Inspeções<br>✅ Fotos<br>✅ Relatórios`;
-        if(nivel === "tecnico") return `✅ Obras<br>✅ Inspeções`;
-        if(nivel === "usuario") return "👁 Visualização";
-        return "👁 Acesso básico";
-    }
-
-    function formatarData(data){
-        if(!data) return "Nunca";
-        try { return new Date(data).toLocaleString("pt-BR"); } catch { return "Data inválida"; }
-    }
-
-    function mostrarEquipe(){
-        const lista = document.getElementById("listaEquipe");
-        lista.innerHTML = "";
-
-        if(equipe.length === 0){
-            lista.innerHTML = "Nenhum usuário encontrado.";
-            return;
-        }
-
-        equipe.forEach(usuario => {
-            const online = estaOnline(usuario);
-            const permissoes = obterPermissoes(usuario.nivel_acesso);
-
-            lista.innerHTML += `
-            <div class="membro">
-                <div class="avatar-box">
-                    <img class="foto-perfil" src="${usuario.foto_url || 'imagens/avatar.png'}" onerror="this.src='../imagens/avatar.png'">
-                    <span class="ponto-online ${online ? 'ativo' : ''}"></span>
-                </div>
-
+    <main class="content erp-team-shell">
+        <header class="erp-team-page-heading">
+            <div class="erp-team-title-lockup">
+                <span class="erp-team-icon-tile" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"></path></svg>
+                </span>
                 <div>
-                    <h3>${usuario.nome || "Sem nome"}</h3>
-                    <p>📧 ${usuario.email || ""}</p>
-                    <span class="cargo">${usuario.nivel_acesso || "usuario"}</span>
-                    <p class="status ${online ? "online" : "offline"}">● ${online ? " Online" : " Offline"}</p>
-                    <p class="ultimo-acesso">🕐 Último acesso: <br>${formatarData(usuario.ultimo_acesso)}</p>
-                    <div class="permissoes">${permissoes}</div>
+                    <p class="erp-team-kicker">GESTÃO DE ACESSOS</p>
+                    <h1>Equipe</h1>
+                    <p class="erp-team-lead">Usuários cadastrados, níveis de acesso e presença.</p>
                 </div>
             </div>
-            `;
-        });
-    }
+            <a class="erp-team-invite-button" href="convites.html" data-company-context>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"></path></svg>
+                <span>Convidar por e-mail</span>
+            </a>
+        </header>
 
-    async function obterUsuarioLogado(){
-        const { data, error } = await banco.auth.getUser();
-        if(error){ console.log("Erro ao pegar usuário:", error); return null; }
-        return data.user;
-    }
+        <p id="mensagemEquipe" class="erp-team-feedback" role="status" aria-live="polite"></p>
+        <section id="listaEquipe" class="erp-team-grid" aria-label="Usuários da equipe" aria-live="polite">
+            <p class="erp-team-state">Carregando equipe…</p>
+        </section>
+    </main>
 
-    async function atualizarHeartbeat(){
-        const usuario = await obterUsuarioLogado();
-        if(!usuario){ return; }
-        const agora = new Date().toISOString();
-        const {error} = await banco.from("usuarios").update({ ultimo_heartbeat: agora }).eq("auth_id", usuario.id);
-        if(error){ console.log("Erro no heartbeat:", error); }
-    }
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/sidebar.js"></script>
 
-    async function registrarAcesso(){
-        const usuario = await obterUsuarioLogado();
-        if(!usuario){ return; }
-        const agora = new Date().toISOString();
-        const {error} = await banco.from("usuarios").update({ ultimo_acesso: agora, ultimo_heartbeat: agora }).eq("auth_id", usuario.id);
-        if(error){ console.log("Erro ao registrar acesso:", error); }
-    }
+    <script>
+        "use strict";
 
-    async function iniciarPresenca(){
-        await registrarAcesso();
-        setInterval(atualizarHeartbeat, 30000);
-    }
+        let equipe = [];
+        let canalEquipe = null;
+        let intervaloPresenca = null;
 
-    function ouvirOnline(){
-        canalEquipe = banco.channel("equipe-tempo-real").on("postgres_changes", { event:"*", schema:"public", table:"usuarios" }, payload => {
-            carregarEquipe();
-        }).subscribe(status => {
-            // console.log("Realtime equipe:", status);
-        });
-    }
+        const lista = document.getElementById("listaEquipe");
+        const feedback = document.getElementById("mensagemEquipe");
 
-    setInterval(() => { mostrarEquipe(); }, 10000);
+        function criarElemento(tag, className = "", texto) {
+            const elemento = document.createElement(tag);
+            if (className) elemento.className = className;
+            if (texto !== undefined) elemento.textContent = texto;
+            return elemento;
+        }
 
-    async function iniciar(){
-        await carregarEquipe();
-        await iniciarPresenca();
-        ouvirOnline();
-    }
+        function criarIcone(tipo) {
+            const desenhos = {
+                email: '<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path>',
+                relogio: '<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>',
+                check: '<path d="m5 12 4 4L19 6"></path>',
+                ver: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle>'
+            };
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 24 24");
+            svg.setAttribute("aria-hidden", "true");
+            svg.innerHTML = desenhos[tipo] || "";
+            return svg;
+        }
 
-    iniciar();
-</script>
+        function estaOnline(usuario) {
+            if (!usuario.ultimo_heartbeat) return false;
+            const ultimoHeartbeat = new Date(usuario.ultimo_heartbeat).getTime();
+            return Number.isFinite(ultimoHeartbeat) && Date.now() - ultimoHeartbeat <= 60000;
+        }
 
+        function obterPermissoes(nivel) {
+            const permissoes = {
+                adm: ["Controle total do sistema"],
+                engenheiro: ["Obras", "Inspeções", "Relatórios", "IA"],
+                inspetor: ["Inspeções", "Fotos", "Relatórios"],
+                tecnico: ["Obras", "Inspeções"],
+                usuario: ["Visualização"]
+            };
+            return permissoes[nivel] || ["Acesso básico"];
+        }
+
+        function nomeDoNivel(nivel) {
+            const nomes = {
+                adm: "Administrador",
+                engenheiro: "Engenheiro",
+                inspetor: "Inspetor",
+                tecnico: "Técnico",
+                usuario: "Usuário"
+            };
+            return nomes[nivel] || "Usuário";
+        }
+
+        function formatarData(data) {
+            if (!data) return "Nunca";
+            const instante = new Date(data);
+            return Number.isNaN(instante.getTime()) ? "Data inválida" : new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(instante);
+        }
+
+        function iniciais(nome) {
+            return String(nome || "U")
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 2)
+                .map((parte) => parte.charAt(0).toLocaleUpperCase("pt-BR"))
+                .join("") || "U";
+        }
+
+        function urlFotoSeguro(valor) {
+            if (!valor) return "";
+            try {
+                const url = new URL(String(valor), window.location.href);
+                return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+            } catch {
+                return "";
+            }
+        }
+
+        function criarAvatar(usuario) {
+            const caixa = criarElemento("div", "erp-team-avatar-box");
+            const nome = usuario.nome || "Sem nome";
+            const placeholder = criarElemento("span", "erp-team-avatar-placeholder", iniciais(nome));
+            placeholder.setAttribute("aria-hidden", "true");
+            caixa.append(placeholder);
+
+            const foto = urlFotoSeguro(usuario.foto_url);
+            if (foto) {
+                const imagem = document.createElement("img");
+                imagem.className = "erp-team-avatar-image";
+                imagem.src = foto;
+                imagem.alt = `Foto de perfil de ${nome}`;
+                imagem.loading = "lazy";
+                imagem.addEventListener("load", () => placeholder.remove(), { once: true });
+                imagem.addEventListener("error", () => imagem.remove(), { once: true });
+                caixa.append(imagem);
+            }
+
+            const online = estaOnline(usuario);
+            const ponto = criarElemento("span", `erp-team-presence-dot ${online ? "is-online" : "is-offline"}`);
+            ponto.setAttribute("aria-hidden", "true");
+            caixa.append(ponto);
+            return caixa;
+        }
+
+        function criarCardUsuario(usuario) {
+            const online = estaOnline(usuario);
+            const cartao = criarElemento("article", "erp-team-card");
+            const cabecalho = criarElemento("div", "erp-team-card-heading");
+            cabecalho.append(
+                criarAvatar(usuario),
+                criarElemento("span", `erp-team-presence-label ${online ? "is-online" : "is-offline"}`, online ? "Online" : "Offline")
+            );
+
+            const conteudo = criarElemento("div", "erp-team-card-content");
+            conteudo.append(
+                criarElemento("h2", "erp-team-member-name", usuario.nome || "Sem nome"),
+                criarElemento("span", "erp-team-role", nomeDoNivel(usuario.nivel_acesso))
+            );
+
+            if (usuario.email) {
+                const email = criarElemento("p", "erp-team-email");
+                email.append(criarIcone("email"), document.createTextNode(usuario.email));
+                conteudo.append(email);
+            }
+
+            const ultimoAcesso = criarElemento("p", "erp-team-last-seen");
+            ultimoAcesso.append(
+                criarIcone("relogio"),
+                document.createTextNode(`Último acesso: ${formatarData(usuario.ultimo_acesso)}`)
+            );
+
+            const permissoesTitulo = criarElemento("p", "erp-team-permissions-title", "Permissões");
+            const permissoes = criarElemento("ul", "erp-team-permissions");
+            obterPermissoes(usuario.nivel_acesso).forEach((permissao) => {
+                const item = criarElemento("li", "erp-team-permission");
+                item.append(criarIcone(usuario.nivel_acesso === "usuario" ? "ver" : "check"), document.createTextNode(permissao));
+                permissoes.append(item);
+            });
+
+            conteudo.append(ultimoAcesso, permissoesTitulo, permissoes);
+            cartao.append(cabecalho, conteudo);
+            return cartao;
+        }
+
+        function mostrarEstado(texto) {
+            lista.replaceChildren(criarElemento("p", "erp-team-state", texto));
+        }
+
+        function mostrarEquipe() {
+            if (!equipe.length) {
+                mostrarEstado("Nenhum usuário encontrado.");
+                return;
+            }
+            lista.replaceChildren(...equipe.map(criarCardUsuario));
+        }
+
+        async function carregarEquipe() {
+            try {
+                if (!window.banco?.from) throw new Error("Cliente Supabase indisponível.");
+                const { data, error } = await window.banco.from("usuarios").select("*").order("id", { ascending: false });
+                if (error) throw error;
+                equipe = Array.isArray(data) ? data : [];
+                mostrarEquipe();
+                feedback.textContent = "";
+            } catch (erro) {
+                console.error("Erro ao carregar equipe:", erro);
+                if (!equipe.length) mostrarEstado("Não foi possível carregar a equipe.");
+                feedback.textContent = "Confira sua conexão e tente atualizar a página.";
+                feedback.className = "erp-team-feedback is-error";
+            }
+        }
+
+        async function obterUsuarioLogado() {
+            try {
+                if (!window.banco?.auth) return null;
+                const { data, error } = await window.banco.auth.getUser();
+                if (error) throw error;
+                return data?.user || null;
+            } catch (erro) {
+                console.error("Erro ao obter usuário autenticado:", erro);
+                return null;
+            }
+        }
+
+        async function atualizarHeartbeat() {
+            const usuario = await obterUsuarioLogado();
+            if (!usuario) return;
+            const agora = new Date().toISOString();
+            const { error } = await window.banco.from("usuarios").update({ ultimo_heartbeat: agora }).eq("auth_id", usuario.id);
+            if (error) console.error("Erro ao atualizar presença:", error);
+        }
+
+        async function registrarAcesso() {
+            const usuario = await obterUsuarioLogado();
+            if (!usuario) return;
+            const agora = new Date().toISOString();
+            const { error } = await window.banco.from("usuarios").update({ ultimo_acesso: agora, ultimo_heartbeat: agora }).eq("auth_id", usuario.id);
+            if (error) console.error("Erro ao registrar acesso:", error);
+        }
+
+        async function iniciarPresenca() {
+            await registrarAcesso();
+            if (!intervaloPresenca) intervaloPresenca = window.setInterval(atualizarHeartbeat, 30000);
+        }
+
+        function ouvirOnline() {
+            if (!window.banco?.channel || canalEquipe) return;
+            canalEquipe = window.banco
+                .channel("equipe-tempo-real")
+                .on("postgres_changes", { event: "*", schema: "public", table: "usuarios" }, carregarEquipe)
+                .subscribe();
+        }
+
+        window.setInterval(mostrarEquipe, 10000);
+
+        async function iniciar() {
+            await carregarEquipe();
+            await iniciarPresenca();
+            ouvirOnline();
+        }
+
+        iniciar();
+    </script>
 </body>
 </html>
