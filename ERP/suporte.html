@@ -1,58 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Falar com Suporte - SmartInspect AI</title>
-
 <link rel="stylesheet" href="../css/style.css">
-
-
-
-    <link rel="icon" type="image/png" href="../imagens/favicon.png">
+<link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
-
 <body class="erp-page--suporte">
 <div class="menu-container"></div>
-
-
-<!-- SIDEBAR -->
-
-
-<!-- CONTEÚDO -->
 <div class="conteudo-suporte">
     <div class="titulo-suporte">
-        <h1>💬 Falar com suporte</h1>
+        <h1><svg class="support-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 4a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>Falar com suporte</h1>
         <p>Converse diretamente com a equipe do SmartInspect AI.</p>
     </div>
-
     <div id="conteudo" class="card-suporte">
-        <div class="support-state">
-            ⏳ Carregando...
-        </div>
+        <div class="support-state"><svg class="support-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg> Carregando...</div>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase.js"></script>
-
 <script>
 let usuarioAtual = null;
 let chamadoAtual = null;
 let canalRealtime = null;
 
+function icone(nome){
+    const caminhos={
+        chat:'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 4a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/>',
+        novo:'<path d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="9"/>',
+        enviar:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+        mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+        arquivo:'<path d="m21.4 11.1-8.5 8.5a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>',
+        pessoa:'<circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/>',
+        suporte:'<path d="M3 11a9 9 0 0 1 18 0v5a2 2 0 0 1-2 2h-2v-7h4M3 11v5a2 2 0 0 0 2 2h2v-7H3"/><path d="M8 21h8"/>',
+        ok:'<path d="m5 12 4 4L19 6"/>',
+        erro:'<circle cx="12" cy="12" r="9"/><path d="m15 9-6 6m0-6 6 6"/>',
+        espera:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        alerta:'<path d="m10.3 3.9-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3.1l-8-14a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/>'
+    };
+    return `<svg class="support-icon" viewBox="0 0 24 24" aria-hidden="true">${caminhos[nome]||caminhos.chat}</svg>`;
+}
 function escapar(texto){
     return String(texto || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
-
 function dataBR(data){
     if(!data) return "";
     return new Date(data).toLocaleString("pt-BR");
 }
-
 function aviso(texto){
     const div = document.createElement("div");
     div.className="aviso";
@@ -60,21 +55,17 @@ function aviso(texto){
     document.body.appendChild(div);
     setTimeout(()=>div.remove(), 4000);
 }
-
 async function obterUsuario(){
     const { data, error } = await banco.auth.getUser();
     if(error || !data.user){ return null; }
     return data.user;
 }
-
 async function carregar(){
     usuarioAtual = await obterUsuario();
     if(!usuarioAtual){
-        // Se não estiver logado, volta pro painel
         window.location.href="../painel-pessoal.html";
         return;
     }
-
     const { data, error } = await banco
         .from("solicitacoes_suporte")
         .select("*")
@@ -83,13 +74,11 @@ async function carregar(){
         .order("data_criacao", { ascending:false })
         .limit(1)
         .maybeSingle();
-
     if(error){
         console.error(error);
         mostrarErro(error.message);
         return;
     }
-
     if(data){
         chamadoAtual=data;
         mostrarChat();
@@ -99,36 +88,31 @@ async function carregar(){
         mostrarCriar();
     }
 }
-
 function mostrarCriar(){
     document.getElementById("conteudo").innerHTML=`
         <div class="criar-atendimento">
-            <h2>🆕 Criar novo atendimento</h2>
+            <h2>${icone("novo")}Criar novo atendimento</h2>
             <p class="support-helper">Envie sua dúvida ou problema para nossa equipe.</p>
             <div class="form-grupo">
-                <label>Assunto</label>
+                <label for="assunto">Assunto</label>
                 <input id="assunto" type="text" placeholder="Ex: Problema no relatório">
             </div>
             <div class="form-grupo">
-                <label>Mensagem</label>
+                <label for="mensagemInicial">Mensagem</label>
                 <textarea id="mensagemInicial" placeholder="Descreva o que aconteceu..."></textarea>
             </div>
-            <button id="btnCriar" class="btn-criar" onclick="criarAtendimento()">📨 Abrir Atendimento</button>
+            <button id="btnCriar" class="btn-criar" onclick="criarAtendimento()">${icone("enviar")} Abrir Atendimento</button>
         </div>
     `;
 }
-
 async function criarAtendimento(){
     const assunto = document.getElementById("assunto").value.trim();
     const mensagem = document.getElementById("mensagemInicial").value.trim();
     const botao = document.getElementById("btnCriar");
-
-    if(!assunto){ aviso("⚠️ Informe o assunto."); return; }
-    if(!mensagem){ aviso("⚠️ Informe a mensagem."); return; }
-
+    if(!assunto){ aviso("Informe o assunto."); return; }
+    if(!mensagem){ aviso("Informe a mensagem."); return; }
     botao.disabled=true;
-    botao.textContent="⏳ Criando...";
-
+    botao.innerHTML=icone("espera")+" Criando...";
     const { data, error } = await banco
         .from("solicitacoes_suporte")
         .insert({
@@ -141,50 +125,44 @@ async function criarAtendimento(){
         })
         .select()
         .single();
-
     if(error){
         console.error(error);
-        aviso("❌ Erro: " + error.message);
+        aviso("Erro: " + error.message);
         botao.disabled=false;
-        botao.textContent="📨 Abrir Atendimento";
+        botao.innerHTML=icone("enviar")+" Abrir Atendimento";
         return;
     }
-
     chamadoAtual=data;
-    aviso("✅ Atendimento criado!");
+    aviso("Atendimento criado!");
     mostrarChat();
     carregarMensagens();
     iniciarRealtime();
 }
-
 function mostrarChat(){
     const status = chamadoAtual.status || "pendente";
-    let textoStatus="🟡 Pendente";
-    if(status==="atendimento") textoStatus="🔵 Em atendimento";
-    if(status==="resolvido") textoStatus="🟢 Resolvido";
-
+    let textoStatus="Pendente";
+    if(status==="atendimento") textoStatus="Em atendimento";
+    if(status==="resolvido") textoStatus="Resolvido";
     document.getElementById("conteudo").innerHTML=`
         <div class="info-chamado">
             <div>
                 <h2>${escapar(chamadoAtual.assunto)}</h2>
-                <p>📧 ${escapar(chamadoAtual.email)} • ${dataBR(chamadoAtual.data_criacao)}</p>
+                <p>${icone("mail")} ${escapar(chamadoAtual.email)} • ${dataBR(chamadoAtual.data_criacao)}</p>
             </div>
-            <span id="status" class="status status-${status}">${textoStatus}</span>
+            <span id="status" class="status status-${escapar(status)}">${escapar(textoStatus)}</span>
         </div>
-
         <div class="chat">
-            <div id="mensagens" class="mensagens">⏳ Carregando...</div>
-            ${status !== "resolvido" 
+            <div id="mensagens" class="mensagens">${icone("espera")} Carregando...</div>
+            ${status !== "resolvido"
                 ? `<div class="area-envio">
-                    <label class="btn-arquivo">📎<input id="arquivo" class="input-arquivo" type="file"></label>
-                    <textarea id="resposta" placeholder="Digite sua mensagem..."></textarea>
-                    <button class="btn-enviar" id="btnEnviar" onclick="enviarMensagem()">📨 Enviar</button>
+                    <label class="btn-arquivo" title="Anexar arquivo" aria-label="Anexar arquivo">${icone("arquivo")}<input id="arquivo" class="input-arquivo" type="file"></label>
+                    <textarea id="resposta" aria-label="Mensagem" placeholder="Digite sua mensagem..."></textarea>
+                    <button class="btn-enviar" id="btnEnviar" onclick="enviarMensagem()">${icone("enviar")} Enviar</button>
                    </div>`
-                : `<div class="chamado-resolvido">✅ Este atendimento foi resolvido.</div>`
+                : `<div class="chamado-resolvido">${icone("ok")} Este atendimento foi resolvido.</div>`
             }
         </div>
     `;
-
     const campo = document.getElementById("resposta");
     if(campo){
         campo.addEventListener("keydown", function(event){
@@ -194,17 +172,14 @@ function mostrarChat(){
             }
         });
     }
-
     const arquivo = document.getElementById("arquivo");
     if(arquivo){ arquivo.addEventListener("change", enviarArquivo); }
 }
-
 async function carregarMensagens(){
     if(!chamadoAtual) return;
     const area = document.getElementById("mensagens");
     if(!area) return;
     area.innerHTML="";
-
     adicionarMensagem({
         id:"original",
         chamado_id: chamadoAtual.id,
@@ -212,48 +187,38 @@ async function carregarMensagens(){
         remetente_tipo: "usuario",
         data_criacao: chamadoAtual.data_criacao
     });
-
     const { data, error } = await banco
         .from("suporte_mensagens")
         .select("*")
         .eq("chamado_id", chamadoAtual.id)
         .order("data_criacao", { ascending:true });
-
     if(error){ console.error(error); return; }
     if(data){ data.forEach(adicionarMensagem); }
     rolarChat();
 }
-
 function adicionarMensagem(msg){
     const area = document.getElementById("mensagens");
     if(!area) return;
     if(msg.id && area.querySelector(`[data-id="${msg.id}"]`)){ return; }
-
     const div = document.createElement("div");
     const adm = msg.remetente_tipo==="adm";
     div.className = "mensagem " + (adm ? "adm":"usuario");
     if(msg.id){ div.dataset.id=msg.id; }
-
     div.innerHTML=`
         ${escapar(msg.mensagem)}
-        <small>${adm ? "🛠️ Suporte" : "👤 Você"} • ${dataBR(msg.data_criacao)}</small>
+        <small>${icone(adm ? "suporte" : "pessoa")}${adm ? "Suporte" : "Você"} • ${dataBR(msg.data_criacao)}</small>
     `;
-
     area.appendChild(div);
     rolarChat();
 }
-
 async function enviarMensagem(){
     if(!chamadoAtual) return;
     const campo = document.getElementById("resposta");
     const botao = document.getElementById("btnEnviar");
     const texto = campo.value.trim();
-
     if(!texto) return;
-
     botao.disabled=true;
-    botao.textContent="⏳";
-
+    botao.innerHTML=icone("espera");
     const { error } = await banco
         .from("suporte_mensagens")
         .insert({
@@ -263,72 +228,59 @@ async function enviarMensagem(){
             mensagem: texto,
             tipo: "texto"
         });
-
     if(error){
         console.error(error);
-        aviso("❌ " + error.message);
+        aviso(error.message);
     }else{
         campo.value="";
     }
-
     botao.disabled=false;
-    botao.textContent="📨 Enviar";
+    botao.innerHTML=icone("enviar")+" Enviar";
 }
-
 async function enviarArquivo(){
     const input = document.getElementById("arquivo");
     const arquivo = input?.files?.[0];
     if(!arquivo || !chamadoAtual) return;
-
     const nome = Date.now() + "_" + arquivo.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const caminho = chamadoAtual.id + "/" + nome;
-
-    aviso("⏳ Enviando arquivo...");
-
+    aviso("Enviando arquivo...");
     const { error } = await banco.storage.from("suporte").upload(caminho, arquivo);
-
     if(error){
         console.error(error);
-        aviso("❌ " + error.message);
+        aviso(error.message);
         input.value="";
         return;
     }
-
     const { data:urlData } = banco.storage.from("suporte").getPublicUrl(caminho);
-
-    const { data, error:erroMensagem } = await banco
+    const { error:erroMensagem } = await banco
         .from("suporte_mensagens")
         .insert({
             chamado_id: chamadoAtual.id,
             remetente_tipo: "usuario",
             remetente_id: usuarioAtual.id,
-            mensagem: "📎 " + arquivo.name,
+            mensagem: arquivo.name,
             tipo: "arquivo",
             url: urlData.publicUrl
         })
         .select()
         .single();
-
     if(erroMensagem){
         console.error(erroMensagem);
-        aviso("❌ Erro ao salvar arquivo.");
+        aviso("Erro ao salvar arquivo.");
         input.value="";
         return;
     }
-
-    aviso("✅ Arquivo enviado!");
+    aviso("Arquivo enviado!");
     input.value="";
 }
-
 function iniciarRealtime(){
     if(!chamadoAtual) return;
     if(canalRealtime){ banco.removeChannel(canalRealtime); }
-
     canalRealtime = banco
         .channel("usuario-atendimento-" + chamadoAtual.id)
         .on("postgres_changes", { event:"INSERT", schema:"public", table:"suporte_mensagens", filter: "chamado_id=eq." + chamadoAtual.id }, payload => {
             adicionarMensagem(payload.new);
-            if(payload.new.remetente_tipo==="adm"){ aviso("💬 Nova resposta do suporte!"); }
+            if(payload.new.remetente_tipo==="adm"){ aviso("Nova resposta do suporte!"); }
         })
         .on("postgres_changes", { event:"UPDATE", schema:"public", table:"solicitacoes_suporte", filter: "id=eq." + chamadoAtual.id }, payload => {
             chamadoAtual = payload.new;
@@ -337,34 +289,28 @@ function iniciarRealtime(){
         })
         .subscribe(status => { console.log("Realtime:", status); });
 }
-
 function rolarChat(){
     const area = document.getElementById("mensagens");
     if(!area) return;
     setTimeout(()=>{ area.scrollTop = area.scrollHeight; }, 50);
 }
-
 function mostrarErro(erro){
     document.getElementById("conteudo").innerHTML=`
         <div class="support-state support-state--error">
-            ❌ Não foi possível carregar o suporte.
+            ${icone("erro")} Não foi possível carregar o suporte.
             <br><br>
             ${escapar(erro)}
         </div>
     `;
 }
-
 async function sair(){
     if(canalRealtime){ await banco.removeChannel(canalRealtime); }
     await banco.auth.signOut();
     localStorage.removeItem("usuario");
     window.location.href = "../painel-pessoal.html";
 }
-
 carregar();
 </script>
-
-
 <script src="../js/sidebar.js"></script>
 </body>
 </html>
