@@ -1,695 +1,195 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Notificações - SmartInspect AI</title>
-
-<link rel="stylesheet" href="../css/style.css">
-
-
-
-    <link rel="icon" type="image/png" href="../imagens/favicon.png">
-</head>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b31">
+  <title>Notificações - SmartInspect AI</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="../imagens/favicon.png">
+  </head>
 <body class="erp-page--notificacoes">
-
-<div class="menu-container"></div>
-
-<div class="content">
-
-<div class="notificacoes-header">
-
-<div>
-
-<h1>🔔 Notificações</h1>
-
-<p>
-Central de alertas e acontecimentos das obras
-</p>
-
-</div>
-
-<div
-id="contador"
-class="contador-notificacoes"
->
-
-0 não lidas
-
-</div>
-
-</div>
-
-<!-- FILTROS -->
-
-<div class="filtros-notificacoes">
-
-<button
-class="filtro active"
-data-filtro="todos"
-
->
-
-Todas </button>
-
-<button
-class="filtro"
-data-filtro="nao_lidas"
-
->
-
-🔔 Não lidas </button>
-
-<button
-class="filtro"
-data-filtro="critico"
-
->
-
-🔴 Crítico </button>
-
-<button
-class="filtro"
-data-filtro="atencao"
-
->
-
-🟠 Atenção </button>
-
-<button
-class="filtro"
-data-filtro="informativo"
-
->
-
-🟡 Informativo </button>
-
-<button
-class="filtro"
-data-filtro="concluido"
-
->
-
-🟢 Concluído </button>
-
-</div>
-
-<!-- LISTA -->
-
-<div id="listaNotificacoes">
-
-<div class="card">
-
-Carregando notificações...
-
-</div>
-
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="../js/supabase.js"></script>
-
-<script src="../js/configuracoes.js"></script>
-<script src="../js/auth.js"></script>
-
-<script src="../js/sidebar.js"></script>
-
-<script>
-
-verificarLogin();
-
-
-let notificacoes = [];
-
-let filtroAtual = "todos";
-
-
-const $ = id =>
-document.getElementById(id);
-
-
-
-/* ==========================================
-   ESCAPAR HTML
-========================================== */
-
-function esc(valor) {
-
-return String(valor || "")
-.replace(/&/g, "&amp;")
-.replace(/</g, "&lt;")
-.replace(/>/g, "&gt;")
-.replace(/"/g, "&quot;")
-.replace(/'/g, "&#039;");
-
-}
-
-
-
-/* ==========================================
-   ÍCONE DA PRIORIDADE
-========================================== */
-
-function iconePrioridade(prioridade) {
-
-if (prioridade === "critico")
-return "🔴";
-
-if (prioridade === "atencao")
-return "🟠";
-
-if (prioridade === "concluido")
-return "🟢";
-
-return "🟡";
-
-}
-
-
-
-/* ==========================================
-   NOME DA PRIORIDADE
-========================================== */
-
-function nomePrioridade(prioridade) {
-
-if (prioridade === "critico")
-return "CRÍTICO";
-
-if (prioridade === "atencao")
-return "ATENÇÃO";
-
-if (prioridade === "concluido")
-return "CONCLUÍDO";
-
-return "INFORMATIVO";
-
-}
-
-
-
-/* ==========================================
-   DATA
-========================================== */
-
-function formatarData(data) {
-
-if (!data)
-return "";
-
-return new Date(data).toLocaleString(
-"pt-BR",
-{
-dateStyle: "short",
-timeStyle: "short"
-}
-);
-
-}
-
-
-
-/* ==========================================
-   CARREGAR
-========================================== */
-
-async function carregarNotificacoes() {
-
-
-const { data, error } =
-
-await banco
-
-.from("notificacoes")
-
-.select("*")
-
-.order(
-"criado_em",
-{
-ascending: false
-}
-);
-
-
-if (error) {
-
-console.error(error);
-
-$("listaNotificacoes").innerHTML = `
-
-<div class="card">
-
-❌ Erro ao carregar notificações.
-
-<br><br>
-
-${esc(error.message)}
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-notificacoes = data || [];
-
-renderizarNotificacoes();
-
-}
-
-
-
-/* ==========================================
-   RENDERIZAR
-========================================== */
-
-function renderizarNotificacoes() {
-
-
-const naoLidas =
-
-notificacoes.filter(
-item => !item.lida
-).length;
-
-
-$("contador").textContent =
-
-`${naoLidas} não lida${naoLidas === 1 ? "" : "s"}`;
-
-
-
-let lista =
-
-notificacoes.filter(
-notificacao => {
-
-
-if (
-filtroAtual === "todos"
-)
-return true;
-
-
-if (
-filtroAtual === "nao_lidas"
-)
-return !notificacao.lida;
-
-
-return (
-notificacao.prioridade ===
-filtroAtual
-);
-
-}
-);
-
-
-
-if (!lista.length) {
-
-$("listaNotificacoes").innerHTML = `
-
-<div class="card empty-state">
-
-🔔
-
-<h3>
-
-Nenhuma notificação encontrada
-
-</h3>
-
-<p>
-
-Quando houver novos acontecimentos,
-eles aparecerão aqui.
-
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-
-$("listaNotificacoes").innerHTML =
-
-lista.map(notificacao => `
-
-<article
-class="card notificacao
-${esc(notificacao.prioridade || "informativo")}
-${notificacao.lida ? "lida" : ""}"
->
-
-
-<div class="notificacao-topo">
-
-<div>
-
-<span class="prioridade">
-
-${iconePrioridade(notificacao.prioridade)}
-
-${nomePrioridade(notificacao.prioridade)}
-
-</span>
-
-<h3>
-
-${esc(notificacao.titulo)}
-
-</h3>
-
-</div>
-
-
-<span class="data-notificacao">
-
-${formatarData(notificacao.criado_em)}
-
-</span>
-
-</div>
-
-
-
-<p>
-
-${esc(notificacao.mensagem)}
-
-</p>
-
-
-
-${
-notificacao.problema
-?
-`
-
-<p>
-
-<strong>
-Problema:
-</strong>
-
-${esc(notificacao.problema)}
-
-</p>
-
-`
-:
-""
-}
-
-
-
-${
-notificacao.impacto
-?
-`
-
-<p>
-
-<strong>
-Impacto:
-</strong>
-
-${esc(notificacao.impacto)}
-
-</p>
-
-`
-:
-""
-}
-
-
-
-${
-notificacao.recomendacao
-?
-`
-
-<p>
-
-<strong>
-Ação recomendada:
-</strong>
-
-${esc(notificacao.recomendacao)}
-
-</p>
-
-`
-:
-""
-}
-
-
-
-<div class="notificacao-acoes">
-
-
-${
-!notificacao.lida
-?
-
-`
-
-<button
-class="botao-pequeno botao-lida"
-onclick="marcarLida(${notificacao.id})"
->
-
-✅ Marcar como lida
-
-</button>
-
-`
-
-:
-
-`
-
-<button
-class="botao-pequeno botao-lida"
-disabled
->
-
-✓ Lida
-
-</button>
-
-`
-}
-
-
-
-<button
-class="botao-pequeno botao-excluir"
-onclick="excluirNotificacao(${notificacao.id})"
->
-
-🗑 Excluir
-
-</button>
-
-
-</div>
-
-
-</article>
-
-`).join("");
-
-}
-
-
-
-/* ==========================================
-   MARCAR COMO LIDA
-========================================== */
-
-async function marcarLida(id) {
-
-
-const { error } =
-
-await banco
-
-.from("notificacoes")
-
-.update({
-lida: true
-})
-
-.eq(
-"id",
-id
-);
-
-
-if (error) {
-
-console.error(error);
-
-alert(
-"Não foi possível marcar a notificação."
-);
-
-return;
-
-}
-
-
-const notificacao =
-notificacoes.find(
-item => item.id === id
-);
-
-
-if (notificacao)
-notificacao.lida = true;
-
-
-renderizarNotificacoes();
-
-}
-
-
-
-/* ==========================================
-   EXCLUIR
-========================================== */
-
-async function excluirNotificacao(id) {
-
-
-if (
-!confirm(
-"Deseja excluir esta notificação?"
-)
-)
-return;
-
-
-const { error } =
-
-await banco
-
-.from("notificacoes")
-
-.delete()
-
-.eq(
-"id",
-id
-);
-
-
-if (error) {
-
-console.error(error);
-
-alert(
-"Não foi possível excluir a notificação."
-);
-
-return;
-
-}
-
-
-notificacoes =
-notificacoes.filter(
-item => item.id !== id
-);
-
-
-renderizarNotificacoes();
-
-}
-
-
-
-/* ==========================================
-   FILTROS
-========================================== */
-
-document
-.querySelectorAll(".filtro")
-.forEach(botao => {
-
-
-botao.addEventListener(
-"click",
-() => {
-
-
-filtroAtual =
-botao.dataset.filtro;
-
-
-document
-.querySelectorAll(".filtro")
-.forEach(item =>
-
-item.classList.toggle(
-"active",
-item === botao
-)
-
-);
-
-
-renderizarNotificacoes();
-
-}
-
-);
-
-});
-
-
-
-/* ==========================================
-   ATUALIZAÇÃO AUTOMÁTICA
-========================================== */
-
-setInterval(
-carregarNotificacoes,
-30000
-);
-
-
-
-/* ==========================================
-   INICIAR
-========================================== */
-
-carregarNotificacoes();
-
-</script>
-
+  <div class="menu-container"></div>
+  <main class="content">
+    <header class="notificacoes-header">
+      <div>
+        <h1><svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" stroke-linecap="round" stroke-linejoin="round"/></svg>Notificações</h1>
+        <p>Central de alertas e acontecimentos das obras</p>
+      </div>
+      <div id="contador" class="contador-notificacoes">0 não lidas</div>
+    </header>
+    <nav class="filtros-notificacoes" aria-label="Filtrar notificações">
+      <button class="filtro active" data-filtro="todos" type="button">Todas</button>
+      <button class="filtro" data-filtro="nao_lidas" type="button">Não lidas</button>
+      <button class="filtro" data-filtro="critico" type="button">Crítico</button>
+      <button class="filtro" data-filtro="atencao" type="button">Atenção</button>
+      <button class="filtro" data-filtro="informativo" type="button">Informativo</button>
+      <button class="filtro" data-filtro="concluido" type="button">Concluído</button>
+    </nav>
+    <section id="listaNotificacoes" aria-live="polite" aria-label="Lista de notificações">
+      <div class="card">Carregando notificações...</div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/configuracoes.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script>
+    let notificacoes = [];
+    let filtroAtual = "todos";
+    const $ = id => document.getElementById(id);
+
+    async function verificarLogin() {
+      const cliente = window.banco;
+      if (!cliente?.auth || typeof cliente.auth.getSession !== "function") {
+        console.error("O cliente de autenticação não foi inicializado.");
+        $("listaNotificacoes").innerHTML = '<div class="card">Não foi possível validar sua sessão. Atualize a página e tente novamente.</div>';
+        return false;
+      }
+      const { data, error } = await cliente.auth.getSession();
+      if (error) {
+        console.error("Falha ao validar a sessão:", error);
+        $("listaNotificacoes").innerHTML = '<div class="card">Não foi possível validar sua sessão. Atualize a página e tente novamente.</div>';
+        return false;
+      }
+      if (!data?.session) {
+        window.location.replace("../login.html");
+        return false;
+      }
+      return true;
+    }
+
+    function esc(valor) {
+      return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function iconePrioridade(prioridade) {
+      if (prioridade === "critico") return '<span class="prioridade-icon" aria-hidden="true"></span>';
+      if (prioridade === "atencao") return '<span class="prioridade-icon" aria-hidden="true"></span>';
+      if (prioridade === "concluido") return '<span class="prioridade-icon" aria-hidden="true"></span>';
+      return '<span class="prioridade-icon" aria-hidden="true"></span>';
+    }
+
+    function nomePrioridade(prioridade) {
+      if (prioridade === "critico") return "CRÍTICO";
+      if (prioridade === "atencao") return "ATENÇÃO";
+      if (prioridade === "concluido") return "CONCLUÍDO";
+      return "INFORMATIVO";
+    }
+
+    function formatarData(data) {
+      if (!data) return "";
+      const valor = new Date(data);
+      if (Number.isNaN(valor.getTime())) return "";
+      return esc(valor.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" }));
+    }
+
+    async function carregarNotificacoes() {
+      const { data, error } = await banco
+        .from("notificacoes")
+        .select("*")
+        .order("criado_em", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        $("listaNotificacoes").innerHTML = `
+          <div class="card">
+            <strong>Erro ao carregar notificações.</strong>
+            <p>${esc(error.message)}</p>
+          </div>`;
+        return;
+      }
+      notificacoes = data || [];
+      renderizarNotificacoes();
+    }
+
+    function renderizarNotificacoes() {
+      const naoLidas = notificacoes.filter(item => !item.lida).length;
+      $("contador").textContent = `${naoLidas} não lida${naoLidas === 1 ? "" : "s"}`;
+
+      const lista = notificacoes.filter(notificacao => {
+        if (filtroAtual === "todos") return true;
+        if (filtroAtual === "nao_lidas") return !notificacao.lida;
+        return notificacao.prioridade === filtroAtual;
+      });
+
+      if (!lista.length) {
+        $("listaNotificacoes").innerHTML = `
+          <div class="card empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Nenhuma notificação encontrada</h3>
+            <p>Quando houver novos acontecimentos,<br>eles aparecerão aqui.</p>
+          </div>`;
+        return;
+      }
+
+      $("listaNotificacoes").innerHTML = lista.map(notificacao => `
+        <article class="card notificacao ${esc(notificacao.prioridade || "informativo")} ${notificacao.lida ? "lida" : ""}">
+          <div class="notificacao-topo">
+            <div>
+              <span class="prioridade">${iconePrioridade(notificacao.prioridade)}${esc(nomePrioridade(notificacao.prioridade))}</span>
+              <h3>${esc(notificacao.titulo)}</h3>
+            </div>
+            <span class="data-notificacao">${formatarData(notificacao.criado_em)}</span>
+          </div>
+          <p>${esc(notificacao.mensagem)}</p>
+          ${notificacao.problema ? `<p><strong>Problema:</strong> ${esc(notificacao.problema)}</p>` : ""}
+          ${notificacao.impacto ? `<p><strong>Impacto:</strong> ${esc(notificacao.impacto)}</p>` : ""}
+          ${notificacao.recomendacao ? `<p><strong>Ação recomendada:</strong> ${esc(notificacao.recomendacao)}</p>` : ""}
+          <div class="notificacao-acoes">
+            ${!notificacao.lida
+              ? `<button class="botao-pequeno botao-lida" type="button" onclick="marcarLida('${esc(notificacao.id)}')"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Marcar como lida</button>`
+              : `<button class="botao-pequeno botao-lida" type="button" disabled><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Lida</button>`}
+            <button class="botao-pequeno botao-excluir" type="button" onclick="excluirNotificacao('${esc(notificacao.id)}')"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M5 7l1 14h12l1-14M9 7V4h6v3" stroke-linecap="round" stroke-linejoin="round"/></svg>Excluir</button>
+          </div>
+        </article>`).join("");
+    }
+
+    async function marcarLida(id) {
+      const { error } = await banco.from("notificacoes").update({ lida: true }).eq("id", id);
+      if (error) {
+        console.error(error);
+        alert("Não foi possível marcar a notificação.");
+        return;
+      }
+      const notificacao = notificacoes.find(item => String(item.id) === String(id));
+      if (notificacao) notificacao.lida = true;
+      renderizarNotificacoes();
+    }
+
+    async function excluirNotificacao(id) {
+      if (!confirm("Deseja excluir esta notificação?")) return;
+      const { error } = await banco.from("notificacoes").delete().eq("id", id);
+      if (error) {
+        console.error(error);
+        alert("Não foi possível excluir a notificação.");
+        return;
+      }
+      notificacoes = notificacoes.filter(item => String(item.id) !== String(id));
+      renderizarNotificacoes();
+    }
+
+    document.querySelectorAll(".filtro").forEach(botao => {
+      botao.addEventListener("click", () => {
+        filtroAtual = botao.dataset.filtro;
+        document.querySelectorAll(".filtro").forEach(item => item.classList.toggle("active", item === botao));
+        renderizarNotificacoes();
+      });
+    });
+
+    async function iniciarNotificacoes() {
+      if (!(await verificarLogin())) return;
+      await carregarNotificacoes();
+      window.setInterval(carregarNotificacoes, 30000);
+    }
+
+    iniciarNotificacoes();
+  </script>
 </body>
-
 </html>
