@@ -169,6 +169,16 @@ Aguardando imagem...
 // Configure com a origem HTTPS pública do FastAPI (por exemplo, um túnel seguro).
 // A Vercel estática não executa as rotas Python do backend.
 const IA_API_BASE = String(window.SMARTINSPECT_IA_API_BASE || "").trim().replace(/\/+$/, "");
+const EMPRESA_ID = new URLSearchParams(window.location.search).get("empresa_id") ||
+    new URLSearchParams(window.location.search).get("empresa") || "";
+
+function empresaIdAtiva(){
+    if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(EMPRESA_ID)){
+        throw new Error("Não identifiquei a empresa ativa. Abra a IA pelo painel da empresa.");
+    }
+    return EMPRESA_ID;
+}
+
 function endpointIA(caminho){
     if(!IA_API_BASE) throw new Error("A IA ainda não está conectada. Configure window.SMARTINSPECT_IA_API_BASE com a URL HTTPS do backend FastAPI.");
     let base;
@@ -339,11 +349,14 @@ async function conversarIA(){
 
                     headers: await headersIA(true),
 
-                    body:
+                        body:
                         JSON.stringify({
 
                             mensagem:
-                                pergunta
+                                pergunta,
+
+                            empresa_id:
+                                empresaIdAtiva()
 
                         })
 
@@ -489,7 +502,7 @@ async function conversarIA(){
 
         adicionarMensagem(
 
-            " Não foi possível conectar ao servidor da IA.",
+            limparEmojis(error?.message || "Não foi possível conectar ao servidor da IA."),
 
             "ia"
 
@@ -596,6 +609,12 @@ async function analisarImagem(){
 
 
     try{
+
+
+        formData.append(
+            "empresa_id",
+            empresaIdAtiva()
+        );
 
 
         const resposta =
