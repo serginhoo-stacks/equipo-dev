@@ -63,7 +63,8 @@
                 pessoa: '<path d="M20 21a8 8 0 0 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>',
                 data: '<rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path>',
                 observacao: '<path d="M4 4h16v13H8l-4 4z"></path><path d="M8 9h8M8 13h5"></path>',
-                ver: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle>'
+                ver: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle>',
+                excluir: '<path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v7m6-7v7"></path>'
             };
             const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             svg.setAttribute("viewBox", "0 0 24 24");
@@ -123,7 +124,12 @@
             ver.dataset.action = "ver";
             ver.dataset.id = String(inspecao.id);
             ver.append(criarIcone("ver"), document.createTextNode("Ver detalhes"));
-            acoes.append(ver);
+            const excluir = criarElemento("button", "erp-ui-button erp-ui-button--danger");
+            excluir.type = "button";
+            excluir.dataset.action = "excluir";
+            excluir.dataset.id = String(inspecao.id);
+            excluir.append(criarIcone("excluir"), document.createTextNode("Excluir"));
+            acoes.append(ver, excluir);
             card.append(acoes);
             return card;
         }
@@ -160,10 +166,37 @@
             window.location.href = "nova_inspecao.html";
         });
 
-        lista.addEventListener("click", (evento) => {
-            const botao = evento.target.closest('button[data-action="ver"]');
+        lista.addEventListener("click", async (evento) => {
+            const botao = evento.target.closest("button[data-action]");
             if (!botao || !lista.contains(botao)) return;
-            window.location.href = `detalhes_inspecao.html?id=${encodeURIComponent(botao.dataset.id)}`;
+            const id = botao.dataset.id;
+
+            if (botao.dataset.action === "ver") {
+                window.location.href = `detalhes_inspecao.html?id=${encodeURIComponent(id)}`;
+                return;
+            }
+
+            if (botao.dataset.action !== "excluir") return;
+            const confirmou = window.confirm("Tem certeza que deseja excluir esta inspeção? As informações e fotos vinculadas serão removidas.");
+            if (!confirmou) return;
+
+            botao.disabled = true;
+            try {
+                const fotos = await window.banco.from("inspecao_fotos").delete().eq("inspecao_id", id);
+                if (fotos.error) throw fotos.error;
+
+                const resultado = await window.banco.from("inspecoes").delete().eq("id", id);
+                if (resultado.error) throw resultado.error;
+
+                await carregarInspecoes();
+                feedback.textContent = "Inspeção excluída com sucesso.";
+                feedback.className = "erp-ui-feedback is-success";
+            } catch (erro) {
+                console.error("Erro ao excluir inspeção:", erro);
+                botao.disabled = false;
+                feedback.textContent = "Não foi possível excluir a inspeção. Tente novamente.";
+                feedback.className = "erp-ui-feedback is-error";
+            }
         });
 
         carregarInspecoes();
