@@ -106,25 +106,22 @@
                 return;
             }
 
-            const endereco = document.getElementById("endereco").value.trim();
-            const responsavel = document.getElementById("responsavel").value.trim();
-            const dataInicio = document.getElementById("data_inicio").value;
-            const status = document.getElementById("status").value;
+            // A tabela public.obras atual possui somente nome e empresa_id
+            // como campos preenchíveis. Os demais dados deste formulário
+            // ficam preparados para quando o esquema for ampliado.
 
             botaoSalvar.disabled = true;
             mostrarMensagem("Salvando obra…");
 
             try {
-                const { data: authData, error: authError } = await cliente.auth.getUser();
+                const { error: authError } = await cliente.auth.getUser();
                 if (authError) throw authError;
+                const empresaId = window.smartInspectCompanyId;
+                if (!empresaId) throw new Error("Nenhuma empresa foi selecionada.");
 
                 const { error } = await cliente.from("obras").insert([{
                     nome,
-                    endereco: endereco || null,
-                    responsavel: responsavel || null,
-                    data_inicio: dataInicio || null,
-                    status,
-                    criado_por: authData?.user?.id || null
+                    empresa_id: empresaId
                 }]);
 
                 if (error) throw error;
@@ -135,7 +132,8 @@
                 }, 900);
             } catch (erro) {
                 console.error("Erro ao cadastrar obra:", erro);
-                mostrarMensagem("Não foi possível cadastrar a obra. Confira os dados e tente novamente.", "is-error");
+                const detalhe = [erro?.code, erro?.message, erro?.details].filter(Boolean).join(" — ");
+                mostrarMensagem(detalhe || "Não foi possível cadastrar a obra. Confira os dados e tente novamente.", "is-error");
                 botaoSalvar.disabled = false;
             }
         });
