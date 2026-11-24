@@ -26,7 +26,7 @@
                     <p class="erp-team-lead">Usuários cadastrados, níveis de acesso e presença.</p>
                 </div>
             </div>
-            <a class="erp-team-invite-button" href="convites.html" data-company-context>
+            <a class="erp-team-invite-button" href="../convites.html" data-company-context>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"></path></svg>
                 <span>Convidar por e-mail</span>
             </a>
@@ -208,9 +208,30 @@
         async function carregarEquipe() {
             try {
                 if (!window.banco?.from) throw new Error("Cliente Supabase indisponível.");
-                const { data, error } = await window.banco.from("usuarios").select("*").order("id", { ascending: false });
-                if (error) throw error;
-                equipe = Array.isArray(data) ? data : [];
+                const { data: membros, error: membrosError } = await window.banco
+                    .from("membros_empresa")
+                    .select("usuario_id,cargo,ativo,created_at")
+                    .eq("empresa_id", window.smartInspectCompanyId)
+                    .eq("ativo", true)
+                    .order("created_at", { ascending: false });
+                if (membrosError) throw membrosError;
+                const ids = [...new Set((membros || []).map((membro) => membro.usuario_id).filter(Boolean))];
+                let perfis = [];
+                if (ids.length) {
+                    const { data, error } = await window.banco.from("perfis").select("id,nome,email,avatar_url").in("id", ids);
+                    if (error) throw error;
+                    perfis = data || [];
+                }
+                const porId = new Map(perfis.map((perfil) => [String(perfil.id), perfil]));
+                equipe = (membros || []).map((membro) => ({
+                    ...(porId.get(String(membro.usuario_id)) || {}),
+                    id: membro.usuario_id,
+                    cargo: membro.cargo,
+                    nivel_acesso: membro.cargo,
+                    foto_url: porId.get(String(membro.usuario_id))?.avatar_url || null,
+                    ultimo_acesso: null,
+                    ultimo_heartbeat: null
+                }));
                 mostrarEquipe();
                 feedback.textContent = "";
             } catch (erro) {
@@ -236,17 +257,14 @@
         async function atualizarHeartbeat() {
             const usuario = await obterUsuarioLogado();
             if (!usuario) return;
-            const agora = new Date().toISOString();
-            const { error } = await window.banco.from("usuarios").update({ ultimo_heartbeat: agora }).eq("auth_id", usuario.id);
-            if (error) console.error("Erro ao atualizar presença:", error);
+            // O esquema atual não possui heartbeat em perfis/membros_empresa.
+            // A presença em tempo real será adicionada quando houver uma tabela própria.
         }
 
         async function registrarAcesso() {
             const usuario = await obterUsuarioLogado();
             if (!usuario) return;
-            const agora = new Date().toISOString();
-            const { error } = await window.banco.from("usuarios").update({ ultimo_acesso: agora, ultimo_heartbeat: agora }).eq("auth_id", usuario.id);
-            if (error) console.error("Erro ao registrar acesso:", error);
+            // Não gravar acesso em uma tabela inexistente.
         }
 
         async function iniciarPresenca() {
@@ -258,7 +276,7 @@
             if (!window.banco?.channel || canalEquipe) return;
             canalEquipe = window.banco
                 .channel("equipe-tempo-real")
-                .on("postgres_changes", { event: "*", schema: "public", table: "usuarios" }, carregarEquipe)
+                .on("postgres_changes", { event: "*", schema: "public", table: "membros_empresa", filter: `empresa_id=eq.${window.smartInspectCompanyId}` }, carregarEquipe)
                 .subscribe();
         }
 
