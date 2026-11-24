@@ -32,6 +32,7 @@
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/supabase.js"></script>
+  <script src="../js/notificacoes.js"></script>
   <script src="../js/configuracoes.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/sidebar.js"></script>
@@ -91,22 +92,14 @@
     }
 
     async function carregarNotificacoes() {
-      const { data, error } = await banco
-        .from("notificacoes")
-        .select("*")
-        .order("criado_em", { ascending: false });
-
-      if (error) {
+      try {
+        const profile = await window.SmartInspectNotifications.currentProfile(banco);
+        notificacoes = profile?.id ? await window.SmartInspectNotifications.list(banco, profile.id, { limit: 100 }) : [];
+        renderizarNotificacoes();
+      } catch (error) {
         console.error(error);
-        $("listaNotificacoes").innerHTML = `
-          <div class="card">
-            <strong>Erro ao carregar notificações.</strong>
-            <p>${esc(error.message)}</p>
-          </div>`;
-        return;
+        $("listaNotificacoes").innerHTML = `<div class="card"><strong>Erro ao carregar notificações.</strong><p>${esc(error.message)}</p></div>`;
       }
-      notificacoes = data || [];
-      renderizarNotificacoes();
     }
 
     function renderizarNotificacoes() {
@@ -186,6 +179,10 @@
     async function iniciarNotificacoes() {
       if (!(await verificarLogin())) return;
       await carregarNotificacoes();
+      try {
+        const profile = await window.SmartInspectNotifications.currentProfile(banco);
+        if (profile?.id) window.SmartInspectNotifications.subscribe(banco, profile.id, carregarNotificacoes, "erp-notificacoes");
+      } catch (error) { console.warn("Realtime do ERP indisponível:", error); }
       window.setInterval(carregarNotificacoes, 30000);
     }
 
