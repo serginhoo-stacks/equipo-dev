@@ -2922,3 +2922,38 @@ body.erp-page--detalhes-inspecao .sr-only { position: absolute; width: 1px; heig
   body.erp-page--detalhes-inspecao .photos-grid { grid-template-columns: 1fr; }
   body.erp-page--detalhes-inspecao .close-photo { top: 12px; right: 12px; }
 }
+
+
+/* Ajustes de consistência visual dos cards de detalhes. */
+body.erp-page--detalhes-inspecao .detail-card.full {
+  display: block;
+  width: auto;
+  margin-top: 0;
+}
+body.erp-page--detalhes-inspecao .detail-card-heading {
+  justify-content: flex-start;
+  width: 100%;
+}
+body.erp-page--detalhes-inspecao .detail-card-heading h2 {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+body.erp-page--detalhes-inspecao .observacao {
+  display: block;
+  width: 100%;
+}
+body.erp-page--detalhes-inspecao .photos-grid {
+  width: 100%;
+}
+body.erp-page--detalhes-inspecao .photos-grid > .empty-photos {
+  width: 100%;
+  min-height: 76px;
+}
+body.erp-page--detalhes-inspecao .details-loading {
+  width: 100%;
+}
+@media (min-width: 801px) {
+  body.erp-page--detalhes-inspecao .detail-card.full .detail-card-heading {
+    margin-bottom: 18px;
+  }
+}
