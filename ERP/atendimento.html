@@ -242,22 +242,13 @@ async function verificarADM(){
         data.session;
 
 
-    const {
-        data:usuario,
-        error:erroUsuario
-    } = await banco
-
-        .from("usuarios")
-
-        .select(
-            "nome,email,nivel_acesso,status"
-        )
-
-        .eq(
-            "auth_id",
-            session.user.id
-        )
-
+        const {
+            data:perfil,
+            error:erroUsuario
+        } = await banco
+        .from("perfis")
+        .select("id,nome,email")
+        .eq("id", session.user.id)
         .maybeSingle();
 
 
@@ -272,11 +263,15 @@ async function verificarADM(){
     }
 
 
-    if(
-        !usuario ||
-        usuario.nivel_acesso !== "adm" ||
-        usuario.status !== "ativo"
-    ){
+        const { data: membro, error: erroMembro } = await banco
+            .from("membros_empresa")
+            .select("cargo,ativo")
+            .eq("usuario_id", session.user.id)
+            .eq("ativo", true)
+            .eq("cargo", "adm")
+            .maybeSingle();
+
+        if(erroMembro || !perfil || !membro){
 
         alert(
             "Acesso restrito ao administrador."
@@ -290,9 +285,10 @@ async function verificarADM(){
     }
 
 
-    usuarioADM = {
-
-        ...usuario,
+        usuarioADM = {
+            ...perfil,
+            nivel_acesso: membro.cargo,
+            status: "ativo",
 
         id:
             session.user.id
