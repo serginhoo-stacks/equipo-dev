@@ -10,9 +10,10 @@
     if (!db?.auth || typeof db.from !== "function") return null;
     const { data: authData, error: authError } = await db.auth.getUser();
     if (authError || !authData?.user) return null;
-    const { data: profile, error } = await db.from("usuarios").select("id,auth_id,nome,email,foto_url").eq("auth_id", authData.user.id).maybeSingle();
-    if (error) throw error;
-    return profile || { auth_id: authData.user.id, email: authData.user.email };
+    let profile = null;
+    const { data, error } = await db.rpc("perfil_obter_meu");
+    if (!error) profile = Array.isArray(data) ? data[0] || null : data;
+    return { ...(profile || {}), id: authData.user.id, auth_id: authData.user.id, email: profile?.email || authData.user.email };
   }
 
   async function list(db, profileId, options = {}) {
@@ -54,9 +55,7 @@ async function criarNotificacao({ titulo, mensagem, categoria = "informativo", p
   try {
     const { data: authData, error: authError } = await banco.auth.getUser();
     if (authError || !authData?.user) return null;
-    const { data: usuario, error: usuarioError } = await banco.from("usuarios").select("id").eq("auth_id", authData.user.id).maybeSingle();
-    if (usuarioError || !usuario) return null;
-    const { data, error } = await banco.from("notificacoes").insert([{ usuario_id: usuario.id, obra_id, titulo, mensagem, categoria, prioridade, problema, impacto, recomendacao, lida: false }]).select().single();
+    const { data, error } = await banco.from("notificacoes").insert([{ usuario_id: authData.user.id, obra_id, titulo, mensagem, categoria, prioridade, problema, impacto, recomendacao, lida: false }]).select().single();
     if (error) throw error;
     return data;
   } catch (error) {
