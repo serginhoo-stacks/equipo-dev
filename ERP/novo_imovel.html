@@ -122,6 +122,7 @@
                 const { data, error } = await window.banco
                     .from("obras")
                     .select("id, nome")
+                    .eq("empresa_id", window.smartInspectCompanyId)
                     .order("id", { ascending: false });
                 if (error) throw error;
 
@@ -148,6 +149,11 @@
 
             const nome = document.getElementById("nome").value.trim();
             const obraId = selectObra.value;
+            const empresaId = window.smartInspectCompanyId;
+            if (!empresaId) {
+                mostrarMensagem("Selecione uma empresa antes de cadastrar o imóvel.", "is-error");
+                return;
+            }
             if (!obraId || !nome) {
                 mostrarMensagem("Selecione uma obra e informe o nome do imóvel.", "is-error");
                 return;
@@ -185,6 +191,7 @@
 
                 const { error } = await cliente.from("imoveis").insert([{
                     obra_id: obraId,
+                    empresa_id: empresaId,
                     nome,
                     tipo: document.getElementById("tipo").value,
                     endereco: document.getElementById("endereco").value.trim() || null,
@@ -200,7 +207,8 @@
                 await carregarObras();
             } catch (erro) {
                 console.error("Erro ao cadastrar imóvel:", erro);
-                mostrarMensagem("Não foi possível salvar o imóvel. Confira os dados e tente novamente.", "is-error");
+                const detalhe = [erro?.code, erro?.message, erro?.details].filter(Boolean).join(" — ");
+                mostrarMensagem(detalhe || "Não foi possível salvar o imóvel. Confira os dados e tente novamente.", "is-error");
             } finally {
                 botaoSalvar.disabled = false;
                 textoBotao.textContent = "Salvar imóvel";
