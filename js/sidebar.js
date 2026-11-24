@@ -6,6 +6,11 @@
   const LOGIN_URL = new URL("../login.html", window.location.href);
   const COLLAPSED_KEY = "smartinspect:erp-sidebar-collapsed";
 
+  // Deixa o contexto disponível para scripts inline que executam antes do DOMContentLoaded.
+  window.smartInspectCompanyId = new URLSearchParams(window.location.search).get("empresa_id") ||
+    new URLSearchParams(window.location.search).get("empresa") ||
+    (() => { try { return localStorage.getItem("smartinspect:empresa_id") || ""; } catch { return ""; } })();
+
   function readCachedUser() {
     try {
       return JSON.parse(localStorage.getItem("usuario") || "null");
@@ -16,7 +21,16 @@
 
   function currentCompanyId() {
     const params = new URLSearchParams(window.location.search);
-    return params.get("empresa_id") || params.get("empresa") || "";
+    const fromUrl = params.get("empresa_id") || params.get("empresa") || "";
+    if (fromUrl) {
+      try { localStorage.setItem("smartinspect:empresa_id", fromUrl); } catch { /* storage opcional */ }
+      window.smartInspectCompanyId = fromUrl;
+      return fromUrl;
+    }
+    let saved = "";
+    try { saved = localStorage.getItem("smartinspect:empresa_id") || ""; } catch { /* storage opcional */ }
+    window.smartInspectCompanyId = saved;
+    return saved;
   }
 
   function addCompanyContext(root) {
@@ -48,9 +62,10 @@
     if (roleElement) roleElement.textContent = role || "Conta conectada";
     if (avatar) {
       const initials = name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toLocaleUpperCase("pt-BR") || "U";
-      if (user.foto_url) {
+      const fotoUrl = user.foto_url || user.avatar_url;
+      if (fotoUrl) {
         const image = document.createElement("img");
-        image.src = user.foto_url;
+        image.src = fotoUrl;
         image.alt = "";
         image.referrerPolicy = "no-referrer";
         image.onerror = () => { avatar.replaceChildren(document.createTextNode(initials)); };
@@ -83,16 +98,12 @@
       }
 
       let profile = null;
-      const { data, error } = await db
-        .from("usuarios")
-        .select("*")
-        .eq("auth_id", authResult.user.id)
-        .maybeSingle();
-
-      if (error) {
-        console.warn("Não foi possível carregar o perfil da tabela usuarios:", error.message);
+      const { data, error } = await db.rpc("perfil_obter_meu");
+      if (!error) {
+        profile = Array.isArray(data) ? data[0] || null : data;
       } else {
-        profile = data;
+        // O Auth continua sendo um fallback válido caso a RPC ainda não esteja publicada.
+        console.warn("Não foi possível carregar perfil_obter_meu; usando dados do Auth:", error.message);
       }
 
       setProfile(root, profile, authResult.user);
@@ -128,7 +139,7 @@
   async function loadUnreadNotifications(root, account) {
     const badge = root.querySelector("#badgeNotificacoes");
     if (!badge) return;
-    const userId = account?.profile?.id;
+    const userId = account?.authUser?.id || account?.profile?.id;
     const db = window.banco;
     if (!userId || !db?.from) return;
 
