@@ -4,198 +4,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Detalhes de uma inspeção técnica">
-    <title>Detalhes da Inspeção — SmartInspect AI</title>
+    <meta name="description" content="Detalhes de uma inspeção técnica no SmartInspect AI.">
+    <title>Detalhes da inspeção — SmartInspect AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
-
-
     <link rel="icon" type="image/png" href="../imagens/favicon.png">
 </head>
 
 <body class="erp-page--detalhes-inspecao">
-<div class="menu-container"></div>
+    <div class="menu-container"></div>
 
-
-
-
-
-<main class="content">
-    <div class="inspection-details">
-        <header class="details-header">
-            <div>
-                <p class="eyebrow">INSPEÇÃO TÉCNICA</p>
-                <h1 id="tituloPagina">Detalhes da inspeção</h1>
-                <p class="subtitle" id="subtitulo">Carregando informações...</p>
-            </div>
-            <a href="inspecoes.html" class="secondary-button back-button">← Voltar</a>
-        </header>
-
-        <div id="mensagemErro" class="error-message" hidden></div>
-        <div id="carregando" class="loading">⏳ Carregando inspeção...</div>
-
-        <div id="conteudo" class="details-grid" hidden>
-            <section class="detail-card">
-                <h2>📋 Informações</h2>
-                <div class="detail-row"><div class="detail-label">ID</div><div class="detail-value" id="idInspecao">—</div></div>
-                <div class="detail-row"><div class="detail-label">Obra</div><div class="detail-value" id="obraNome">—</div></div>
-                <div class="detail-row"><div class="detail-label">Tipo</div><div class="detail-value" id="tipoInspecao">—</div></div>
-                <div class="detail-row"><div class="detail-label">Data</div><div class="detail-value" id="dataInspecao">—</div></div>
-                <div class="detail-row"><div class="detail-label">Responsável</div><div class="detail-value" id="responsavel">—</div></div>
-                <div class="detail-row"><div class="detail-label">Status</div><div class="detail-value" id="statusInspecao">—</div></div>
-            </section>
-
-            <section class="detail-card">
-                <h2>🏢 Obra</h2>
-                <div class="detail-row"><div class="detail-label">Nome</div><div class="detail-value" id="obraDetalheNome">—</div></div>
-                <div class="detail-row"><div class="detail-label">Endereço</div><div class="detail-value" id="obraEndereco">—</div></div>
-                <div class="detail-row"><div class="detail-label">Responsável</div><div class="detail-value" id="obraResponsavel">—</div></div>
-                <div class="detail-row"><div class="detail-label">Status da obra</div><div class="detail-value" id="obraStatus">—</div></div>
-            </section>
-
-            <section class="detail-card full">
-                <h2>📝 Observações</h2>
-                <div class="observacao" id="observacao">Nenhuma observação registrada.</div>
-            </section>
-
-            <section class="detail-card full">
-                <h2>📸 Evidências fotográficas</h2>
-                <div id="photosGrid" class="photos-grid">
-                    <div class="empty-photos">⏳ Carregando fotos...</div>
+    <main class="content erp-ui-shell">
+        <div class="inspection-details">
+            <header class="erp-ui-page-heading details-header">
+                <div class="erp-ui-title-lockup">
+                    <span class="erp-ui-icon-tile" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M9 5h6M9 3h6a2 2 0 0 1 2 2v1h2v15H5V6h2V5a2 2 0 0 1 2-2Z"></path><path d="m9 14 2 2 4-4M9 10h.01"></path></svg>
+                    </span>
+                    <div>
+                        <p class="erp-ui-page-kicker">INSPEÇÃO TÉCNICA</p>
+                        <h1 id="tituloPagina">Detalhes da inspeção</h1>
+                        <p class="erp-ui-page-lead" id="subtitulo">Carregando informações...</p>
+                    </div>
                 </div>
-            </section>
+                <a href="inspecoes.html" class="erp-ui-button erp-ui-button--secondary back-button">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+                    <span>Voltar às inspeções</span>
+                </a>
+            </header>
+
+            <div id="mensagemErro" class="erp-ui-feedback is-error" role="alert" hidden></div>
+            <div id="carregando" class="erp-ui-empty-state details-loading" role="status" aria-live="polite">
+                <svg class="status-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                <span>Carregando inspeção...</span>
+            </div>
+
+            <div id="conteudo" class="details-grid" hidden>
+                <section class="detail-card" aria-labelledby="informacoesTitulo">
+                    <div class="detail-card-heading">
+                        <span class="detail-card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"></path><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+                        </span>
+                        <h2 id="informacoesTitulo">Informações da inspeção</h2>
+                    </div>
+                    <div class="detail-row"><div class="detail-label">ID</div><div class="detail-value" id="idInspecao">—</div></div>
+                    <div class="detail-row"><div class="detail-label">Obra</div><div class="detail-value" id="obraNome">—</div></div>
+                    <div class="detail-row"><div class="detail-label">Tipo</div><div class="detail-value" id="tipoInspecao">—</div></div>
+                    <div class="detail-row"><div class="detail-label">Data</div><div class="detail-value" id="dataInspecao">—</div></div>
+                    <div class="detail-row"><div class="detail-label">Responsável</div><div class="detail-value" id="responsavel">—</div></div>
+                    <div class="detail-row"><div class="detail-label">Status</div><div class="detail-value" id="statusInspecao">—</div></div>
+                </section>
+
+                <section class="detail-card" aria-labelledby="obraTitulo">
+                    <div class="detail-card-heading">
+                        <span class="detail-card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5M9 9h.01M15 9h.01M9 12h.01M15 12h.01"></path></svg>
+                        </span>
+                        <h2 id="obraTitulo">Obra vinculada</h2>
+                    </div>
+                    <div class="detail-row"><div class="detail-label">Nome</div><div class="detail-value" id="obraDetalheNome">—</div></div>
+                    <div class="detail-row"><div class="detail-label">Endereço</div><div class="detail-value" id="obraEndereco">—</div></div>
+                    <div class="detail-row"><div class="detail-label">Responsável</div><div class="detail-value" id="obraResponsavel">—</div></div>
+                    <div class="detail-row"><div class="detail-label">Status da obra</div><div class="detail-value" id="obraStatus">—</div></div>
+                </section>
+
+                <section class="detail-card full" aria-labelledby="observacoesTitulo">
+                    <div class="detail-card-heading">
+                        <span class="detail-card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path><path d="M7 8h10M7 12h10M7 16h6"></path></svg>
+                        </span>
+                        <h2 id="observacoesTitulo">Observações</h2>
+                    </div>
+                    <div class="observacao" id="observacao">Nenhuma observação registrada.</div>
+                </section>
+
+                <section class="detail-card full" aria-labelledby="evidenciasTitulo">
+                    <div class="detail-card-heading">
+                        <span class="detail-card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8.5" cy="9" r="1.5"></circle><path d="m21 15-4-4L7 20"></path></svg>
+                        </span>
+                        <h2 id="evidenciasTitulo">Evidências fotográficas</h2>
+                    </div>
+                    <div id="photosGrid" class="photos-grid" aria-live="polite">
+                        <div class="empty-photos"><span class="status-icon" aria-hidden="true"></span><span>Carregando fotos...</span></div>
+                    </div>
+                </section>
+            </div>
         </div>
+    </main>
+
+    <div id="photoModal" class="photo-modal" role="dialog" aria-modal="true" aria-labelledby="modalImageTitle" hidden>
+        <button type="button" id="closePhoto" class="close-photo" aria-label="Fechar visualização">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+        </button>
+        <span id="modalImageTitle" class="sr-only">Visualização da foto da inspeção</span>
+        <img id="modalImage" src="" alt="Foto da inspeção">
     </div>
-</main>
 
-<div id="photoModal" class="photo-modal" hidden>
-    <button type="button" id="closePhoto" class="close-photo" aria-label="Fechar">×</button>
-    <img id="modalImage" src="" alt="Foto da inspeção">
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script>
+        (() => {
+            "use strict";
 
-<!-- APENAS O SUPABASE E SCRIPTS ESSENCIAIS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
+            const parametros = new URLSearchParams(window.location.search);
+            const inspecaoId = parametros.get("id");
+            const $ = (id) => document.getElementById(id);
+            const iconeAlerta = '<svg class="status-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>';
+            const iconeFoto = '<svg class="status-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8.5" cy="9" r="1.5"></circle><path d="m21 15-4-4L7 20"></path></svg>';
 
-<script>
-    // NÃO CHAMA MAIS O verificarLogin()
-
-    const parametros = new URLSearchParams(window.location.search);
-    const inspecaoId = parametros.get("id");
-    const $ = id => document.getElementById(id);
-
-    if (!inspecaoId) {
-        $("carregando").hidden = true;
-        $("mensagemErro").hidden = false;
-        $("mensagemErro").textContent = "❌ Nenhuma inspeção foi informada na URL.";
-    }
-
-    function formatarData(data) {
-        if (!data) return "—";
-        const partes = String(data).split("-");
-        if (partes.length === 3) return `${partes[2]}/${partes[1]}/${partes[0]}`;
-        return data;
-    }
-
-    function renderizarStatus(status) {
-        if (!status) return "—";
-        const texto = String(status);
-        const normalizado = texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        let classe = "status-desconhecido";
-        if (normalizado === "pendente") classe = "status-pendente";
-        else if (normalizado === "aprovado") classe = "status-aprovado";
-        else if (normalizado === "reprovado") classe = "status-reprovado";
-        return `<span class="status ${classe}">${texto}</span>`;
-    }
-
-    async function carregarInspecao() {
-        try {
-            const { data, error } = await banco.from("inspecoes").select(`
-                *, obras (id, nome, endereco, responsavel, status)
-            `).eq("id", inspecaoId).single();
-
-            if (error) throw error;
-            if (!data) throw new Error("Inspeção não encontrada.");
-
-            $("idInspecao").textContent = data.id ?? "—";
-            $("tipoInspecao").textContent = data.tipo ?? "—";
-            $("dataInspecao").textContent = formatarData(data.data_inspecao);
-            $("responsavel").textContent = data.responsavel ?? "—";
-            $("statusInspecao").innerHTML = renderizarStatus(data.status);
-            $("observacao").textContent = data.observacao || "Nenhuma observação registrada.";
-
-            const obra = data.obras;
-            if (obra) {
-                $("obraNome").textContent = obra.nome ?? "—";
-                $("obraDetalheNome").textContent = obra.nome ?? "—";
-                $("obraEndereco").textContent = obra.endereco ?? "—";
-                $("obraResponsavel").textContent = obra.responsavel ?? "—";
-                $("obraStatus").textContent = obra.status ?? "—";
-                $("subtitulo").textContent = `${obra.nome || "Obra"} • ${data.tipo || "Inspeção"}`;
-            } else {
-                $("obraNome").textContent = "Obra não encontrada";
-                $("subtitulo").textContent = data.tipo || "Inspeção técnica";
+            function exibirMensagemErro(mensagem) {
+                const elemento = $("mensagemErro");
+                elemento.replaceChildren();
+                elemento.insertAdjacentHTML("afterbegin", iconeAlerta);
+                elemento.append(document.createTextNode(mensagem));
+                elemento.hidden = false;
             }
 
-            $("tituloPagina").textContent = `Inspeção #${data.id}`;
-            await carregarFotos(data.id);
-            $("carregando").hidden = true;
-            $("conteudo").hidden = false;
-        } catch (erro) {
-            $("carregando").hidden = true;
-            $("mensagemErro").hidden = false;
-            $("mensagemErro").textContent = `❌ Não foi possível carregar a inspeção. ${erro.message || ""}`;
-        }
-    }
-
-    async function carregarFotos(id) {
-        const grid = $("photosGrid");
-        grid.innerHTML = `<div class="empty-photos">⏳ Carregando fotos...</div>`;
-
-        const { data, error } = await banco.from("inspecao_fotos").select("*").eq("inspecao_id", id).order("ordem", { ascending: true });
-
-        if (error || !data?.length) {
-            grid.innerHTML = `<div class="empty-photos">📷 Nenhuma foto foi registrada nesta inspeção.</div>`;
-            return;
-        }
-
-        grid.innerHTML = "";
-        for (const foto of data) {
-            const resultadoPublico = banco.storage.from("inspecao-fotos").getPublicUrl(foto.caminho);
-            const url = resultadoPublico?.data?.publicUrl;
-
-            const figure = document.createElement("figure");
-            figure.className = "photo-item";
-            if (url) {
-                figure.innerHTML = `
-                    <img src="${url}" alt="${foto.nome_arquivo || "Foto da inspeção"}" loading="lazy">
-                    <figcaption>${foto.nome_arquivo || `Foto ${foto.ordem || ""}`}</figcaption>
-                `;
-                figure.querySelector("img").addEventListener("click", () => abrirFoto(url));
-            } else {
-                figure.innerHTML = `<div class="empty-photos">⚠️ Foto sem URL disponível.</div>`;
+            function formatarData(data) {
+                if (!data) return "—";
+                const partes = String(data).split("-");
+                return partes.length === 3 ? `${partes[2]}/${partes[1]}/${partes[0]}` : String(data);
             }
-            grid.appendChild(figure);
-        }
-    }
 
-    function abrirFoto(url) {
-        $("modalImage").src = url;
-        $("photoModal").hidden = false;
-    }
+            function renderizarStatus(status) {
+                if (!status) return "—";
+                const texto = String(status);
+                const normalizado = texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const classe = normalizado === "pendente" ? "status-pendente" : normalizado === "aprovado" ? "status-aprovado" : normalizado === "reprovado" ? "status-reprovado" : "status-desconhecido";
+                const elemento = document.createElement("span");
+                elemento.className = `status ${classe}`;
+                elemento.textContent = texto;
+                return elemento;
+            }
 
-    function fecharFoto() {
-        $("photoModal").hidden = true;
-        $("modalImage").src = "";
-    }
+            async function carregarInspecao() {
+                try {
+                    const { data, error } = await banco.from("inspecoes").select(`*, obras (id, nome, endereco, responsavel, status)`).eq("id", inspecaoId).single();
+                    if (error) throw error;
+                    if (!data) throw new Error("Inspeção não encontrada.");
 
-    $("closePhoto").addEventListener("click", fecharFoto);
-    $("photoModal").addEventListener("click", evento => { if (evento.target === $("photoModal")) fecharFoto(); });
-    document.addEventListener("keydown", evento => { if (evento.key === "Escape") fecharFoto(); });
+                    $("idInspecao").textContent = data.id ?? "—";
+                    $("tipoInspecao").textContent = data.tipo ?? "—";
+                    $("dataInspecao").textContent = formatarData(data.data_inspecao);
+                    $("responsavel").textContent = data.responsavel ?? "—";
+                    $("statusInspecao").replaceChildren(renderizarStatus(data.status));
+                    $("observacao").textContent = data.observacao || "Nenhuma observação registrada.";
 
-    if (inspecaoId) carregarInspecao();
-</script>
+                    const obra = data.obras;
+                    if (obra) {
+                        $("obraNome").textContent = obra.nome ?? "—";
+                        $("obraDetalheNome").textContent = obra.nome ?? "—";
+                        $("obraEndereco").textContent = obra.endereco ?? "—";
+                        $("obraResponsavel").textContent = obra.responsavel ?? "—";
+                        $("obraStatus").textContent = obra.status ?? "—";
+                        $("subtitulo").textContent = `${obra.nome || "Obra"} · ${data.tipo || "Inspeção"}`;
+                    } else {
+                        $("obraNome").textContent = "Obra não encontrada";
+                        $("subtitulo").textContent = data.tipo || "Inspeção técnica";
+                    }
 
+                    $("tituloPagina").textContent = `Inspeção #${data.id}`;
+                    await carregarFotos(data.id);
+                    $("carregando").hidden = true;
+                    $("conteudo").hidden = false;
+                } catch (erro) {
+                    $("carregando").hidden = true;
+                    exibirMensagemErro(`Não foi possível carregar a inspeção. ${erro.message || ""}`);
+                }
+            }
 
-<script src="../js/sidebar.js"></script>
+            async function carregarFotos(id) {
+                const grid = $("photosGrid");
+                grid.innerHTML = `<div class="empty-photos">${iconeFoto}<span>Carregando fotos...</span></div>`;
+                const { data, error } = await banco.from("inspecao_fotos").select("*").eq("inspecao_id", id).order("ordem", { ascending: true });
+
+                if (error || !data?.length) {
+                    grid.innerHTML = `<div class="empty-photos">${iconeFoto}<span>Nenhuma foto foi registrada nesta inspeção.</span></div>`;
+                    return;
+                }
+
+                grid.replaceChildren();
+                for (const foto of data) {
+                    const resultadoPublico = banco.storage.from("inspecao-fotos").getPublicUrl(foto.caminho);
+                    const url = resultadoPublico?.data?.publicUrl;
+                    const figure = document.createElement("figure");
+                    figure.className = "photo-item";
+
+                    if (url) {
+                        const imagem = document.createElement("img");
+                        imagem.src = url;
+                        imagem.alt = foto.nome_arquivo || "Foto da inspeção";
+                        imagem.loading = "lazy";
+                        imagem.addEventListener("click", () => abrirFoto(url));
+                        const legenda = document.createElement("figcaption");
+                        legenda.textContent = foto.nome_arquivo || `Foto ${foto.ordem || ""}`;
+                        figure.append(imagem, legenda);
+                    } else {
+                        figure.innerHTML = `<div class="empty-photos">${iconeAlerta}<span>Foto sem URL disponível.</span></div>`;
+                    }
+                    grid.append(figure);
+                }
+            }
+
+            function abrirFoto(url) {
+                $("modalImage").src = url;
+                $("photoModal").hidden = false;
+                $("closePhoto").focus();
+            }
+
+            function fecharFoto() {
+                $("photoModal").hidden = true;
+                $("modalImage").src = "";
+            }
+
+            $("closePhoto").addEventListener("click", fecharFoto);
+            $("photoModal").addEventListener("click", (evento) => {
+                if (evento.target === $("photoModal")) fecharFoto();
+            });
+            document.addEventListener("keydown", (evento) => {
+                if (evento.key === "Escape" && !$("photoModal").hidden) fecharFoto();
+            });
+
+            if (inspecaoId) {
+                carregarInspecao();
+            } else {
+                $("carregando").hidden = true;
+                exibirMensagemErro("Nenhuma inspeção foi informada na URL.");
+            }
+        })();
+    </script>
 </body>
 </html>
