@@ -157,3 +157,11 @@ html body.personal-page .chat-compose textarea {
 .notification-content small { display:block; margin-top:7px; color:var(--muted); font-size:10px; }
 .notification-open { flex:0 0 auto; min-height:36px; }
 @media(max-width:640px) { .notification-settings { align-items:stretch; flex-direction:column; } .notification-open { width:100%; } }
+
+/* Ícones sem emojis no painel pessoal. */
+.summary-icon svg,.empty-orb svg,.btn-icon,.notification-icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.summary-icon svg { width: 19px; height: 19px; }
+.empty-orb svg { width: 23px; height: 23px; }
+.btn-icon { flex: 0 0 auto; }
+.notification-item .notification-icon { font-size: 0; }
+.secondary-button.notification-open { min-height: 32px; padding-inline: 10px; font-size: 10px; }
