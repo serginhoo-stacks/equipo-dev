@@ -190,7 +190,13 @@
                 grid.replaceChildren();
                 for (const foto of data) {
                     const resultadoPublico = banco.storage.from("inspecao-fotos").getPublicUrl(foto.caminho);
-                    const url = resultadoPublico?.data?.publicUrl;
+                    let url = resultadoPublico?.data?.publicUrl || "";
+                    try {
+                        const resultadoAssinado = await banco.storage.from("inspecao-fotos").createSignedUrl(foto.caminho, 3600);
+                        url = resultadoAssinado?.data?.signedUrl || url;
+                    } catch (erroUrl) {
+                        console.warn("Não foi possível gerar URL assinada para a foto:", foto.caminho, erroUrl);
+                    }
                     const figure = document.createElement("figure");
                     figure.className = "photo-item";
 
