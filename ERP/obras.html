@@ -177,6 +177,32 @@
 
             botao.disabled = true;
             try {
+                const { data: inspecciones, error: erroConsulta } = await window.banco
+                    .from("inspecoes")
+                    .select("id")
+                    .eq("obra_id", id);
+                if (erroConsulta) throw erroConsulta;
+
+                for (const inspecao of inspecciones || []) {
+                    const { error: erroFotos } = await window.banco
+                        .from("inspecao_fotos")
+                        .delete()
+                        .eq("inspecao_id", inspecao.id);
+                    if (erroFotos) throw erroFotos;
+
+                    const { error: erroInspecao } = await window.banco
+                        .from("inspecoes")
+                        .delete()
+                        .eq("id", inspecao.id);
+                    if (erroInspecao) throw erroInspecao;
+                }
+
+                const { error: erroImoveis } = await window.banco
+                    .from("imoveis")
+                    .update({ obra_id: null })
+                    .eq("obra_id", id);
+                if (erroImoveis) throw erroImoveis;
+
                 const { error } = await window.banco.from("obras").delete().eq("id", id);
                 if (error) throw error;
                 mostrarFeedback("Obra excluída com sucesso.", "is-success");
