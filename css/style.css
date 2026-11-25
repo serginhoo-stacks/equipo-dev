@@ -3043,3 +3043,42 @@ body.erp-page--relatorios .report-preview h2 { margin-top:0; color:#0f2740; }
 body.erp-page--relatorios .reports-state { padding:20px; border:1px dashed var(--border); border-radius:12px; color:var(--muted); background:rgba(255,255,255,.025); text-align:center; }
 body.erp-page--relatorios .reports-state--error { color:#ffb0ba; border-color:rgba(255,111,132,.25); background:rgba(255,111,132,.06); }
 @media(max-width:640px) { body.erp-page--relatorios .reports-shell { padding:18px 12px 38px; } body.erp-page--relatorios .reports-page-heading { align-items:flex-start; flex-direction:column; } body.erp-page--relatorios .reports-page-badge { align-self:flex-start; } body.erp-page--relatorios .report-row { align-items:stretch; flex-direction:column; } body.erp-page--relatorios .report-row .report-button { width:100%; } body.erp-page--relatorios .report-editor { grid-template-columns:1fr; gap:13px; } body.erp-page--relatorios .report-editor .full { grid-column:auto; } body.erp-page--relatorios .report-actions { flex-direction:column; } body.erp-page--relatorios .report-button { width:100%; } }
+
+/* Convites: shell próprio, sem alterar componentes globais. */
+body.erp-page--convites .erp-invites-shell { width:min(100%,1080px); margin-inline:auto; }
+body.erp-page--convites .erp-invites-heading { display:flex; align-items:center; justify-content:space-between; gap:22px; margin-bottom:24px; }
+body.erp-page--convites .erp-invites-title-lockup { display:flex; align-items:center; gap:16px; }
+body.erp-page--convites .erp-invites-icon-tile, body.erp-page--convites .erp-invites-section-icon { display:grid; place-items:center; color:var(--cyan); background:rgba(92,236,255,.09); border:1px solid rgba(92,236,255,.25); }
+body.erp-page--convites .erp-invites-icon-tile { width:54px; height:54px; flex:0 0 54px; border-radius:16px; }
+body.erp-page--convites .erp-invites-icon-tile svg { width:27px; height:27px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+body.erp-page--convites .erp-invites-heading h1 { margin:0; color:var(--text); font-size:clamp(25px,3vw,34px); }
+body.erp-page--convites .erp-invites-heading p:not(.eyebrow) { margin:7px 0 0; color:var(--muted); }
+body.erp-page--convites .erp-invites-back { padding:10px 14px; border:1px solid rgba(92,236,255,.24); border-radius:10px; color:var(--cyan); background:rgba(92,236,255,.06); font-size:12px; font-weight:750; text-decoration:none; }
+body.erp-page--convites .erp-invites-card { margin-bottom:16px; padding:clamp(18px,3vw,26px); }
+body.erp-page--convites .erp-invites-section-heading { display:flex; align-items:flex-start; gap:12px; margin-bottom:18px; }
+body.erp-page--convites .erp-invites-section-icon { width:38px; height:38px; flex:0 0 38px; border-radius:11px; }
+body.erp-page--convites .erp-invites-section-icon svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+body.erp-page--convites .erp-invites-section-heading h2 { margin:0; color:var(--text); font-size:19px; }
+body.erp-page--convites .erp-invites-section-heading p:not(.eyebrow) { margin:6px 0 0; color:var(--muted); font-size:11px; }
+body.erp-page--convites .erp-invites-note { margin:0 0 16px; color:var(--muted); font-size:12px; line-height:1.55; }
+body.erp-page--convites .erp-invites-form { display:flex; align-items:end; gap:12px; }
+body.erp-page--convites .erp-invites-form label { display:grid; flex:1; gap:7px; color:#dcecf5; font-size:12px; font-weight:700; }
+body.erp-page--convites .erp-invites-form input { width:100%; min-height:43px; box-sizing:border-box; padding:0 12px; border:1px solid var(--border); border-radius:10px; color:var(--text); background:rgba(3,11,23,.62); }
+body.erp-page--convites .erp-invites-form input:focus-visible { outline:2px solid rgba(92,236,255,.24); border-color:var(--cyan); }
+body.erp-page--convites .erp-invites-primary { display:inline-flex; min-height:43px; align-items:center; gap:8px; padding:0 15px; border:0; border-radius:10px; color:#061522; background:linear-gradient(110deg,var(--cyan),#56b9ff); font:inherit; font-size:12px; font-weight:800; cursor:pointer; }
+body.erp-page--convites .erp-invites-primary svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+body.erp-page--convites .erp-invites-status { min-height:18px; margin:12px 0 0; color:var(--muted); font-size:11px; }
+body.erp-page--convites .erp-invites-status.is-error { color:#ffabb4; }
+body.erp-page--convites .erp-invites-list { display:grid; gap:8px; }
+body.erp-page--convites .invite-card { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 14px; border:1px solid rgba(133,216,255,.14); border-radius:12px; background:rgba(3,11,23,.28); }
+body.erp-page--convites .invite-copy { display:grid; gap:4px; min-width:0; }
+body.erp-page--convites .invite-copy strong { overflow-wrap:anywhere; color:var(--text); font-size:12px; }
+body.erp-page--convites .invite-copy span { color:var(--muted); font-size:10px; }
+body.erp-page--convites .invite-state { padding:5px 8px; border-radius:999px; color:#b8c9d7; background:rgba(255,255,255,.07); font-size:10px; white-space:nowrap; }
+body.erp-page--convites .invite-state.pending { color:#ffca83; background:rgba(255,189,105,.1); }
+body.erp-page--convites .invite-empty { margin:0; padding:18px; border:1px dashed var(--border); border-radius:11px; color:var(--muted); font-size:12px; text-align:center; }
+body.erp-page--equipe .erp-team-card-actions { display:flex; align-items:flex-end; margin-left:auto; }
+body.erp-page--equipe .erp-team-remove-button { display:inline-flex; align-items:center; gap:6px; padding:7px 9px; border:1px solid rgba(255,111,132,.24); border-radius:8px; color:#ffabb4; background:rgba(255,111,132,.07); font:inherit; font-size:10px; cursor:pointer; }
+body.erp-page--equipe .erp-team-remove-button svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+body.erp-page--equipe .erp-team-remove-button:hover { border-color:#ff8091; background:rgba(255,111,132,.13); }
+@media(max-width:640px) { body.erp-page--convites .erp-invites-heading { align-items:flex-start; flex-direction:column; } body.erp-page--convites .erp-invites-back { align-self:flex-start; } body.erp-page--convites .erp-invites-form { align-items:stretch; flex-direction:column; } body.erp-page--convites .erp-invites-primary { justify-content:center; } body.erp-page--convites .invite-card { align-items:flex-start; flex-direction:column; } body.erp-page--equipe .erp-team-card-actions { width:100%; margin-left:0; } body.erp-page--equipe .erp-team-remove-button { width:100%; justify-content:center; } }
