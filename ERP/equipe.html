@@ -26,7 +26,7 @@
                     <p class="erp-team-lead">Usuários cadastrados, níveis de acesso e presença.</p>
                 </div>
             </div>
-            <a class="erp-team-invite-button" href="../convites.html" data-company-context>
+            <a class="erp-team-invite-button" href="convites.html" data-company-context>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"></path></svg>
                 <span>Convidar por e-mail</span>
             </a>
@@ -48,6 +48,8 @@
         let equipe = [];
         let canalEquipe = null;
         let intervaloPresenca = null;
+        let usuarioLogadoId = null;
+        let podeGerenciarEquipe = false;
 
         const lista = document.getElementById("listaEquipe");
         const feedback = document.getElementById("mensagemEquipe");
@@ -64,7 +66,8 @@
                 email: '<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path>',
                 relogio: '<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>',
                 check: '<path d="m5 12 4 4L19 6"></path>',
-                ver: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle>'
+                ver: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle>',
+                remover: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"></path>'
             };
             const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             svg.setAttribute("viewBox", "0 0 24 24");
@@ -190,6 +193,15 @@
 
             conteudo.append(ultimoAcesso, permissoesTitulo, permissoes);
             cartao.append(cabecalho, conteudo);
+            if (podeGerenciarEquipe && String(usuario.id) !== String(usuarioLogadoId)) {
+                const acoes = criarElemento("div", "erp-team-card-actions");
+                const remover = criarElemento("button", "erp-team-remove-button");
+                remover.type = "button";
+                remover.append(criarIcone("remover"), document.createTextNode("Remover acesso"));
+                remover.addEventListener("click", () => removerAcesso(usuario));
+                acoes.append(remover);
+                cartao.append(acoes);
+            }
             return cartao;
         }
 
@@ -208,6 +220,12 @@
         async function carregarEquipe() {
             try {
                 if (!window.banco?.from) throw new Error("Cliente Supabase indisponível.");
+                const usuario = await obterUsuarioLogado();
+                usuarioLogadoId = usuario?.id || null;
+                if (usuario?.id) {
+                    const { data: meuVinculo } = await window.banco.from("membros_empresa").select("cargo,ativo").eq("empresa_id", window.smartInspectCompanyId).eq("usuario_id", usuario.id).eq("ativo", true).maybeSingle();
+                    podeGerenciarEquipe = Boolean(meuVinculo && ["adm", "admin", "administrador", "administradora", "proprietario", "proprietária", "owner"].includes(String(meuVinculo.cargo || "").toLocaleLowerCase("pt-BR")));
+                }
                 const { data: membros, error: membrosError } = await window.banco
                     .from("membros_empresa")
                     .select("usuario_id,cargo,ativo,created_at")
@@ -222,6 +240,12 @@
                     if (error) throw error;
                     perfis = data || [];
                 }
+                let presencas = [];
+                if (ids.length) {
+                    const resultadoPresenca = await window.banco.from("presenca_equipe").select("usuario_id,ultimo_acesso,ultimo_heartbeat").eq("empresa_id", window.smartInspectCompanyId).in("usuario_id", ids);
+                    if (!resultadoPresenca.error) presencas = resultadoPresenca.data || [];
+                }
+                const porPresenca = new Map(presencas.map((presenca) => [String(presenca.usuario_id), presenca]));
                 const porId = new Map(perfis.map((perfil) => [String(perfil.id), perfil]));
                 equipe = (membros || []).map((membro) => ({
                     ...(porId.get(String(membro.usuario_id)) || {}),
@@ -229,8 +253,8 @@
                     cargo: membro.cargo,
                     nivel_acesso: membro.cargo,
                     foto_url: porId.get(String(membro.usuario_id))?.avatar_url || null,
-                    ultimo_acesso: null,
-                    ultimo_heartbeat: null
+                    ultimo_acesso: porPresenca.get(String(membro.usuario_id))?.ultimo_acesso || null,
+                    ultimo_heartbeat: porPresenca.get(String(membro.usuario_id))?.ultimo_heartbeat || null
                 }));
                 mostrarEquipe();
                 feedback.textContent = "";
@@ -257,14 +281,34 @@
         async function atualizarHeartbeat() {
             const usuario = await obterUsuarioLogado();
             if (!usuario) return;
-            // O esquema atual não possui heartbeat em perfis/membros_empresa.
-            // A presença em tempo real será adicionada quando houver uma tabela própria.
+            const agora = new Date().toISOString();
+            await window.banco.from("presenca_equipe").upsert({ empresa_id: window.smartInspectCompanyId, usuario_id: usuario.id, ultimo_heartbeat: agora, ultimo_acesso: agora }, { onConflict: "empresa_id,usuario_id" });
+            const membro = equipe.find((item) => String(item.id) === String(usuario.id));
+            if (membro) { membro.ultimo_heartbeat = agora; membro.ultimo_acesso = agora; mostrarEquipe(); }
         }
 
         async function registrarAcesso() {
             const usuario = await obterUsuarioLogado();
             if (!usuario) return;
-            // Não gravar acesso em uma tabela inexistente.
+            try {
+                const agora = new Date().toISOString();
+                await window.banco.from("presenca_equipe").upsert({ empresa_id: window.smartInspectCompanyId, usuario_id: usuario.id, ultimo_heartbeat: agora, ultimo_acesso: agora }, { onConflict: "empresa_id,usuario_id" });
+            } catch (erro) { console.warn("Presença da equipe indisponível:", erro); }
+        }
+
+        async function removerAcesso(usuario) {
+            if (!usuario?.id || !window.confirm(`Remover o acesso de ${usuario.nome || usuario.email || "esta pessoa"}?`)) return;
+            try {
+                const { error } = await window.banco.from("membros_empresa").update({ ativo: false }).eq("empresa_id", window.smartInspectCompanyId).eq("usuario_id", usuario.id);
+                if (error) throw error;
+                equipe = equipe.filter((item) => String(item.id) !== String(usuario.id));
+                mostrarEquipe();
+                feedback.className = "erp-team-feedback is-success";
+                feedback.textContent = "Acesso removido da equipe.";
+            } catch (erro) {
+                feedback.className = "erp-team-feedback is-error";
+                feedback.textContent = erro.message || "Não foi possível remover o acesso.";
+            }
         }
 
         async function iniciarPresenca() {
