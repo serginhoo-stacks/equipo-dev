@@ -13,19 +13,23 @@
 <!-- O MENU LATERAL ESTÁ AQUI -->
 <div class="menu-container"></div>
 
-<div class="content">
-    <h1>📄 Relatórios</h1>
-    <p>Gerar, editar, visualizar e enviar relatórios técnicos de inspeção</p>
+<main class="content reports-shell">
+    <header class="reports-page-heading">
+        <div>
+            <p class="eyebrow">GESTÃO DOCUMENTAL</p>
+            <h1><svg class="reports-title-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6zM9 3v5h6V3M9 12h6M9 16h6"></path></svg>Relatórios</h1>
+            <p>Gere, edite, visualize e envie relatórios técnicos de inspeção.</p>
+        </div>
+        <span class="reports-page-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"></path></svg>Inspeções</span>
+    </header>
 
-    <!-- SELEÇÃO DA INSPEÇÃO -->
-    <div class="card">
-        <h2>📋 Selecionar inspeção</h2>
+    <section class="card reports-selection-card" aria-labelledby="selecionarInspecaoTitulo">
+        <div class="reports-section-heading"><span class="reports-section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"></path></svg></span><div><p class="eyebrow">FONTE DO DOCUMENTO</p><h2 id="selecionarInspecaoTitulo">Selecionar inspeção</h2><p>Escolha um registro para montar o relatório técnico.</p></div></div>
         <div id="listaRelatorios">Carregando inspeções...</div>
-    </div>
+    </section>
 
-    <!-- EDITOR DO RELATÓRIO -->
-    <div id="editorRelatorio" class="card" hidden>
-        <h2>✏️ Editar relatório</h2>
+    <section id="editorRelatorio" class="card reports-editor-card" hidden>
+        <div class="reports-section-heading"><span class="reports-section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16-.8 4.8L8 20l10.8-10.8-4-4L4 16Zm8.8-9.8 4 4M14 4l1.5-1.5a2.1 2.1 0 0 1 3 3L17 7"></path></svg></span><div><p class="eyebrow">CONFIGURAÇÃO</p><h2>Editar relatório</h2><p>Revise os dados antes de gerar ou enviar o documento.</p></div></div>
         <div class="report-editor">
             <label>Número do relatório<input id="numeroRelatorio" type="text" readonly></label>
             <label>E-mail do destinatário<input id="destinatario" type="email" placeholder="exemplo@email.com"></label>
@@ -33,33 +37,26 @@
             <label>Responsável técnico<input id="editorResponsavel" type="text"></label>
             <label>Tipo da inspeção<input id="editorTipo" type="text"></label>
             <label>Data da inspeção<input id="editorData" type="date"></label>
-            <label>Status
-                <select id="editorStatus">
-                    <option>Pendente</option>
-                    <option>Aprovado</option>
-                    <option>Reprovado</option>
-                </select>
-            </label>
+            <label>Status<select id="editorStatus"><option>Pendente</option><option>Aprovado</option><option>Reprovado</option></select></label>
             <label>Nome do arquivo PDF<input id="nomeArquivo" type="text"></label>
             <label class="full">Observações<textarea id="editorObservacao" rows="6" placeholder="Observações da inspeção..."></textarea></label>
-            <label class="full">💬 Mensagem personalizada para o destinatário<textarea id="mensagemPersonalizada" rows="6" placeholder="Digite aqui a mensagem que será enviada junto com o relatório..."></textarea></label>
+            <label class="full">Mensagem personalizada para o destinatário<textarea id="mensagemPersonalizada" rows="6" placeholder="Digite aqui a mensagem que será enviada junto com o relatório..."></textarea></label>
         </div>
 
         <div class="report-actions">
-            <button type="button" onclick="visualizarRelatorio()">👁️ Visualizar relatório</button>
-            <button type="button" onclick="gerarEPdf()">📄 Gerar PDF</button>
-            <button type="button" onclick="gerarEEnviar()">📧 Gerar e enviar</button>
-            <button type="button" onclick="fecharEditor()">❌ Cancelar</button>
+            <button type="button" class="report-button report-button--secondary" onclick="visualizarRelatorio()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>Visualizar relatório</button>
+            <button type="button" class="report-button report-button--primary" onclick="gerarEPdf()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6zM9 3v5h6V3M9 16h6"></path></svg>Gerar PDF</button>
+            <button type="button" class="report-button report-button--primary" onclick="gerarEEnviar()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 18-8-8 18-2-8-8-2Zm8 1 10-9"></path></svg>Gerar e enviar</button>
+            <button type="button" class="report-button report-button--danger" onclick="fecharEditor()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>Cancelar</button>
         </div>
-        <p id="mensagemRelatorio"></p>
-    </div>
+        <p id="mensagemRelatorio" role="status" aria-live="polite"></p>
+    </section>
 
-    <!-- PRÉ-VISUALIZAÇÃO -->
-    <div id="previewContainer" class="card" hidden>
-        <h2>👁️ Pré-visualização</h2>
+    <section id="previewContainer" class="card reports-preview-card" hidden>
+        <div class="reports-section-heading"><span class="reports-section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg></span><div><p class="eyebrow">CONFERÊNCIA</p><h2>Pré-visualização</h2><p>Confira a estrutura do documento antes de gerar o PDF.</p></div></div>
         <div id="previewRelatorio" class="report-preview"></div>
-    </div>
-</div>
+    </section>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -84,14 +81,14 @@
         .order("id", { ascending: false });
 
         if (error) {
-            $("listaRelatorios").innerHTML = `<div class="card">❌ Erro ao carregar inspeções.<br><br>${esc(error.message)}</div>`;
+            $("listaRelatorios").innerHTML = `<div class="reports-state reports-state--error"><strong>Não foi possível carregar as inspeções.</strong><p>${esc(error.message)}</p></div>`;
             return;
         }
 
         inspecoes = data || [];
 
         if (!inspecoes.length) {
-            $("listaRelatorios").innerHTML = `<div class="card">Nenhuma inspeção disponível.</div>`;
+            $("listaRelatorios").innerHTML = `<div class="reports-state">Nenhuma inspeção disponível.</div>`;
             return;
         }
 
@@ -100,13 +97,9 @@
                 <div>
                     <p><b>INSPEÇÃO #${inspecao.id}</b></p>
                     <h2>${esc(inspecao.tipo || "Inspeção")} - ${esc(inspecao.obras?.nome || "Sem obra")}</h2>
-                    <p>
-                        📅 ${esc(inspecao.data_inspecao || "-")}<br>
-                        👷 Responsável: ${esc(inspecao.responsavel || "-")}<br>
-                        📌 Status: <span class="status-badge">${esc(inspecao.status || "Pendente")}</span>
-                    </p>
+                    <p class="report-row-meta">Data: ${esc(inspecao.data_inspecao || "-")}<span>Responsável: ${esc(inspecao.responsavel || "-")}</span><span>Status: <span class="status-badge">${esc(inspecao.status || "Pendente")}</span></span></p>
                 </div>
-                <button onclick="abrirEditor(${inspecao.id})">✏️ Editar relatório</button>
+                <button class="report-button report-button--secondary" onclick="abrirEditor(${inspecao.id})"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16-.8 4.8L8 20l10.8-10.8-4-4L4 16Zm8.8-9.8 4 4M14 4l1.5-1.5a2.1 2.1 0 0 1 3 3L17 7"></path></svg>Editar relatório</button>
             </div>
         `).join("");
     }
@@ -161,7 +154,7 @@
         try {
             const dados = obterDadosRelatorio();
             $("previewRelatorio").innerHTML = `
-                <h2>🏗 SmartInspect AI</h2>
+                <h2>SmartInspect AI</h2>
                 <h3>RELATÓRIO TÉCNICO DE INSPEÇÃO</h3>
                 <hr>
                 <p><strong>Número:</strong> ${esc(dados.numero)}</p>
@@ -172,10 +165,10 @@
                 <p><strong>Responsável:</strong> ${esc(dados.responsavel)}</p>
                 <p><strong>Status:</strong> ${esc(dados.status)}</p>
                 <hr>
-                <h3>📝 Observações</h3>
+                <h3>Observações</h3>
                 <p>${esc(dados.observacao || "Nenhuma observação")}</p>
                 <hr>
-                <h3>💬 Mensagem ao destinatário</h3>
+                <h3>Mensagem ao destinatário</h3>
                 <p>${esc(dados.mensagem || "Nenhuma mensagem personalizada.")}</p>
             `;
             $("previewContainer").hidden = false;
@@ -216,9 +209,9 @@
         try {
             const resultado = gerarPdf();
             resultado.pdf.save(resultado.dados.nomeArquivo);
-            $("mensagemRelatorio").innerHTML = "✅ PDF gerado com sucesso.";
+            $("mensagemRelatorio").textContent = "PDF gerado com sucesso.";
         } catch (erro) {
-            $("mensagemRelatorio").innerHTML = "❌ Erro ao gerar PDF.";
+            $("mensagemRelatorio").textContent = "Erro ao gerar PDF.";
         }
     }
 
@@ -226,13 +219,13 @@
         try {
             const dados = obterDadosRelatorio();
             if (!dados.destinatario) {
-                $("mensagemRelatorio").innerHTML = "❌ Informe o e-mail do destinatário.";
+                $("mensagemRelatorio").textContent = "Informe o e-mail do destinatário.";
                 return;
             }
-            $("mensagemRelatorio").innerHTML = "⏳ Gerando PDF...";
+            $("mensagemRelatorio").textContent = "Gerando PDF...";
             const resultado = gerarPdf();
             const base64 = resultado.pdf.output("datauristring").split(",")[1];
-            $("mensagemRelatorio").innerHTML = "📧 Enviando relatório...";
+            $("mensagemRelatorio").textContent = "Enviando relatório...";
 
             const registro = await banco.from("relatorios").insert([{
                 inspecao_id: inspecaoAtual.id, obra_id: inspecaoAtual.obra_id,
@@ -254,9 +247,9 @@
 
             await banco.from("relatorios").update({ status: "enviado", enviado_em: new Date().toISOString() }).eq("id", registro.data.id);
 
-            $("mensagemRelatorio").innerHTML = `✅ <strong>Relatório enviado com sucesso!</strong><br>Número: ${esc(dados.numero)}<br>Destinatário: ${esc(dados.destinatario)}`;
+            $("mensagemRelatorio").innerHTML = `<strong>Relatório enviado com sucesso.</strong><br>Número: ${esc(dados.numero)}<br>Destinatário: ${esc(dados.destinatario)}`;
         } catch (erro) {
-            $("mensagemRelatorio").innerHTML = `❌ Erro ao enviar relatório.<br>${esc(erro.message || erro)}`;
+            $("mensagemRelatorio").innerHTML = `Erro ao enviar relatório.<br>${esc(erro.message || erro)}`;
         }
     }
 
