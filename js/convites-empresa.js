@@ -13,13 +13,22 @@
     const { data } = await db.from("empresas").select("id,nome").eq("id", companyId).maybeSingle();
     return data?.nome || "Empresa";
   };
+  async function mensagemErroFuncao(error) {
+    if (error?.context && typeof error.context.json === "function") {
+      try {
+        const body = await error.context.json();
+        return body?.message || body?.error || body?.mensagem || error.message;
+      } catch { /* mantém a mensagem original */ }
+    }
+    return error?.message || "Não foi possível enviar o convite.";
+  }
   async function sendInvite(companyId, email) {
     const normalizedEmail = String(email || "").trim().toLowerCase();
     if (!companyId || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) throw new Error("Informe uma empresa e um e-mail válido.");
     const { data, error } = await db.functions.invoke("enviar-convite-empresa", {
       body: { empresa_id: companyId, email: normalizedEmail },
     });
-    if (error) throw error;
+    if (error) throw new Error(await mensagemErroFuncao(error));
     if (!data?.ok) throw new Error(data?.message || "Não foi possível enviar o convite.");
     return data;
   }
