@@ -160,8 +160,11 @@
                 lista.replaceChildren(...data.map(criarLinhaLog));
             } catch (erro) {
                 console.error("Erro ao carregar o histórico do estoque:", erro);
-                mostrarEstado("Não foi possível carregar o histórico.");
-                feedback.textContent = "Verifique a conexão e confirme se a tabela movimentacoes_estoque está configurada no Supabase.";
+                const emDesenvolvimento = erro?.code === "PGRST205";
+                mostrarEstado(emDesenvolvimento
+                    ? "O histórico de movimentações estará disponível em uma próxima atualização. Este recurso ainda está em desenvolvimento."
+                    : "Não foi possível carregar o histórico agora. Tente novamente mais tarde.");
+                feedback.textContent = "";
                 feedback.className = "erp-stock-feedback is-error";
             }
         }
