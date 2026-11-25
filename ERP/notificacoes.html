@@ -70,20 +70,6 @@
         .replace(/'/g, "&#039;");
     }
 
-    function iconePrioridade(prioridade) {
-      if (prioridade === "critico") return '<span class="prioridade-icon" aria-hidden="true"></span>';
-      if (prioridade === "atencao") return '<span class="prioridade-icon" aria-hidden="true"></span>';
-      if (prioridade === "concluido") return '<span class="prioridade-icon" aria-hidden="true"></span>';
-      return '<span class="prioridade-icon" aria-hidden="true"></span>';
-    }
-
-    function nomePrioridade(prioridade) {
-      if (prioridade === "critico") return "CRÍTICO";
-      if (prioridade === "atencao") return "ATENÇÃO";
-      if (prioridade === "concluido") return "CONCLUÍDO";
-      return "INFORMATIVO";
-    }
-
     function formatarData(data) {
       if (!data) return "";
       const valor = new Date(data);
@@ -109,7 +95,7 @@
       const lista = notificacoes.filter(notificacao => {
         if (filtroAtual === "todos") return true;
         if (filtroAtual === "nao_lidas") return !notificacao.lida;
-        return notificacao.prioridade === filtroAtual;
+        return window.SmartInspectNotifications.notificationMeta(notificacao).priority === filtroAtual;
       });
 
       if (!lista.length) {
@@ -122,11 +108,13 @@
         return;
       }
 
-      $("listaNotificacoes").innerHTML = lista.map(notificacao => `
-        <article class="card notificacao ${esc(notificacao.prioridade || "informativo")} ${notificacao.lida ? "lida" : ""}">
+      $("listaNotificacoes").innerHTML = lista.map(notificacao => {
+        const meta = window.SmartInspectNotifications.notificationMeta(notificacao);
+        return `
+        <article class="card notificacao ${esc(meta.priority)} notificacao-${esc(meta.key)} ${notificacao.lida ? "lida" : ""}">
           <div class="notificacao-topo">
             <div>
-              <span class="prioridade">${iconePrioridade(notificacao.prioridade)}${esc(nomePrioridade(notificacao.prioridade))}</span>
+              <span class="prioridade">${meta.icon}${esc(meta.label)}</span>
               <h3>${esc(notificacao.titulo)}</h3>
             </div>
             <span class="data-notificacao">${formatarData(notificacao.criado_em)}</span>
@@ -141,7 +129,8 @@
               : `<button class="botao-pequeno botao-lida" type="button" disabled><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Lida</button>`}
             <button class="botao-pequeno botao-excluir" type="button" onclick="excluirNotificacao('${esc(notificacao.id)}')"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M5 7l1 14h12l1-14M9 7V4h6v3" stroke-linecap="round" stroke-linejoin="round"/></svg>Excluir</button>
           </div>
-        </article>`).join("");
+        </article>`;
+      }).join("");
     }
 
     async function marcarLida(id) {
