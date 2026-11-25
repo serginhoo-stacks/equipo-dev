@@ -189,11 +189,11 @@
 
                 grid.replaceChildren();
                 for (const foto of data) {
-                    const resultadoPublico = banco.storage.from("inspecao-fotos").getPublicUrl(foto.caminho);
-                    let url = resultadoPublico?.data?.publicUrl || "";
+                    let url = "";
                     try {
                         const resultadoAssinado = await banco.storage.from("inspecao-fotos").createSignedUrl(foto.caminho, 3600);
-                        url = resultadoAssinado?.data?.signedUrl || url;
+                        if (resultadoAssinado?.error) throw resultadoAssinado.error;
+                        url = resultadoAssinado?.data?.signedUrl || "";
                     } catch (erroUrl) {
                         console.warn("Não foi possível gerar URL assinada para a foto:", foto.caminho, erroUrl);
                     }
@@ -205,6 +205,9 @@
                         imagem.src = url;
                         imagem.alt = foto.nome_arquivo || "Foto da inspeção";
                         imagem.loading = "lazy";
+                        imagem.addEventListener("error", () => {
+                            figure.innerHTML = `<div class="empty-photos">${iconeAlerta}<span>Foto indisponível.</span></div>`;
+                        }, { once: true });
                         imagem.addEventListener("click", () => abrirFoto(url));
                         const legenda = document.createElement("figcaption");
                         legenda.textContent = foto.nome_arquivo || `Foto ${foto.ordem || ""}`;
