@@ -2987,3 +2987,19 @@ body.erp-page--estoque .erp-stock-photo--empty { display:grid; place-items:cente
   body.erp-page--novo-estoque .form-actions { flex-direction:column-reverse; }
   body.erp-page--novo-estoque .form-actions :is(a,button) { width:100%; }
 }
+
+/* Ações do formulário centralizadas sem alterar o restante do layout. */
+body.erp-page--novo-estoque .form-actions { justify-content: center; }
+body.erp-page--novo-estoque .form-actions :is(a, button) { min-width: 128px; }
+@media (max-width: 640px) {
+  body.erp-page--novo-estoque .form-actions :is(a, button) { width: min(100%, 280px); }
+}
+
+/* Fotos de materiais: preservar o enquadramento completo, sem corte. */
+body.erp-page--estoque .erp-stock-photo {
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  padding: 12px;
+  background: linear-gradient(145deg, rgba(3,11,23,.86), rgba(18,42,72,.48));
+}
