@@ -2938,3 +2938,17 @@ body.erp-page--imoveis .erp-ui-card-actions { margin-top:16px; }
 @media (max-width:700px) {
   body.erp-page--imoveis .erp-property-grid { grid-template-columns:minmax(0,1fr); }
 }
+
+/* Estados semânticos das notificações. */
+body.erp-page--notificacoes .notificacao { position: relative; overflow: hidden; }
+body.erp-page--notificacoes .notificacao::after { position:absolute; top:0; right:0; width:180px; height:100%; background:radial-gradient(circle at top right,rgba(92,236,255,.08),transparent 68%); content:""; pointer-events:none; }
+body.erp-page--notificacoes .notificacao-nao-conforme { border-left-color:#ff6f84; }
+body.erp-page--notificacoes .notificacao-nao-conforme .prioridade { color:#ff9ba5; border-color:rgba(255,111,132,.28); background:rgba(255,111,132,.1); }
+body.erp-page--notificacoes .notificacao-nova-inspecao { border-left-color:#5cecff; }
+body.erp-page--notificacoes .notificacao-nova-inspecao .prioridade { color:var(--cyan); border-color:rgba(92,236,255,.28); background:rgba(92,236,255,.1); }
+body.erp-page--notificacoes .notificacao-concluido .prioridade { color:#67e5a7; border-color:rgba(88,223,160,.28); background:rgba(88,223,160,.1); }
+body.erp-page--notificacoes .notificacao-atencao .prioridade { color:#ffca83; border-color:rgba(255,189,105,.28); background:rgba(255,189,105,.1); }
+body.erp-page--notificacoes .prioridade { position:relative; z-index:1; }
+body.erp-page--notificacoes .prioridade svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.8; }
+body.erp-page--notificacoes .notificacao-recusado { border-left-color:#ff9ba5; }
+body.erp-page--notificacoes .notificacao-recusado .prioridade { color:#ffb0ba; border-color:rgba(255,111,132,.28); background:rgba(255,111,132,.1); }
