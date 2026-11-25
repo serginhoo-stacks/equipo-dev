@@ -150,7 +150,9 @@
       const { error } = await banco.from("notificacoes").delete().eq("id", id);
       if (error) {
         console.error(error);
-        alert("Não foi possível excluir a notificação.");
+        alert(error.code === "42501"
+          ? "A exclusão ainda não está habilitada no banco. Execute o arquivo sql/permissoes_notificacoes.sql no SQL Editor do Supabase."
+          : "Não foi possível excluir a notificação.");
         return;
       }
       notificacoes = notificacoes.filter(item => String(item.id) !== String(id));
