@@ -16,59 +16,52 @@
 
 
 <main class="content">
-    <header class="page-header">
+    <header class="page-header estoque-page-header">
         <div>
             <p class="eyebrow">CONTROLE DE ESTOQUE</p>
-            <h1 id="tituloPagina">📦 Novo Material</h1>
+            <h1 id="tituloPagina"><svg class="page-title-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v13H4zM7 4h10v3H7zM8 11h8M8 15h5"></path></svg>Novo material</h1>
             <p class="subtitle">Cadastre ou altere um material do estoque.</p>
         </div>
-        <a href="estoque.html" class="secondary-button">← Voltar</a>
+        <a href="estoque.html" class="secondary-button"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7"></path></svg>Voltar</a>
     </header>
 
-    <section class="card">
-        <form id="formEstoque">
-            <label>🏢 Obra
-                <select id="obra" required>
-                    <option value="">Carregando obras...</option>
-                </select>
-            </label>
-            <br>
-            <label>📦 Material
-                <input id="material" type="text" placeholder="Ex: Cimento CP II" required>
-            </label>
-            <br>
-            <label>📷 Foto do material
-                <input id="foto" type="file" accept="image/*">
-            </label>
-            <br>
-            <label>🔢 Quantidade
-                <input id="quantidade" type="number" min="0" step="0.01" placeholder="Quantidade" required>
-            </label>
-            <br>
-            <label>📏 Unidade
-                <input id="unidade" type="text" placeholder="Ex: saco, kg, m³" required>
-            </label>
-            <br>
-            <label>⚠️ Estoque mínimo
-                <input id="minimo" type="number" min="0" step="0.01" placeholder="Quantidade mínima">
-            </label>
-            <br>
-            <label>📅 Data de entrada
-                <input id="data" type="date">
-            </label>
-            <br>
-            <label>📌 Status
-                <select id="status">
-                    <option value="Disponível">🟢 Disponível</option>
-                    <option value="Estoque baixo">🟠 Estoque baixo</option>
-                    <option value="Sem estoque">🔴 Sem estoque</option>
-                </select>
-            </label>
-            <br><br>
-            <button type="submit" class="primary-button" id="salvarButton">
-                💾 Salvar Material
-            </button>
-            <p id="mensagem" class="dashboard-message"></p>
+    <section class="card estoque-form-card">
+        <div class="form-section-heading">
+            <div><span class="eyebrow">DADOS DO MATERIAL</span><h2>Informações do estoque</h2><p>Preencha os dados principais para manter o controle atualizado.</p></div>
+            <span class="form-heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 4h10v3H7zM8 11h8M8 15h5"></path></svg></span>
+        </div>
+        <form id="formEstoque" class="estoque-form">
+            <div class="estoque-form-grid">
+                <label class="form-field form-field-wide"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V5h14v16M8 8h2m4 0h2M8 12h2m4 0h2M8 16h2m4 0h2"></path></svg>Obra</span>
+                    <select id="obra" required><option value="">Carregando obras...</option></select>
+                </label>
+                <label class="form-field form-field-wide"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v13H4zM7 4h10v3H7zM8 11h8M8 15h5"></path></svg>Material</span>
+                    <input id="material" type="text" placeholder="Ex.: Cimento CP II" required>
+                </label>
+                <label class="form-field form-field-wide"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8M8 13h5"></path></svg>Foto do material <small>opcional</small></span>
+                    <input id="foto" type="file" accept="image/*">
+                </label>
+                <label class="form-field"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M8 8h6a3 3 0 1 1 0 6H8h5a3 3 0 1 1 0 6"></path></svg>Quantidade</span>
+                    <input id="quantidade" type="number" min="0" step="0.01" placeholder="0,00" required>
+                </label>
+                <label class="form-field"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>Unidade</span>
+                    <input id="unidade" type="text" placeholder="Ex.: saco, kg, m³" required>
+                </label>
+                <label class="form-field"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18"></path></svg>Estoque mínimo <small>opcional</small></span>
+                    <input id="minimo" type="number" min="0" step="0.01" placeholder="Quantidade mínima">
+                </label>
+                <label class="form-field"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M8 3v4M16 3v4M4 10h16"></path></svg>Data de entrada</span>
+                    <input id="data" type="date">
+                </label>
+                <label class="form-field"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path></svg>Status</span>
+                    <select id="status"><option value="Disponível">Disponível</option><option value="Estoque baixo">Estoque baixo</option><option value="Sem estoque">Sem estoque</option></select>
+                </label>
+            </div>
+            <div class="form-actions">
+                <a href="estoque.html" class="secondary-button">Cancelar</a>
+                <button type="submit" class="primary-button" id="salvarButton"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM8 4v6h8V4M8 16h8"></path></svg>Salvar material</button>
+            </div>
+            <p id="mensagem" class="dashboard-message" role="status" aria-live="polite"></p>
         </form>
     </section>
 </main>
@@ -90,7 +83,7 @@
         const { data, error } = await banco.from("obras").select("*").order("id", { ascending: false });
 
         if (error) {
-            select.innerHTML = `<option value="">❌ Erro ao carregar obras</option>`;
+            select.innerHTML = `<option value="">Não foi possível carregar as obras</option>`;
             return;
         }
 
@@ -112,13 +105,13 @@
     async function carregarMaterial() {
         if (!estoqueId) return;
 
-        $("tituloPagina").textContent = "✏️ Editar Material";
-        $("salvarButton").textContent = "💾 Salvar alterações";
+        $("tituloPagina").innerHTML = '<svg class="page-title-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16-.8 4.8L8 20l10.8-10.8-4-4L4 16Zm8.8-9.8 4 4M14 4l1.5-1.5a2.1 2.1 0 0 1 3 3L17 7"></path></svg>Editar material';
+        $("salvarButton").innerHTML = '<svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM8 4v6h8V4M8 16h8"></path></svg>Salvar alterações';
 
         const { data, error } = await banco.from("estoque").select("*").eq("id", estoqueId).single();
 
         if (error || !data) {
-            $("mensagem").textContent = "❌ Não foi possível carregar este material.";
+            $("mensagem").textContent = "Não foi possível carregar este material.";
             return;
         }
 
@@ -147,8 +140,8 @@
             throw new Error("Não foi possível enviar a foto.");
         }
 
-        const resultado = banco.storage.from("estoque").getPublicUrl(nomeArquivo);
-        return resultado?.data?.publicUrl || null;
+        // Guarda o caminho do objeto, não uma URL pública que pode expirar ou retornar 403.
+        return nomeArquivo;
     }
 
     // Salvar Formulário
@@ -200,23 +193,25 @@
             if (estoqueId) {
                 const { error } = await banco.from("estoque").update(dados).eq("id", estoqueId);
                 if (error) throw error;
-                mensagem.textContent = "✅ Material atualizado com sucesso!";
+                mensagem.textContent = "Material atualizado com sucesso.";
             } else {
                 // Como tiramos o getUsuario(), usamos um valor padrão
                 dados.responsavel = "Usuário"; 
                 
                 const { error } = await banco.from("estoque").insert([dados]);
                 if (error) throw error;
-                mensagem.textContent = "✅ Material cadastrado com sucesso!";
+                mensagem.textContent = "Material cadastrado com sucesso.";
                 $("formEstoque").reset();
             }
 
         } catch (error) {
             console.error("Erro ao salvar estoque:", error);
-            mensagem.textContent = "❌ " + (error.message || "Erro ao salvar material.");
+            mensagem.textContent = error.message || "Erro ao salvar material.";
         } finally {
             botao.disabled = false;
-            botao.textContent = estoqueId ? "💾 Salvar alterações" : "💾 Salvar Material";
+            botao.innerHTML = estoqueId
+                ? '<svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM8 4v6h8V4M8 16h8"></path></svg>Salvar alterações'
+                : '<svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM8 4v6h8V4M8 16h8"></path></svg>Salvar material';
         }
     });
 
@@ -229,7 +224,7 @@
 </script>
 
 <footer class="rodape">
-    <p>🚀 SmartInspect AI</p>
+    <p>SmartInspect AI</p>
     <p>Desenvolvido por <strong>Sérgio and Gabriel</strong></p>
     <p>Versão 1.0.1</p>
 </footer>
